@@ -1,0 +1,973 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Choosing the best Qiskit swap mapper &#8212; Enabing Technologies  documentation</title>
+<script>
+  document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+  document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
+</script>
+
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+
+
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script async="async" src="https://www.google-analytics.com/analytics.js"></script>
+    <script>
+                window.ga = window.ga || function () {
+                    (ga.q = ga.q || []).push(arguments) };
+                ga.l = +new Date;
+                ga('create', 'UA-16824831-8', 'auto');
+                ga('set', 'anonymizeIp', true);
+                ga('send', 'pageview');
+            </script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="docsearch:language" content="None"> 
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../../blog/atom.xml"
+  title="Paul Nation's Blog"
+/>
+ 
+<style type="text/css">
+  ul.ablog-archive {
+    list-style: none;
+    overflow: auto;
+    margin-left: 0px;
+  }
+  ul.ablog-archive li {
+    float: left;
+    margin-right: 5px;
+    font-size: 80%;
+  }
+  ul.postlist a {
+    font-style: italic;
+  }
+  ul.postlist-style-disc {
+    list-style-type: disc;
+  }
+  ul.postlist-style-none {
+    list-style-type: none;
+  }
+  ul.postlist-style-circle {
+    list-style-type: circle;
+  }
+</style>
+
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+    <div class="bd-header-announcement container-fluid" id="banner">
+      
+
+    </div>
+
+    
+    <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="bd-header__inner container-xl">
+
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../_static/dark_logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="fas fa-bars"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../blog.html">
+  Explorations
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../members.html">
+  Members
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" >
+</form>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span id="theme-switch" class="btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/IBM-Quantum-Technical-Enablement" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="bd-container container-xl">
+      <div class="bd-container__inner row">
+          
+
+<!-- Only show if we have sidebars configured, else just a small margin  -->
+<div class="bd-sidebar-primary col-12 col-md-3 bd-sidebar">
+  <div class="sidebar-start-items">  
+<h2>
+   <i class="fa fa-calendar"></i>
+  31 October 2021 
+</h2>
+
+<ul>
+      
+<li id="category">
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
+  >
+   
+  <a href="../../blog/category/qiskit.html">Qiskit</a>  
+</li>
+ 
+<li id="tags">
+  <span
+    ><i
+      class="fa-fw fa fa-tag"
+    ></i
+    ></span
+  >
+   
+  <a href="../../blog/tag/best-practices.html">best practices</a>  
+</li>
+ 
+</ul>
+<div class="dropdown-buttons">
+    <!-- ipynb file if we had a myst markdown file -->
+    
+    <!-- Download raw file -->
+    <a class="dropdown-buttons" href="../../_sources/posts/2021/2021-10-31-best_swap_mapper_qiskit.ipynb.txt"><button type="button"
+            class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+            data-placement="left">.ipynb</button></a>
+</div>
+<h3>
+  <a href="../../blog.html">Recent Posts</a>
+</h3>
+<ul>
+   
+  <li>
+    <a href="2021-12-20-qrng.html"
+      >20 December - Pitfalls in generating random numbers on quantum computers</a
+    >
+  </li>
+  
+  <li>
+    <a href="2021-12-20-esp_readout.html"
+      >20 December - Excited State Promotion (ESP) Readout</a
+    >
+  </li>
+  
+  <li>
+    <a href="2021-11-28-falcon_r5.html"
+      >28 November - Comparison of Falcon R5 processors verse R4</a
+    >
+  </li>
+  
+  <li>
+    <a href="2021-10-27-dynamic_BV.html"
+      >27 October - Dynamic Bernstein-Vazirani using mid-circuit reset and measurement</a
+    >
+  </li>
+  
+  <li>
+    <a href="2021-10-13-expval_program.html"
+      >13 October - Custom Expectation Value Program for the Qiskit Runtime</a
+    >
+  </li>
+  
+</ul>
+
+<h3>
+  <a href="../../blog/archive.html">Archives</a>
+</h3>
+<ul>
+   
+  <li>
+    <a href="../../blog/2021.html">2021 (7)</a>
+  </li>
+   
+</ul>
+
+  </div>
+  <div class="sidebar-end-items">
+  </div>
+</div>
+
+
+          
+
+
+<div class="bd-sidebar-secondary d-none d-xl-block col-xl-2 bd-toc">
+  
+    
+    <div class="toc-item">
+      
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary-of-results">
+   Summary of results
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#frontmatter">
+   Frontmatter
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#define-the-bechmarking-functions">
+   Define the bechmarking functions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#q-t-tests">
+   5Q-T tests
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ghz-bv-circuit">
+     GHZ / BV circuit
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#qv">
+     QV
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#efficient-su2-linear">
+     Efficient SU2 - linear
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#efficient-su2-full">
+     Efficient SU2 - full
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#two-local-linear">
+     Two-local linear
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#qft">
+     QFT
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#q-tests">
+   20Q tests
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     GHZ / BV circuit
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     QV
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     Efficient SU2 - linear
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     Efficient SU2 - full
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     Two-local linear
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     QFT
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#version-information">
+   Version information
+  </a>
+ </li>
+</ul>
+
+</nav>
+    </div>
+    
+    <div class="toc-item">
+      
+    </div>
+    
+  
+</div>
+
+
+          
+          
+          <div class="bd-content col-12 col-md-9 col-xl-7">
+              
+              <article class="bd-article" role="main">
+                 <section class="tex2jax_ignore mathjax_ignore" id="choosing-the-best-qiskit-swap-mapper">
+<h1>Choosing the best Qiskit swap mapper<a class="headerlink" href="#choosing-the-best-qiskit-swap-mapper" title="Permalink to this headline">#</a></h1>
+<p>One of the most important (perhaps the most important) steps when compiling quantum circuits for architectures with limited connectivity is swap mapping.  If a requested two-qubit gate cannot be implimented directly on hardware, the states of the corresponding qubits must be swapped with those of their neighboors until the states reside on qubits where a two qubit gate is supported.  Swap gates are expensive, equal to three CNOT gates, and therefore moving qubit states around using the fewest number of swap gates is desireable.  Unfortunately, directly computing the minimum number of swap gates is NP-complete, and heuristics need to be developed that come close to the ideal solution while scaling favorably with the number of qubits.</p>
+<p>Qiskit supports a variety of swap mappers and other optimization settings, and how to best set these options is important for getting high-fidelty results.  Additionally, there are other Qiskit compatible compilers out there that should also be evaluated.  To this end, here we look at a selection of circuits compiled with various Qiskit compiler settings, as well as those produced with the <a class="reference external" href="https://cambridgequantum.com/home/">Cambridge Quantum Computing (CQC)</a> <a class="reference external" href="https://github.com/CQCL/tket">Tket compiler</a>.  We will investigate the performance of these methods in terms of both number of CNOT gates in the output, as well as the associated runtimes.  Because Qiskit swap mappers are stochastic, we will run each one several times and plot the distributions of results.</p>
+<section id="summary-of-results">
+<h2>Summary of results<a class="headerlink" href="#summary-of-results" title="Permalink to this headline">#</a></h2>
+<p>When using the native Qiskit transpiler in general it is best to first try the following settings:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="n">transpile</span><span class="p">(</span><span class="n">circuits</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">optimization_level</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+          <span class="n">layout_method</span><span class="o">=</span><span class="s1">&#39;sabre&#39;</span><span class="p">,</span> <span class="n">routing_method</span><span class="o">=</span><span class="s1">&#39;sabre&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Additionally, because of the stochastic nature of the Qiskit swap mappers, ideally one should transpile the same circuit multiple times and select the one with the lowest number of CNOT gates in it.  Alternatively one can get good results using the CQC Tket compiler via:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="n">tk_qc</span> <span class="o">=</span> <span class="n">qiskit_to_tk</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span>
+<span class="n">tk_backend</span><span class="o">.</span><span class="n">default_compilation_pass</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">tk_qc</span><span class="p">)</span>
+<span class="n">tk_to_qiskit</span><span class="p">(</span><span class="n">tk_qc</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The Tket mapper is deterministic and thus only needs to be run once.  It does appear to slow down at larger qubit counts when compared to the runtime of the Qiskit compiler.</p>
+</section>
+<section id="frontmatter">
+<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this headline">#</a></h2>
+<p>Import the needed libraries.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s1">&#39;darkgrid&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Load up some predefined circuits.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">QuantumVolume</span><span class="p">,</span> <span class="n">EfficientSU2</span><span class="p">,</span> <span class="n">TwoLocal</span><span class="p">,</span> <span class="n">QFT</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To get the CQC Tket compiler and Qiskit interoperability on needs to first <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pytket</span></code>.  Then we can load up the necessary IO and compiler routines.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pytket.extensions.qiskit</span> <span class="kn">import</span> <span class="n">qiskit_to_tk</span><span class="p">,</span> <span class="n">tk_to_qiskit</span><span class="p">,</span> <span class="n">IBMQBackend</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Tket requires loading backends from the IBM Quantum provider.  Thus we cannot use mock backends here.  So we load up our IBM Quantum account and a provider.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">IBMQ</span><span class="o">.</span><span class="n">load_account</span><span class="p">()</span>
+<span class="n">provider</span> <span class="o">=</span> <span class="n">IBMQ</span><span class="o">.</span><span class="n">get_provider</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="s1">&#39;deployed&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="define-the-bechmarking-functions">
+<h2>Define the bechmarking functions<a class="headerlink" href="#define-the-bechmarking-functions" title="Permalink to this headline">#</a></h2>
+<p>Here we define a couple of functions for benchmarking.  First we need a way of compiling circuits via Tket and obtaining the CNOT gate count and the time it took (not including Tket &lt;-&gt; Qiskit conversion time).  Second we need a similar routine for compiling in Qiskit.  This is where things get tricky as there are a <a class="reference external" href="https://qiskit.org/documentation/stubs/qiskit.compiler.transpile.html#qiskit-compiler-transpile">myriad of compiling combinations in Qiskit</a>.  Here we look at a few combinations.  Namely we will try to compile at all the non-trivial optimization levels: 1 (default), 2, and 3.  Additionally, we will turn on Sabre swap mapping, and then look at both Sabre initial layout and routing (here called “sabre-sabre”).  Due to the stochastic nature of the swap mappers in Qiskit we will run each a couple of times and collect statistics.  This is not really cheating as the compilation can be done in parallel.  Finally, we make the primary user callable function <code class="docutils literal notranslate"><span class="pre">compiler_benchmark</span></code> that runs everything for us, and makes a nice plot.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">pytket_run</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">tk_backend</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get compling results for a given circuit and Tket backend.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">        qc (QuantumCircuit): The circuit.</span>
+<span class="sd">        tk_backend (TketBackend): A Tket backend instance.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        int: Number of CNOT gates in compiled circuit.</span>
+<span class="sd">        float: Compilation time.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tk_qc</span> <span class="o">=</span> <span class="n">qiskit_to_tk</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span>
+    <span class="n">st</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+    <span class="n">tk_backend</span><span class="o">.</span><span class="n">default_compilation_pass</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">tk_qc</span><span class="p">)</span>
+    <span class="n">ft</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">tk_to_qiskit</span><span class="p">(</span><span class="n">tk_qc</span><span class="p">)</span><span class="o">.</span><span class="n">count_ops</span><span class="p">()[</span><span class="s1">&#39;cx&#39;</span><span class="p">],</span> <span class="n">ft</span><span class="o">-</span><span class="n">st</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">qiskit_run</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get compling results for a given circuit and backend.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">        qc (QuantumCircuit): The circuit.</span>
+<span class="sd">        backend (IBMQBackend): An IBM Quantum backend instance.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        list: Number of CNOT gates in compiled circuits.</span>
+<span class="sd">        list: Best compilation times.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">qk_cx_count1</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">qk_cx_count2</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">qk_cx_count3</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">qk_cx_count3l</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">qk_cx_count3s</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">qk_time1</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">qk_time2</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">qk_time3</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">qk_time3l</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">qk_time3s</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+        <span class="n">qk_cx_count1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span>
+                                      <span class="n">optimization_level</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">count_ops</span><span class="p">()[</span><span class="s1">&#39;cx&#39;</span><span class="p">])</span>
+        <span class="n">ft</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+        <span class="n">qk_time1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ft</span><span class="o">-</span><span class="n">st</span><span class="p">)</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+        <span class="n">qk_cx_count2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span>
+                                      <span class="n">optimization_level</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">count_ops</span><span class="p">()[</span><span class="s1">&#39;cx&#39;</span><span class="p">])</span>
+        <span class="n">ft</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+        <span class="n">qk_time2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ft</span><span class="o">-</span><span class="n">st</span><span class="p">)</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+        <span class="n">qk_cx_count3</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span>
+                                      <span class="n">optimization_level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">count_ops</span><span class="p">()[</span><span class="s1">&#39;cx&#39;</span><span class="p">])</span>
+        <span class="n">ft</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+        <span class="n">qk_time3</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ft</span><span class="o">-</span><span class="n">st</span><span class="p">)</span>
+        
+        <span class="n">st</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+        <span class="n">qk_cx_count3l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">optimization_level</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                                       <span class="n">layout_method</span><span class="o">=</span><span class="s1">&#39;sabre&#39;</span><span class="p">,</span>
+                                       <span class="p">)</span><span class="o">.</span><span class="n">count_ops</span><span class="p">()[</span><span class="s1">&#39;cx&#39;</span><span class="p">])</span>
+        <span class="n">ft</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+        <span class="n">qk_time3l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ft</span><span class="o">-</span><span class="n">st</span><span class="p">)</span>
+        
+        <span class="n">st</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+        <span class="n">qk_cx_count3s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">optimization_level</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                                       <span class="n">layout_method</span><span class="o">=</span><span class="s1">&#39;sabre&#39;</span><span class="p">,</span>
+                                       <span class="n">routing_method</span><span class="o">=</span><span class="s1">&#39;sabre&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">count_ops</span><span class="p">()[</span><span class="s1">&#39;cx&#39;</span><span class="p">])</span>
+        <span class="n">ft</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+        <span class="n">qk_time3s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ft</span><span class="o">-</span><span class="n">st</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="n">qk_cx_count1</span><span class="p">,</span> <span class="n">qk_cx_count2</span><span class="p">,</span>
+            <span class="n">qk_cx_count3</span><span class="p">,</span> <span class="n">qk_cx_count3l</span><span class="p">,</span>
+            <span class="n">qk_cx_count3s</span><span class="p">],</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">qk_time1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">qk_time2</span><span class="p">),</span>
+                             <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">qk_time3</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">qk_time3l</span><span class="p">),</span>
+                             <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">qk_time3s</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compiler_benchmark</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">backend</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Benchmarks a circuit on the target backend and plot</span>
+<span class="sd">    the results.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">        circuit (QuantumCircuit): The circuit to benchmark.</span>
+<span class="sd">        backend (IBMQBackend): The target system</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tk_backend</span> <span class="o">=</span> <span class="n">IBMQBackend</span><span class="p">(</span><span class="n">backend</span><span class="o">.</span><span class="n">name</span><span class="p">(),</span> <span class="n">group</span><span class="o">=</span><span class="s1">&#39;deployed&#39;</span><span class="p">)</span>
+    
+    <span class="n">tk_cx_count</span><span class="p">,</span> <span class="n">tk_time</span> <span class="o">=</span> <span class="n">pytket_run</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">tk_backend</span><span class="p">)</span>
+    <span class="n">qk_counts</span><span class="p">,</span> <span class="n">qk_times</span> <span class="o">=</span> <span class="n">qiskit_run</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+    
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">qk_counts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Qiskit O1 [</span><span class="si">{}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">qk_times</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">)),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">qk_counts</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Qiskit O2 [</span><span class="si">{}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">qk_times</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="mi">3</span><span class="p">)),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">qk_counts</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Qiskit O3 [</span><span class="si">{}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">qk_times</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="mi">3</span><span class="p">)),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">qk_counts</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Qiskit O3-sabre [</span><span class="si">{}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">qk_times</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="mi">3</span><span class="p">)),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">qk_counts</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Qiskit O3-sabre-sabre [</span><span class="si">{}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">qk_times</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span><span class="mi">3</span><span class="p">)),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">tk_cx_count</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span>
+               <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Tket [</span><span class="si">{}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">tk_time</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;CX count&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Occurance&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.04</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="q-t-tests">
+<h2>5Q-T tests<a class="headerlink" href="#q-t-tests" title="Permalink to this headline">#</a></h2>
+<p>Here we run tests on a 5Q system with a “T”-shaped coupling map.  This is a bit more interesting than a linear coupling when it comes to figuring out swaps.  The Quito system has such a layout.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">backend</span> <span class="o">=</span> <span class="n">provider</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">ibmq_quito</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="ghz-bv-circuit">
+<h3>GHZ / BV circuit<a class="headerlink" href="#ghz-bv-circuit" title="Permalink to this headline">#</a></h3>
+<p>A commonly used test circuit where all CNOT gates require a control or target on a single qubit.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;qiskit.circuit.instructionset.InstructionSet at 0x7f3bed0bcd30&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">compiler_benchmark</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/13c6ece8d30be6120dad100786a505b46b54ce6a3192ccc60404ffc321c55417.png" src="../../_images/13c6ece8d30be6120dad100786a505b46b54ce6a3192ccc60404ffc321c55417.png" />
+</div>
+</div>
+</section>
+<section id="qv">
+<h3>QV<a class="headerlink" href="#qv" title="Permalink to this headline">#</a></h3>
+<p>The standard “quality” metric circuits.  Results can vary (sometimes dramatically) based on generated circuit.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumVolume</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">compiler_benchmark</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/674e5b50dad2ed5026ba80f7ce7b335273e0f2237bc8e87652e05df4c2fb3953.png" src="../../_images/674e5b50dad2ed5026ba80f7ce7b335273e0f2237bc8e87652e05df4c2fb3953.png" />
+</div>
+</div>
+</section>
+<section id="efficient-su2-linear">
+<h3>Efficient SU2 - linear<a class="headerlink" href="#efficient-su2-linear" title="Permalink to this headline">#</a></h3>
+<p>An ansatz circuit with linear entanglement profile.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc</span> <span class="o">=</span> <span class="n">EfficientSU2</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">entanglement</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">compiler_benchmark</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/515a124797a70c0c669e6023aef3748f92b0d1ddccd3582e7e0be68a16b83e21.png" src="../../_images/515a124797a70c0c669e6023aef3748f92b0d1ddccd3582e7e0be68a16b83e21.png" />
+</div>
+</div>
+</section>
+<section id="efficient-su2-full">
+<h3>Efficient SU2 - full<a class="headerlink" href="#efficient-su2-full" title="Permalink to this headline">#</a></h3>
+<p>Same thing as above but with full entanglement.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc</span> <span class="o">=</span> <span class="n">EfficientSU2</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">entanglement</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">compiler_benchmark</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/c3eb5337b017bcb5e3bc9ded54aabb465af877e3fce9c29b4fc105d59eca1c82.png" src="../../_images/c3eb5337b017bcb5e3bc9ded54aabb465af877e3fce9c29b4fc105d59eca1c82.png" />
+</div>
+</div>
+</section>
+<section id="two-local-linear">
+<h3>Two-local linear<a class="headerlink" href="#two-local-linear" title="Permalink to this headline">#</a></h3>
+<p>Another flavor of ansatz with linear entanglement and several repeated layers.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc</span> <span class="o">=</span> <span class="n">TwoLocal</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;ry&#39;</span><span class="p">,</span> <span class="s1">&#39;cx&#39;</span><span class="p">,</span> <span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">reps</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">compiler_benchmark</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/3be70063e971bd127a1b4a8b5bb09c9121bc2085474f430880fa9ad983e9ec80.png" src="../../_images/3be70063e971bd127a1b4a8b5bb09c9121bc2085474f430880fa9ad983e9ec80.png" />
+</div>
+</div>
+</section>
+<section id="qft">
+<h3>QFT<a class="headerlink" href="#qft" title="Permalink to this headline">#</a></h3>
+<p>The Quantum Fourier Transformation (QFT).  Also used a lot in benchmarking.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc</span> <span class="o">=</span> <span class="n">QFT</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">compiler_benchmark</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/a01f897aca51cfb39f7bc4b39ecd67037fbd9e5778bc4c1e1ac7b7d7f422b239.png" src="../../_images/a01f897aca51cfb39f7bc4b39ecd67037fbd9e5778bc4c1e1ac7b7d7f422b239.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="q-tests">
+<h2>20Q tests<a class="headerlink" href="#q-tests" title="Permalink to this headline">#</a></h2>
+<p>Here we expand or circuits to 20 qubits and look at compiling on a 27qubit Falcon heavy-hex topology.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">backend</span> <span class="o">=</span> <span class="n">provider</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">ibmq_mumbai</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tk_backend</span> <span class="o">=</span> <span class="n">IBMQBackend</span><span class="p">(</span><span class="s2">&quot;ibmq_mumbai&quot;</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s1">&#39;deployed&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="id1">
+<h3>GHZ / BV circuit<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<p>A commonly used test circuit where all CNOT gates require a control or target on a single qubit.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;qiskit.circuit.instructionset.InstructionSet at 0x7f3be8804fa0&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">compiler_benchmark</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/63703a2a6113c812c12b2dab59566148dd826f9ca1d4e1c411df889bd572a187.png" src="../../_images/63703a2a6113c812c12b2dab59566148dd826f9ca1d4e1c411df889bd572a187.png" />
+</div>
+</div>
+</section>
+<section id="id2">
+<h3>QV<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h3>
+<p>The standard “quality” metric circuits.  Results can vary (sometimes dramatically) based on generated circuit.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumVolume</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">compiler_benchmark</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/07ecb3f96b79bdace458ecfa6a3d88284b7b63c08e09dfc227540d582cadf1a5.png" src="../../_images/07ecb3f96b79bdace458ecfa6a3d88284b7b63c08e09dfc227540d582cadf1a5.png" />
+</div>
+</div>
+</section>
+<section id="id3">
+<h3>Efficient SU2 - linear<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
+<p>An ansatz circuit with linear entanglement profile.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc</span> <span class="o">=</span> <span class="n">EfficientSU2</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">entanglement</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">compiler_benchmark</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/1d18f78b747dd844252cba1e39b566342f36062c80c114134464ccdcba9390a7.png" src="../../_images/1d18f78b747dd844252cba1e39b566342f36062c80c114134464ccdcba9390a7.png" />
+</div>
+</div>
+</section>
+<section id="id4">
+<h3>Efficient SU2 - full<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h3>
+<p>Same thing as above but with full entanglement.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc</span> <span class="o">=</span> <span class="n">EfficientSU2</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">entanglement</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">compiler_benchmark</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/46fc2cb9cf34159d90c5ded7de6b35de3a57a2b4684328eaf436a257a7fdeb8a.png" src="../../_images/46fc2cb9cf34159d90c5ded7de6b35de3a57a2b4684328eaf436a257a7fdeb8a.png" />
+</div>
+</div>
+</section>
+<section id="id5">
+<h3>Two-local linear<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h3>
+<p>Another flavor of ansatz with linear entanglement and several repeated layers.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc</span> <span class="o">=</span> <span class="n">TwoLocal</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;ry&#39;</span><span class="p">,</span> <span class="s1">&#39;cx&#39;</span><span class="p">,</span> <span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">reps</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">compiler_benchmark</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/a653c33ae6190c6cf35e8db17698c76d9b5cd4bcf354085712633a5f2ca97bcc.png" src="../../_images/a653c33ae6190c6cf35e8db17698c76d9b5cd4bcf354085712633a5f2ca97bcc.png" />
+</div>
+</div>
+</section>
+<section id="id6">
+<h3>QFT<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h3>
+<p>The Quantum Fourier Transformation (QFT).  Also used a lot in benchmarking.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc</span> <span class="o">=</span> <span class="n">QFT</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">compiler_benchmark</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/d6262eb1f2b0bd16b0233f593b9c047f2223ebd90950ec7ed2a6350fa5006e45.png" src="../../_images/d6262eb1f2b0bd16b0233f593b9c047f2223ebd90950ec7ed2a6350fa5006e45.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="version-information">
+<h2>Version information<a class="headerlink" href="#version-information" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.tools.jupyter</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="o">%</span><span class="k">qiskit_version_table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/paul/miniconda3/envs/qiskit/lib/python3.9/site-packages/qiskit/aqua/__init__.py:86: DeprecationWarning: The package qiskit.aqua is deprecated. It was moved/refactored to qiskit-terra For more information see &lt;https://github.com/Qiskit/qiskit-aqua/blob/main/README.md#migration-guide&gt;
+  warn_package(&#39;aqua&#39;, &#39;qiskit-terra&#39;)
+</pre></div>
+</div>
+<div class="output text_html"><h3>Version Information</h3><table><tr><th>Qiskit Software</th><th>Version</th></tr><tr><td><code>qiskit-terra</code></td><td>0.18.3</td></tr><tr><td><code>qiskit-aer</code></td><td>0.9.1</td></tr><tr><td><code>qiskit-ignis</code></td><td>0.6.0</td></tr><tr><td><code>qiskit-ibmq-provider</code></td><td>0.17.0</td></tr><tr><td><code>qiskit-aqua</code></td><td>0.9.5</td></tr><tr><td><code>qiskit</code></td><td>0.31.0</td></tr><tr><td><code>qiskit-optimization</code></td><td>0.2.0</td></tr><tr><th>System information</th></tr><tr><td>Python</td><td>3.9.7 | packaged by conda-forge | (default, Sep 29 2021, 19:23:11) 
+[GCC 9.4.0]</td></tr><tr><td>OS</td><td>Linux</td></tr><tr><td>CPUs</td><td>4</td></tr><tr><td>Memory (Gb)</td><td>62.73820495605469</td></tr><tr><td colspan='2'>Sun Oct 31 06:14:50 2021 EDT</td></tr></table></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">pytket</span></code> does not have any version (<code class="docutils literal notranslate"><span class="pre">__version__</span></code>) information.  So you will just have to trust me that it is version <code class="docutils literal notranslate"><span class="pre">0.16.0</span></code></p>
+</section>
+</section>
+
+<div class="section">
+    
+
+<div class="section">
+  <span style="float: left">
+     
+    <a href="2021-10-27-dynamic_BV.html">
+      <i class="fa fa-arrow-circle-left"></i> Dynamic Bernstein-Vazirani using mid-circuit reset and measurement
+    </a>
+    
+  </span>
+  <span>&nbsp;</span>
+  <span style="float: right">
+     
+    <a href="2021-11-28-falcon_r5.html">
+      Comparison of Falcon R5 processors verse R4 <i
+        class="fa fa-arrow-circle-right"
+      ></i
+      >
+    </a>
+    
+  </span>
+</div>
+  
+</div>
+
+              </article>
+              
+
+              
+              <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+              </footer>
+              
+          </div>
+          
+      </div>
+    </div>
+
+  
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695"></script>
+
+<footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    <p class="copyright">
+    &copy; Copyright 2022, IBM Quantum.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+</p>
+  </div>
+  
+</div>
+</footer>
+  </body>
+</html>

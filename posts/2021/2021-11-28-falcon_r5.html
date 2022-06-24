@@ -1,0 +1,594 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Comparison of Falcon R5 processors verse R4 &#8212; Enabing Technologies  documentation</title>
+<script>
+  document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+  document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
+</script>
+
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+
+
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script async="async" src="https://www.google-analytics.com/analytics.js"></script>
+    <script>
+                window.ga = window.ga || function () {
+                    (ga.q = ga.q || []).push(arguments) };
+                ga.l = +new Date;
+                ga('create', 'UA-16824831-8', 'auto');
+                ga('set', 'anonymizeIp', true);
+                ga('send', 'pageview');
+            </script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="docsearch:language" content="None"> 
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../../blog/atom.xml"
+  title="Paul Nation's Blog"
+/>
+ 
+<style type="text/css">
+  ul.ablog-archive {
+    list-style: none;
+    overflow: auto;
+    margin-left: 0px;
+  }
+  ul.ablog-archive li {
+    float: left;
+    margin-right: 5px;
+    font-size: 80%;
+  }
+  ul.postlist a {
+    font-style: italic;
+  }
+  ul.postlist-style-disc {
+    list-style-type: disc;
+  }
+  ul.postlist-style-none {
+    list-style-type: none;
+  }
+  ul.postlist-style-circle {
+    list-style-type: circle;
+  }
+</style>
+
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+    <div class="bd-header-announcement container-fluid" id="banner">
+      
+
+    </div>
+
+    
+    <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="bd-header__inner container-xl">
+
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../_static/dark_logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="fas fa-bars"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../blog.html">
+  Explorations
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../members.html">
+  Members
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" >
+</form>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span id="theme-switch" class="btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/IBM-Quantum-Technical-Enablement" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="bd-container container-xl">
+      <div class="bd-container__inner row">
+          
+
+<!-- Only show if we have sidebars configured, else just a small margin  -->
+<div class="bd-sidebar-primary col-12 col-md-3 bd-sidebar">
+  <div class="sidebar-start-items">  
+<h2>
+   <i class="fa fa-calendar"></i>
+  28 November 2021 
+</h2>
+
+<ul>
+      
+<li id="category">
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
+  >
+   
+  <a href="../../blog/category/hardware.html">Hardware</a>  
+</li>
+ 
+<li id="tags">
+  <span
+    ><i
+      class="fa-fw fa fa-tag"
+    ></i
+    ></span
+  >
+   
+  <a href="../../blog/tag/falcon.html">Falcon</a>  
+</li>
+ 
+</ul>
+<div class="dropdown-buttons">
+    <!-- ipynb file if we had a myst markdown file -->
+    
+    <!-- Download raw file -->
+    <a class="dropdown-buttons" href="../../_sources/posts/2021/2021-11-28-falcon_r5.ipynb.txt"><button type="button"
+            class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+            data-placement="left">.ipynb</button></a>
+</div>
+<h3>
+  <a href="../../blog.html">Recent Posts</a>
+</h3>
+<ul>
+   
+  <li>
+    <a href="2021-12-20-qrng.html"
+      >20 December - Pitfalls in generating random numbers on quantum computers</a
+    >
+  </li>
+  
+  <li>
+    <a href="2021-12-20-esp_readout.html"
+      >20 December - Excited State Promotion (ESP) Readout</a
+    >
+  </li>
+  
+  <li>
+    <a href="2021-10-31-best_swap_mapper_qiskit.html"
+      >31 October - Choosing the best Qiskit swap mapper</a
+    >
+  </li>
+  
+  <li>
+    <a href="2021-10-27-dynamic_BV.html"
+      >27 October - Dynamic Bernstein-Vazirani using mid-circuit reset and measurement</a
+    >
+  </li>
+  
+  <li>
+    <a href="2021-10-13-expval_program.html"
+      >13 October - Custom Expectation Value Program for the Qiskit Runtime</a
+    >
+  </li>
+  
+</ul>
+
+<h3>
+  <a href="../../blog/archive.html">Archives</a>
+</h3>
+<ul>
+   
+  <li>
+    <a href="../../blog/2021.html">2021 (7)</a>
+  </li>
+   
+</ul>
+
+  </div>
+  <div class="sidebar-end-items">
+  </div>
+</div>
+
+
+          
+
+
+<div class="bd-sidebar-secondary d-none d-xl-block col-xl-2 bd-toc">
+  
+    
+    <div class="toc-item">
+      
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#frontmatter">
+   Frontmatter
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-account-and-backend-selection">
+   Load account and backend selection
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#get-the-calibration-data">
+   Get the calibration data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#plot-results">
+   Plot results
+  </a>
+ </li>
+</ul>
+
+</nav>
+    </div>
+    
+    <div class="toc-item">
+      
+    </div>
+    
+  
+</div>
+
+
+          
+          
+          <div class="bd-content col-12 col-md-9 col-xl-7">
+              
+              <article class="bd-article" role="main">
+                 <section class="tex2jax_ignore mathjax_ignore" id="comparison-of-falcon-r5-processors-verse-r4">
+<h1>Comparison of Falcon R5 processors verse R4<a class="headerlink" href="#comparison-of-falcon-r5-processors-verse-r4" title="Permalink to this headline">#</a></h1>
+<p>Recently IBM Quantum announced the move to revision 5 (R5) of its Falcon processors <a class="reference external" href="https://twitter.com/jaygambetta/status/1460697559773634570">see this tweet from Jay Gambetta</a>.  In particular it was highlighted that there is a 8x reduction in meausrement time on these systems.  Lets see if this, or any other enhancements, are visible from the system calibration data.</p>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">#</a></h2>
+<p>The highlight of the recently released Falcon R5 “core” systems is their much improved measurement times (7x) and error rates (2x).  On these systems a measurement is roughly twice as long as a CNOT gate, compared to 13x on the old R4 systems, and allows for implimenting high-fidelity dynamic circuits with resets, mid-circuit measurements, and eventually classically-conditioned gates.  For other tasks, the modest improvements in the CNOT gate errors and <span class="math notranslate nohighlight">\(T_{1}\)</span> times are also welcomed.</p>
+</section>
+<section id="frontmatter">
+<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;nonhermitian&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="load-account-and-backend-selection">
+<h2>Load account and backend selection<a class="headerlink" href="#load-account-and-backend-selection" title="Permalink to this headline">#</a></h2>
+<p>Loading account and making two lists; one for R5 backends and the other for R4.  Which is which can be found on the <a class="reference external" href="https://quantum-computing.ibm.com/services?services=systems">systems page</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">IBMQ</span><span class="o">.</span><span class="n">load_account</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">provider</span> <span class="o">=</span> <span class="n">IBMQ</span><span class="o">.</span><span class="n">get_provider</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="s1">&#39;internal-test&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r5_backends</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ibmq_kolkata&#39;</span><span class="p">,</span> <span class="s1">&#39;ibm_hanoi&#39;</span><span class="p">,</span> <span class="s1">&#39;ibm_kawasaki&#39;</span><span class="p">,</span> <span class="s1">&#39;ibm_cairo&#39;</span><span class="p">,</span> <span class="s1">&#39;ibm_auckland&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r4_backends</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ibmq_montreal&#39;</span><span class="p">,</span> <span class="s1">&#39;ibmq_dublin&#39;</span><span class="p">,</span> <span class="s1">&#39;ibmq_toronto&#39;</span><span class="p">,</span> <span class="s1">&#39;ibmq_sydney&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="get-the-calibration-data">
+<h2>Get the calibration data<a class="headerlink" href="#get-the-calibration-data" title="Permalink to this headline">#</a></h2>
+<p>Here we make a function to get the calibration data and grab the results for our targeted machines.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">backends_data</span><span class="p">(</span><span class="n">backends</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return backend calibration data for a list of backends.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">        backends (list): A list of backend names.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        list: cx gate errors</span>
+<span class="sd">        list: cx gate times</span>
+<span class="sd">        list: meas errors</span>
+<span class="sd">        list: meas times</span>
+<span class="sd">        list: T1 values</span>
+<span class="sd">        list: T2 values</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cx_gate_errors</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">cx_gate_times</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">meas_errors</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">meas_times</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">t1s</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">t2s</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">back</span> <span class="ow">in</span> <span class="n">backends</span><span class="p">:</span>
+        <span class="n">backend</span> <span class="o">=</span> <span class="n">provider</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="n">back</span><span class="p">)</span>
+        <span class="n">props</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">properties</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">gate</span> <span class="ow">in</span> <span class="n">props</span><span class="o">.</span><span class="n">gates</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;cx&#39;</span> <span class="ow">in</span> <span class="n">gate</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">gate</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">!=</span> <span class="mf">1.0</span><span class="p">:</span>
+                    <span class="n">cx_gate_errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gate</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+                <span class="n">cx_gate_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gate</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">qubit</span> <span class="ow">in</span> <span class="n">props</span><span class="o">.</span><span class="n">qubits</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">qubit</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;readout_error&#39;</span><span class="p">:</span>
+                    <span class="n">meas_errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;readout_length&#39;</span><span class="p">:</span>
+                    <span class="n">meas_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;T1&#39;</span><span class="p">:</span>
+                    <span class="n">t1s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;T2&#39;</span><span class="p">:</span>
+                    <span class="n">t2s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+                    
+    <span class="k">return</span> <span class="n">cx_gate_errors</span><span class="p">,</span> <span class="n">cx_gate_times</span><span class="p">,</span> <span class="n">meas_errors</span><span class="p">,</span> <span class="n">meas_times</span><span class="p">,</span> <span class="n">t1s</span><span class="p">,</span> <span class="n">t2s</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r5_data</span> <span class="o">=</span> <span class="n">backends_data</span><span class="p">(</span><span class="n">r5_backends</span><span class="p">)</span>
+<span class="n">r4_data</span> <span class="o">=</span> <span class="n">backends_data</span><span class="p">(</span><span class="n">r4_backends</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="plot-results">
+<h2>Plot results<a class="headerlink" href="#plot-results" title="Permalink to this headline">#</a></h2>
+<p>Here we compute the improvement of R5 over R4, if any, and plot it in a bar plot.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">improve</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">r4_data</span><span class="p">[</span><span class="n">kk</span><span class="p">])</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">r5_data</span><span class="p">[</span><span class="n">kk</span><span class="p">])</span> <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
+<span class="n">improve</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">r5_data</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">r4_data</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]),</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">r5_data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">r4_data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;cx_error&#39;</span><span class="p">,</span> <span class="s1">&#39;cx_speed&#39;</span><span class="p">,</span> <span class="s1">&#39;meas_error&#39;</span><span class="p">,</span> <span class="s1">&#39;meas_speed&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;$\mathrm</span><span class="si">{T}</span><span class="s1">_</span><span class="si">{1}</span><span class="s1">$&#39;</span><span class="p">,</span> <span class="s1">&#39;$\mathrm</span><span class="si">{T}</span><span class="s1">_</span><span class="si">{2}</span><span class="s1">$&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">bars</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">improve</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.3&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Falcon R5 characteristics verses R4&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Improvement&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">bar</span> <span class="ow">in</span> <span class="n">bars</span><span class="p">:</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">+</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_y</span><span class="p">()</span><span class="o">+</span><span class="mf">0.5</span><span class="o">*</span><span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">(),</span>
+             <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">x&#39;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+             <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s2">&quot;semibold&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.3&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/db6dfb274bd8e4c30c266cf1efcdf79c65fce170b2f07adc6224b21785ef8766.png" src="../../_images/db6dfb274bd8e4c30c266cf1efcdf79c65fce170b2f07adc6224b21785ef8766.png" />
+</div>
+</div>
+<p>Ok cool, we do indeed see a roughly 7x improvment in the median measurement time, as well as an over 2x reduction in the associated measurement error.  Not only that, there is a modest improvement in the CNOT gate speed and error rates as well, with a bit better <span class="math notranslate nohighlight">\(T_{1}\)</span> to round out the gains. How was this accomplished?  Well the measurement gains come from a combination of increased measurement cavity linewidth (<span class="math notranslate nohighlight">\(\kappa\)</span>) due to stronger coupling, as well an increased in the dispersive shift (<span class="math notranslate nohighlight">\(\chi\)</span>) that aids in visibility.  The improvements in the CNOT gates comes from further refinements in how the gates are performed.</p>
+<p>This reduction in measurement time, and error, is critical for implimenting dynamic circuits with qubit reset, mid-circuit measurements, and eventually conditional logic.  Ideally, measurement should not take any longer than any gate, and we can look to see how the R5 measurement times compare to the CNOT gate times:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Median R5 CNOT gate time:  &#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">r5_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Median R5 measurement time:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">r5_data</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Median R5 CNOT gate time:   348.4444444444444
+Median R5 measurement time: 732.4444444444445
+</pre></div>
+</div>
+</div>
+</div>
+<p>We see that a measurement takes about twice as long as a CNOT gate on the R5 systems.  Thus, the R5 systens achieve the goal of high-fidelity readout on a timescale no longe than the typical gate times on the system.  What about the old R4  systems?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Median R4 CNOT gate time:  &#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">r4_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Median R4 measurement time:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">r4_data</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Median R4 CNOT gate time:   419.55555555555554
+Median R4 measurement time: 5276.444444444443
+</pre></div>
+</div>
+</div>
+</div>
+<p>Ouch!  Each CNOT gate on an R4 system is roughly 13 CNOT gates in terms of time.  Not a good situation to be in when you need to measure and reset a qubit mid-circuit.  Indeed, trying to do so on the R4 systems quickly leads to headaches.  For example, you can try to play with the <a class="reference external" href="https://nonhermitian.org/posts/2021/2021-10-27-dynamic_BV.html">dynamic Bernstein-Vazirani example</a> using an R5 (as done there) and comparing it to an R4 system.</p>
+</section>
+</section>
+
+<div class="section">
+    
+
+<div class="section">
+  <span style="float: left">
+     
+    <a href="2021-10-31-best_swap_mapper_qiskit.html">
+      <i class="fa fa-arrow-circle-left"></i> Choosing the best Qiskit swap mapper
+    </a>
+    
+  </span>
+  <span>&nbsp;</span>
+  <span style="float: right">
+     
+    <a href="2021-12-20-esp_readout.html">
+      Excited State Promotion (ESP) Readout <i
+        class="fa fa-arrow-circle-right"
+      ></i
+      >
+    </a>
+    
+  </span>
+</div>
+  
+</div>
+
+              </article>
+              
+
+              
+              <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+              </footer>
+              
+          </div>
+          
+      </div>
+    </div>
+
+  
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695"></script>
+
+<footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    <p class="copyright">
+    &copy; Copyright 2022, IBM Quantum.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+</p>
+  </div>
+  
+</div>
+</footer>
+  </body>
+</html>

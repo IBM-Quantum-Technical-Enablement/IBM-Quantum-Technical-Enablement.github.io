@@ -1,0 +1,327 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "1f8c719d",
+   "metadata": {
+    "tags": []
+   },
+   "source": [
+    "# Pitfalls in generating random numbers on quantum computers\n",
+    "\n",
+    "```{post} 2021-12-20\n",
+    ":category: Misc\n",
+    "```\n",
+    "\n",
+    "One of the first things many beginning quantum practitioners do is try to exploit the random nature of quantum measurements to build a basic random number generator.  Typically they do this via one or more Hadamard gates, and then quickly post an issue saying they do not observe the expected 50/50 outcome of 0's and 1's.  Taking this a step further, many companies are looking to commercializing quantum random number generation (QRNG) as a service. These services usually are marketed with words like \"true randomness\" or \"quantum certified\".  Recently news spread of a new QRNG service from \n",
+    "Cambridge Quantum Computing (CQC) called [Quantum Origin](https://cambridgequantum.com/our-technology/origin/). CQC is now part of [Quantinuum](https://www.quantinuum.com), a joint venture with Honeywell Quantum Solutions.  This service even has a [collection of Partners](https://cambridgequantum.com/our-technology/origin/origin-partners/) attributed to it.\n",
+    "\n",
+    "The materials available from CQC suggest that this is essentially the same service as that [introduced by CQC and IBM over a year ago](https://www.hpcwire.com/2020/09/21/ibm-cqc-intro-cloud-based-quantum-random-number-generation/).  This service has been a part of Qiskit since the announcement has the [qiskit-rng](https://github.com/qiskit-community/qiskit_rng) module.  Given that this is open source software, we can play around with the code to see why the underlying QRNG method can never be truly \"certified\" as being quantum in origin."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ad10a957-1961-4eb2-a307-83e2531b03ba",
+   "metadata": {},
+   "source": [
+    "## Background\n",
+    "\n",
+    "The theoretical underpinnings of the CQC QRNG service can be found in [arXiv:2009.06551](https://arxiv.org/abs/2009.06551).  The basic idea is that a quantum computer executes single-shot three qubit GHZ states followed by random X- and Y-basis measurements.  If the state is tripartite entangled, as measured by the Mermin inequality:\n",
+    "\n",
+    "$$\n",
+    "𝑀_{\\rm obs}=\\langle 𝐴_{1}𝐵_{1}𝐶_{1}\\rangle−\\langle 𝐴_{1}𝐵_{2}𝐶_{1}\\rangle−\\langle 𝐴_{2}𝐵_{1}𝐶_{2}\\rangle−\\langle 𝐴_{2}𝐵_{2}𝐶_{1}\\rangle \\ge 2,\n",
+    "$$\n",
+    "\n",
+    "then the measured output is said to be \"certified quantum random\".  The maximum value is $M_{\\rm obs}=4$ which indicates maximum randomness, and and that the measurement outcomes are uniformly random.  Values that fall below this need post-processing by an \"extractor\" step in order to be uniform.  This necessarily reduces the number of bits at the end of the process.  Below we will see if an IBM Quantum system can generate the necessary Mermin values, and if there are any surprises in store."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0cc43863-8761-4b6e-a4dc-3ba61c91e637",
+   "metadata": {},
+   "source": [
+    "## Frontmatter\n",
+    "\n",
+    "Let us load the needed modules, including pieces of the `qiskit-rng` module.  The module itself does not work well with newer version of Qiskit so we just grab the needed internal components here."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "id": "756322bd",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "import qiskit\n",
+    "from qiskit import IBMQ, transpile\n",
+    "from qiskit_rng import Generator, GeneratorJob"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f202f156-eb8c-4b3a-87c4-287a0720eeb1",
+   "metadata": {},
+   "source": [
+    "## Load account and select a target system"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "d9fbc340-a6ef-4253-9594-da0bc70eebe2",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "IBMQ.load_account();"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "4f1e274e",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "provider = IBMQ.get_provider(project='internal-test')\n",
+    "backend = provider.backend.ibm_nairobi"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "640589c3-78de-4442-a132-4da8a41852cf",
+   "metadata": {},
+   "source": [
+    "## Experiments\n",
+    "\n",
+    "Here we run the CQC QRNG algorithm, basically reproducing the tutorial in the [documentation](https://qiskit-rng.readthedocs.io/en/latest/).  We start by setting the number of raw bits desired and compute the number of circuits and shots needed.  "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "7516fd45",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "num_raw_bits = 1024\n",
+    "max_shots = backend.configuration().max_shots\n",
+    "num_raw_bits_qubit = int((num_raw_bits + 2)/3)\n",
+    "\n",
+    "if num_raw_bits_qubit <= max_shots:\n",
+    "    shots = num_raw_bits_qubit\n",
+    "    num_circuits = 1\n",
+    "else:\n",
+    "    num_circuits = int((num_raw_bits_qubit + max_shots - 1)/max_shots)\n",
+    "    shots = int((num_raw_bits_qubit + num_circuits - 1)/num_circuits)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "41b22a2e-274c-451e-937c-9057c66b05d6",
+   "metadata": {},
+   "source": [
+    "We now make a `Generator` object and use a \"weak source of random numbers\" (wsr), which is nothing but a classical pseudo-random number generator, to seed the selection of random measurements."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "851453ff",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "gen = Generator(backend)\n",
+    "\n",
+    "initial_wsr = gen.wsr_generator(num_circuits * 3)\n",
+    "wsr_bits = gen._get_wsr(num_circuits, initial_wsr)\n",
+    "circuits = gen._generate_all_circuits(num_circuits, wsr_bits)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "54ced108-c3ce-4fe7-951b-3989cdd42ca6",
+   "metadata": {},
+   "source": [
+    "Next we transpile the circuits, making sure to match the topology exactly, and then run."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e2e0f3e4-bb29-4070-a5f0-9f27ffefe6bb",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "trans_qc = transpile(circuits, backend, optimization_level=3, initial_layout=[1,0,2])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "abca207c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "job = backend.run(trans_qc, shots=shots, memory=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "89f7ca1c-a716-482d-a8d9-9c59b7b4b56e",
+   "metadata": {},
+   "source": [
+    "We now wrap the Qiskit job with a `GeneratorJob` instance so as to extract the desired Mermin value."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "3d545a67",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "gen_job = GeneratorJob(initial_wsr=initial_wsr,\n",
+    "                       wsr=wsr_bits,job=job,shots=shots)\n",
+    "result = gen_job.block_until_ready()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "3021aa8c-443e-46b8-a0c9-34d39c55d7df",
+   "metadata": {},
+   "source": [
+    "A quick check of the Mermin correlator shows that indeed we have tripartite entanglement, and therefore the algorithm has created \"certified quantum random\" numbers."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "c8dd2308",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "2.690058479532164"
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "result.mermin_correlator"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "5ea184e9-440a-4523-a162-b2cd118e74bf",
+   "metadata": {},
+   "source": [
+    "The value is not exactly the ideal value of 4, so an extraction step would need to be run after this (but this is not important).  The good news is that we have generated random numbers certified by the laws of quantum mechanics itself!  Or have we?"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "bcbedf8f-b4cf-40e7-b769-78e5b8fcfe74",
+   "metadata": {},
+   "source": [
+    "For fun, lets try using a classical simulator to generate the GHZ states.  As a Mermin value $M_{\\rm obs} \\ge 2$ is a signature of genuine quantum randomness our simulator, being completely classical, should score below this.  Lets see (I have to use `BasicAer` as I am on an M1 Mac):"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "id": "725c4713-b197-444a-b478-0e81723a0b07",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "sim = qiskit.BasicAer.get_backend('qasm_simulator')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "id": "3ad53b33-a272-404a-8a96-651ef3cad22b",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "job2 = sim.run(trans_qc, shots=shots, memory=True)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "id": "d3dd28e6-6b6b-47fd-815a-52eedcc7c89d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "gen_job2 = GeneratorJob(initial_wsr=initial_wsr,\n",
+    "                       wsr=wsr_bits,job=job2,shots=shots)\n",
+    "result2 = gen_job2.block_until_ready()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "id": "e36978a9-dbc0-4171-9339-195995e6267e",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "4.0"
+      ]
+     },
+     "execution_count": 23,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "result2.mermin_correlator"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "45c55889-1a67-444b-9d77-887357ef5976",
+   "metadata": {},
+   "source": [
+    "Wow.  The classical simulator has scored a perfect score!  Is it \"certified quantum random\" then?  Of course not.  The fundamental limitation of the CQC QRNG service is that you have to trust that the thing running the circuits is an actual quantum system.  There is no way to tell this from the results.  Therefore it is entirely possible that the thing streaming the numbers to you is a classical simulator with values pre-computed by an adversary.  Since you can spoof the QRNG service with a simulator it is kind of a pointless thing to use at this stage.  Even if it was certified quantum, the speed at which these random bits can be generated is quite slow, even on superconducting processors.  The Quantum Origin service runs on a Honeywell H1, a trapped ion platform.  These are typically ~100x slower than superconducting systems, and represents a bottleneck in the service.  One could cache the numbers when the processor is idle, but this would again, in principle, allow for someone to break the security.\n",
+    "\n",
+    "Now the CQC QRNG service is not the only random number generation service that has these trust issues.  Google also [demoed a random number service at their 2020 Summer Symposium](https://www.youtube.com/watch?v=Pgp2nlgIOUQ&list=PLQY2H8rRoyvx4VttfJOPRslw8XWT7yaBJ&index=4). This was also claimed to be \"certifiable\" under the assumption that the quantum computer could sample from random circuit distributions so fast that no classical computer could possibly have generated the output.  This is very much a Quantum Supremacy type claim, and as we have all seen, such speed claims can quickly be rendered invalid by crafty classical algorithms.  So Google hits the same fundamental roadblock as the CQC service; it is impossible to validate that the \"quantumness\" of the generated random values."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "61d36bba-043e-46b4-8ca8-8bb8eaf65a2a",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.9"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
