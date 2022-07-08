@@ -274,48 +274,6 @@
 
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="../../posts/2022/2021-11-07-rep_delay.html"
-        >Improving state prep errors on IBM Quantum systems</a
-      >
-    </h2>
-
-    <ul class="ablog-archive">
-      <li>
-         <i class="fa fa-calendar"></i> 07 November 2021 
-      </li>
-          
-<li id="category">
-  <span
-    ><i class="fa-fw fa fa-folder-open"></i></span
-  >
-   
-  <a href="../category/hardware.html">Hardware</a>  
-</li>
- 
-<li id="tags">
-  <span
-    ><i class="fa-fw fa fa-tags"></i> </span
-  >
-   
-  <a href="spam.html">SPAM</a>   
-  <a href="reset.html">Reset</a>   
-  <a href="#">Dynamic</a>  
-</li>
- 
-    </ul>
-    <div class="ablog-post-excerpt docutils container">
-<p>It is often taken for granted that qubits are initialized to zero when executing quantum circuits on hardware.  However, errors in the reset process mean that this initialization is not perfect leading to state preparation errors.  Here we will look at state prep errors and how to improve them on IBM Quantum systems.</p>
-<p>Here we will use two lesser known configuration variables available on IBM Quantum systems to do so.  First is <code class="docutils literal notranslate"><span class="pre">rep_delay</span></code>.  This is the delay time before the next circuit is executed.  Each backend has a different <code class="docutils literal notranslate"><span class="pre">default_rep_delay</span></code> (although as of the time of writing many are <span class="math notranslate nohighlight">\(250~\mu \rm s\)</span> or lower) and support tuning this parameter from <span class="math notranslate nohighlight">\(0\)</span> up to <span class="math notranslate nohighlight">\(500~\mu \rm s\)</span>.  Why in the world would I want to vary this parameter?  Well if I set <code class="docutils literal notranslate"><span class="pre">rep_delay=0</span></code> then I can get much faster throughput as the default delay is nominally longer than the <span class="math notranslate nohighlight">\(T_{1}\)</span> time of the system.  However when doing so you are trusting the implicit reset (called “unconditional reset”) to do its job and reset the qubits to their ground state with high-fidelity.  Failure to do so would lead to state-prep errors that propagate through the circuit.  This is why the delay is usually longer than <span class="math notranslate nohighlight">\(T_{1}\)</span>; let the enviornment help your reset fidelity.  Second is <code class="docutils literal notranslate"><span class="pre">init_qubits</span></code> that tells the hardware to not perform an unconditional reset.  As no reset at all would quickly lead to junk, this setting needs to be done in concert with <code class="docutils literal notranslate"><span class="pre">reset</span></code> instructions being added to the beginning of your circuits.  Perhaps this is better, or maybe a single reset at the beginning and the uncondtional reset.  Lets find out.</p>
-<img alt="../../_images/9bd1e7b458a6bd9b2721b691d5946ebd4f465feac96980527863caeea3cd2c7e.png" src="../../_images/9bd1e7b458a6bd9b2721b691d5946ebd4f465feac96980527863caeea3cd2c7e.png" />
-</div>
-
-    <p class="ablog-post-expand"><a href="../../posts/2022/2021-11-07-rep_delay.html"><em>Read more ...</em></a></p>
-    <hr />
-  </div>
-  
-
-  <div class="section ablog-post">
-    <h2 class="ablog-post-title">
       <a href="../../posts/2021/2021-10-27-dynamic_BV.html"
         >Dynamic Bernstein-Vazirani using mid-circuit reset and measurement</a
       >
@@ -353,49 +311,6 @@
 </div>
 
     <p class="ablog-post-expand"><a href="../../posts/2021/2021-10-27-dynamic_BV.html"><em>Read more ...</em></a></p>
-    <hr />
-  </div>
-  
-
-  <div class="section ablog-post">
-    <h2 class="ablog-post-title">
-      <a href="../../posts/2022/2021-10-27-dynamic_BV.html"
-        >Dynamic Bernstein-Vazirani using mid-circuit reset and measurement</a
-      >
-    </h2>
-
-    <ul class="ablog-archive">
-      <li>
-         <i class="fa fa-calendar"></i> 27 October 2021 
-      </li>
-          
-<li id="category">
-  <span
-    ><i class="fa-fw fa fa-folder-open"></i></span
-  >
-   
-  <a href="../category/hardware.html">Hardware</a>  
-</li>
- 
-<li id="tags">
-  <span
-    ><i
-      class="fa-fw fa fa-tag"
-    ></i
-    ></span
-  >
-   
-  <a href="#">Dynamic</a>  
-</li>
- 
-    </ul>
-    <div class="ablog-post-excerpt docutils container">
-<p>The ability to do mid-circuit reset and measurement unlocks a variety of tools for executing quantum circuits.  A brief discussion is given in this <a class="reference external" href="https://www.ibm.com/blogs/research/2021/02/quantum-mid-circuit-measurement/">IBM Research blog post</a>.  On particular possibility is the ability to reuse qubits, and in doing so reduce the hardware requirements of some algorithms.  The Bernstein-Vazirani (BV) algorithm is one such example.  In particular, when using phase-kickback, BV usually requires a high degree of qubit connectivity to impliment.  This has been used by trapped-ion hardware vendors to show that their hardware gives better fidelity on these problems, e.g. see (<a class="reference external" href="https://arxiv.org/abs/2102.00371">https://arxiv.org/abs/2102.00371</a> and <a class="reference external" href="https://www.nature.com/articles/s41467-019-13534-2">https://www.nature.com/articles/s41467-019-13534-2</a>).  However, with reset and measurement, BV requires only two qubits, making connectivity differences mute.  We showed this in a reply Tweet: <a class="reference external" href="https://twitter.com/nonhermitian/status/1362348935440986113">https://twitter.com/nonhermitian/status/1362348935440986113</a>, but did not explain how we got that figure.  So here is how I did it.</p>
-<p>Here we select the backend and extract its two-qubit gate coupling map.  This is not the same backend used in the original figure as, at the time or writing, that one is offline.  It is however the same processor family and revision.</p>
-<img alt="../../_images/0890cf65bd38c4da213670396ac07ffaf54fe7d77b107d16ab1d78c90c6c9469.png" src="../../_images/0890cf65bd38c4da213670396ac07ffaf54fe7d77b107d16ab1d78c90c6c9469.png" />
-</div>
-
-    <p class="ablog-post-expand"><a href="../../posts/2022/2021-10-27-dynamic_BV.html"><em>Read more ...</em></a></p>
     <hr />
   </div>
    
