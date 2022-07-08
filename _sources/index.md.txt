@@ -4,7 +4,7 @@ The Enabling Technologies team focuses
 
 ## Recent explorations
 
-See the [exploration archives](blog.md) for a more complete list.
+See the [exploration archives](explore.md) for a more complete list.
 
 ```{postlist}
 :date: "%Y-%m-%d"
@@ -15,6 +15,8 @@ See the [exploration archives](blog.md) for a more complete list.
 ```{toctree}
 :maxdepth: 2
 :hidden:
-blog
+how-to/howto
+explore
+hardware
 members
 ```
