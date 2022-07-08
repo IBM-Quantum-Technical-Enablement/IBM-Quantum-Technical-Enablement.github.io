@@ -2,7 +2,7 @@
 
 ## Current members
 
-::::{grid} 2
+::::{grid} 4
 :::{grid-item-card}
 :columns: 3
 :img-top: images/paul.png
@@ -16,6 +16,21 @@
 
 **Paul Nation** is a Principal Research Staff member at IBM Quantum and the Director of Enabling Technologies.
 :::
+
+:::{grid-item-card}
+:columns: 3
+:img-top: images/johannes.jpg
+:shadow: none
+:padding: 1 0 0 0
+
+:::
+:::{grid-item-card}
+:columns: 9
+:shadow: none
+
+**Johannes Greiner** is Enabling Technologies Hardware Lead at IBM Quantum.
+:::
+
 ::::
 
 

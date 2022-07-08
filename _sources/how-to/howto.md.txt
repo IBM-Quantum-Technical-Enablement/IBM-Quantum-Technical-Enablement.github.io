@@ -1,6 +1,6 @@
 # How to guides
 
-How to guides.
+How to guides
 
 ```{toctree}
 :maxdepth: 2

@@ -270,6 +270,48 @@
     <p class="ablog-post-expand"><a href="../../posts/2021/2021-11-07-rep_delay.html"><em>Read more ...</em></a></p>
     <hr />
   </div>
+  
+
+  <div class="section ablog-post">
+    <h2 class="ablog-post-title">
+      <a href="../../posts/2022/2021-11-07-rep_delay.html"
+        >Improving state prep errors on IBM Quantum systems</a
+      >
+    </h2>
+
+    <ul class="ablog-archive">
+      <li>
+         <i class="fa fa-calendar"></i> 07 November 2021 
+      </li>
+          
+<li id="category">
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
+  >
+   
+  <a href="../category/hardware.html">Hardware</a>  
+</li>
+ 
+<li id="tags">
+  <span
+    ><i class="fa-fw fa fa-tags"></i> </span
+  >
+   
+  <a href="#">SPAM</a>   
+  <a href="reset.html">Reset</a>   
+  <a href="dynamic.html">Dynamic</a>  
+</li>
+ 
+    </ul>
+    <div class="ablog-post-excerpt docutils container">
+<p>It is often taken for granted that qubits are initialized to zero when executing quantum circuits on hardware.  However, errors in the reset process mean that this initialization is not perfect leading to state preparation errors.  Here we will look at state prep errors and how to improve them on IBM Quantum systems.</p>
+<p>Here we will use two lesser known configuration variables available on IBM Quantum systems to do so.  First is <code class="docutils literal notranslate"><span class="pre">rep_delay</span></code>.  This is the delay time before the next circuit is executed.  Each backend has a different <code class="docutils literal notranslate"><span class="pre">default_rep_delay</span></code> (although as of the time of writing many are <span class="math notranslate nohighlight">\(250~\mu \rm s\)</span> or lower) and support tuning this parameter from <span class="math notranslate nohighlight">\(0\)</span> up to <span class="math notranslate nohighlight">\(500~\mu \rm s\)</span>.  Why in the world would I want to vary this parameter?  Well if I set <code class="docutils literal notranslate"><span class="pre">rep_delay=0</span></code> then I can get much faster throughput as the default delay is nominally longer than the <span class="math notranslate nohighlight">\(T_{1}\)</span> time of the system.  However when doing so you are trusting the implicit reset (called “unconditional reset”) to do its job and reset the qubits to their ground state with high-fidelity.  Failure to do so would lead to state-prep errors that propagate through the circuit.  This is why the delay is usually longer than <span class="math notranslate nohighlight">\(T_{1}\)</span>; let the enviornment help your reset fidelity.  Second is <code class="docutils literal notranslate"><span class="pre">init_qubits</span></code> that tells the hardware to not perform an unconditional reset.  As no reset at all would quickly lead to junk, this setting needs to be done in concert with <code class="docutils literal notranslate"><span class="pre">reset</span></code> instructions being added to the beginning of your circuits.  Perhaps this is better, or maybe a single reset at the beginning and the uncondtional reset.  Lets find out.</p>
+<img alt="../../_images/9bd1e7b458a6bd9b2721b691d5946ebd4f465feac96980527863caeea3cd2c7e.png" src="../../_images/9bd1e7b458a6bd9b2721b691d5946ebd4f465feac96980527863caeea3cd2c7e.png" />
+</div>
+
+    <p class="ablog-post-expand"><a href="../../posts/2022/2021-11-07-rep_delay.html"><em>Read more ...</em></a></p>
+    <hr />
+  </div>
    
 </div>
 

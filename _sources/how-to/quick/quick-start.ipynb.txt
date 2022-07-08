@@ -51,7 +51,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "eea0fc45",
+   "id": "c4b8c9c9",
    "metadata": {},
    "source": [
     "## Frontmatter\n",
@@ -63,7 +63,7 @@
   {
    "cell_type": "code",
    "execution_count": 2,
-   "id": "83843169",
+   "id": "b3c0996b",
    "metadata": {
     "ExecuteTime": {
      "end_time": "2022-07-08T01:36:51.262806Z",
@@ -79,7 +79,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "44445646",
+   "id": "5b4df0fa",
    "metadata": {},
    "source": [
     "Next we define our test circuit:"
@@ -258,7 +258,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "213a31a9",
+   "id": "f889716f",
    "metadata": {},
    "source": [
     "<div class=\"alert alert-info\">\n",
@@ -439,7 +439,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "8c25a566",
+   "id": "f3324ff7",
    "metadata": {},
    "source": [
     "Because DD requires timing knowledge, we must get the duration of each operation that the backend supports."
@@ -462,7 +462,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "294aaf0f",
+   "id": "96ac4d72",
    "metadata": {},
    "source": [
     "We also need to get the timing constraints that tell us the limitations of the device:"
@@ -485,7 +485,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "bfaf76de",
+   "id": "f0d96062",
    "metadata": {},
    "source": [
     "Finally we have to get the timing information into the circuit and the DD gate sequences inserted into the idle times of the circuit:"
@@ -540,7 +540,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "25ec9ded",
+   "id": "81d393fd",
    "metadata": {
     "ExecuteTime": {
      "end_time": "2022-07-07T22:40:09.105405Z",
@@ -605,7 +605,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "26e89355",
+   "id": "23efcdcb",
    "metadata": {},
    "source": [
     "Next we construct a M3 mitigation object, and then pass the `measured_qubits` to tell the object to calibrate those measurement values:"
@@ -643,7 +643,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "1b91f399",
+   "id": "8e64edb1",
    "metadata": {},
    "source": [
     "Now, up until this point, we have yet to actually run our compiled and error suppressed circuit.  We will need the raw result to perform mitigation so lets run the circuit now:"
@@ -666,7 +666,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "7da4ac19",
+   "id": "5656593a",
    "metadata": {},
    "source": [
     "With this data in hand, we can now correct the returned distribution:"
@@ -731,7 +731,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "6ef39505",
+   "id": "4a1553a7",
    "metadata": {
     "ExecuteTime": {
      "end_time": "2022-07-07T23:01:54.345732Z",
@@ -745,7 +745,7 @@
   {
    "cell_type": "code",
    "execution_count": 21,
-   "id": "cc6d05bd",
+   "id": "143fb30e",
    "metadata": {
     "ExecuteTime": {
      "end_time": "2022-07-08T01:39:05.632937Z",
@@ -770,7 +770,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "77d19320",
+   "id": "38f89547",
    "metadata": {},
    "source": [
     "Where as our correect quasi-probability results give:"
@@ -804,7 +804,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "05f8a2e9",
+   "id": "394c7b91",
    "metadata": {},
    "source": [
     "So we see that indeed, the readout error mitigation gives an improved expectation value.  It is important to note that this does come with an increase in the corresponding standard deviation, and thus one needs to execute more circuits to obtain a desired precision.\n",
@@ -815,7 +815,7 @@
   {
    "cell_type": "code",
    "execution_count": 23,
-   "id": "3dc1e115",
+   "id": "59c1138c",
    "metadata": {
     "ExecuteTime": {
      "end_time": "2022-07-08T01:39:05.645426Z",
@@ -829,7 +829,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "4449a51b",
+   "id": "76851938",
    "metadata": {},
    "source": [
     "This can now be used to, for example, compute the fidelity:"
@@ -838,7 +838,7 @@
   {
    "cell_type": "code",
    "execution_count": 24,
-   "id": "0c232291",
+   "id": "d365f96e",
    "metadata": {
     "ExecuteTime": {
      "end_time": "2022-07-08T01:39:05.652037Z",
@@ -864,7 +864,7 @@
   {
    "cell_type": "code",
    "execution_count": 25,
-   "id": "2ff572b5",
+   "id": "722c4f76",
    "metadata": {
     "ExecuteTime": {
      "end_time": "2022-07-08T01:39:05.659099Z",
@@ -889,16 +889,16 @@
   },
   {
    "cell_type": "markdown",
-   "id": "28283900",
+   "id": "90577052",
    "metadata": {},
    "source": [
-    "Again, we see an improvement."
+    "Again, we see an improvement.  As before, a word of caution: If one is interested in performing error analysis then this conversion to a true probability distribution makes that analysis difficult.  In addition, one still has the increase in standard deviation to deal with."
    ]
   },
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "bb621783",
+   "id": "e9aba84a",
    "metadata": {},
    "outputs": [],
    "source": []
