@@ -26,6 +26,7 @@ compiling/compiling
 :caption: Error mitigation
 :maxdepth: 2
 :hidden:
+mitigation/M3/m3_mitigation
 ```
 
 ```{toctree}

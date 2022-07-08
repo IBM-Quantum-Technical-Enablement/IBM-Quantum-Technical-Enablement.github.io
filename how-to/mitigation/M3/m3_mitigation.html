@@ -1,0 +1,961 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Mesurement error mitigation using M3 &#8212; Enabing Technologies  documentation</title>
+<script>
+  document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+  document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
+</script>
+
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+
+
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script async="async" src="https://www.google-analytics.com/analytics.js"></script>
+    <script>
+                window.ga = window.ga || function () {
+                    (ga.q = ga.q || []).push(arguments) };
+                ga.l = +new Date;
+                ga('create', 'UA-16824831-8', 'auto');
+                ga('set', 'anonymizeIp', true);
+                ga('send', 'pageview');
+            </script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Explorations" href="../../../explore.html" />
+    <link rel="prev" title="Using the Qiskit compiler" href="../../compiling/compiling.html" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="docsearch:language" content="None"> 
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../../../explore/atom.xml"
+  title="Quantum Explorations"
+/>
+ 
+<style type="text/css">
+  ul.ablog-archive {
+    list-style: none;
+    overflow: auto;
+    margin-left: 0px;
+  }
+  ul.ablog-archive li {
+    float: left;
+    margin-right: 5px;
+    font-size: 80%;
+  }
+  ul.postlist a {
+    font-style: italic;
+  }
+  ul.postlist-style-disc {
+    list-style-type: disc;
+  }
+  ul.postlist-style-none {
+    list-style-type: none;
+  }
+  ul.postlist-style-circle {
+    list-style-type: circle;
+  }
+</style>
+
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+    <div class="bd-header-announcement container-fluid" id="banner">
+      
+
+    </div>
+
+    
+    <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="bd-header__inner container-xl">
+
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../_static/dark_logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="fas fa-bars"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../../howto.html">
+  How to guides
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../explore.html">
+  Explorations
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../hardware.html">
+  IBM Quantum Hardware
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../members.html">
+  Members
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" >
+</form>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span id="theme-switch" class="btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/IBM-Quantum-Technical-Enablement" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="bd-container container-xl">
+      <div class="bd-container__inner row">
+          
+
+<!-- Only show if we have sidebars configured, else just a small margin  -->
+<div class="bd-sidebar-primary col-12 col-md-3 bd-sidebar">
+  <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Quick start
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../quick/quick-start.html">
+   Quick start guide
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Circuit compilation
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../compiling/compiling.html">
+   Using the Qiskit compiler
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Error mitigation
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Mesurement error mitigation using M3
+  </a>
+ </li>
+</ul>
+
+  </div>
+</nav>
+  </div>
+  <div class="sidebar-end-items">
+  </div>
+</div>
+
+
+          
+
+
+<div class="bd-sidebar-secondary d-none d-xl-block col-xl-2 bd-toc">
+  
+    
+    <div class="toc-item">
+      
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#frontmatter">
+   Frontmatter
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#background">
+   Background
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#expectation-values">
+   Expectation values
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#computing-expectation-values">
+     Computing expectation values
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#matrix-free-measurement-mitigation-m3">
+   Matrix-free Measurement Mitigation (M3)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#simple-m3-example">
+     Simple M3 example
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mitigating-transpiled-circuits">
+     Mitigating transpiled circuits
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#getting-a-probability-distribution">
+     Getting a probability distribution
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#final-notes">
+   Final notes
+  </a>
+ </li>
+</ul>
+
+</nav>
+    </div>
+    
+    <div class="toc-item">
+      
+    </div>
+    
+  
+</div>
+
+
+          
+          
+          <div class="bd-content col-12 col-md-9 col-xl-7">
+              
+              <article class="bd-article" role="main">
+                 <section class="tex2jax_ignore mathjax_ignore" id="mesurement-error-mitigation-using-m3">
+<h1>Mesurement error mitigation using M3<a class="headerlink" href="#mesurement-error-mitigation-using-m3" title="Permalink to this headline">#</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
+<p>Here we show how to mitigate measurements on IBM Quantum systems in a scalable manner using the <a class="reference external" href="https://qiskit.org/documentation/partners/mthree/">M3 package</a>.</p>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">#</a></h2>
+<p>For short-depth near term applications, measurement errors can greatly affect the computation of expectation values and other quantities on today’s quantum systems.  M3 allows one to easily mitigate these measurement errors up to numbers of qubits that are otherwise out of reach for other mitigation methods.  Mitigation involves three steps:</p>
+<ol class="arabic simple">
+<li><p>Construct a mitigator targeting a backend (<code class="docutils literal notranslate"><span class="pre">backend</span></code>).</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mthree</span>
+<span class="n">mit</span> <span class="o">=</span> <span class="n">mthree</span><span class="o">.</span><span class="n">M3Mitigation</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Use the mitigator to calibrate over a list of physical qubits (<code class="docutils literal notranslate"><span class="pre">qubits</span></code>) measured</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mit</span><span class="o">.</span><span class="n">cals_from_system</span><span class="p">(</span><span class="n">qubits</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Generate a corrected set of quasiprobabilities from a given set of noisy counts data <code class="docutils literal notranslate"><span class="pre">raw_counts</span></code>:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">quasi_probs</span> <span class="o">=</span> <span class="n">mit</span><span class="o">.</span><span class="n">apply_correction</span><span class="p">(</span><span class="n">raw_counts</span><span class="p">,</span> <span class="n">qubits</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>These quasiprobabilities can then be used directly to compute expectation values.  A complete users guide can be found in the <a class="reference external" href="https://qiskit.org/documentation/partners/mthree">M3 documentation</a>.  Additionally, M3 can called as an option in the Qiskit runtime base programs.</p>
+</section>
+<section id="frontmatter">
+<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">qiskit.quantum_info</span> <span class="kn">import</span> <span class="n">Statevector</span><span class="p">,</span> <span class="n">hellinger_fidelity</span>
+<span class="kn">from</span> <span class="nn">qiskit.providers.fake_provider</span> <span class="kn">import</span> <span class="n">FakeMumbai</span>
+
+<span class="kn">import</span> <span class="nn">mthree</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;ibmq-dark&#39;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="background">
+<h2>Background<a class="headerlink" href="#background" title="Permalink to this headline">#</a></h2>
+<p>Although the power of quantum computation lies in the ability to create large amounts of entanglement and explore large swaths of Hilbert space, at the end of the day the result encoded in the terminal quantum state must be converted to classical information by measuring the qubits.  There is also the possibility of mid-circuit measurements, but we will not address those here.</p>
+<p>Measurements are not perfect and have a non-negligible amount of error associated with them (taken from PRX Quantum 2, 040326 (2021))</p>
+<a class="reference internal image-reference" href="../../../_images/meas-error-table.png"><img alt="../../../_images/meas-error-table.png" src="../../../_images/meas-error-table.png" style="width: 50%;" /></a>
+<p>Each qubit of a quantum system has its own measurement error rates and, due to the difference in energy between the <span class="math notranslate nohighlight">\(|0\rangle\)</span> and <span class="math notranslate nohighlight">\(|1\rangle\)</span> states, there is a different error rate depending on which of these two states the qubit was supposed to be measured in</p>
+<img alt="../../../_images/meas-errors-mumbai.png" src="../../../_images/meas-errors-mumbai.png" />
+<p>Measurement errors take a given target bitstring, eg. <code class="docutils literal notranslate"><span class="pre">110011</span></code>, and probabilistically map it to other bitstrings that are close to the target in terms of Hamming distance.  Because a generic quantum circuit can yield any one of <span class="math notranslate nohighlight">\(2^{N}\)</span> bitstrings, where <span class="math notranslate nohighlight">\(N\)</span> is the number of qubits measured, characterizing this process requires prepping each computational basis state and measuring output bitstrings.  The resulting matrix that gets generated is called the assignment (A)-matrix (or T-matrix, or confusion matrix) (taken from PRX Quantum 2, 040326 (2021)):</p>
+<a class="reference internal image-reference" href="../../../_images/full-A-matrix.png"><img alt="../../../_images/full-A-matrix.png" src="../../../_images/full-A-matrix.png" style="width: 50%;" /></a>
+<p>The mitigation of measurement errors involves taking the above matrix <span class="math notranslate nohighlight">\(A\)</span> and using it to solve the linear system of equations:</p>
+<div class="math notranslate nohighlight">
+\[
+A \vec{p}_{\rm ideal} = \vec{p}_{\rm noisy}
+\]</div>
+<p>for <span class="math notranslate nohighlight">\(\vec{p}_{\rm ideal}\)</span>, where <span class="math notranslate nohighlight">\(\vec{p}_{\rm noisy}\)</span> is the raw output from the quantum computer in vector form, and <span class="math notranslate nohighlight">\(\vec{p}_{\rm ideal}\)</span> is the target distribution representing no measurement errors, but still includes other sources of imperfection such as gate errors.</p>
+<p>Since computing the full A-matrix requires <span class="math notranslate nohighlight">\(2^{N}\)</span> circuits, it does not scale beyond a handful of qubits.  To get around this we will assume that the measurement error one one qubit is not affected by other qubits; there is no correlation between qubit readouts.  With this approximation, which is quite valid on IBM Quantum systems, it is possible to construct the A-matrix using as few as two circuits. While this is great progress, the dimensions of the A-matrix still grow as <span class="math notranslate nohighlight">\(2^{N}\)</span> and therefore constructing the matrix is still prohibitively expensive.  Here we will use a method that bypasses these limitations, and can scale well beyond conventional methods: <a class="reference external" href="https://doi.org/10.1103/PRXQuantum.2.040326">PRX Quantum 2, 040326 (2021)</a>.</p>
+<p>Depending on the solution method, the output <span class="math notranslate nohighlight">\(\vec{p}_{\rm ideal}\)</span> is not guaranteed to be a physical probability vector.  Rather it is usually a vector of quasiprobabilities; a distribution that contains negative values but still sums to one.  Luckily this does not matter when computing expectation values, and we can use these quasiprobabilities directly in our calculations.</p>
+</section>
+<section id="expectation-values">
+<h2>Expectation values<a class="headerlink" href="#expectation-values" title="Permalink to this headline">#</a></h2>
+<p>Expectation values of Hermitian operators are the observables that can be measured for a quantum state.  Given that expectation values correspond to averages, formally an expectation value is the value that one would get by measuring a given operator infinity many times and averaging over the results of these measurements.  In practice one is limited to a finite number of samples from a given state and as such expectation values computed from a quantum computer are necessarily approximations to the true value; the precision of the computed value improving as <span class="math notranslate nohighlight">\(1/\sqrt{\rm samples}\)</span>.</p>
+<p>IBM Quantum systems, like the vast majority of quantum architectures, can only measure in a single basis called the “computational basis” that defines the z-axis in the Bloch sphere representation of a single-qubit quantum state.</p>
+<a class="reference internal image-reference" href="../../../_images/empty-bloch.png"><img alt="../../../_images/empty-bloch.png" src="../../../_images/empty-bloch.png" style="width: 40%;" /></a>
+<p>Because we are able to measure only in the computational basis, expectation values must be over only those operators that are diagonal in this basis.  We will also assume that the spectral radius of the operators is one, and that any coefficients can be multiplied later in via classical post-processing.  Many operators of interest already satisfy this:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+Z = \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; -1\end{bmatrix}; \ \ I = \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 1\end{bmatrix}; P_{0} = \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 0\end{bmatrix}; P_{1} = N = \begin{bmatrix} 0 &amp; 0 \\ 0 &amp; 1\end{bmatrix};
+\end{split}\]</div>
+<p>and others do not:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+X = \begin{bmatrix} 0 &amp; 1 \\ 1 &amp; 0\end{bmatrix}; \ \ Y = \begin{bmatrix} 0 &amp; -i \\ i &amp; 0\end{bmatrix}; 
+\end{split}\]</div>
+<p>If we want to measure non-diagonal operators on qubits we need to append additional operators to the circuit that rotate the eigenstates of the non-diagonal operator onto the computational basis states.</p>
+<p>For the <code class="docutils literal notranslate"><span class="pre">X</span></code> operator this is done by appending a Hadamard gate <code class="docutils literal notranslate"><span class="pre">H</span></code> to the circuit that rotates the <span class="math notranslate nohighlight">\(|+x\rangle\)</span> and <span class="math notranslate nohighlight">\(|-x\rangle\)</span> states onto the <span class="math notranslate nohighlight">\(|0\rangle\)</span> and <span class="math notranslate nohighlight">\(|1\rangle\)</span> state, respectively.</p>
+<a class="reference internal image-reference" href="../../../_images/bloch-xbasis.png"><img alt="../../../_images/bloch-xbasis.png" src="../../../_images/bloch-xbasis.png" style="width: 40%;" /></a>
+<p>Similarly for the <code class="docutils literal notranslate"><span class="pre">Y</span></code> operator we can append an <span class="math notranslate nohighlight">\(S^{\dagger}\)</span> gate to align the <span class="math notranslate nohighlight">\(|\pm y\rangle\)</span> states with the corresponding x-axes, and then follow that up with a <code class="docutils literal notranslate"><span class="pre">H</span></code> gate as done above.</p>
+<a class="reference internal image-reference" href="../../../_images/bloch-ybasis.png"><img alt="../../../_images/bloch-ybasis.png" src="../../../_images/bloch-ybasis.png" style="width: 40%;" /></a>
+<section id="computing-expectation-values">
+<h3>Computing expectation values<a class="headerlink" href="#computing-expectation-values" title="Permalink to this headline">#</a></h3>
+<p>We now turn to the question of how to compute the expectation value of a given operator from data returned by the quantum computer.  Coming back to the BV circuit discussed earlier, we see that at the end of the algorithm all the qubits used for encoding the secret bit-string have a Hadamard gate followed by a measurement.  From our explanation above we see this to be nothing more than measuring each of the qubits in the x-basis.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">qc_bv</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">qc_bv</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">qc_bv</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+<span class="n">qc_bv</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">qc_bv</span><span class="o">.</span><span class="n">barrier</span><span class="p">()</span>
+<span class="n">qc_bv</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">qc_bv</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">qc_bv</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/76f5209a2dde84b00b849987d7bf73abd4dcb3d79b9d3a07b86249317d421eaf.png" src="../../../_images/76f5209a2dde84b00b849987d7bf73abd4dcb3d79b9d3a07b86249317d421eaf.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">backend</span> <span class="o">=</span> <span class="n">FakeMumbai</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trans_qc</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">([</span><span class="n">qc_bv</span><span class="p">]</span><span class="o">*</span><span class="mi">10</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">optimization_level</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">initial_layout</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">depths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">circ</span><span class="o">.</span><span class="n">depth</span><span class="p">()</span> <span class="k">for</span> <span class="n">circ</span> <span class="ow">in</span> <span class="n">trans_qc</span><span class="p">])</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">depths</span> <span class="o">==</span> <span class="nb">min</span><span class="p">(</span><span class="n">depths</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">best_qc</span> <span class="o">=</span> <span class="n">trans_qc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shots</span> <span class="o">=</span> <span class="mi">4000</span>
+<span class="n">z_counts</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">best_qc</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="n">shots</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">z_counts</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;10001&#39;: 2, &#39;01000&#39;: 1, &#39;01010&#39;: 3, &#39;10010&#39;: 4, &#39;00101&#39;: 3, &#39;10101&#39;: 4, &#39;00000&#39;: 30, &#39;00011&#39;: 60, &#39;11010&#39;: 12, &#39;00001&#39;: 83, &#39;01110&#39;: 14, &#39;10011&#39;: 6, &#39;10111&#39;: 132, &#39;01101&#39;: 9, &#39;01111&#39;: 144, &#39;11011&#39;: 121, &#39;10100&#39;: 2, &#39;00111&#39;: 61, &#39;11110&#39;: 173, &#39;01011&#39;: 26, &#39;01100&#39;: 2, &#39;11100&#39;: 7, &#39;10000&#39;: 1, &#39;11001&#39;: 7, &#39;00110&#39;: 3, &#39;11101&#39;: 123, &#39;00010&#39;: 2, &#39;10110&#39;: 39, &#39;11111&#39;: 2926}
+</pre></div>
+</div>
+</div>
+</div>
+<p>Having applied the rotation gates at the end of the circuit, we left with computing the expectation value of the operator <span class="math notranslate nohighlight">\(\langle ZZZZZ\rangle\)</span>.  Let us take the bit-string <code class="docutils literal notranslate"><span class="pre">'10110'</span></code> as an explicit example.  First we compute the probability of being found in that state:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span> <span class="o">=</span> <span class="n">z_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;10110&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">shots</span>
+<span class="n">prob</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.00975
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next we need to determine the coefficient that multiples this probability.  Because the total operator is composed using the tensor product of diagonal operators, in this case <span class="math notranslate nohighlight">\(Z_{N-1}\otimes\dots\otimes Z_{0}\)</span> (per the IBM bit-ordering convention) we can obtain this value directly from the eigenvalues (diagonal elements) of the sub-matrices specified by the bit-string.</p>
+<p>Defining <span class="math notranslate nohighlight">\(z_{0}=Z[0,0]=1\)</span> and <span class="math notranslate nohighlight">\(z_{1}=Z[1,1]=-1\)</span> we have</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">z0</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">z1</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+<span class="n">coeff</span> <span class="o">=</span> <span class="n">z1</span><span class="o">*</span><span class="n">z0</span><span class="o">*</span><span class="n">z1</span><span class="o">*</span><span class="n">z1</span><span class="o">*</span><span class="n">z0</span> <span class="c1">#10110</span>
+<span class="n">coeff</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-1
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then the contribution to the expectation value from that bit-string is simply</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coeff</span><span class="o">*</span><span class="n">prob</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.00975
+</pre></div>
+</div>
+</div>
+</div>
+<p>This procedure can be extended to all elments of the counts</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">exp_val</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">operator</span> <span class="o">=</span> <span class="s1">&#39;ZZZZZ&#39;</span>
+<span class="n">operator_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Z&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]}</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">z_counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">prob</span> <span class="o">=</span> <span class="n">val</span> <span class="o">/</span> <span class="n">shots</span>
+    <span class="n">coeff</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">bit</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+        <span class="n">coeff</span> <span class="o">*=</span> <span class="n">operator_dict</span><span class="p">[</span><span class="n">operator</span><span class="p">[</span><span class="n">idx</span><span class="p">]][</span><span class="nb">int</span><span class="p">(</span><span class="n">bit</span><span class="p">)]</span>
+    <span class="n">exp_val</span> <span class="o">+=</span> <span class="n">coeff</span> <span class="o">*</span> <span class="n">prob</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Expectation value:&#39;</span><span class="p">,</span> <span class="n">exp_val</span><span class="p">)</span>    
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Expectation value: -0.5990000000000001
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can now include the possibility of using a collection of diagonal operators:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">expectation_value</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">operator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute expectation value for a given operator represented by a string</span>
+<span class="sd">    and a dictionary of counts data.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">        counts (dict): Dictionary of counts.</span>
+<span class="sd">        operator (str): A diagonal Hermitian operator.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Expectation value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">exp_val</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">shots</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">counts</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="n">operator_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Z&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;I&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;0&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">prob</span> <span class="o">=</span> <span class="n">val</span> <span class="o">/</span> <span class="n">shots</span>
+        <span class="n">coeff</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">bit</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+            <span class="n">coeff</span> <span class="o">*=</span> <span class="n">operator_dict</span><span class="p">[</span><span class="n">operator</span><span class="p">[</span><span class="n">idx</span><span class="p">]][</span><span class="nb">int</span><span class="p">(</span><span class="n">bit</span><span class="p">)]</span>
+        <span class="n">exp_val</span> <span class="o">+=</span> <span class="n">coeff</span> <span class="o">*</span> <span class="n">prob</span>
+    <span class="k">return</span> <span class="n">exp_val</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expectation_value</span><span class="p">(</span><span class="n">z_counts</span><span class="p">,</span> <span class="s1">&#39;IIIII&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Although we have focused on probabilities, the above expectation value routine is equally valid if we input quasiprobabilities in place of <code class="docutils literal notranslate"><span class="pre">counts</span></code> (provided they are both represented by a Python dictionary).  Therefore the introduction of measurement mitigation to routines that compute expectation values is nomially a very simple task.</p>
+</section>
+</section>
+<section id="matrix-free-measurement-mitigation-m3">
+<h2>Matrix-free Measurement Mitigation (M3)<a class="headerlink" href="#matrix-free-measurement-mitigation-m3" title="Permalink to this headline">#</a></h2>
+<p>Here we will see how to use the M3 measurement mitigation method.  M3 is not a part of Qiskit and must be installed separately:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install mthree
+</pre></div>
+</div>
+<p>Qiskit itself contains <a class="reference external" href="https://qiskit.org/documentation/apidoc/mitigation.html">a collection of methods</a> that explicitly construct the A-matrix but none the less might be valuable for small numbers of qubits.  However, this functionality is deprecated, and is not maintained.  M3 gets around the explicit construction of the full <span class="math notranslate nohighlight">\(2^{N}\)</span> A-matrix via a information preserving truncation step (taken from PRX Quantum 2, 040326 (2021))</p>
+<img alt="../../../_images/m3-truncation.png" src="../../../_images/m3-truncation.png" />
+<p>that reduces the dimensionality to be equal to the number of unique bit-strings  in the noisy output distribution.  If the number of unique bit-strings is itself too large for explicit matrix construction then M3 will exploit the structure of the A-matrix to efficiently solve the linear system via matrix-free iterative methods.  This all sounds complicated, however the actual usage of M3 is straightforward and best demonstrated via examples.</p>
+<section id="simple-m3-example">
+<h3>Simple M3 example<a class="headerlink" href="#simple-m3-example" title="Permalink to this headline">#</a></h3>
+<p>Here we look at a simple example of a 12 qubit circuit that maps directly onto a linear topology.  We begin here as there is there is no additional qubit permutations from the SWAP mapper.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qubits</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">ch</span><span class="p">(</span><span class="n">kk</span><span class="p">,</span> <span class="n">kk</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">ch</span><span class="p">(</span><span class="n">kk</span><span class="p">,</span> <span class="n">kk</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">fold</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/e7c28a43ebd4b536b59fe33f87be56a9267a174cfe2273e1e38cde95ec62e667.png" src="../../../_images/e7c28a43ebd4b536b59fe33f87be56a9267a174cfe2273e1e38cde95ec62e667.png" />
+</div>
+</div>
+<p>In order to gauge the improvement from measurement mitigation we first compute the ideal output distribution from the statevector</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">state_vec</span> <span class="o">=</span> <span class="n">Statevector</span><span class="o">.</span><span class="n">from_instruction</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span>
+<span class="n">ideal_prob</span> <span class="o">=</span> <span class="n">state_vec</span><span class="o">.</span><span class="n">probabilities_dict</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>and evaluate the expectation value for the default all Z’s expectation value using our <code class="docutils literal notranslate"><span class="pre">expectation_value</span></code> code above.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expectation_value</span><span class="p">(</span><span class="n">ideal_prob</span><span class="p">,</span> <span class="s1">&#39;Z&#39;</span><span class="o">*</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.44628906249999983
+</pre></div>
+</div>
+</div>
+</div>
+<p>Migition of measurement errors using M3 involves three steps:</p>
+<ol class="arabic simple">
+<li><p>Create a measurement mitigator that targets the system of interest.</p></li>
+<li><p>Calibrate the mitigator over the physical qubits measured, or all qubits, if so desired.</p></li>
+<li><p>Take the raw noisy counts data from one or more circuits and corrected it with the mitigator which returns quasiprobabilities.</p></li>
+</ol>
+<p>Here we do Step #1 and create a mitigator targeting our backend:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mit</span> <span class="o">=</span> <span class="n">mthree</span><span class="o">.</span><span class="n">M3Mitigation</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For Step #2 we need to tell the mitigator which qubits we are using so that it can calibrate their error rates.  If we do not specify the qubits it will calibrate all device qubits.  If we map the circuit to the target system using <code class="docutils literal notranslate"><span class="pre">transpile</span></code> (Note that as we have prearranged things so that the problem matches the system topology, and we do not benefit from block-collection, so we do not need to run <code class="docutils literal notranslate"><span class="pre">optimization_level=3</span></code> here) then we can find out which physical qubits are being used and calibrate only those.  However first, we need to add some measurements:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc_plus_meas</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">measure_all</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">trans_qc</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc_plus_meas</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">initial_layout</span><span class="o">=</span><span class="n">qubits</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">measured_qubits</span> <span class="o">=</span> <span class="n">mthree</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">final_measurement_mapping</span><span class="p">(</span><span class="n">trans_qc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here we do the actual calibration step:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mit</span><span class="o">.</span><span class="n">cals_from_system</span><span class="p">(</span><span class="n">measured_qubits</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And finally lets run the circuit itself to get the “raw”, un-mitigated distribution:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_counts</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">trans_qc</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can now see what the raw expectation value equates to on this backend.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expectation_value</span><span class="p">(</span><span class="n">raw_counts</span><span class="p">,</span> <span class="s1">&#39;Z&#39;</span><span class="o">*</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.15260000000000018
+</pre></div>
+</div>
+</div>
+</div>
+<p>To get the mitigated quasiprobabilities, Step #3 above, we need to <code class="docutils literal notranslate"><span class="pre">apply_correction</span></code> to our <code class="docutils literal notranslate"><span class="pre">raw_counts</span></code> using the list of measured qubits to specify the physical qubits that correspond to the elements of the bit-strings.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">quasi_probs</span> <span class="o">=</span> <span class="n">mit</span><span class="o">.</span><span class="n">apply_correction</span><span class="p">(</span><span class="n">raw_counts</span><span class="p">,</span> <span class="n">qubits</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use our <code class="docutils literal notranslate"><span class="pre">expectation_value</span></code> code to directly compute the expectation value based on this corrected distribution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expectation_value</span><span class="p">(</span><span class="n">quasi_probs</span><span class="p">,</span> <span class="s1">&#39;Z&#39;</span><span class="o">*</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.39697370323471537
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="mitigating-transpiled-circuits">
+<h3>Mitigating transpiled circuits<a class="headerlink" href="#mitigating-transpiled-circuits" title="Permalink to this headline">#</a></h3>
+<p>We have seen that SWAP mapping (transpiling) a circuit nominally permutes the assignment of qubits at the end of a circuit from the <code class="docutils literal notranslate"><span class="pre">initial_layout</span></code> that was supplied by the user or auto-generated.  Going back to our GHZ example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">qc2</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="n">qc2</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc2</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+<span class="n">qc2</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trans_qc2</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc2</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">initial_layout</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">seed_transpiler</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">trans_qc2</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">fold</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/0123b22d032a446a0532f78464ce8ebfd6e4b71342bb834fd46ebe52096cf9c7.png" src="../../../_images/0123b22d032a446a0532f78464ce8ebfd6e4b71342bb834fd46ebe52096cf9c7.png" />
+</div>
+</div>
+<p>we see that the physical qubits that correspond to the measured virtual qubits does not match that of the initial layout.  In the example above we started with the mapping <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">0,</span> <span class="pre">4,</span> <span class="pre">2,</span> <span class="pre">7,</span> <span class="pre">3]</span></code> but ended up with <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">0,</span> <span class="pre">7,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">2]</span></code>.  Because each qubit has its own measurement error rate, it is important to track these permutations and account for them in the mitigation process.  Qiskit has no way of doing this outside of drawing the circuit and looking to see where the measurements map to.  M3 will compute this tracking for you</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_map</span> <span class="o">=</span> <span class="n">mthree</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">final_measurement_mapping</span><span class="p">(</span><span class="n">trans_qc2</span><span class="p">)</span>
+<span class="n">final_map</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{1: 0, 0: 1, 4: 2, 3: 3, 7: 4, 2: 5}
+</pre></div>
+</div>
+</div>
+</div>
+<p>that tells you which physical qubit maps to which bit in the bit-string.  In this case <code class="docutils literal notranslate"><span class="pre">1-&gt;0</span></code>, <code class="docutils literal notranslate"><span class="pre">0-&gt;1</span></code>, <code class="docutils literal notranslate"><span class="pre">7-&gt;2</span></code>, etc. We will use this map to calibrate our mitigator and perform the correct mitigation.  First the raw results:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_counts2</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">trans_qc2</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expectation_value</span><span class="p">(</span><span class="n">raw_counts2</span><span class="p">,</span> <span class="s1">&#39;Z&#39;</span><span class="o">*</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6136
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now make a generator and calibrate only those qubits in <code class="docutils literal notranslate"><span class="pre">final_map</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mit</span> <span class="o">=</span> <span class="n">mthree</span><span class="o">.</span><span class="n">M3Mitigation</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
+<span class="n">mit</span><span class="o">.</span><span class="n">cals_from_system</span><span class="p">(</span><span class="n">final_map</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Apply correction and see how good we did:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">quasi_prob2</span> <span class="o">=</span> <span class="n">mit</span><span class="o">.</span><span class="n">apply_correction</span><span class="p">(</span><span class="n">raw_counts2</span><span class="p">,</span> <span class="n">final_map</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expectation_value</span><span class="p">(</span><span class="n">quasi_prob2</span><span class="p">,</span> <span class="s1">&#39;Z&#39;</span><span class="o">*</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7908781288708842
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="getting-a-probability-distribution">
+<h3>Getting a probability distribution<a class="headerlink" href="#getting-a-probability-distribution" title="Permalink to this headline">#</a></h3>
+<p>For those who would like to get the closest probability distribution, in the sense of <span class="math notranslate nohighlight">\(L^{2}\)</span>-norm one can use the <code class="docutils literal notranslate"><span class="pre">nearest_probability_distribution</span></code> method of the quasiprobabilites.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">quasi_prob2</span><span class="o">.</span><span class="n">nearest_probability_distribution</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;101100&#39;: 5.892134376033864e-06,
+ &#39;101011&#39;: 1.5484842161605958e-05,
+ &#39;011001&#39;: 4.00550344624736e-05,
+ &#39;000111&#39;: 4.588505667017539e-05,
+ &#39;011100&#39;: 6.55827582897637e-05,
+ &#39;100110&#39;: 6.78657025283469e-05,
+ &#39;101101&#39;: 6.787425513437616e-05,
+ &#39;010001&#39;: 7.234354902182713e-05,
+ &#39;110010&#39;: 8.173481400653134e-05,
+ &#39;101110&#39;: 9.73775485147226e-05,
+ &#39;100011&#39;: 0.00012499396395875486,
+ &#39;011011&#39;: 0.0001326919865908645,
+ &#39;001101&#39;: 0.00013360659860436191,
+ &#39;000011&#39;: 0.00015284591884111122,
+ &#39;100010&#39;: 0.0001935732010229058,
+ &#39;111000&#39;: 0.00023038389086840904,
+ &#39;010011&#39;: 0.00023156324845556843,
+ &#39;001100&#39;: 0.00026154805843302416,
+ &#39;010010&#39;: 0.00038001378736758845,
+ &#39;111010&#39;: 0.00048453271289382,
+ &#39;101000&#39;: 0.0005761986652310162,
+ &#39;101001&#39;: 0.0007365932608999446,
+ &#39;010111&#39;: 0.002980708170797513,
+ &#39;110101&#39;: 0.0031870382005117384,
+ &#39;000001&#39;: 0.003275519991923144,
+ &#39;100101&#39;: 0.0038324682622638087,
+ &#39;111001&#39;: 0.004555974628217244,
+ &#39;001000&#39;: 0.005014847407169499,
+ &#39;100001&#39;: 0.005079411521198101,
+ &#39;011010&#39;: 0.005091762425038143,
+ &#39;110001&#39;: 0.005247322176796171,
+ &#39;001010&#39;: 0.005255469208980819,
+ &#39;111110&#39;: 0.0056010708130169945,
+ &#39;100000&#39;: 0.005609917934930436,
+ &#39;000110&#39;: 0.005712124357541365,
+ &#39;000100&#39;: 0.007760313350485965,
+ &#39;011110&#39;: 0.007854454345046917,
+ &#39;011111&#39;: 0.008875302366301767,
+ &#39;001110&#39;: 0.009593270531513579,
+ &#39;111101&#39;: 0.010243020177966597,
+ &#39;000010&#39;: 0.010511165560074148,
+ &#39;110111&#39;: 0.010724088523272633,
+ &#39;111011&#39;: 0.010943397224603253,
+ &#39;111111&#39;: 0.40649251907051076,
+ &#39;000000&#39;: 0.4523601927635066}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="final-notes">
+<h2>Final notes<a class="headerlink" href="#final-notes" title="Permalink to this headline">#</a></h2>
+<ol class="arabic simple">
+<li><p>Typically you know all the qubits you are using ahead of time, and therefore the calibrate procedure need only be done once by passing the entire set of qubits to <code class="docutils literal notranslate"><span class="pre">cals_from_system</span></code> (can be in the form of a list of final mappings.</p></li>
+<li><p>One can correct multiple circuits at once by supplying a list of circuits and  measured qubits or mappings to <code class="docutils literal notranslate"><span class="pre">apply_correction</span></code>.</p></li>
+<li><p>M3 has a host of other features detailed in the documentation: https://qiskit.org/documentation/partners/mthree</p></li>
+<li><p>M3 mitigation can be called seamlessly from the Qiskit runtime.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qiskit.tools.jupyter</span>
+<span class="o">%</span><span class="k">qiskit_version_table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><h3>Version Information</h3><table><tr><th>Qiskit Software</th><th>Version</th></tr><tr><td><code>qiskit-terra</code></td><td>0.21.0</td></tr><tr><td><code>qiskit-aer</code></td><td>0.10.4</td></tr><tr><td><code>qiskit-ignis</code></td><td>0.7.1</td></tr><tr><td><code>qiskit-ibmq-provider</code></td><td>0.19.2</td></tr><tr><td><code>qiskit</code></td><td>0.37.0</td></tr><tr><td><code>qiskit-nature</code></td><td>0.3.1</td></tr><tr><th>System information</th></tr><tr><td>Python version</td><td>3.10.4</td></tr><tr><td>Python compiler</td><td>Clang 12.0.1 </td></tr><tr><td>Python build</td><td>main, Mar 24 2022 17:43:32</td></tr><tr><td>OS</td><td>Darwin</td></tr><tr><td>CPUs</td><td>4</td></tr><tr><td>Memory (Gb)</td><td>16.0</td></tr><tr><td colspan='2'>Fri Jul 08 13:17:24 2022 EDT</td></tr></table></div></div>
+</div>
+</section>
+</section>
+
+<div class="section">
+   
+</div>
+
+              </article>
+              
+
+              
+              <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="../../compiling/compiling.html" title="previous page">
+      <i class="fas fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Using the Qiskit compiler</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="../../../explore.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Explorations</p>
+  </div>
+  <i class="fas fa-angle-right"></i>
+  </a>
+</div>
+              </footer>
+              
+          </div>
+          
+      </div>
+    </div>
+
+  
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695"></script>
+
+<footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    <p class="copyright">
+    &copy; Copyright 2022, IBM Quantum.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+</p>
+  </div>
+  
+</div>
+</footer>
+  </body>
+</html>
