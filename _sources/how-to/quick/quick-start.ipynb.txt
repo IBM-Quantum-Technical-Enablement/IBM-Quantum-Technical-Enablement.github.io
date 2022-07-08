@@ -523,7 +523,7 @@
    "source": [
     "dd_sequence = [XGate(), XGate()]\n",
     "pm = PassManager([ALAPScheduleAnalysis(durations),\n",
-    "                  PadDynamicalDecoupling(durations, dd_sequence, pulse_alignment=constraints['granularity'])])\n",
+    "                  PadDynamicalDecoupling(durations, dd_sequence, pulse_alignment=constraints['pulse_alignment'])])\n",
     "opt_qc = pm.run(best_qc)\n",
     "opt_qc.draw('mpl')"
    ]

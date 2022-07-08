@@ -206,12 +206,24 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <div class="bd-toc-item active">
-    <ul class="current nav bd-sidenav">
+    <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Quick start
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Quick start guide
   </a>
  </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Circuit compilation
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../compiling/compiling.html">
    Using the Qiskit compiler
@@ -476,7 +488,7 @@ If you do not have mapomatic installed, you can do so via:<font style="font-fami
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dd_sequence</span> <span class="o">=</span> <span class="p">[</span><span class="n">XGate</span><span class="p">(),</span> <span class="n">XGate</span><span class="p">()]</span>
 <span class="n">pm</span> <span class="o">=</span> <span class="n">PassManager</span><span class="p">([</span><span class="n">ALAPScheduleAnalysis</span><span class="p">(</span><span class="n">durations</span><span class="p">),</span>
-                  <span class="n">PadDynamicalDecoupling</span><span class="p">(</span><span class="n">durations</span><span class="p">,</span> <span class="n">dd_sequence</span><span class="p">,</span> <span class="n">pulse_alignment</span><span class="o">=</span><span class="n">constraints</span><span class="p">[</span><span class="s1">&#39;granularity&#39;</span><span class="p">])])</span>
+                  <span class="n">PadDynamicalDecoupling</span><span class="p">(</span><span class="n">durations</span><span class="p">,</span> <span class="n">dd_sequence</span><span class="p">,</span> <span class="n">pulse_alignment</span><span class="o">=</span><span class="n">constraints</span><span class="p">[</span><span class="s1">&#39;pulse_alignment&#39;</span><span class="p">])])</span>
 <span class="n">opt_qc</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">best_qc</span><span class="p">)</span>
 <span class="n">opt_qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
 </pre></div>
