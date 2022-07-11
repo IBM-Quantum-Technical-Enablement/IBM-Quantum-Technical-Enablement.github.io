@@ -20,6 +20,7 @@ compiling/compiling
 :caption: Error suppression
 :maxdepth: 2
 :hidden:
+dynamical_decoupling/dynamical_decoupling
 ```
 
 ```{toctree}
