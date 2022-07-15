@@ -1,0 +1,43 @@
+# Matplotlib styles
+
+We have made two Matplotlib style files that we use for formatting figures for this website, presentations, and even papers:
+
+The `ibmq` style uses the following palette of color-blind friendly colors:
+
+```python
+['#0075C3', '#ee7733', '#6929c4', '#009988', '#cc3311', '#33bbee', '#ee3377']
+```
+
+with a background color of `'#f2f0ed'`.  The order of the colors matters as they are sorted to maximize differences amongst neighboring colors (in grayscale as well).  All text and grids are `black`.
+
+The `ibmq-dark` style uses:
+
+```python
+['#00e5cc', '#925cdd', '#f4a67a', '#0099e6', '#f47aa6', '#7ad3f4', '#ef5c3b']
+```
+
+on a background of `'#161616'`. Again, the order of the colors is important. All grids and text are `white`.
+
+## Installation
+
+The [source files are located here](https://github.com/IBM-Quantum-Technical-Enablement/visualization/tree/main/matplotlib/styles).
+
+You can install the files for your local user by first finding the local Matplotlib config directory:
+
+```python
+import matplotlib
+matplotlib.get_configdir()
+```
+
+and, if needed, creating a directory called `stylelib`.  The style files should be placed within this folder.
+
+## Usage
+
+To load the styles for use simply do (here using the `'ibmq-dark'` style as an example):
+
+```python
+import matplotlib.pyplot as plt
+plt.style.use('ibmq-dark')
+```
+
+before rendering the figure that you want stylized.
