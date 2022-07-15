@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <id>quantum-enablement.org</id>
   <title>Quantum Explorations</title>
-  <updated>2022-07-15T00:35:56.840477+00:00</updated>
+  <updated>2022-07-15T00:42:41.990114+00:00</updated>
   <link href="quantum-enablement.org"/>
   <link href="quantum-enablement.org/explore/atom.xml" rel="self"/>
   <generator uri="https://ablog.readthedocs.org/" version="0.10.25">ABlog</generator>
@@ -83,7 +83,7 @@
     <published>2021-12-20T00:00:00-05:00</published>
   </entry>
   <entry>
-    <id>quantum-enablement.org/posts/2022/2022-07-18-wormhole.html</id>
+    <id>quantum-enablement.org/posts/2022/2022-07-14-wormhole.html</id>
     <title>Going down the Wormhole</title>
     <updated>2022-07-14T00:00:00-04:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
@@ -92,7 +92,7 @@
 &lt;img alt="_images/circuit.png" src="_images/circuit.png" /&gt;
 &lt;/div&gt;
 </content>
-    <link href="quantum-enablement.org/posts/2022/2022-07-18-wormhole.html" rel="alternate"/>
+    <link href="quantum-enablement.org/posts/2022/2022-07-14-wormhole.html" rel="alternate"/>
     <summary>Recently our Partners over at Lawrence Berkeley National Laboratory (LBNL) published an interesting paper on probing quantum gravity in the lab: arXiv:2205.14081.  This paper caught our eye for two reasons. First, it is about teleportation via wormholes, so why not check it out?.  Second, it compares our quantum systems verses the trapped-ion systems from Quantinuum.  From a competitive standpoint, these types of papers are fun to look at and see if we can do better.  Trying to do so is the basis for this notebook.  If you want all the details you will need to see the paper, however the basics can be gathered from Figure 1 in the paper:Basically they are creating entangled pairs of qubits at the beginning; a prerequisite of all teleportation procedures.  Doing evolution backward and forward by the same about of time on the L group, coupling the L and R groups of qubits with a tunable phase g, and then performing the forward evolution again on the R group of qubits, and then measuring the state on the bottom qubit.  As a function of the coupling g the expectation value of the Z operator on the last qubit in both simulation and on the real quantum hardware is seen to be:</summary>
     <category term="hardware" label="hardware"/>
     <category term="dynamicaldecoupling" label="dynamical decoupling"/>
