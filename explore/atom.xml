@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <id>quantum-enablement.org</id>
   <title>Quantum Explorations</title>
-  <updated>2022-07-11T13:38:13.113726+00:00</updated>
+  <updated>2022-07-15T00:35:56.840477+00:00</updated>
   <link href="quantum-enablement.org"/>
   <link href="quantum-enablement.org/explore/atom.xml" rel="self"/>
   <generator uri="https://ablog.readthedocs.org/" version="0.10.25">ABlog</generator>
@@ -81,5 +81,21 @@
     <link href="quantum-enablement.org/posts/2021/2021-12-20-esp_readout.html" rel="alternate"/>
     <summary>Excited State Promotion (ESP) readout is method for decreasing measurement errors in quantum computing systems where decay from the excited |1\rangle state to |0\rangle is non-negligible over the measurement timescales.  Although it was originally an useful technique on the previous generation Falcon R4 systems, today it is only available on a few Falcon R5 systems where the nearly order of magnitude improvement in measurement times leaves little value in using this functionality.  In testing, it looks to even be a bit worse performing than the standard readout method.  ESP readout is on by default for those systems that support it.  To disable it run:On many quantum computing platforms one of the two computational basis states, the |1\rangle state by convention, is an excited state of the system with respect to the ground state |0\rangle.  The difference in energy between these two states defines the frequency of the qubit through the relation E=hf.  Because the |1\rangle state is an excited state, there is a non-zero probability that the state will decay to |0\rangle via interaction with the environment.  The characteristic timescale for this is the T_{1} time of the qubit.  When performing gate operations, or non-reversible instructions like measurements on qubits, if the time it takes to perform these operations is a non-negligible fraction of T_{1}, then there is a possibility that this decay has occurred.</summary>
     <published>2021-12-20T00:00:00-05:00</published>
+  </entry>
+  <entry>
+    <id>quantum-enablement.org/posts/2022/2022-07-18-wormhole.html</id>
+    <title>Going down the Wormhole</title>
+    <updated>2022-07-14T00:00:00-04:00</updated>
+    <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
+&lt;p&gt;Recently our Partners over at Lawrence Berkeley National Laboratory (LBNL) published an interesting paper on probing quantum gravity in the lab: &lt;a class="reference external" href="https://arxiv.org/abs/2205.14081"&gt;arXiv:2205.14081&lt;/a&gt;.  This paper caught our eye for two reasons. First, it is about teleportation via wormholes, so why not check it out?.  Second, it compares our quantum systems verses the trapped-ion systems from Quantinuum.  From a competitive standpoint, these types of papers are fun to look at and see if we can do better.  Trying to do so is the basis for this notebook.  If you want all the details you will need to see the paper, however the basics can be gathered from Figure 1 in the paper:&lt;/p&gt;
+&lt;p&gt;Basically they are creating entangled pairs of qubits at the beginning; a prerequisite of all teleportation procedures.  Doing evolution backward and forward by the same about of time on the &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;L&lt;/span&gt;&lt;/code&gt; group, coupling the L and R groups of qubits with a tunable phase &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;g&lt;/span&gt;&lt;/code&gt;, and then performing the forward evolution again on the &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;R&lt;/span&gt;&lt;/code&gt; group of qubits, and then measuring the state on the bottom qubit.  As a function of the coupling &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;g&lt;/span&gt;&lt;/code&gt; the expectation value of the &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;Z&lt;/span&gt;&lt;/code&gt; operator on the last qubit in both simulation and on the real quantum hardware is seen to be:&lt;/p&gt;
+&lt;img alt="_images/circuit.png" src="_images/circuit.png" /&gt;
+&lt;/div&gt;
+</content>
+    <link href="quantum-enablement.org/posts/2022/2022-07-18-wormhole.html" rel="alternate"/>
+    <summary>Recently our Partners over at Lawrence Berkeley National Laboratory (LBNL) published an interesting paper on probing quantum gravity in the lab: arXiv:2205.14081.  This paper caught our eye for two reasons. First, it is about teleportation via wormholes, so why not check it out?.  Second, it compares our quantum systems verses the trapped-ion systems from Quantinuum.  From a competitive standpoint, these types of papers are fun to look at and see if we can do better.  Trying to do so is the basis for this notebook.  If you want all the details you will need to see the paper, however the basics can be gathered from Figure 1 in the paper:Basically they are creating entangled pairs of qubits at the beginning; a prerequisite of all teleportation procedures.  Doing evolution backward and forward by the same about of time on the L group, coupling the L and R groups of qubits with a tunable phase g, and then performing the forward evolution again on the R group of qubits, and then measuring the state on the bottom qubit.  As a function of the coupling g the expectation value of the Z operator on the last qubit in both simulation and on the real quantum hardware is seen to be:</summary>
+    <category term="hardware" label="hardware"/>
+    <category term="dynamicaldecoupling" label="dynamical decoupling"/>
+    <published>2022-07-14T00:00:00-04:00</published>
   </entry>
 </feed>
