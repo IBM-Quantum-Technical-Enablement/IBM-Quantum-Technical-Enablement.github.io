@@ -318,13 +318,11 @@
               <article class="bd-article" role="main">
                  <section class="tex2jax_ignore mathjax_ignore" id="ibm-quantum-hardware">
 <h1>IBM Quantum Hardware<a class="headerlink" href="#ibm-quantum-hardware" title="Permalink to this headline">#</a></h1>
-<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm sd-card-hover docutils">
-<div class="sd-card-body docutils">
-<div class="sd-card-title sd-font-weight-bold docutils">
-How to select a quantum system?</div>
-<p class="sd-card-text">How to select which quantum system to execute on?</p>
-</div>
-<a class="sd-stretched-link reference external" href="https://quantum-computing.ibm.com/services/resources?tab=systems"></a></div>
+<!-- :::{card} How to select a quantum system?
+:link: https://quantum-computing.ibm.com/services/resources?tab=systems
+
+How to select which quantum system to execute on?
+::: -->
 <div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm sd-card-hover docutils">
 <div class="sd-card-body docutils">
 <div class="sd-card-title sd-font-weight-bold docutils">
@@ -334,11 +332,17 @@ IBM Quantum systems catalog</div>
 <a class="sd-stretched-link reference external" href="https://quantum-computing.ibm.com/services/resources?tab=systems"></a></div>
 <section id="eagle-processors-127q">
 <h2>Eagle processors (127Q)<a class="headerlink" href="#eagle-processors-127q" title="Permalink to this headline">#</a></h2>
+<figure class="align-default" id="eagle-fig">
+<a class="reference internal image-reference" href="_images/eagle.png"><img alt="_images/eagle.png" src="_images/eagle.png" style="height: 500px;" /></a>
+<figcaption>
+<p><span class="caption-text">Entangling gate topology of a 127-qubit Eagle processor.  Qubits are colorcoded according to
+the multiplexed readout channels.</span><a class="headerlink" href="#eagle-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>Eagle processors are 127 qubit systems that feature <a class="reference external" href="https://research.ibm.com/blog/127-qubit-quantum-processor-eagle">3D multi-layer fabrication techniques</a>
 with qubits and readout resonators on different qubit layers connected by through substrate
-vias. The processors share many freatures with the Hummingbird systems, including 8x readout multiplexing.  Eagle processors are the first to use conditional qubit reset as the qubit
-intialization method.  The Eagle systems will replace Falcon processors as the next-generation
-“core” systems.</p>
+vias. The processors share many features with the Hummingbird systems, including 8x readout multiplexing.  Eagle processors are the first to use conditional qubit reset as the qubit
+intialization method.  The Eagle systems will replace Falcon processors as the next-generation systems.</p>
 <section id="r3">
 <h3>R3<a class="headerlink" href="#r3" title="Permalink to this headline">#</a></h3>
 <p>A high-coherence version of the Eagle processor.</p>
@@ -350,6 +354,12 @@ intialization method.  The Eagle systems will replace Falcon processors as the n
 </section>
 <section id="hummingbird-processors-65q">
 <h2>Hummingbird processors (65Q)<a class="headerlink" href="#hummingbird-processors-65q" title="Permalink to this headline">#</a></h2>
+<figure class="align-default" id="hummingbird-fig">
+<a class="reference internal image-reference" href="_images/hummingbird.png"><img alt="_images/hummingbird.png" src="_images/hummingbird.png" style="height: 400px;" /></a>
+<figcaption>
+<p><span class="caption-text">Entangling gate topology of a 65-qubit Hummingbird processor.</span><a class="headerlink" href="#hummingbird-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>In essence, a scaled-up 65 qubit version of the Falcon series featuring 8x readout multiplxing.</p>
 <section id="id1">
 <h3>R3<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
@@ -366,6 +376,13 @@ intialization method.  The Eagle systems will replace Falcon processors as the n
 </section>
 <section id="falcon-processors-27q">
 <h2>Falcon processors (27Q)<a class="headerlink" href="#falcon-processors-27q" title="Permalink to this headline">#</a></h2>
+<figure class="align-default" id="falcon-fig">
+<a class="reference internal image-reference" href="_images/falcon.png"><img alt="_images/falcon.png" src="_images/falcon.png" style="height: 300px;" /></a>
+<figcaption>
+<p><span class="caption-text">Entangling gate topology of a 27-qubit Falcons processor.  Qubits are colorcoded according to
+the multiplexed readout channels.</span><a class="headerlink" href="#falcon-fig" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <p>The current “core” systems offered by IBM Quantum.  These are 27 qubit systems that were the first
 to introduce the <a class="reference external" href="https://research.ibm.com/blog/heavy-hex-lattice?mhsrc=ibmsearch_a&amp;mhq=heavy%20hex">heavy-hex toplogy</a>.  Falcon sytems are bump-bonded to an “interposer” chip that provides readout and signal delivery wiring.  Falcon systems have undergone many revisions and changes over the last two years.</p>
 <section id="r8">
@@ -378,7 +395,7 @@ to introduce the <a class="reference external" href="https://research.ibm.com/bl
 </section>
 <section id="r5">
 <h3>R5<a class="headerlink" href="#r5" title="Permalink to this headline">#</a></h3>
-<p>Improved measurements that are ~7x faster than those found on the R4 systems.  This is achieved via stronger readout coupling strengths and larger dispersive shifts.  This greatly increases output fidelity when using mid-circuit measurements through reduced dephasing.  A more detailed discussion can be found here</p>
+<p>Improved measurements that are ~7x faster than those found on the R4 systems.  This is achieved via stronger readout coupling strengths and larger dispersive shifts.  This greatly increases output fidelity when using mid-circuit measurements through reduced dephasing.  A more detailed discussion can be found <a class="reference internal" href="posts/2021/2021-11-28-falcon_r5.html"><span class="doc std std-doc">here</span></a></p>
 </section>
 <section id="r4">
 <h3>R4<a class="headerlink" href="#r4" title="Permalink to this headline">#</a></h3>

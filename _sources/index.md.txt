@@ -1,8 +1,4 @@
-# Enabling Technologies team
-
-The Enabling Technologies team focuses
-
-## Recent explorations
+# Recent explorations
 
 See the [exploration archives](explore.md) for a more complete list.
 

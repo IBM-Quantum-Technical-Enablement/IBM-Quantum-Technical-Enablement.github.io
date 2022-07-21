@@ -351,6 +351,11 @@
    </li>
   </ul>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#apply-dynamical-decoupling-more-easily-and-have-a-greater-varity-of-sequences">
+   Apply Dynamical Decoupling more easily and have a greater varity of sequences
+  </a>
+ </li>
 </ul>
 
 </nav>
@@ -378,7 +383,7 @@
 Note that the optimal dynamical decoupling strategy depends largely on the involved specific backend and the circuits & algorithms used. The strategies used here should therefore not be seen as 'cooking recipe' but as experimental work which needs to be adapted to the specific situation of your problem and the real hardware you use.
 </div><section id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">#</a></h2>
-<p>Qiskit offers an in-built <a class="reference external" href="https://qiskit.org/documentation/stubs/qiskit.transpiler.passes.PadDynamicalDecoupling.html"><code class="docutils literal notranslate"><span class="pre">PadDynamicalDecoupling</span></code></a> class which allows to fill gaps in quantum circuits with a dynamical decoupling sequence for noise reduction. In order to use it, a pulse schedule needs to be defined by a <code class="docutils literal notranslate"><span class="pre">PassManager</span></code> applied to your circuit. <code class="docutils literal notranslate"><span class="pre">PadDynamicalDecoupling</span></code> scans the circuit for idle periods of time and inserts a sequence of gates in those spots. These gates amount to the identity, so do they not change the circuit per se and its outcomes, but have the effect of mitigating noise in those idle periods.</p>
+<p>Qiskit offers an in-built <a class="reference external" href="https://qiskit.org/documentation/stubs/qiskit.transpiler.passes.PadDynamicalDecoupling.html"><code class="docutils literal notranslate"><span class="pre">PadDynamicalDecoupling</span></code></a> class which allows to fill gaps in quantum circuits with a dynamical decoupling sequence for noise reduction. In order to use it, a pulse schedule needs to be defined by a <code class="docutils literal notranslate"><span class="pre">PassManager</span></code> applied to your circuit. <code class="docutils literal notranslate"><span class="pre">PadDynamicalDecoupling</span></code> scans the circuit for idle periods of time and inserts a sequence of gates in those spots. These gates amount to the identity, so do they not change the circuit per se and its outcomes, but have the effect of mitigating noise in those idle periods. We will also look at tools from <a class="reference external" href="https://github.com/qiskit-research/qiskit-research">qiskit-research</a> which allow to apply Dynamical Decoupling more easily and have a greater varity of sequences and gates.</p>
 </section>
 <section id="frontmatter">
 <h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this headline">#</a></h2>
@@ -453,7 +458,7 @@ Note that the optimal dynamical decoupling strategy depends largely on the invol
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/671815cdfa08292a766a748b4387876da38c7f1e66643cad7516c0cba2d41f83.png" src="../../_images/671815cdfa08292a766a748b4387876da38c7f1e66643cad7516c0cba2d41f83.png" />
+<img alt="../../_images/9a0158c37ad53bcd4f47dfd8a051affdac1701f59be89287af5fa0f39bd539e8.png" src="../../_images/9a0158c37ad53bcd4f47dfd8a051affdac1701f59be89287af5fa0f39bd539e8.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -540,6 +545,19 @@ Note that the optimal dynamical decoupling strategy depends largely on the invol
 <img alt="../../_images/b369faa3f02f4b00288fc097706f558d9ecfb40f4e8f0d44ada6c4b6fcf2bdf7.png" src="../../_images/b369faa3f02f4b00288fc097706f558d9ecfb40f4e8f0d44ada6c4b6fcf2bdf7.png" />
 </div>
 </div>
+<p>Times are given in units of the smallest possible timestep on a given backend <code class="docutils literal notranslate"><span class="pre">dt</span></code>. This Qubit drive channel timestep is limited by the time resolution of the Room Temperature control Electronics and can be obtained in units of secons by this command:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dt = &quot;</span><span class="p">,</span><span class="n">backend</span><span class="o">.</span><span class="n">configuration</span><span class="p">()</span><span class="o">.</span><span class="n">dt</span><span class="p">,</span> <span class="s2">&quot;[seconds]&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dt =  2.2222222222222221e-10 [seconds]
+</pre></div>
+</div>
+</div>
+</div>
 <p>Note that we need to specify a <code class="docutils literal notranslate"><span class="pre">scheduling_method</span></code> now in order to be able to transpile the circuit</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -613,14 +631,8 @@ Note that the optimal dynamical decoupling strategy depends largely on the invol
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simulated_counts</span><span class="o">=</span><span class="n">sim_job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
 <span class="n">counts</span><span class="o">=</span><span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
 <span class="n">dd_counts</span> <span class="o">=</span> <span class="n">dd_job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
-
-<span class="n">plot_histogram</span><span class="p">([</span><span class="n">simulated_counts</span><span class="p">,</span><span class="n">counts</span><span class="p">,</span><span class="n">dd_counts</span><span class="p">],</span> 
-<span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;simulated counts&#39;</span><span class="p">,</span><span class="s1">&#39;original counts&#39;</span><span class="p">,</span><span class="s1">&#39;dynamically decoupled counts&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../../_images/46d8fdd09f988dff9121ce7ed6588d5f986ef7744b1385bde6b956f17f67c4cd.png" src="../../_images/46d8fdd09f988dff9121ce7ed6588d5f986ef7744b1385bde6b956f17f67c4cd.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -972,6 +984,177 @@ Note that the optimal dynamical decoupling strategy depends largely on the invol
 </div>
 <p>Note that the success probability is notably increased by running the BV algorithm with dynamical decoupling.</p>
 <p>Summa: Do use dynamical decoupling, especially if your circuits contain lots of idle time for some qubits!</p>
+</section>
+</section>
+<section id="apply-dynamical-decoupling-more-easily-and-have-a-greater-varity-of-sequences">
+<h2>Apply Dynamical Decoupling more easily and have a greater varity of sequences<a class="headerlink" href="#apply-dynamical-decoupling-more-easily-and-have-a-greater-varity-of-sequences" title="Permalink to this headline">#</a></h2>
+<p>We saw that managing <code class="docutils literal notranslate"><span class="pre">PassManager</span></code>, scheduling and chosing the right methods for transpiling are somewhat involved. Luckily there are people working on making life easier for you as a user at <a class="reference external" href="https://github.com/qiskit-research/qiskit-research">qiskit-research</a> . A useful utility in this context is the method <code class="docutils literal notranslate"><span class="pre">add_dynamical_decoupling</span></code></p>
+<p>Install qiskit-research by running</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">qiskit</span><span class="o">-</span><span class="n">research</span><span class="o">/</span><span class="n">qiskit</span><span class="o">-</span><span class="n">research</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">qiskit</span><span class="o">-</span><span class="n">research</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">.</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circuit_transpiled</span><span class="o">=</span><span class="n">transpile</span><span class="p">(</span><span class="n">circ</span><span class="p">,</span><span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span><span class="n">initial_layout</span><span class="o">=</span><span class="p">[[</span><span class="mi">23</span><span class="p">,</span><span class="mi">24</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">22</span><span class="p">]])</span>
+<span class="n">circuit_transpiled</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">idle_wires</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/93353fc2853b4d27a62838283a3c661fc9c0f21083650d88235b95bbf0f77aa0.png" src="../../_images/93353fc2853b4d27a62838283a3c661fc9c0f21083650d88235b95bbf0f77aa0.png" />
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">add_dynamical_decoupling</span></code> makes it easy to add sepcific DD sequences to a circuit that is transpiled to match the gate definitions of the backend. It also gives you the option to specify a string of which sequence you would like to add. At the time of writing, the following sequences are available:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dd_sequences</span><span class="o">=</span> <span class="p">[</span><span class="s2">&quot;X2&quot;</span><span class="p">,</span><span class="s2">&quot;XY4&quot;</span><span class="p">,</span><span class="s2">&quot;XY8&quot;</span><span class="p">,</span><span class="s2">&quot;X2pm&quot;</span><span class="p">,</span><span class="s2">&quot;XY4pm&quot;</span><span class="p">,</span><span class="s2">&quot;XY8pm&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that the suffix <code class="docutils literal notranslate"><span class="pre">&quot;pm&quot;</span></code> indicates plus, minus and refers to rotations with positive or negative sign, respectively. At the microwave pulse level, this corresponds to the sign of the amplitude. The circuit below shows an example of a <code class="docutils literal notranslate"><span class="pre">&quot;X2pm&quot;</span></code> decoupling sequence.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit_research.utils.convenience</span> <span class="kn">import</span> <span class="n">add_dynamical_decoupling</span>
+
+<span class="n">circ_with_dd</span> <span class="o">=</span> <span class="n">add_dynamical_decoupling</span><span class="p">(</span><span class="n">circuit_transpiled</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="s2">&quot;X2pm&quot;</span><span class="p">,</span> <span class="n">add_pulse_cals</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">circ_with_dd</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/fa4871fc4284bce10392337d198ea4f97080a27ec015dc79081614af4618d4f0.png" src="../../_images/fa4871fc4284bce10392337d198ea4f97080a27ec015dc79081614af4618d4f0.png" />
+</div>
+</div>
+<p>So let us compare the effects of different sequences added to the original GHZ circuit. Note that we need to input a transpiled circuit to the <code class="docutils literal notranslate"><span class="pre">add_dynamical_decoupling</span></code> method, such that the right basis gates and instruction durations are provided. Here, we also transpile again after adding dynamical decoupling since some of the gates involved are not part of the basis gate set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">backend</span><span class="o">.</span><span class="n">configuration</span><span class="p">()</span><span class="o">.</span><span class="n">basis_gates</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;id&#39;, &#39;rz&#39;, &#39;sx&#39;, &#39;x&#39;, &#39;cx&#39;, &#39;reset&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dd_circuits</span><span class="o">=</span><span class="p">[]</span>
+<span class="k">for</span> <span class="n">sequence</span> <span class="ow">in</span> <span class="n">dd_sequences</span><span class="p">:</span>
+    <span class="n">dd_circuits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">transpile</span><span class="p">(</span>
+        <span class="n">add_dynamical_decoupling</span><span class="p">(</span><span class="n">circuit_transpiled</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">sequence</span><span class="p">,</span> <span class="n">add_pulse_cals</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="p">,</span><span class="n">backend</span><span class="p">,</span><span class="n">scheduling_method</span><span class="o">=</span><span class="s2">&quot;alap&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_dd_circs</span><span class="o">=</span><span class="n">backend</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">dd_circuits</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simulated_counts</span><span class="o">=</span><span class="n">sim_job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+
+<span class="n">hellinger_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">hellinger_fidelity</span><span class="p">(</span><span class="n">simulated_counts</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">fidelities2</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">hellinger_function</span><span class="p">,</span>
+    <span class="n">job_dd_circs</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()))</span>
+
+<span class="n">fidelities_dict</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">dd_sequences</span><span class="p">,</span><span class="n">fidelities2</span><span class="p">))</span>
+<span class="n">plot_histogram</span><span class="p">(</span><span class="n">fidelities_dict</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">dd_sequences</span><span class="p">,</span><span class="n">fidelities2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Hellinger fidelities of Dynamical Decoupling sequences&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">fidelities2</span><span class="p">)</span><span class="o">*</span><span class="mf">0.999</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">fidelities2</span><span class="p">)</span><span class="o">*</span><span class="mf">1.001</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/bb376a453929585e28946f7fa71d1494f7ae60e99501e39f9948a1dab457b8f2.png" src="../../_images/bb376a453929585e28946f7fa71d1494f7ae60e99501e39f9948a1dab457b8f2.png" />
+</div>
+</div>
+<p>So we already see that there may be better sequences than X-X, depending on the circuit in question. However, why do the <code class="docutils literal notranslate"><span class="pre">&quot;pm&quot;</span></code> sequences perform so poorly in terms of Hellinger fidelity? Let us see what the second transpilation did to the circuit with the <code class="docutils literal notranslate"><span class="pre">&quot;X2pm&quot;</span></code> sequence applied.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transpile</span><span class="p">(</span><span class="n">circ_with_dd</span><span class="p">,</span><span class="n">backend</span><span class="p">,</span><span class="n">scheduling_method</span><span class="o">=</span><span class="s2">&quot;alap&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/0f15f91505b80fad25748b7277dd5155e166d87243cf0573d8eca4bdebc602b4.png" src="../../_images/0f15f91505b80fad25748b7277dd5155e166d87243cf0573d8eca4bdebc602b4.png" />
+</div>
+</div>
+<p>So the <code class="docutils literal notranslate"><span class="pre">&quot;Xp&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;Xm&quot;</span></code> gates were transpiled back to basis gates again. Instead, if we want to use those gates as intended, we have to specify the option <code class="docutils literal notranslate"><span class="pre">add_pulse_cals=True</span></code> within <code class="docutils literal notranslate"><span class="pre">add_dynamical_decoupling</span></code>. The method will take care of defining those gates for us at the Pulse level.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dd_circuits_cals</span><span class="o">=</span><span class="p">[]</span>
+<span class="k">for</span> <span class="n">sequence</span> <span class="ow">in</span> <span class="n">dd_sequences</span><span class="p">:</span>
+    <span class="n">dd_circuits_cals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">add_dynamical_decoupling</span><span class="p">(</span><span class="n">circuit_transpiled</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">sequence</span><span class="p">,</span> <span class="n">add_pulse_cals</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job_dd_cals</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">dd_circuits_cals</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As an example, the circuit now looks like this with the <code class="docutils literal notranslate"><span class="pre">&quot;XY4pm&quot;</span></code> sequence added</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dd_circuits_cals</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">fold</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/74c8e01c47b0259f3ecd55fa92d40e26401fa9b56676952c5e8f1bef7067dd27.png" src="../../_images/74c8e01c47b0259f3ecd55fa92d40e26401fa9b56676952c5e8f1bef7067dd27.png" />
+</div>
+</div>
+<p>These tricks can increase the performance of our circuit run on the backend by quite a bit. Note how the sequences containing custom gates <code class="docutils literal notranslate"><span class="pre">&quot;XY*&quot;</span></code> as well as the <code class="docutils literal notranslate"><span class="pre">&quot;*pm&quot;</span></code> sequences improve in performance relative to <code class="docutils literal notranslate"><span class="pre">&quot;X2&quot;</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simulated_counts</span><span class="o">=</span><span class="n">sim_job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+
+<span class="n">hellinger_function</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">hellinger_fidelity</span><span class="p">(</span><span class="n">simulated_counts</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">fidelities3</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">hellinger_function</span><span class="p">,</span>
+    <span class="n">job_dd_cals</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()))</span>
+
+<span class="n">fidelities_dict3</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">dd_sequences</span><span class="p">,</span><span class="n">fidelities3</span><span class="p">))</span>
+<span class="n">plot_histogram</span><span class="p">(</span><span class="n">fidelities_dict3</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">dd_sequences</span><span class="p">,</span><span class="n">fidelities3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Hellinger fidelities of Dynamical Decoupling sequences&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="nb">min</span><span class="p">(</span><span class="n">fidelities3</span><span class="p">)</span><span class="o">*</span><span class="mf">0.999</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">fidelities3</span><span class="p">)</span><span class="o">*</span><span class="mf">1.001</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/96b53fd6823943f0d550d3e6a3457fd8d2a43056d2a6113956afd2f8e7f1e81a.png" src="../../_images/96b53fd6823943f0d550d3e6a3457fd8d2a43056d2a6113956afd2f8e7f1e81a.png" />
+</div>
+</div>
+<p>In Summary, we are provided with tools to easily add dynamical decoupling to our circuit and increase its Fidelity with gates defined at the Qiskit Pulse level.</p>
+<p>We see that using the definitions at Pulse level is very beneficial as compared to transpilation to the basis gates. This observation is confirmed in the literature, c.f. the recent arxiv <a class="reference external" href="https://arxiv.org/abs/2207.03670">Dynamical decoupling for superconducting qubits: a performance survey</a>, in particular Appendix B. There is ongoing work of extending the sequences available for dynamical decoupling at the pulse level, including the higher-order sequences discussed in the referenced paper.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">qiskit_version_table</span>
@@ -979,9 +1162,8 @@ Note that the optimal dynamical decoupling strategy depends largely on the invol
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><h3>Version Information</h3><table><tr><th>Qiskit Software</th><th>Version</th></tr><tr><td><code>qiskit-terra</code></td><td>0.21.0</td></tr><tr><td><code>qiskit-aer</code></td><td>0.10.4</td></tr><tr><td><code>qiskit-ignis</code></td><td>0.7.1</td></tr><tr><td><code>qiskit-ibmq-provider</code></td><td>0.19.2</td></tr><tr><td><code>qiskit</code></td><td>0.37.0</td></tr><tr><td><code>qiskit-nature</code></td><td>0.4.2</td></tr><tr><td><code>qiskit-finance</code></td><td>0.3.3</td></tr><tr><td><code>qiskit-optimization</code></td><td>0.4.0</td></tr><tr><td><code>qiskit-machine-learning</code></td><td>0.4.0</td></tr><tr><th>System information</th></tr><tr><td>Python version</td><td>3.8.2</td></tr><tr><td>Python compiler</td><td>MSC v.1916 64 bit (AMD64)</td></tr><tr><td>Python build</td><td>default, Apr 14 2020 19:01:40</td></tr><tr><td>OS</td><td>Windows</td></tr><tr><td>CPUs</td><td>4</td></tr><tr><td>Memory (Gb)</td><td>7.838371276855469</td></tr><tr><td colspan='2'>Mon Jul 11 11:34:47 2022 W. Europe Summer Time</td></tr></table></div></div>
+<div class="output text_html"><h3>Version Information</h3><table><tr><th>Qiskit Software</th><th>Version</th></tr><tr><td><code>qiskit-terra</code></td><td>0.21.0</td></tr><tr><td><code>qiskit-aer</code></td><td>0.10.4</td></tr><tr><td><code>qiskit-ignis</code></td><td>0.7.1</td></tr><tr><td><code>qiskit-ibmq-provider</code></td><td>0.19.2</td></tr><tr><td><code>qiskit</code></td><td>0.37.0</td></tr><tr><td><code>qiskit-nature</code></td><td>0.4.2</td></tr><tr><td><code>qiskit-finance</code></td><td>0.3.3</td></tr><tr><td><code>qiskit-optimization</code></td><td>0.4.0</td></tr><tr><td><code>qiskit-machine-learning</code></td><td>0.4.0</td></tr><tr><th>System information</th></tr><tr><td>Python version</td><td>3.8.2</td></tr><tr><td>Python compiler</td><td>MSC v.1916 64 bit (AMD64)</td></tr><tr><td>Python build</td><td>default, Apr 14 2020 19:01:40</td></tr><tr><td>OS</td><td>Windows</td></tr><tr><td>CPUs</td><td>4</td></tr><tr><td>Memory (Gb)</td><td>7.838371276855469</td></tr><tr><td colspan='2'>Tue Jul 19 23:24:02 2022 W. Europe Summer Time</td></tr></table></div></div>
 </div>
-</section>
 </section>
 </section>
 

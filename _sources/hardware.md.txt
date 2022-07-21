@@ -1,10 +1,10 @@
 # IBM Quantum Hardware
 
-:::{card} How to select a quantum system?
+<!-- :::{card} How to select a quantum system?
 :link: https://quantum-computing.ibm.com/services/resources?tab=systems
 
 How to select which quantum system to execute on?
-:::
+::: -->
 
 :::{card} IBM Quantum systems catalog
 :link: https://quantum-computing.ibm.com/services/resources?tab=systems
@@ -14,11 +14,19 @@ A complete listing of available quantum systems.
 
 ## Eagle processors (127Q)
 
+```{figure} images/hw/eagle.png
+---
+height: 500px
+name: eagle-fig
+---
+Entangling gate topology of a 127-qubit Eagle processor.  Qubits are colorcoded according to
+the multiplexed readout channels.
+```
+
 Eagle processors are 127 qubit systems that feature [3D multi-layer fabrication techniques](https://research.ibm.com/blog/127-qubit-quantum-processor-eagle)
 with qubits and readout resonators on different qubit layers connected by through substrate
-vias. The processors share many freatures with the Hummingbird systems, including 8x readout multiplexing.  Eagle processors are the first to use conditional qubit reset as the qubit
-intialization method.  The Eagle systems will replace Falcon processors as the next-generation
-"core" systems.
+vias. The processors share many features with the Hummingbird systems, including 8x readout multiplexing.  Eagle processors are the first to use conditional qubit reset as the qubit
+intialization method.  The Eagle systems will replace Falcon processors as the next-generation systems.
 
 ### R3
 
@@ -29,6 +37,14 @@ A high-coherence version of the Eagle processor.
 The initial version of the Eagle processor.
 
 ## Hummingbird processors (65Q)
+
+```{figure} images/hw/hummingbird.png
+---
+height: 400px
+name: hummingbird-fig
+---
+Entangling gate topology of a 65-qubit Hummingbird processor.
+```
 
 In essence, a scaled-up 65 qubit version of the Falcon series featuring 8x readout multiplxing.  
 
@@ -46,6 +62,16 @@ The initial version of the Hummingbird processor.
 
 ## Falcon processors (27Q)
 
+
+```{figure} images/hw/falcon.png
+---
+height: 300px
+name: falcon-fig
+---
+Entangling gate topology of a 27-qubit Falcons processor.  Qubits are colorcoded according to
+the multiplexed readout channels.
+```
+
 The current "core" systems offered by IBM Quantum.  These are 27 qubit systems that were the first
 to introduce the [heavy-hex toplogy](https://research.ibm.com/blog/heavy-hex-lattice?mhsrc=ibmsearch_a&mhq=heavy%20hex).  Falcon sytems are bump-bonded to an "interposer" chip that provides readout and signal delivery wiring.  Falcon systems have undergone many revisions and changes over the last two years.
 
@@ -59,7 +85,7 @@ Introduced [interference couplers](https://doi.org/10.48550/arXiv.2011.07050) in
 
 ### R5
 
-Improved measurements that are ~7x faster than those found on the R4 systems.  This is achieved via stronger readout coupling strengths and larger dispersive shifts.  This greatly increases output fidelity when using mid-circuit measurements through reduced dephasing.  A more detailed discussion can be found here
+Improved measurements that are ~7x faster than those found on the R4 systems.  This is achieved via stronger readout coupling strengths and larger dispersive shifts.  This greatly increases output fidelity when using mid-circuit measurements through reduced dephasing.  A more detailed discussion can be found [here](posts/2021/2021-11-28-falcon_r5.ipynb)
 
 ### R4
 

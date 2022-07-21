@@ -1,6 +1,6 @@
 # How to guides
 
-How to guides
+A couple of tips and tricks on Qiskit (Runtime) and how to best run quantum circuits on IBM Quantum hardware, avoiding the pitfalls of noisy intermediate-scale quantum devices. Chose any of the topics from the sidebar.  
 
 ```{toctree}
 :caption: Quick start
