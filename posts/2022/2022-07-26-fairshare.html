@@ -1,0 +1,819 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Understanding fair-share scheduling &#8212; Enabing Technologies  documentation</title>
+<script>
+  document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+  document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
+</script>
+
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+
+
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/thebelab-helper.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://www.google-analytics.com/analytics.js"></script>
+    <script>
+                window.ga = window.ga || function () {
+                    (ga.q = ga.q || []).push(arguments) };
+                ga.l = +new Date;
+                ga('create', 'UA-16824831-8', 'auto');
+                ga('set', 'anonymizeIp', true);
+                ga('send', 'pageview');
+            </script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="docsearch:language" content="en"> 
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../../explore/atom.xml"
+  title="Quantum Explorations"
+/>
+ 
+<style type="text/css">
+  ul.ablog-archive {
+    list-style: none;
+    overflow: auto;
+    margin-left: 0px;
+  }
+  ul.ablog-archive li {
+    float: left;
+    margin-right: 5px;
+    font-size: 80%;
+  }
+  ul.postlist a {
+    font-style: italic;
+  }
+  ul.postlist-style-disc {
+    list-style-type: disc;
+  }
+  ul.postlist-style-none {
+    list-style-type: none;
+  }
+  ul.postlist-style-circle {
+    list-style-type: circle;
+  }
+</style>
+
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+    <div class="bd-header-announcement container-fluid" id="banner">
+      
+
+    </div>
+
+    
+    <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="bd-header__inner container-xl">
+
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../_static/dark_logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="fas fa-bars"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../how-to/howto.html">
+  How to guides
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../explore.html">
+  Explorations
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../hardware/hardware.html">
+  IBM Quantum Hardware
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../members.html">
+  Members
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" >
+</form>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span id="theme-switch" class="btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/IBM-Quantum-Technical-Enablement" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="bd-container container-xl">
+      <div class="bd-container__inner row">
+          
+
+<!-- Only show if we have sidebars configured, else just a small margin  -->
+<div class="bd-sidebar-primary col-12 col-md-3 bd-sidebar">
+  <div class="sidebar-start-items">  
+<h2>
+   <i class="fa fa-calendar"></i>
+  26 July 2022 
+</h2>
+
+<ul>
+      
+<li id="category">
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
+  >
+   
+  <a href="../../explore/category/services.html">Services</a>  
+</li>
+ 
+<li id="tags">
+  <span
+    ><i class="fa-fw fa fa-tags"></i> </span
+  >
+   
+  <a href="../../explore/tag/services.html">services</a>   
+  <a href="../../explore/tag/hardware.html">hardware</a>   
+  <a href="../../explore/tag/admin.html">admin</a>  
+</li>
+ 
+</ul>
+<div class="dropdown-buttons">
+    <!-- ipynb file if we had a myst markdown file -->
+    
+    <!-- Download raw file -->
+    <a class="dropdown-buttons" href="../../_sources/posts/2022/2022-07-26-fairshare.ipynb.txt"><button type="button"
+            class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+            data-placement="left">.ipynb</button></a>
+</div>
+<h3>
+  <a href="../../explore.html">Recent Posts</a>
+</h3>
+<ul>
+   
+  <li>
+    <a href="2022-07-14-wormhole.html"
+      >14 July - Going down the Wormhole</a
+    >
+  </li>
+  
+  <li>
+    <a href="../2021/2021-12-20-esp_readout.html"
+      >20 December - Excited State Promotion (ESP) Readout</a
+    >
+  </li>
+  
+  <li>
+    <a href="../2021/2021-11-28-falcon_r5.html"
+      >28 November - Comparison of Falcon R5 processors verse R4</a
+    >
+  </li>
+  
+  <li>
+    <a href="../2021/2021-11-07-rep_delay.html"
+      >07 November - Improving state prep errors on IBM Quantum systems</a
+    >
+  </li>
+  
+  <li>
+    <a href="../2021/2021-10-31-best_swap_mapper_qiskit.html"
+      >31 October - Choosing the best Qiskit swap mapper</a
+    >
+  </li>
+  
+</ul>
+
+<h3>
+  <a href="../../explore/archive.html">Archives</a>
+</h3>
+<ul>
+   
+  <li>
+    <a href="../../explore/2022.html">2022 (2)</a>
+  </li>
+    
+  <li>
+    <a href="../../explore/2021.html">2021 (5)</a>
+  </li>
+   
+</ul>
+
+  </div>
+  <div class="sidebar-end-items">
+  </div>
+</div>
+
+
+          
+
+
+<div class="bd-sidebar-secondary d-none d-xl-block col-xl-2 bd-toc">
+  
+    
+    <div class="toc-item">
+      
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#frontmatter">
+   Frontmatter
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction-to-fair-share">
+   Introduction to Fair-share
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#scheduling-assumptions">
+   Scheduling assumptions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#fair-share-basics">
+   Fair-share basics
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simulating-fair-share-scheduling">
+   Simulating fair-share scheduling
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#fair-share-simulation-one-system-multiple-users">
+   Fair-share simulation: One system, multiple users
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#minimum-access-amount">
+   Minimum access amount
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#fair-share-simulation-multiple-systems-multiple-users">
+   Fair-share simulation: Multiple systems, multiple users
+  </a>
+ </li>
+</ul>
+
+</nav>
+    </div>
+    
+    <div class="toc-item">
+      
+    </div>
+    
+  
+</div>
+
+
+          
+          
+          <div class="bd-content col-12 col-md-9 col-xl-7">
+              
+              <article class="bd-article" role="main">
+                 <section class="tex2jax_ignore mathjax_ignore" id="understanding-fair-share-scheduling">
+<h1>Understanding fair-share scheduling<a class="headerlink" href="#understanding-fair-share-scheduling" title="Permalink to this heading">#</a></h1>
+<p>Here we will introduce the reader to Fair-share Scheduling, the method by which most IBM Quantum systems are accessed.  We will go over the basics of Fair-share and understand its behavior via simulation.</p>
+<section id="frontmatter">
+<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this heading">#</a></h2>
+<p>Here we import the tools we will need to make a threaded Fair-share scheduling simulation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># For plotting</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;ibmq-dark&#39;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format=&#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="introduction-to-fair-share">
+<h2>Introduction to Fair-share<a class="headerlink" href="#introduction-to-fair-share" title="Permalink to this heading">#</a></h2>
+<p>Understanding how jobs are processed by IBM Quantum computers is one of the harder things for users to grasp.  These difficulties are due to the fact that the manner in which jobs are processed by the quantum processors (QPUs) is dynamic; there is no notion of a fixed order / queue.  This makes informing users as to when their jobs will execute challenging.  Add to this the fact that many types of jobs, e.g. iterative algorithms, do not have an a priori known execution time, and things get even harder to estimate.</p>
+<p>However, the fundamental building blocks of a fair-share scheduler are fairly easy to understand.  In fact, fair-share scheduling has been around for sometime, is a standard building-block of classical operating systems, and even has a Wiki page: <a class="reference external" href="https://en.wikipedia.org/wiki/Fair-share_scheduling">Fair-share_scheduling</a>.  Moreover, even though this system is complex in practice, we can actually simulate the dynamics, and understand the behavior in certain theoretical limits.</p>
+<p>Here we introduce the reader to the fair-share scheduler used by IBM Quantum and the assumptions and limitations that come into play.  In particular, we will simulate the behavior of this model in several situations to gain understanding of how it works in ideal settings.</p>
+</section>
+<section id="scheduling-assumptions">
+<h2>Scheduling assumptions<a class="headerlink" href="#scheduling-assumptions" title="Permalink to this heading">#</a></h2>
+<p>The fair-share algorithm is predicated on the validity of several assumptions.  These are laid out in the following slide:</p>
+<img alt="../../_images/assumptions.png" src="../../_images/assumptions.png" />
+<p>So, in short, the hardware is assumed to be used all the time, we cannot make the duration of the jobs longer than some threshold value, and (of course) we should give access to the hardware in proportion to what “share” is purchased or allotted.</p>
+</section>
+<section id="fair-share-basics">
+<h2>Fair-share basics<a class="headerlink" href="#fair-share-basics" title="Permalink to this heading">#</a></h2>
+<p>With the assumptions and operating conditions in hand, we can now get to the basics behind fair-share.  First, we need three ingredients: The fraction of system access given to each user, the floating time span over which we aim to balance the usage, and the maximum duration of a job.</p>
+<p>To begin we focus on the simple situation where several users with different shares send jobs to a single QPU.  First, user is given some fraction of system as their access amount (if you have noticed I try to avoid saying anything about amounts of time a user gets and instead say “access”.  This is intentional).  Next, we have to compute the amount of “usage” that each user has accumulated going back in time by an amount equal to the window time and adding up the time for all jobs in this duration.  For example, with a time window of 4 weeks/ 28 days (<span class="math notranslate nohighlight">\(168 * 4=672\)</span> hours), we go back and and sum over all the prior jobs on the QPU in the last <span class="math notranslate nohighlight">\(672\)</span> hours from the user of interest.  This is the “used time” for that user.  The usage for user <span class="math notranslate nohighlight">\(i\)</span> is then given by</p>
+<div class="math notranslate nohighlight">
+\[
+\mathrm{usage}_{i} = \frac{\mathrm{used~time}_{i}}{\mathrm{share}_{i}*\mathrm{window~time}}
+\]</div>
+<img alt="../../_images/setup.png" src="../../_images/setup.png" />
+<p>Every time the QPU requests another job, it looks at the usage over all the users with jobs waiting, and selects the next job from the user with the least usage.  What this means is that the order in which jobs are processed is dynamic, and depends on an users usage relative to other users waiting for the system.  For example, you may have a job that at one moment is next in line to be executed when another user with lower usage jumps on and you get bumped back.  This is the fair-share scheduler attempting to balance the usage.  To see this in action we need to simulate the scheduling.  That will be our next task.</p>
+<div class="info alert-info">
+An astute reader may have noticed that the "window time" is not needed in the usage expression as it is a constant used on both sides of a relative expression.  This is indeed correct, and it is used here only to make the usage unit-less.  The shares given also need not be actual percentages, and can be anything you want provided that more shares equals more access.  Below we will discuss the "queue slot" units that IBM Quantum uses.
+</div></section>
+<section id="simulating-fair-share-scheduling">
+<h2>Simulating fair-share scheduling<a class="headerlink" href="#simulating-fair-share-scheduling" title="Permalink to this heading">#</a></h2>
+<p>Here we will create the code needed to simulate fair-share scheduling.  There are a few limitations that we must keep in mind.  1)  It is difficult to simulate fair-share starting from anything but a simple initial state.  2) We will use our assumption that all users are continuously submitting jobs to all QPUs. 3) The duration of jobs will be chosen randomly from a uniform distribution between <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">max_job_time)</span></code>.</p>
+<p>In order to simulate fair-share we will need the notion of an “User”; a class object representing an user.  A collection of users, here called “Users” that tells the system the number of users that are available and their properties related to computing usage.  This is also important for processing jobs from multiple QPUs in parallel, which is what happens in the real world.</p>
+<p>The code below also uses “queue slots” in place of “shares” for the unit of access given to users.  This is a very IBM Quantum specific unit of access, and one queue-slot is equal to 5% access to a single QPU.  So each machine has 20 queue-slots of access; if you have a dedicated machine then you have 20 queue-slots of access.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">User</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queue_slots</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; A User class for keeping track of usage from a single organization.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue_slots</span> <span class="o">=</span> <span class="n">queue_slots</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">used_time</span> <span class="o">=</span> <span class="mf">0.0</span>
+        
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;User&lt;index: </span><span class="si">{}</span><span class="s2">, queue_slots: </span><span class="si">{}</span><span class="s2">, used_time: </span><span class="si">{}</span><span class="s2">&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+                                                                        <span class="bp">self</span><span class="o">.</span><span class="n">queue_slots</span><span class="p">,</span> 
+                                                                        <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">used_time</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">Users</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A class that tracks shares, queue-slots, and usage across all organizations</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_queue_slots</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a new user and give it an id</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            user (User): A user instance to add</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_queue_slots</span> <span class="o">+=</span> <span class="n">user</span><span class="o">.</span><span class="n">queue_slots</span>
+        
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_list</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_list</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In addition to users, we also need a <code class="docutils literal notranslate"><span class="pre">Job</span></code> object that tells us which user submitted the job, the job durations, and the usage of the user at the time the job was chosen:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Job</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">usage</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A single Job</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">user_id</span>  <span class="c1"># which user is the job from</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">duration</span> <span class="o">=</span> <span class="n">duration</span>  <span class="c1"># The duration of the job</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># When the job started</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">usage</span> <span class="o">=</span> <span class="n">usage</span>  <span class="c1"># The usage of the user when the job started</span>
+        
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Job&lt;User: </span><span class="si">{}</span><span class="s2">, duration: </span><span class="si">{}</span><span class="s2">, usage: </span><span class="si">{}</span><span class="s2">&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> 
+                                                               <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span>
+                                                               <span class="bp">self</span><span class="o">.</span><span class="n">usage</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We now turn to representing the QPUs themselves.  The <code class="docutils literal notranslate"><span class="pre">QPU</span></code> class is more complicated as it contains the threaded processing code as well as the <code class="docutils literal notranslate"><span class="pre">Users</span></code> object so that it can update the values contained in that object from the different threads. The <code class="docutils literal notranslate"><span class="pre">_start_processing</span></code> method does the actual simulated job execution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">QPU</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">users</span><span class="p">,</span> <span class="n">window_time</span><span class="o">=</span><span class="mi">168</span><span class="o">*</span><span class="mi">4</span><span class="p">,</span> <span class="n">max_job_time</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A class for representing a QPU that processes jobs in a</span>
+<span class="sd">        separate thread.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            users (Users): The class representing all users.</span>
+<span class="sd">            window_time (float): The duration of the floating window, default=672.</span>
+<span class="sd">            max_job_time (float): The maximum job duration. Should be &lt;&lt; then window_time, default=8</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elapsed_time</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># The elapsed time accumulated on this QPU</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">job_history</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># A history of all the jobs on this QPU</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">users</span> <span class="o">=</span> <span class="n">users</span>  <span class="c1"># Holds the user list for processing</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window_time</span> <span class="o">=</span> <span class="n">window_time</span>  <span class="c1"># The window time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_job_time</span> <span class="o">=</span> <span class="n">max_job_time</span>  <span class="c1"># The maximum job duration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">()</span>  <span class="c1"># Gives the QPU its own RNG</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># The thread doing the work</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># The start time of the job processing</span>
+            
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;QPU&lt;elapsed_time: </span><span class="si">{}</span><span class="s2">, total_jobs: </span><span class="si">{}</span><span class="s2">&gt;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elapsed_time</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">job_history</span><span class="p">))</span>
+        
+    <span class="k">def</span> <span class="nf">_start_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The actual routine that does the simulated job execution</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">elapsed_time</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_time</span><span class="p">:</span>
+            <span class="c1"># determine which user goes next</span>
+            <span class="n">_next</span><span class="p">,</span> <span class="n">_usage</span> <span class="o">=</span> <span class="n">next_user</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="c1"># Create a job for this user and randomly generate a job duration</span>
+            <span class="n">job</span> <span class="o">=</span> <span class="n">Job</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">_next</span><span class="p">,</span> 
+                      <span class="n">duration</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_job_time</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(),</span>
+                      <span class="n">usage</span><span class="o">=</span><span class="n">_usage</span><span class="p">)</span>
+            <span class="n">job</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+            <span class="c1"># Pause for the duration of the job (with a 1e-4 constant to make it fast)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">duration</span><span class="o">*</span><span class="mf">1e-4</span><span class="p">)</span>
+            <span class="c1"># Add the duration of the job to the identified user</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">users</span><span class="p">[</span><span class="n">_next</span><span class="p">]</span><span class="o">.</span><span class="n">used_time</span> <span class="o">+=</span> <span class="n">job</span><span class="o">.</span><span class="n">duration</span>
+            <span class="c1"># Add the duration to the QPU total time</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">elapsed_time</span> <span class="o">+=</span> <span class="n">job</span><span class="o">.</span><span class="n">duration</span>
+            <span class="c1"># Add the job to the job history for the QPU</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">job_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">job</span><span class="p">)</span>
+            
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Start processing jobs in a separate thread</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_start_processing</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        
+    <span class="k">def</span> <span class="nf">join</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Join the thread when done</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Ok we are almost done.  We just need to make a function that determines our usage as given by the above equation</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">usage</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">processor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Computes the usage of a User</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">        user (User): The user</span>
+<span class="sd">        processor (QPU): The QPU</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        float: The usage for the User</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">user</span><span class="o">.</span><span class="n">used_time</span> <span class="o">/</span> <span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">queue_slots</span> <span class="o">*</span> <span class="n">processor</span><span class="o">.</span><span class="n">window_time</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>and make another function that computes the usage for all users, and selects the one with the lowest usage to go next</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">next_user</span><span class="p">(</span><span class="n">processor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Decide which user goes next based on their usage</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">        processor (QPU): The QPU determining which user is next</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        int: The ID of the selected user</span>
+<span class="sd">        float: The usage of the selected user</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">users</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">users</span>
+    <span class="n">usage_numbers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">usage</span><span class="p">(</span><span class="n">ptnr</span><span class="p">,</span> <span class="n">processor</span><span class="p">)</span> <span class="k">for</span> <span class="n">ptnr</span> <span class="ow">in</span> <span class="n">users</span><span class="o">.</span><span class="n">user_list</span><span class="p">])</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">usage_numbers</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">usage_numbers</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">idx</span><span class="p">,</span> <span class="n">usage_numbers</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="fair-share-simulation-one-system-multiple-users">
+<h2>Fair-share simulation: One system, multiple users<a class="headerlink" href="#fair-share-simulation-one-system-multiple-users" title="Permalink to this heading">#</a></h2>
+<p>Let us simulate scheduling for a single system with three users with total queue-slot allocations of 20; we have allocated the entire system in terms of queue-slots.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the number of QPUs and window time (the max job duration is implicitly set to 8)</span>
+<span class="n">num_qpus</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">window_time</span> <span class="o">=</span> <span class="mi">168</span><span class="o">*</span><span class="mi">4</span>
+
+<span class="c1"># Add 3 users with sum of queue-slots equal to 20</span>
+<span class="n">users</span> <span class="o">=</span> <span class="n">Users</span><span class="p">()</span>
+<span class="n">users</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">User</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">users</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">User</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">users</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">User</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="c1"># Generate the QPUs</span>
+<span class="n">processors</span> <span class="o">=</span> <span class="p">[</span><span class="n">QPU</span><span class="p">(</span><span class="n">users</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_qpus</span><span class="p">)]</span>
+
+<span class="c1"># Start the threads to run the simulated job execution</span>
+<span class="p">[</span><span class="n">pro</span><span class="o">.</span><span class="n">run</span><span class="p">()</span> <span class="k">for</span> <span class="n">pro</span> <span class="ow">in</span> <span class="n">processors</span><span class="p">]</span>
+<span class="c1"># Join the threads when done</span>
+<span class="p">[</span><span class="n">pro</span><span class="o">.</span><span class="n">join</span><span class="p">()</span> <span class="k">for</span> <span class="n">pro</span> <span class="ow">in</span> <span class="n">processors</span><span class="p">];</span> <span class="c1"># semi-colon to supress null output</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>You have now performed a fair-share scheduling simulation!  To see the results let us print out the accumulated on-chip time for each user:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sim_time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">user</span><span class="o">.</span><span class="n">used_time</span> <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">users</span><span class="o">.</span><span class="n">user_list</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;simulated_time:&#39;</span><span class="p">,</span> <span class="n">sim_time</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>simulated_time: [169.3  167.69 335.93]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We see that the first two users use roughly the same amount of time (up to fluctuations inherent in our simulation method), where as the third user uses double the time for the others.  This is exactly what one should expect given that users 1 &amp; 2 are given the same number of queue-slots, and user 3 is given double that.</p>
+<p>We now turn to a very important question: How much time do we expect each user to get given the number of queue-slots?  So far we have gone to great lengths NOT to discuss the amount of time that an user should get.  Instead we have focused on “access”.  The reason is because <strong>unless all users submit jobs continuously to all QPUs,there is no rigorous notion of expected amounts of time in the fair-share model</strong>.  There are too many unknowns when operating outside of this assumption to be able to draw any conclusions at all.  This is why this assumption is extremely important, and why we have stuck with “access” until now.</p>
+<p>Because our simulations are working in this ideal regime we can convert the access given by queue-slots into time by converting them to a fraction and multiplying by the window time.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expected_time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="n">user</span><span class="o">.</span><span class="n">queue_slots</span><span class="o">*</span><span class="mf">0.05</span><span class="p">)</span> <span class="o">*</span> <span class="n">window_time</span> <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">users</span><span class="o">.</span><span class="n">user_list</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;expected_time:&#39;</span><span class="p">,</span> <span class="n">expected_time</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>expected_time: [168. 168. 336.]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We see that the simulated times correspond nicely with these theoretical expectations.  The only difference is up to small fluctuations inherent in the way we create jobs.</p>
+<p>We can also look at other values of interest.  For example, how many jobs were executed from each user?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">total_jobs</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span>
+
+<span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">processors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">job_history</span><span class="p">:</span>
+    <span class="n">total_jobs</span><span class="p">[</span><span class="n">job</span><span class="o">.</span><span class="n">user</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">([</span><span class="s1">&#39;User 1&#39;</span><span class="p">,</span> <span class="s1">&#39;User 2&#39;</span><span class="p">,</span> <span class="s1">&#39;User 3&#39;</span><span class="p">],</span> <span class="n">total_jobs</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Jobs per user&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/12dfbf760fb7e7d680cd4a96571ea56d195481052599aa9897d61c95de171cce.png" src="../../_images/12dfbf760fb7e7d680cd4a96571ea56d195481052599aa9897d61c95de171cce.png" />
+</div>
+</div>
+<p>Or, for example, we can look at the execution pattern of jobs to identify the order in which user jobs were executed:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">which_user</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">processors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">job_history</span><span class="p">[:</span><span class="mi">21</span><span class="p">]:</span>
+    <span class="n">which_user</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">which_user</span><span class="p">,</span> <span class="s1">&#39;o--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;User number&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Job index&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;History of first 20 jobs executed&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/6414df5a1bec798a662fff18866cb72d1413580e49bb0386f325a923c1640d90.png" src="../../_images/6414df5a1bec798a662fff18866cb72d1413580e49bb0386f325a923c1640d90.png" />
+</div>
+</div>
+<p>Now it is important to remember that everything is relative, and depends in the usage of users verses others. So lets repeat the above example, but only give out half of the total queue-slots for a machine; 10 verses the full 20.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add 3 users with sum of queue-slots equal to 10</span>
+<span class="n">users</span> <span class="o">=</span> <span class="n">Users</span><span class="p">()</span>
+<span class="n">users</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">User</span><span class="p">(</span><span class="mf">2.5</span><span class="p">))</span>
+<span class="n">users</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">User</span><span class="p">(</span><span class="mf">2.5</span><span class="p">))</span>
+<span class="n">users</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">User</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># Generate the QPUs</span>
+<span class="n">processors</span> <span class="o">=</span> <span class="p">[</span><span class="n">QPU</span><span class="p">(</span><span class="n">users</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_qpus</span><span class="p">)]</span>
+
+<span class="c1"># Start the threads to run the simulated job execution</span>
+<span class="p">[</span><span class="n">pro</span><span class="o">.</span><span class="n">run</span><span class="p">()</span> <span class="k">for</span> <span class="n">pro</span> <span class="ow">in</span> <span class="n">processors</span><span class="p">]</span>
+<span class="c1"># Join the threads when done</span>
+<span class="p">[</span><span class="n">pro</span><span class="o">.</span><span class="n">join</span><span class="p">()</span> <span class="k">for</span> <span class="n">pro</span> <span class="ow">in</span> <span class="n">processors</span><span class="p">];</span> <span class="c1"># semi-colon to supress null output</span>
+
+<span class="n">sim_time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">user</span><span class="o">.</span><span class="n">used_time</span> <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">users</span><span class="o">.</span><span class="n">user_list</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;simulated_time:&#39;</span><span class="p">,</span> <span class="n">sim_time</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>simulated_time: [167.73 168.67 337.73]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Has we would have guessed, the total amount of time per user remains unchanged.  This is because in a relative expression we are free to multiple both sides by a number and leave the expression valid.  In this case it is dividing the shares (queue-slots) by 2, which is equal to multiplying the usage by a factor of 2.  Either way it does not change anything.</p>
+<p>This essentially the way that jobs were scheduled on IBM Quantum systems up to April 2022.  Each system had its own set of queue-slots, and users were given a fraction of these slots per system to which they had access.  The usage, and thus job processing, was computed per machine.  The above simulations would have been valid per machine, and the total usage, real or theoretical, could be computed by summing over all machines.</p>
+<img alt="../../_images/oldway.png" src="../../_images/oldway.png" />
+</section>
+<section id="minimum-access-amount">
+<h2>Minimum access amount<a class="headerlink" href="#minimum-access-amount" title="Permalink to this heading">#</a></h2>
+<p>Although we are in principle free to set queue-slot (share) values to whatever we want, in practice this is not the case.  Because jobs are not infinitesimally small in duration, giving too small an access amount can lead to users with small fractions getting more than they should under the fair-share assumptions.  Preventing this from happening requires balancing the window time with the maximum allowed job duration.  The slide below shows that in the case of IBM Quantum a quarter of a queue-slot, 1.25%, is the smallest amount of access that can be given under the current operating parameters.</p>
+<img alt="../../_images/minimum.png" src="../../_images/minimum.png" />
+</section>
+<section id="fair-share-simulation-multiple-systems-multiple-users">
+<h2>Fair-share simulation: Multiple systems, multiple users<a class="headerlink" href="#fair-share-simulation-multiple-systems-multiple-users" title="Permalink to this heading">#</a></h2>
+<p>In mid-April 2022, IBM Quantum changed from fair-share scheduling per system to a global version where usage is computed by summing over jobs on all systems during the floating time window.</p>
+<img alt="../../_images/newway.png" src="../../_images/newway.png" />
+<p>It is a simple extension of our code above to simulate this.  Here we just add another QPU and rerun with the same number of queue-slots allocated as before:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Number of QPUs now 2</span>
+<span class="n">num_qpus</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="c1"># Add 3 users with sum of queue-slots equal to 20</span>
+<span class="n">users</span> <span class="o">=</span> <span class="n">Users</span><span class="p">()</span>
+<span class="n">users</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">User</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">users</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">User</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">users</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">User</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="c1"># Generate the QPUs</span>
+<span class="n">processors</span> <span class="o">=</span> <span class="p">[</span><span class="n">QPU</span><span class="p">(</span><span class="n">users</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_qpus</span><span class="p">)]</span>
+
+<span class="c1"># Start the threads to run the simulated job execution</span>
+<span class="p">[</span><span class="n">pro</span><span class="o">.</span><span class="n">run</span><span class="p">()</span> <span class="k">for</span> <span class="n">pro</span> <span class="ow">in</span> <span class="n">processors</span><span class="p">]</span>
+<span class="c1"># Join the threads when done</span>
+<span class="p">[</span><span class="n">pro</span><span class="o">.</span><span class="n">join</span><span class="p">()</span> <span class="k">for</span> <span class="n">pro</span> <span class="ow">in</span> <span class="n">processors</span><span class="p">];</span> <span class="c1"># semi-colon to supress null output</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Simulating as we did before we can compute the total amount of time used:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sim_time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">user</span><span class="o">.</span><span class="n">used_time</span> <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">users</span><span class="o">.</span><span class="n">user_list</span><span class="p">]),</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;simulated_time:&#39;</span><span class="p">,</span> <span class="n">sim_time</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>simulated_time: [336.84 338.97 672.95]
+</pre></div>
+</div>
+</div>
+</div>
+<p>and find that the total usage is twice the amount that the queue-slots say we should.  This is a general feature of this type of scheduling; When doing fair-share scheduling over <code class="docutils literal notranslate"><span class="pre">N</span></code> systems using a unique usage value, you get <code class="docutils literal notranslate"><span class="pre">N</span></code> times the amount of usage.  So if you have arranged for 5% of access over a single-system, in the global model you would get <span class="math notranslate nohighlight">\(N * 5\%\)</span> total access.  Now, in practice this is not exactly how IBM Quantum implements fair-share, so this factor of <code class="docutils literal notranslate"><span class="pre">N</span></code> enhancement in usage is not really to be expected in most cases.  Also our assumption of continuous demand by all users over all systems is very ideal, and never observed in practice.</p>
+</section>
+</section>
+
+<div class="section">
+    
+
+<div class="section">
+  <span style="float: left">
+     
+    <a href="2022-07-14-wormhole.html">
+      <i class="fa fa-arrow-circle-left"></i> Going down the Wormhole
+    </a>
+    
+  </span>
+  <span>&nbsp;</span>
+  <span style="float: right">
+    
+  </span>
+</div>
+  
+</div>
+
+              </article>
+              
+
+              
+              <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+              </footer>
+              
+          </div>
+          
+      </div>
+    </div>
+
+  
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695"></script>
+
+<footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    <p class="copyright">
+    &copy; Copyright 2022, IBM Quantum.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.0.<br>
+</p>
+  </div>
+  
+</div>
+</footer>
+  </body>
+</html>

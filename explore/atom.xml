@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
   <id>quantum-enablement.org</id>
   <title>Quantum Explorations</title>
-  <updated>2022-07-26T10:05:42.094247+00:00</updated>
+  <updated>2022-07-26T15:19:18.365133+00:00</updated>
   <link href="quantum-enablement.org"/>
   <link href="quantum-enablement.org/explore/atom.xml" rel="self"/>
   <generator uri="https://ablog.readthedocs.org/" version="0.10.25">ABlog</generator>
@@ -97,5 +97,22 @@
     <category term="hardware" label="hardware"/>
     <category term="dynamicaldecoupling" label="dynamical decoupling"/>
     <published>2022-07-14T00:00:00-04:00</published>
+  </entry>
+  <entry>
+    <id>quantum-enablement.org/posts/2022/2022-07-26-fairshare.html</id>
+    <title>Understanding fair-share scheduling</title>
+    <updated>2022-07-26T00:00:00-04:00</updated>
+    <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
+&lt;p&gt;Here we will introduce the reader to Fair-share Scheduling, the method by which most IBM Quantum systems are accessed.  We will go over the basics of Fair-share and understand its behavior via simulation.&lt;/p&gt;
+&lt;p&gt;Here we import the tools we will need to make a threaded Fair-share scheduling simulation.&lt;/p&gt;
+&lt;img alt="_images/assumptions.png" src="_images/assumptions.png" /&gt;
+&lt;/div&gt;
+</content>
+    <link href="quantum-enablement.org/posts/2022/2022-07-26-fairshare.html" rel="alternate"/>
+    <summary>Here we will introduce the reader to Fair-share Scheduling, the method by which most IBM Quantum systems are accessed.  We will go over the basics of Fair-share and understand its behavior via simulation.Here we import the tools we will need to make a threaded Fair-share scheduling simulation.</summary>
+    <category term="services" label="services"/>
+    <category term="hardware" label="hardware"/>
+    <category term="admin" label="admin"/>
+    <published>2022-07-26T00:00:00-04:00</published>
   </entry>
 </feed>
