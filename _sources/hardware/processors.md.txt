@@ -1,4 +1,4 @@
-# IBM Quantum Hardware
+# IBM Quantum processor families
 
 <!-- :::{card} How to select a quantum system?
 :link: https://quantum-computing.ibm.com/services/resources?tab=systems
@@ -16,10 +16,9 @@ A complete listing of available quantum systems.
 
 ```{figure} images/hw/eagle.png
 ---
-height: 500px
 name: eagle-fig
 ---
-Entangling gate topology of a 127-qubit Eagle processor.  Qubits are colorcoded according to
+Entangling gate topology of a 127-qubit Eagle processor.  Qubits are color coded according to
 the multiplexed readout channels.
 ```
 
@@ -40,7 +39,6 @@ The initial version of the Eagle processor.
 
 ```{figure} images/hw/hummingbird.png
 ---
-height: 400px
 name: hummingbird-fig
 ---
 Entangling gate topology of a 65-qubit Hummingbird processor.
@@ -65,14 +63,13 @@ The initial version of the Hummingbird processor.
 
 ```{figure} images/hw/falcon.png
 ---
-height: 300px
 name: falcon-fig
 ---
-Entangling gate topology of a 27-qubit Falcons processor.  Qubits are colorcoded according to
+Entangling gate topology of a 27-qubit Falcon processor.  Qubits are color coded according to
 the multiplexed readout channels.
 ```
 
-The current "core" systems offered by IBM Quantum.  These are 27 qubit systems that were the first
+The current systems offered by IBM Quantum.  These are 27 qubit systems that were the first
 to introduce the [heavy-hex toplogy](https://research.ibm.com/blog/heavy-hex-lattice?mhsrc=ibmsearch_a&mhq=heavy%20hex).  Falcon sytems are bump-bonded to an "interposer" chip that provides readout and signal delivery wiring.  Falcon systems have undergone many revisions and changes over the last two years.
 
 ### R8
@@ -85,7 +82,7 @@ Introduced [interference couplers](https://doi.org/10.48550/arXiv.2011.07050) in
 
 ### R5
 
-Improved measurements that are ~7x faster than those found on the R4 systems.  This is achieved via stronger readout coupling strengths and larger dispersive shifts.  This greatly increases output fidelity when using mid-circuit measurements through reduced dephasing.  A more detailed discussion can be found [here](posts/2021/2021-11-28-falcon_r5.ipynb)
+Improved measurements that are ~7x faster than those found on the R4 systems.  This is achieved via stronger readout coupling strengths and larger dispersive shifts.  This greatly increases output fidelity when using mid-circuit measurements through reduced dephasing.  A more detailed discussion can be found [here](../posts/2021/2021-11-28-falcon_r5.ipynb)
 
 ### R4
 

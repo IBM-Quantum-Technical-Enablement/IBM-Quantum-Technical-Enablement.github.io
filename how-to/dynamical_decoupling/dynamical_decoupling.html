@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Dynamical Decoupling &#8212; Enabing Technologies  documentation</title>
 <script>
@@ -38,6 +38,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/thebelab-helper.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -62,7 +63,7 @@
     <link rel="next" title="Mesurement error mitigation using M3" href="../mitigation/M3/m3_mitigation.html" />
     <link rel="prev" title="Using the Qiskit compiler" href="../compiling/compiling.html" /> 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="docsearch:language" content="None"> 
+<meta name="docsearch:language" content="en"> 
 <link
   rel="alternate"
   type="application/atom+xml"
@@ -149,7 +150,7 @@
 </li>
 
 <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../../hardware.html">
+ <a class="reference internal nav-link" href="../../hardware/hardware.html">
   IBM Quantum Hardware
  </a>
 </li>
@@ -375,18 +376,18 @@
               
               <article class="bd-article" role="main">
                  <section class="tex2jax_ignore mathjax_ignore" id="dynamical-decoupling">
-<h1>Dynamical Decoupling<a class="headerlink" href="#dynamical-decoupling" title="Permalink to this headline">#</a></h1>
+<h1>Dynamical Decoupling<a class="headerlink" href="#dynamical-decoupling" title="Permalink to this heading">#</a></h1>
 <p>
 <font size=4 color="#0f62fe">IBM Quantum Enabling Technologies Team</font>
 <p><p>Information is futile in the Quantum world. Any operation on qubits, as well as qubits just sitting idle, are subject to noise. <a class="reference external" href="https://en.wikipedia.org/wiki/Quantum_decoherence">Decoherence</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Dephasing">Dephasing</a> effects are driving qubits towards more classical <a class="reference external" href="https://en.wikipedia.org/wiki/Quantum_state#Mixed_states">Mixed states</a>. A common technique in Quantum Information Processing in order to prevent these effects is <a class="reference external" href="https://en.wikipedia.org/wiki/Dynamical_decoupling">Dynamical Decoupling</a>. We use Dynamical Decoupling in its simplest form, by implementing periodic sequences of gates, which serve to average out unwanted system-enviroment couplings. We focus on decoupling qubits that are idle for some time during a quantum circuit.</p>
 <div class="alert alert-warning">
 Note that the optimal dynamical decoupling strategy depends largely on the involved specific backend and the circuits & algorithms used. The strategies used here should therefore not be seen as 'cooking recipe' but as experimental work which needs to be adapted to the specific situation of your problem and the real hardware you use.
 </div><section id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">#</a></h2>
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h2>
 <p>Qiskit offers an in-built <a class="reference external" href="https://qiskit.org/documentation/stubs/qiskit.transpiler.passes.PadDynamicalDecoupling.html"><code class="docutils literal notranslate"><span class="pre">PadDynamicalDecoupling</span></code></a> class which allows to fill gaps in quantum circuits with a dynamical decoupling sequence for noise reduction. In order to use it, a pulse schedule needs to be defined by a <code class="docutils literal notranslate"><span class="pre">PassManager</span></code> applied to your circuit. <code class="docutils literal notranslate"><span class="pre">PadDynamicalDecoupling</span></code> scans the circuit for idle periods of time and inserts a sequence of gates in those spots. These gates amount to the identity, so do they not change the circuit per se and its outcomes, but have the effect of mitigating noise in those idle periods. We will also look at tools from <a class="reference external" href="https://github.com/qiskit-research/qiskit-research">qiskit-research</a> which allow to apply Dynamical Decoupling more easily and have a greater varity of sequences and gates.</p>
 </section>
 <section id="frontmatter">
-<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this headline">#</a></h2>
+<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this heading">#</a></h2>
 <p>Here we load the modules needed for the rest of the notebook, our IBM Quantum account and the real backend we’ll use.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -421,7 +422,7 @@ Note that the optimal dynamical decoupling strategy depends largely on the invol
 </div>
 </section>
 <section id="example-circuit">
-<h2>Example circuit<a class="headerlink" href="#example-circuit" title="Permalink to this headline">#</a></h2>
+<h2>Example circuit<a class="headerlink" href="#example-circuit" title="Permalink to this heading">#</a></h2>
 <p>Let us set up an example circuit that we can try to decouple from noise, in this case a GHZ state as a standard example.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -487,7 +488,7 @@ Note that the optimal dynamical decoupling strategy depends largely on the invol
 </div>
 </div>
 <section id="applying-dynamical-decoupling">
-<h3>Applying Dynamical Decoupling<a class="headerlink" href="#applying-dynamical-decoupling" title="Permalink to this headline">#</a></h3>
+<h3>Applying Dynamical Decoupling<a class="headerlink" href="#applying-dynamical-decoupling" title="Permalink to this heading">#</a></h3>
 <p>We use <code class="docutils literal notranslate"><span class="pre">PadDynamicalDecoupling</span></code> inside a <code class="docutils literal notranslate"><span class="pre">PassManager</span></code> to add a Decoupling sequence to qubits at idle times. In this case, we use a simple X-X sequence. Note that some backends have different timing constraints, depending on the version of Room Temperature Electronics (control electronics) gateware they run on. This was one of the reasons, <code class="docutils literal notranslate"><span class="pre">PadDynamicalDecoupling</span></code> was recently introduced as a replacement of the previous <code class="docutils literal notranslate"><span class="pre">DynamicalDecoupling</span></code> method, besides improvements in scheduling. There are subtle differences in timing constraints, compare for example the <code class="docutils literal notranslate"><span class="pre">pulse_alignment</span></code> for the following two backends</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -579,7 +580,7 @@ Note that the optimal dynamical decoupling strategy depends largely on the invol
 </div>
 </section>
 <section id="varying-gate-spacing">
-<h3>Varying gate spacing<a class="headerlink" href="#varying-gate-spacing" title="Permalink to this headline">#</a></h3>
+<h3>Varying gate spacing<a class="headerlink" href="#varying-gate-spacing" title="Permalink to this heading">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">PadDynamicalDecoupling</span></code> allows to vary the time between the dynamical decoupling gates by specifing the parameter <code class="docutils literal notranslate"><span class="pre">spacing</span></code>. One way of doing so was given by Prof. Uhrig of TU Dortmund in his paper <a class="reference external" href="https://arxiv.org/abs/quant-ph/0609203">Keeping a Quantum Bit Alive by Optimized π-Pulse Sequences</a>. We can apply his method in the following way</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -670,7 +671,7 @@ Note that the optimal dynamical decoupling strategy depends largely on the invol
 </section>
 </section>
 <section id="decoupling-a-mid-circuit-measurement">
-<h2>Decoupling a mid-circuit measurement<a class="headerlink" href="#decoupling-a-mid-circuit-measurement" title="Permalink to this headline">#</a></h2>
+<h2>Decoupling a mid-circuit measurement<a class="headerlink" href="#decoupling-a-mid-circuit-measurement" title="Permalink to this heading">#</a></h2>
 <p>Measurements take up quite some time in the course of a circuit. Let us see the effects of applying dynamical decoupling during a measurement &amp; reset sequence. This circuit is inspired by the IBM research blog’s <a class="reference external" href="https://www.ibm.com/blogs/research/2021/02/quantum-mid-circuit-measurement/">introduction</a> of mid-circuit measurements.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -811,10 +812,10 @@ Note that the optimal dynamical decoupling strategy depends largely on the invol
 <p>We see that Dynamical Decoupling is beneficial in general, however applying extra pulses to passive qubits was not successful in this case. There can be cases in which spectator qubits play an important role, however, which is when decoupling on all qubits can be beneficial.</p>
 </section>
 <section id="application-to-bernstein-vazirani">
-<h2>Application to Bernstein-Vazirani<a class="headerlink" href="#application-to-bernstein-vazirani" title="Permalink to this headline">#</a></h2>
+<h2>Application to Bernstein-Vazirani<a class="headerlink" href="#application-to-bernstein-vazirani" title="Permalink to this heading">#</a></h2>
 <p>The <a class="reference external" href="https://qiskit.org/textbook/ch-algorithms/bernstein-vazirani.html">Bernstein-Vazirani Algorithm</a> is a modification of the Deutsch-Josza algorithm. It is constructed to learn a string encoded in a function. Its circuits turn out to possess long idle times and have thus <a class="reference external" href="https://gist.github.com/blakejohnson/9d0d7aa8c50350f869ed3eeca185f8f0">shown to be well-suited</a> for an application of the kind of dynamical decoupling presented. Let us look at this effect in a concise manner.</p>
 <section id="setting-up-the-circuit">
-<h3>Setting up the circuit<a class="headerlink" href="#setting-up-the-circuit" title="Permalink to this headline">#</a></h3>
+<h3>Setting up the circuit<a class="headerlink" href="#setting-up-the-circuit" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_oracle</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">,</span> <span class="n">input_size</span><span class="p">,</span> <span class="n">secret_int</span><span class="p">):</span>
@@ -880,7 +881,7 @@ Note that the optimal dynamical decoupling strategy depends largely on the invol
 </div>
 </section>
 <section id="verifying-the-functionality-in-simulation">
-<h3>Verifying the functionality in simulation<a class="headerlink" href="#verifying-the-functionality-in-simulation" title="Permalink to this headline">#</a></h3>
+<h3>Verifying the functionality in simulation<a class="headerlink" href="#verifying-the-functionality-in-simulation" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sim_backend</span> <span class="o">=</span> <span class="n">provider</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">ibmq_qasm_simulator</span>
@@ -899,7 +900,7 @@ Note that the optimal dynamical decoupling strategy depends largely on the invol
 <p>We get back the binary string we passed to the BV function as desired. Now let’s…</p>
 </section>
 <section id="run-the-original-circuit">
-<h3>Run the original circuit<a class="headerlink" href="#run-the-original-circuit" title="Permalink to this headline">#</a></h3>
+<h3>Run the original circuit<a class="headerlink" href="#run-the-original-circuit" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bv_circuit</span> <span class="o">=</span> <span class="n">bernstein_vazirani</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;1111&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
@@ -936,7 +937,7 @@ Note that the optimal dynamical decoupling strategy depends largely on the invol
 <p>The success probability is not too high. Can’t we do better than this?</p>
 </section>
 <section id="apply-dynamical-decoupling">
-<h3>Apply Dynamical Decoupling<a class="headerlink" href="#apply-dynamical-decoupling" title="Permalink to this headline">#</a></h3>
+<h3>Apply Dynamical Decoupling<a class="headerlink" href="#apply-dynamical-decoupling" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">durations_backend</span> <span class="o">=</span> <span class="n">InstructionDurations</span><span class="o">.</span><span class="n">from_backend</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
@@ -987,7 +988,7 @@ Note that the optimal dynamical decoupling strategy depends largely on the invol
 </section>
 </section>
 <section id="apply-dynamical-decoupling-more-easily-and-have-a-greater-varity-of-sequences">
-<h2>Apply Dynamical Decoupling more easily and have a greater varity of sequences<a class="headerlink" href="#apply-dynamical-decoupling-more-easily-and-have-a-greater-varity-of-sequences" title="Permalink to this headline">#</a></h2>
+<h2>Apply Dynamical Decoupling more easily and have a greater varity of sequences<a class="headerlink" href="#apply-dynamical-decoupling-more-easily-and-have-a-greater-varity-of-sequences" title="Permalink to this heading">#</a></h2>
 <p>We saw that managing <code class="docutils literal notranslate"><span class="pre">PassManager</span></code>, scheduling and chosing the right methods for transpiling are somewhat involved. Luckily there are people working on making life easier for you as a user at <a class="reference external" href="https://github.com/qiskit-research/qiskit-research">qiskit-research</a> . A useful utility in this context is the method <code class="docutils literal notranslate"><span class="pre">add_dynamical_decoupling</span></code></p>
 <p>Install qiskit-research by running</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">qiskit</span><span class="o">-</span><span class="n">research</span><span class="o">/</span><span class="n">qiskit</span><span class="o">-</span><span class="n">research</span><span class="o">.</span><span class="n">git</span>
@@ -1153,8 +1154,62 @@ Note that the optimal dynamical decoupling strategy depends largely on the invol
 <img alt="../../_images/96b53fd6823943f0d550d3e6a3457fd8d2a43056d2a6113956afd2f8e7f1e81a.png" src="../../_images/96b53fd6823943f0d550d3e6a3457fd8d2a43056d2a6113956afd2f8e7f1e81a.png" />
 </div>
 </div>
+<p>Let’s confirm this observation statistically by running the same experiment with 100 circuits and 100.000 shots for each dynamical decoupling sequence applied to our exemplary GHZ circuit and compare against a circuit with no dynamical decoupling applied.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sequences</span><span class="o">=</span><span class="n">dd_sequences</span><span class="o">+</span><span class="n">dd_sequences</span><span class="o">+</span><span class="p">[</span><span class="s1">&#39;no_dd&#39;</span><span class="p">]</span>
+<span class="c1">#initializing a dictonary for jobs for all sequences + the circuit with no dynamical decoupling applied</span>
+<span class="n">job_dict</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sequences</span><span class="p">))))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s run all these jobs on the backend (this will take a while)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dd_circuits_statistics</span><span class="o">=</span><span class="p">[]</span>
+<span class="k">for</span> <span class="n">sequence</span> <span class="ow">in</span> <span class="n">dd_sequences</span><span class="p">:</span>
+    <span class="n">circ_sequence</span><span class="o">=</span><span class="n">add_dynamical_decoupling</span><span class="p">(</span><span class="n">circuit_transpiled</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">sequence</span><span class="p">,</span> <span class="n">add_pulse_cals</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">job_dict</span><span class="p">[</span><span class="n">sequence</span><span class="p">]</span><span class="o">=</span><span class="n">backend</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">circ_sequence</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="n">backend</span><span class="o">.</span><span class="n">configuration</span><span class="p">()</span><span class="o">.</span><span class="n">max_shots</span><span class="p">)</span>
+    <span class="n">job_dict</span><span class="p">[</span><span class="n">sequence</span><span class="p">]</span><span class="o">.</span><span class="n">update_tags</span><span class="p">(</span><span class="n">additional_tags</span><span class="o">=</span><span class="p">[</span><span class="n">sequence</span><span class="p">,</span><span class="s2">&quot;dynamical decoupling&quot;</span><span class="p">])</span>
+
+<span class="n">job_dict</span><span class="p">[</span><span class="s1">&#39;no_dd&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">backend</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">circuit_transpiled</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="n">backend</span><span class="o">.</span><span class="n">configuration</span><span class="p">()</span><span class="o">.</span><span class="n">max_shots</span><span class="p">)</span>
+<span class="n">job_dict</span><span class="p">[</span><span class="s1">&#39;no_dd&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">update_tags</span><span class="p">(</span><span class="n">additional_tags</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;no_dd&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>After the 70.000.000 shots finished running, we collect Hellinger fidelities for each of the circuits</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fidelities_all</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sequences</span><span class="p">))))</span>
+<span class="k">for</span> <span class="n">sequence</span> <span class="ow">in</span> <span class="n">job_dict</span><span class="p">:</span>
+    <span class="n">fidelities_all</span><span class="p">[</span><span class="n">sequence</span><span class="p">]</span><span class="o">=</span>
+    <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">hellinger_function</span><span class="p">,</span>
+    <span class="n">job_dict</span><span class="p">[</span><span class="n">sequence</span><span class="p">]</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">sequence</span> <span class="ow">in</span> <span class="n">fidelities_all</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">sequence</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="n">fidelities_all</span><span class="p">[</span><span class="n">sequence</span><span class="p">],</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Hellinger fidelities of dd sequences, 100 circuits at 100.000 shots each&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="nb">min</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">fidelities_all</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span><span class="o">*</span><span class="mf">0.999</span><span class="p">,</span><span class="nb">max</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">fidelities_all</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span><span class="o">*</span><span class="mf">1.001</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/cfafe9fe8e891958d419f9ffd6c783d686e07953cb6a6c2e59a83c143be19be7.png" src="../../_images/cfafe9fe8e891958d419f9ffd6c783d686e07953cb6a6c2e59a83c143be19be7.png" />
+</div>
+</div>
+<p>This confirms that X2pm is the best sequence in this case. Note that the circuit without dynamical decoupling applied, at the right side of the plot above, performs comparably. As mentioned at the beginning of this guide, if and how to apply dynamical decoupling has to be analyzed on a case-by-case basis depending on the circuit and backend in question.</p>
 <p>In Summary, we are provided with tools to easily add dynamical decoupling to our circuit and increase its Fidelity with gates defined at the Qiskit Pulse level.</p>
-<p>We see that using the definitions at Pulse level is very beneficial as compared to transpilation to the basis gates. This observation is confirmed in the literature, c.f. the recent arxiv <a class="reference external" href="https://arxiv.org/abs/2207.03670">Dynamical decoupling for superconducting qubits: a performance survey</a>, in particular Appendix B. There is ongoing work of extending the sequences available for dynamical decoupling at the pulse level, including the higher-order sequences discussed in the referenced paper.</p>
+<p>We see that using custom gates defined at Qiskit Pulse level is beneficial as compared to transpilation to the basis gates. This observation is confirmed in the literature, c.f. the recent arxiv <a class="reference external" href="https://arxiv.org/abs/2207.03670">Dynamical decoupling for superconducting qubits: a performance survey</a>, in particular Appendix B. There is ongoing work of extending the sequences available for dynamical decoupling at the pulse level, including the higher-order sequences discussed in the referenced paper.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">qiskit_version_table</span>
@@ -1162,7 +1217,7 @@ Note that the optimal dynamical decoupling strategy depends largely on the invol
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><h3>Version Information</h3><table><tr><th>Qiskit Software</th><th>Version</th></tr><tr><td><code>qiskit-terra</code></td><td>0.21.0</td></tr><tr><td><code>qiskit-aer</code></td><td>0.10.4</td></tr><tr><td><code>qiskit-ignis</code></td><td>0.7.1</td></tr><tr><td><code>qiskit-ibmq-provider</code></td><td>0.19.2</td></tr><tr><td><code>qiskit</code></td><td>0.37.0</td></tr><tr><td><code>qiskit-nature</code></td><td>0.4.2</td></tr><tr><td><code>qiskit-finance</code></td><td>0.3.3</td></tr><tr><td><code>qiskit-optimization</code></td><td>0.4.0</td></tr><tr><td><code>qiskit-machine-learning</code></td><td>0.4.0</td></tr><tr><th>System information</th></tr><tr><td>Python version</td><td>3.8.2</td></tr><tr><td>Python compiler</td><td>MSC v.1916 64 bit (AMD64)</td></tr><tr><td>Python build</td><td>default, Apr 14 2020 19:01:40</td></tr><tr><td>OS</td><td>Windows</td></tr><tr><td>CPUs</td><td>4</td></tr><tr><td>Memory (Gb)</td><td>7.838371276855469</td></tr><tr><td colspan='2'>Tue Jul 19 23:24:02 2022 W. Europe Summer Time</td></tr></table></div></div>
+<div class="output text_html"><h3>Version Information</h3><table><tr><th>Qiskit Software</th><th>Version</th></tr><tr><td><code>qiskit-terra</code></td><td>0.21.0</td></tr><tr><td><code>qiskit-aer</code></td><td>0.10.4</td></tr><tr><td><code>qiskit-ignis</code></td><td>0.7.1</td></tr><tr><td><code>qiskit-ibmq-provider</code></td><td>0.19.2</td></tr><tr><td><code>qiskit</code></td><td>0.37.0</td></tr><tr><td><code>qiskit-nature</code></td><td>0.4.2</td></tr><tr><td><code>qiskit-finance</code></td><td>0.3.3</td></tr><tr><td><code>qiskit-optimization</code></td><td>0.4.0</td></tr><tr><td><code>qiskit-machine-learning</code></td><td>0.4.0</td></tr><tr><th>System information</th></tr><tr><td>Python version</td><td>3.8.2</td></tr><tr><td>Python compiler</td><td>MSC v.1916 64 bit (AMD64)</td></tr><tr><td>Python build</td><td>default, Apr 14 2020 19:01:40</td></tr><tr><td>OS</td><td>Windows</td></tr><tr><td>CPUs</td><td>4</td></tr><tr><td>Memory (Gb)</td><td>7.838371276855469</td></tr><tr><td colspan='2'>Mon Jul 25 10:00:05 2022 W. Europe Summer Time</td></tr></table></div></div>
 </div>
 </section>
 </section>
@@ -1215,7 +1270,7 @@ Note that the optimal dynamical decoupling strategy depends largely on the invol
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.0.<br>
 </p>
   </div>
   

@@ -13,6 +13,6 @@ See the [exploration archives](explore.md) for a more complete list.
 :hidden:
 how-to/howto
 explore
-hardware
+hardware/hardware
 members
 ```

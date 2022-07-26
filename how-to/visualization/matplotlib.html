@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Matplotlib styles &#8212; Enabing Technologies  documentation</title>
 <script>
@@ -38,6 +38,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/thebelab-helper.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -62,7 +63,7 @@
     <link rel="next" title="Explorations" href="../../explore.html" />
     <link rel="prev" title="Mesurement error mitigation using M3" href="../mitigation/M3/m3_mitigation.html" /> 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="docsearch:language" content="None"> 
+<meta name="docsearch:language" content="en"> 
 <link
   rel="alternate"
   type="application/atom+xml"
@@ -149,7 +150,7 @@
 </li>
 
 <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../../hardware.html">
+ <a class="reference internal nav-link" href="../../hardware/hardware.html">
   IBM Quantum Hardware
  </a>
 </li>
@@ -326,7 +327,7 @@
               
               <article class="bd-article" role="main">
                  <section class="tex2jax_ignore mathjax_ignore" id="matplotlib-styles">
-<h1>Matplotlib styles<a class="headerlink" href="#matplotlib-styles" title="Permalink to this headline">#</a></h1>
+<h1>Matplotlib styles<a class="headerlink" href="#matplotlib-styles" title="Permalink to this heading">#</a></h1>
 <p>We have made two Matplotlib style files that we use for formatting figures for this website, presentations, and even papers:</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">ibmq</span></code> style uses the following palette of color-blind friendly colors:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;#0075C3&#39;</span><span class="p">,</span> <span class="s1">&#39;#ee7733&#39;</span><span class="p">,</span> <span class="s1">&#39;#6929c4&#39;</span><span class="p">,</span> <span class="s1">&#39;#009988&#39;</span><span class="p">,</span> <span class="s1">&#39;#cc3311&#39;</span><span class="p">,</span> <span class="s1">&#39;#33bbee&#39;</span><span class="p">,</span> <span class="s1">&#39;#ee3377&#39;</span><span class="p">]</span>
@@ -339,7 +340,7 @@
 </div>
 <p>on a background of <code class="docutils literal notranslate"><span class="pre">'#161616'</span></code>. Again, the order of the colors is important. All grids and text are <code class="docutils literal notranslate"><span class="pre">white</span></code>.</p>
 <section id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">#</a></h2>
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
@@ -367,7 +368,7 @@
 <img alt="../../_images/ibmq-dark.png" class="bg-primary align-center" src="../../_images/ibmq-dark.png" />
 </section>
 <section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">#</a></h2>
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
 <p>The <a class="reference external" href="https://github.com/IBM-Quantum-Technical-Enablement/visualization/tree/main/matplotlib/styles">source files are located here</a>.</p>
 <p>You can install the files for your local user by first finding the local Matplotlib config directory:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib</span>
@@ -377,7 +378,7 @@
 <p>and, if needed, creating a directory called <code class="docutils literal notranslate"><span class="pre">stylelib</span></code>.  The style files should be placed within this folder.</p>
 </section>
 <section id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">#</a></h2>
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">#</a></h2>
 <p>To load the styles for use simply do (here using the <code class="docutils literal notranslate"><span class="pre">'ibmq-dark'</span></code> style as an example):</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;ibmq-dark&#39;</span><span class="p">)</span>
@@ -435,7 +436,7 @@
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.0.<br>
 </p>
   </div>
   

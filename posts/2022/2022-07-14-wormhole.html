@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Going down the Wormhole &#8212; Enabing Technologies  documentation</title>
 <script>
@@ -38,6 +38,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/thebelab-helper.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -62,7 +63,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="docsearch:language" content="None"> 
+<meta name="docsearch:language" content="en"> 
 <link
   rel="alternate"
   type="application/atom+xml"
@@ -149,7 +150,7 @@
 </li>
 
 <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../../hardware.html">
+ <a class="reference internal nav-link" href="../../hardware/hardware.html">
   IBM Quantum Hardware
  </a>
 </li>
@@ -354,14 +355,14 @@
               
               <article class="bd-article" role="main">
                  <section class="tex2jax_ignore mathjax_ignore" id="going-down-the-wormhole">
-<h1>Going down the Wormhole<a class="headerlink" href="#going-down-the-wormhole" title="Permalink to this headline">#</a></h1>
+<h1>Going down the Wormhole<a class="headerlink" href="#going-down-the-wormhole" title="Permalink to this heading">#</a></h1>
 <p>Recently our Partners over at Lawrence Berkeley National Laboratory (LBNL) published an interesting paper on probing quantum gravity in the lab: <a class="reference external" href="https://arxiv.org/abs/2205.14081">arXiv:2205.14081</a>.  This paper caught our eye for two reasons. First, it is about teleportation via wormholes, so why not check it out?.  Second, it compares our quantum systems verses the trapped-ion systems from Quantinuum.  From a competitive standpoint, these types of papers are fun to look at and see if we can do better.  Trying to do so is the basis for this notebook.  If you want all the details you will need to see the paper, however the basics can be gathered from Figure 1 in the paper:</p>
 <img alt="../../_images/circuit.png" src="../../_images/circuit.png" />
 <p>Basically they are creating entangled pairs of qubits at the beginning; a prerequisite of all teleportation procedures.  Doing evolution backward and forward by the same about of time on the <code class="docutils literal notranslate"><span class="pre">L</span></code> group, coupling the L and R groups of qubits with a tunable phase <code class="docutils literal notranslate"><span class="pre">g</span></code>, and then performing the forward evolution again on the <code class="docutils literal notranslate"><span class="pre">R</span></code> group of qubits, and then measuring the state on the bottom qubit.  As a function of the coupling <code class="docutils literal notranslate"><span class="pre">g</span></code> the expectation value of the <code class="docutils literal notranslate"><span class="pre">Z</span></code> operator on the last qubit in both simulation and on the real quantum hardware is seen to be:</p>
 <img alt="../../_images/results.png" src="../../_images/results.png" />
 <p>We see the signal oscillates as a function of <code class="docutils literal notranslate"><span class="pre">g</span></code> with the minimum “signal” at <span class="math notranslate nohighlight">\(g/2\pi=0.25\)</span>.  Quantinuum gets close to 80% of this value while IBM Quantum obtains at most ~35% with error mitigation turned on, and 20% with it off on the <code class="docutils literal notranslate"><span class="pre">ibmq_montreal</span></code> Falcon R4 system.  Our goal is to see if we can do better.</p>
 <section id="frontmatter">
-<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this headline">#</a></h2>
+<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this heading">#</a></h2>
 <p>Lets import what we need.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -401,7 +402,7 @@
 </div>
 </section>
 <section id="circuit-construction-and-simulation">
-<h2>Circuit construction and simulation<a class="headerlink" href="#circuit-construction-and-simulation" title="Permalink to this headline">#</a></h2>
+<h2>Circuit construction and simulation<a class="headerlink" href="#circuit-construction-and-simulation" title="Permalink to this heading">#</a></h2>
 <p>The authors of the paper were kind enough to include <a class="reference external" href="https://gitlab.com/ishapova/qglab">a link that includes the code to build the circuits that they ran</a>.  I took their definition of the circuits, extracted the basic building blocks and converted it into a single parameterized circuit with the coupling <code class="docutils literal notranslate"><span class="pre">g</span></code> being the parameter:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -639,7 +640,7 @@
 <p>So we see that, according to the noisy simulation we did, we should get about 65% of the signal at <span class="math notranslate nohighlight">\(g/2\pi=0.25\)</span>.  This is ~3x better than the results from the paper, so lets run it for real and see.</p>
 </section>
 <section id="execution-on-actual-hardware">
-<h2>Execution on actual hardware<a class="headerlink" href="#execution-on-actual-hardware" title="Permalink to this headline">#</a></h2>
+<h2>Execution on actual hardware<a class="headerlink" href="#execution-on-actual-hardware" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">real_counts</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">best_trans_circs</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="n">shots</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
@@ -672,7 +673,7 @@
 <p>Well crap.  It turns out we get basically noise across the board.  Did we do something wrong?  Not really, it turns out that <strong>if you run the above on any IBM Quantum system you get noise!</strong>.  How the paper authors got 20% signal from their “raw” experiments is still a mystery to me.  What is not a mystery is how to fix the problem, although it took a while to figure out.</p>
 </section>
 <section id="fixing-the-problem">
-<h2>Fixing the problem<a class="headerlink" href="#fixing-the-problem" title="Permalink to this headline">#</a></h2>
+<h2>Fixing the problem<a class="headerlink" href="#fixing-the-problem" title="Permalink to this heading">#</a></h2>
 <p>So we get junk on every system.  Do we give up?  No way.  If you read the Quick Start guide you will note that so far we did not apply our dynamical decoupling (DD) step to this problem.  That is where the solution is.  If we look at Figure 1 posted at the top of the notebook you will notice that the last qubit, the one that is being measured, is sitting idle (just an empty wire) for the majority of the circuit duration.  Thus that qubit, amongst others, is subject to dephasing unless we apply DD as an error suppression tool.</p>
 <p>Our previous simulations did not pick that up because taking dephasing into account requires timing information in the circuit.  To get that information we must “schedule” our circuits.  Here we do “as-late-as-possible” scheduling, which is what the actual devices do:</p>
 <div class="cell docutils container">
@@ -811,7 +812,7 @@
 <p>Ok, now we see the benefit of DD.  We finally have something other than noise!  Not as good as the simulations show, but again, this is not too surprising.  We still do not have as good a result as the original authors did, but that may be because our circuit uses a <code class="docutils literal notranslate"><span class="pre">reset</span></code> instruction, where the original used a <code class="docutils literal notranslate"><span class="pre">swap</span></code> gate.  On a Falcon R4 <code class="docutils literal notranslate"><span class="pre">resets</span></code> (measurements) are very long, and thus cause a host of issues.  To find out if we can do better, let us move to a newer system.</p>
 </section>
 <section id="executing-on-a-newer-system">
-<h2>Executing on a newer system<a class="headerlink" href="#executing-on-a-newer-system" title="Permalink to this headline">#</a></h2>
+<h2>Executing on a newer system<a class="headerlink" href="#executing-on-a-newer-system" title="Permalink to this heading">#</a></h2>
 <p>As stated before, every system returns bad results for this problem unless DD is added.  Let us see what we can do on a newer system following the steps above.  Here we choose the <code class="docutils literal notranslate"><span class="pre">ibm_peekskill</span></code> Falcon R8 system.  Amongst other things, it features coherence times that are ~3x longer than that of the <code class="docutils literal notranslate"><span class="pre">ibmq_montreal</span></code> system.  So the effects of dephasing relaxation should be less. For brevity I will just do all the steps at once and produce the final plot.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -993,7 +994,7 @@
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.0.<br>
 </p>
   </div>
   
