@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>Using the Qiskit compiler &#8212; Enabing Technologies  documentation</title>
 <script>
@@ -38,7 +38,6 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/thebelab-helper.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -48,7 +47,7 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/design-tabs.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <script async="async" src="https://www.google-analytics.com/analytics.js"></script>
     <script>
                 window.ga = window.ga || function () {
@@ -65,7 +64,7 @@
     <link rel="next" title="Dynamical Decoupling" href="../dynamical_decoupling/dynamical_decoupling.html" />
     <link rel="prev" title="Quick start guide" href="../quick/quick-start.html" /> 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="docsearch:language" content="en"> 
+<meta name="docsearch:language" content="None"> 
 <link
   rel="alternate"
   type="application/atom+xml"
@@ -439,13 +438,13 @@
               
               <article class="bd-article" role="main">
                  <section class="tex2jax_ignore mathjax_ignore" id="using-the-qiskit-compiler">
-<h1>Using the Qiskit compiler<a class="headerlink" href="#using-the-qiskit-compiler" title="Permalink to this heading">#</a></h1>
+<h1>Using the Qiskit compiler<a class="headerlink" href="#using-the-qiskit-compiler" title="Permalink to this headline">#</a></h1>
 <section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
 <p>Here we will cover how to use the Qiskit compiler to the best extent possible for most common use cases.  As things change frequently, please see the version numbers at the bottom of the notebook to see which version of Qiskit was used in generating the results presented here.  Those interested in just getting a quick summary of the material presented here may do so in the next section.</p>
 </section>
 <section id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h2>
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">#</a></h2>
 <p>Although there are a myriad of compilation options in Qiskit, for a given quantum circuit <code class="docutils literal notranslate"><span class="pre">qc</span></code> and target system called <code class="docutils literal notranslate"><span class="pre">backend</span></code>, the <code class="docutils literal notranslate"><span class="pre">transpile</span></code> function should be called with the <code class="docutils literal notranslate"><span class="pre">optimization_level=3</span></code> setting on Qiskit 0.19+:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">trans_qc</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">optimization_level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
@@ -453,7 +452,7 @@
 <p>Additionally, due to the stochastic nature of the SWAP mappers in Qiskit, ideally one should <code class="docutils literal notranslate"><span class="pre">transpile</span></code> multiple copies of a circuit and take the one with the lowest depth (<code class="docutils literal notranslate"><span class="pre">qc.depth()</span></code>).  Users should also explore mapping their circuits to the target system by hand via setting of the <code class="docutils literal notranslate"><span class="pre">initial_layout</span></code> option in <code class="docutils literal notranslate"><span class="pre">transpile</span></code> to best match the topology of the device and it error characteristics.  At this stage compiler maturity smart hand-mapping generally beats automated layout methods.</p>
 </section>
 <section id="frontmatter">
-<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this heading">#</a></h2>
+<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this headline">#</a></h2>
 <p>Here we load the modules needed for the rest of the notebook, as well as our locally stored IBM Quantum account.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -476,7 +475,7 @@
 </div>
 </section>
 <section id="circuit-compilation">
-<h2>Circuit compilation<a class="headerlink" href="#circuit-compilation" title="Permalink to this heading">#</a></h2>
+<h2>Circuit compilation<a class="headerlink" href="#circuit-compilation" title="Permalink to this headline">#</a></h2>
 <p>To understand how the compiler works we will consider a six-qubit GHZ state written so that a single-qubit requires <span class="math notranslate nohighlight">\(5\)</span>-partite connectivity; outside the maximum Heavy-hex topology connectivity of 3.  Thus this circuit will require swap gates to satisfy the topology constraints.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -503,7 +502,7 @@
 </div>
 </div>
 <section id="basic-circuit-transpilation">
-<h3>Basic circuit transpilation<a class="headerlink" href="#basic-circuit-transpilation" title="Permalink to this heading">#</a></h3>
+<h3>Basic circuit transpilation<a class="headerlink" href="#basic-circuit-transpilation" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trans_qc</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
@@ -538,7 +537,7 @@
 </section>
 </section>
 <section id="basic-compilation-pipeline">
-<h2>Basic compilation pipeline<a class="headerlink" href="#basic-compilation-pipeline" title="Permalink to this heading">#</a></h2>
+<h2>Basic compilation pipeline<a class="headerlink" href="#basic-compilation-pipeline" title="Permalink to this headline">#</a></h2>
 <p>Compilation, in it simplest form, involves the following steps:</p>
 <ol class="arabic simple">
 <li><p>Express circuit in terms of systems native gate set.</p></li>
@@ -547,7 +546,7 @@
 <li><p>Optimize 1Q and 2Q gates.</p></li>
 </ol>
 <section id="system-basis-gates">
-<h3>System basis gates<a class="headerlink" href="#system-basis-gates" title="Permalink to this heading">#</a></h3>
+<h3>System basis gates<a class="headerlink" href="#system-basis-gates" title="Permalink to this headline">#</a></h3>
 <p>Quantum computation greatly benefits from the fact that any computation can be written in terms of polynomial numbers of gates selected from a universal gate set that itself is comprised of a finite number of elements.  This “digitizes” the computation into successive steps.  Alternatives are a “pulse” based, continuous evolution, or ideally, going from initial to final state in a single step by forming the exact desired unitary.  This latter option is rarely, if ever, achievable due to physical constraints, amongst other complications.</p>
 <img alt="../../_images/propagate.png" src="../../_images/propagate.png" />
 <p>In Qiskit, universal gate sets are called <code class="docutils literal notranslate"><span class="pre">basis_gates</span></code>, and in general are over-complete sets. The <code class="docutils literal notranslate"><span class="pre">basis_gates</span></code> for IBM Quantum systems are found in the <code class="docutils literal notranslate"><span class="pre">backend.configuration()</span></code></p>
@@ -600,11 +599,11 @@
 </div>
 </section>
 <section id="initial-qubit-layout">
-<h3>Initial qubit layout<a class="headerlink" href="#initial-qubit-layout" title="Permalink to this heading">#</a></h3>
+<h3>Initial qubit layout<a class="headerlink" href="#initial-qubit-layout" title="Permalink to this headline">#</a></h3>
 <p>The qubits in a circuit are “virtual” qubits in that they exist in abstract only.  To perform the actual computation we must must map these virtual qubits onto the physical qubits of the target quantum system.  There is no unique way to do this, the mapping need only be bijective, and the choice of <code class="docutils literal notranslate"><span class="pre">initial_layout</span></code> can greatly affect the performance of later SWAP mapping, as well as overall fidelity is the selected qubits are overly error prone.</p>
 <img alt="../../_images/mapping.png" src="../../_images/mapping.png" />
 <section id="setting-initial-layout">
-<h4>Setting <code class="docutils literal notranslate"><span class="pre">initial_layout</span></code><a class="headerlink" href="#setting-initial-layout" title="Permalink to this heading">#</a></h4>
+<h4>Setting <code class="docutils literal notranslate"><span class="pre">initial_layout</span></code><a class="headerlink" href="#setting-initial-layout" title="Permalink to this headline">#</a></h4>
 <p>Qiskit will automatically pick an <code class="docutils literal notranslate"><span class="pre">initial_layout</span></code> for you.  The choice of layout depends on the <code class="docutils literal notranslate"><span class="pre">optimization_level</span></code> chosen (default is <code class="docutils literal notranslate"><span class="pre">optimization_level=1</span></code>, as well as additional configuration options.  We will discuss <code class="docutils literal notranslate"><span class="pre">optimization_level</span></code> later, and instead focus on how to manually set the <code class="docutils literal notranslate"><span class="pre">initial_layout</span></code>.  Often times it is best to do so after looking at the calibration data to select the qubits with lowest 1Q errors, measurement errors, and associated <code class="docutils literal notranslate"><span class="pre">cx</span></code> gate errors.</p>
 <p>The calibration data can easily be found on the IBM Quantum  website, e.g. <a class="reference external" href="https://quantum-computing.ibm.com/services?services=systems&amp;system=ibmq_mumbai">Mumbai calibration data</a>.  Alternatively, it can be found via Qiskit.</p>
 <p>The initial virtual -&gt; physical mapping can be manually set using the <code class="docutils literal notranslate"><span class="pre">initial_layout</span></code> argument in <code class="docutils literal notranslate"><span class="pre">transpile</span></code>.  This variable takes a list, amongst other options, where the 0th element tells the transpiler which physical qubit to map virtual qubit 0 to, etc.</p>
@@ -635,7 +634,7 @@
 </section>
 </section>
 <section id="swap-mapping">
-<h3>SWAP mapping<a class="headerlink" href="#swap-mapping" title="Permalink to this heading">#</a></h3>
+<h3>SWAP mapping<a class="headerlink" href="#swap-mapping" title="Permalink to this headline">#</a></h3>
 <p>One of the most important tasks of circuit transpilation/compilation is in the inserting of <code class="docutils literal notranslate"><span class="pre">swap</span></code> gates so as to allow for the limited connectivity of many quantum processors. <code class="docutils literal notranslate"><span class="pre">cx</span></code> gates can only be done between those pairs of qubits listed in the systems coupling map:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -789,10 +788,10 @@
 </section>
 </section>
 <section id="setting-the-level-of-optimization">
-<h2>Setting the level of optimization<a class="headerlink" href="#setting-the-level-of-optimization" title="Permalink to this heading">#</a></h2>
+<h2>Setting the level of optimization<a class="headerlink" href="#setting-the-level-of-optimization" title="Permalink to this headline">#</a></h2>
 <p>Much like standard compiler tool chains where one can specific the level of code optimization, e.g. <code class="docutils literal notranslate"><span class="pre">-O3</span></code>, it is possible to specify the level of quantum circuit optimization that <code class="docutils literal notranslate"><span class="pre">transpile</span></code> performs via the <code class="docutils literal notranslate"><span class="pre">optimization_level</span></code> keyword argument where the level is specified by an integer from 0 to 3.  The basic overview of each option is as follows:</p>
 <section id="optimization-level-0">
-<h3><code class="docutils literal notranslate"><span class="pre">optimization_level=0</span></code><a class="headerlink" href="#optimization-level-0" title="Permalink to this heading">#</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">optimization_level=0</span></code><a class="headerlink" href="#optimization-level-0" title="Permalink to this headline">#</a></h3>
 <ol class="arabic simple">
 <li><p>Convert to target basis gate set.</p></li>
 <li><p>Choose a trivial layout that maps virtual qubit <span class="math notranslate nohighlight">\(i\)</span> to physical qubit <span class="math notranslate nohighlight">\(i\)</span>.</p></li>
@@ -805,7 +804,7 @@ $\texttt{optimization_level=0}$ orders qubits sequentially from $0\dots N-1$.  O
 </ol>
 </section>
 <section id="optimization-level-1">
-<h3><code class="docutils literal notranslate"><span class="pre">optimization_level=1</span></code><a class="headerlink" href="#optimization-level-1" title="Permalink to this heading">#</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">optimization_level=1</span></code><a class="headerlink" href="#optimization-level-1" title="Permalink to this headline">#</a></h3>
 <ol class="arabic simple">
 <li><p>Convert to target basis gate set.</p></li>
 <li><p>Choose a trivial layout that maps virtual qubit <span class="math notranslate nohighlight">\(i\)</span> to physical qubit <span class="math notranslate nohighlight">\(i\)</span>.</p></li>
@@ -818,7 +817,7 @@ $\texttt{optimization_level=1}$ orders qubits sequentially from $0\dots N-1$.  O
 </ol>
 </section>
 <section id="optimization-level-2">
-<h3><code class="docutils literal notranslate"><span class="pre">optimization_level=2</span></code><a class="headerlink" href="#optimization-level-2" title="Permalink to this heading">#</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">optimization_level=2</span></code><a class="headerlink" href="#optimization-level-2" title="Permalink to this headline">#</a></h3>
 <ol class="arabic simple">
 <li><p>Convert to target basis gate set.</p></li>
 <li><p>Choose a dense (high-connectivity), low-error, initial qubit layout.</p></li>
@@ -827,7 +826,7 @@ $\texttt{optimization_level=1}$ orders qubits sequentially from $0\dots N-1$.  O
 </ol>
 </section>
 <section id="optimization-level-3">
-<h3><code class="docutils literal notranslate"><span class="pre">optimization_level=3</span></code><a class="headerlink" href="#optimization-level-3" title="Permalink to this heading">#</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">optimization_level=3</span></code><a class="headerlink" href="#optimization-level-3" title="Permalink to this headline">#</a></h3>
 <ol class="arabic simple">
 <li><p>Convert to target basis gate set.</p></li>
 <li><p>Select an <code class="docutils literal notranslate"><span class="pre">initial_layout</span></code> based on the Sabre algorithm (not noise aware).</p></li>
@@ -868,7 +867,7 @@ $\texttt{optimization_level=3}$ in Qiskit 0.18+ internally uses an implicit appr
 </section>
 </section>
 <section id="the-best-general-choice-for-transpile-options">
-<h2>The best general choice for <code class="docutils literal notranslate"><span class="pre">transpile</span></code> options<a class="headerlink" href="#the-best-general-choice-for-transpile-options" title="Permalink to this heading">#</a></h2>
+<h2>The best general choice for <code class="docutils literal notranslate"><span class="pre">transpile</span></code> options<a class="headerlink" href="#the-best-general-choice-for-transpile-options" title="Permalink to this headline">#</a></h2>
 <p>By default users who do not want, or cannot, map their circuits by hand via <code class="docutils literal notranslate"><span class="pre">initial_layout</span></code> should select <code class="docutils literal notranslate"><span class="pre">optimization_level=3</span></code> in Qiskit <code class="docutils literal notranslate"><span class="pre">0.19+</span></code> or for earlier versions of Qiskit:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">optimization_level</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
           <span class="n">layout_method</span><span class="o">=</span><span class="s1">&#39;sabre&#39;</span><span class="p">,</span> <span class="n">routing_method</span><span class="o">=</span><span class="s1">&#39;sabre&#39;</span><span class="p">)</span>
@@ -877,7 +876,7 @@ $\texttt{optimization_level=3}$ in Qiskit 0.18+ internally uses an implicit appr
 <p>Additionally, one should transpile a given circuit multiple times (at least ~10) to find the best mapping.  A more in-depth investigation into this can be found in <a class="reference external" href="https://nonhermitian.org/posts/2021/2021-10-31-best_swap_mapper_qiskit.html">this blog post</a>.</p>
 </section>
 <section id="things-not-to-do">
-<h2>Things NOT to do<a class="headerlink" href="#things-not-to-do" title="Permalink to this heading">#</a></h2>
+<h2>Things NOT to do<a class="headerlink" href="#things-not-to-do" title="Permalink to this headline">#</a></h2>
 <p>The following is a list of things that, in general, one should not set:</p>
 <ol class="arabic simple">
 <li><p>Never use anything but the default (‘stochastic’) or <code class="docutils literal notranslate"><span class="pre">sabre</span></code> SWAP mappers.  Other options that can be passed to <code class="docutils literal notranslate"><span class="pre">routing_method</span></code> are <code class="docutils literal notranslate"><span class="pre">basic</span></code> and <code class="docutils literal notranslate"><span class="pre">lookahead</span></code>. <code class="docutils literal notranslate"><span class="pre">basic</span></code> is for learning purposes only, and <code class="docutils literal notranslate"><span class="pre">lookahead</span></code> is not really supported, and will crash and/or take a very long time.</p></li>
@@ -885,7 +884,7 @@ $\texttt{optimization_level=3}$ in Qiskit 0.18+ internally uses an implicit appr
 </ol>
 </section>
 <section id="being-smarter">
-<h2>Being smarter<a class="headerlink" href="#being-smarter" title="Permalink to this heading">#</a></h2>
+<h2>Being smarter<a class="headerlink" href="#being-smarter" title="Permalink to this headline">#</a></h2>
 <p>Often there is a smarter way to encode a circuit given knowledge of the topology and/or feature set of the system.  In the case of our GHZ state it is possible to rewrite the circuit to match a linear nearest-neighbor topology, and thus require no additional SWAP gates on most IBM Quantum systems.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -998,7 +997,7 @@ $\texttt{optimization_level=3}$ in Qiskit 0.18+ internally uses an implicit appr
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
 </p>
   </div>
   

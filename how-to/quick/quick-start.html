@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>Quick start guide &#8212; Enabing Technologies  documentation</title>
 <script>
@@ -38,7 +38,6 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/thebelab-helper.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -48,7 +47,7 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/design-tabs.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <script async="async" src="https://www.google-analytics.com/analytics.js"></script>
     <script>
                 window.ga = window.ga || function () {
@@ -65,7 +64,7 @@
     <link rel="next" title="Using the Qiskit compiler" href="../compiling/compiling.html" />
     <link rel="prev" title="How to guides" href="../howto.html" /> 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="docsearch:language" content="en"> 
+<meta name="docsearch:language" content="None"> 
 <link
   rel="alternate"
   type="application/atom+xml"
@@ -344,9 +343,9 @@
               
               <article class="bd-article" role="main">
                  <section class="tex2jax_ignore mathjax_ignore" id="quick-start-guide">
-<h1>Quick start guide<a class="headerlink" href="#quick-start-guide" title="Permalink to this heading">#</a></h1>
+<h1>Quick start guide<a class="headerlink" href="#quick-start-guide" title="Permalink to this headline">#</a></h1>
 <section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
 <p>Our goal with this quick start guide is to enable users to get good results on IBM Quantum systems with minimal effort and know-how.  In short, below outlines a good initial recipe for:</p>
 <ol class="arabic simple">
 <li><p>Transpiling circuits</p></li>
@@ -370,7 +369,7 @@
 </div>
 </section>
 <section id="frontmatter">
-<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this heading">#</a></h2>
+<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this headline">#</a></h2>
 <p>Here will will show the best current compiling strategy for generic circuits.  As a concrete example we will take a Bernstein-Vazarani circuit and map it onto a 27Q system.  We begin by grabbing the target backend:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -400,7 +399,7 @@
 </div>
 </section>
 <section id="best-transpiling-strategy">
-<h2>Best transpiling strategy<a class="headerlink" href="#best-transpiling-strategy" title="Permalink to this heading">#</a></h2>
+<h2>Best transpiling strategy<a class="headerlink" href="#best-transpiling-strategy" title="Permalink to this headline">#</a></h2>
 <p>As a general rule it is always best to use <code class="docutils literal notranslate"><span class="pre">optimization_level=3</span></code> in Qiskit.  This uses the best swap mapping algorithm, and includes additional gate optimizations that can further optimize your circuits.  Note that there is a bit of code included in <code class="docutils literal notranslate"><span class="pre">optimization_level=3</span></code> that turns on approximate gate synthesis that we do not want.  So also setting <code class="docutils literal notranslate"><span class="pre">approximation_degree=0</span></code> is good.  That is to say when transpiling your circuit(s) once you should do:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -447,7 +446,7 @@
 </div>
 </section>
 <section id="find-the-best-physical-qubits">
-<h2>Find the best physical qubits<a class="headerlink" href="#find-the-best-physical-qubits" title="Permalink to this heading">#</a></h2>
+<h2>Find the best physical qubits<a class="headerlink" href="#find-the-best-physical-qubits" title="Permalink to this headline">#</a></h2>
 <p>Having found the circuit with the lowest number of cnot gates, we are now in a position to find the best (or nearly so) qubits on which to execute the circuit.  You might might be wondering why this step is needed given the the circuits above are already mapped onto qubits.  Well, this is because the choice of qubits used at <code class="docutils literal notranslate"><span class="pre">optimization_level=3</span></code> is selected to try to best minimize the number of added swap gates, but is chosen at random.  Given the variability of qubits and gates found on today’s hardware, those qubits are likely not ideal.  So here we look for the best qubits using <code class="docutils literal notranslate"><span class="pre">mapomatic</span></code> and remap the circuit onto them.</p>
 <div class="alert alert-info">
 If you do not have mapomatic installed, you can do so via:<font style="font-family:'Courier New'"> pip install mapomatic</font>.
@@ -498,7 +497,7 @@ If you do not have mapomatic installed, you can do so via:<font style="font-fami
 </div>
 </section>
 <section id="simple-error-suppression">
-<h2>Simple error suppression<a class="headerlink" href="#simple-error-suppression" title="Permalink to this heading">#</a></h2>
+<h2>Simple error suppression<a class="headerlink" href="#simple-error-suppression" title="Permalink to this headline">#</a></h2>
 <p>Having now settled on a good set of qubits we can now apply dynamical decoupling (DD) to suppress some forms of errors.  Doing this requires a few additional imports.  Here we do a very simple DD gate (pulse) sequence of two X-gates.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -542,7 +541,7 @@ If you do not have mapomatic installed, you can do so via:<font style="font-fami
 </div>
 </section>
 <section id="readout-error-mitigation-optional">
-<h2>Readout error mitigation (optional)<a class="headerlink" href="#readout-error-mitigation-optional" title="Permalink to this heading">#</a></h2>
+<h2>Readout error mitigation (optional)<a class="headerlink" href="#readout-error-mitigation-optional" title="Permalink to this headline">#</a></h2>
 <p>The basic circuit operations with the largest error rates on the IBM Quantum systems are measurements.  Given that microwave photons are some 5 orders of magnitude less energetic than their visible counterparts, this should not be surprising.  Luckily it is straightforward to reduce the impact of these errors through mitigation.  Here we will do so via M3.</p>
 <div class="alert alert-info">
 If you do not have M3 installed, you can do so via:<font style="font-family:'Courier New'"> pip install mthree</font>.
@@ -647,7 +646,7 @@ If you do not have M3 installed, you can do so via:<font style="font-family:'Cou
 </div>
 </div>
 </div>
-<p>Where as our correect quasi-probability results give:</p>
+<p>Whereas our correct quasi-probability results give:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">quasi</span><span class="o">.</span><span class="n">expval</span><span class="p">(</span><span class="s1">&#39;ZZZZZ&#39;</span><span class="p">)</span>
@@ -746,7 +745,7 @@ If you do not have M3 installed, you can do so via:<font style="font-family:'Cou
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
 </p>
   </div>
   

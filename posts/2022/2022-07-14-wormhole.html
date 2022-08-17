@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>Going down the Wormhole &#8212; Enabing Technologies  documentation</title>
 <script>
@@ -38,7 +38,6 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/thebelab-helper.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -48,7 +47,7 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/design-tabs.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <script async="async" src="https://www.google-analytics.com/analytics.js"></script>
     <script>
                 window.ga = window.ga || function () {
@@ -63,7 +62,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="docsearch:language" content="en"> 
+<meta name="docsearch:language" content="None"> 
 <link
   rel="alternate"
   type="application/atom+xml"
@@ -355,14 +354,14 @@
               
               <article class="bd-article" role="main">
                  <section class="tex2jax_ignore mathjax_ignore" id="going-down-the-wormhole">
-<h1>Going down the Wormhole<a class="headerlink" href="#going-down-the-wormhole" title="Permalink to this heading">#</a></h1>
-<p>Recently our Partners over at Lawrence Berkeley National Laboratory (LBNL) published an interesting paper on probing quantum gravity in the lab: <a class="reference external" href="https://arxiv.org/abs/2205.14081">arXiv:2205.14081</a>.  This paper caught our eye for two reasons. First, it is about teleportation via wormholes, so why not check it out?.  Second, it compares our quantum systems verses the trapped-ion systems from Quantinuum.  From a competitive standpoint, these types of papers are fun to look at and see if we can do better.  Trying to do so is the basis for this notebook.  If you want all the details you will need to see the paper, however the basics can be gathered from Figure 1 in the paper:</p>
+<h1>Going down the Wormhole<a class="headerlink" href="#going-down-the-wormhole" title="Permalink to this headline">#</a></h1>
+<p>Recently our Partners over at Lawrence Berkeley National Laboratory (LBNL) published an interesting paper on probing quantum gravity in the lab: <a class="reference external" href="https://arxiv.org/abs/2205.14081">arXiv:2205.14081</a>.  This paper caught our eye for two reasons. First, it is about teleportation via wormholes, so why not check it out?  Second, it compares our quantum systems verses the trapped-ion systems from Quantinuum.  From a competitive standpoint, these types of papers are fun to look at and see if we can do better.  Trying to do so is the basis for this notebook.  If you want all the details you will need to see the paper, however the basics can be gathered from Figure 1 in the paper:</p>
 <img alt="../../_images/circuit.png" src="../../_images/circuit.png" />
-<p>Basically they are creating entangled pairs of qubits at the beginning; a prerequisite of all teleportation procedures.  Doing evolution backward and forward by the same about of time on the <code class="docutils literal notranslate"><span class="pre">L</span></code> group, coupling the L and R groups of qubits with a tunable phase <code class="docutils literal notranslate"><span class="pre">g</span></code>, and then performing the forward evolution again on the <code class="docutils literal notranslate"><span class="pre">R</span></code> group of qubits, and then measuring the state on the bottom qubit.  As a function of the coupling <code class="docutils literal notranslate"><span class="pre">g</span></code> the expectation value of the <code class="docutils literal notranslate"><span class="pre">Z</span></code> operator on the last qubit in both simulation and on the real quantum hardware is seen to be:</p>
+<p>Basically they are creating entangled pairs of qubits at the beginning; a prerequisite of all teleportation procedures.  Doing evolution backward and forward by the same amout of time on the <code class="docutils literal notranslate"><span class="pre">L</span></code> group, coupling the L and R groups of qubits with a tunable phase <code class="docutils literal notranslate"><span class="pre">g</span></code>, and then performing the forward evolution again on the <code class="docutils literal notranslate"><span class="pre">R</span></code> group of qubits, and then measuring the state on the bottom qubit.  As a function of the coupling <code class="docutils literal notranslate"><span class="pre">g</span></code> the expectation value of the <code class="docutils literal notranslate"><span class="pre">Z</span></code> operator on the last qubit in both simulation and on the real quantum hardware is seen to be:</p>
 <img alt="../../_images/results.png" src="../../_images/results.png" />
 <p>We see the signal oscillates as a function of <code class="docutils literal notranslate"><span class="pre">g</span></code> with the minimum “signal” at <span class="math notranslate nohighlight">\(g/2\pi=0.25\)</span>.  Quantinuum gets close to 80% of this value while IBM Quantum obtains at most ~35% with error mitigation turned on, and 20% with it off on the <code class="docutils literal notranslate"><span class="pre">ibmq_montreal</span></code> Falcon R4 system.  Our goal is to see if we can do better.</p>
 <section id="frontmatter">
-<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this heading">#</a></h2>
+<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this headline">#</a></h2>
 <p>Lets import what we need.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -402,7 +401,7 @@
 </div>
 </section>
 <section id="circuit-construction-and-simulation">
-<h2>Circuit construction and simulation<a class="headerlink" href="#circuit-construction-and-simulation" title="Permalink to this heading">#</a></h2>
+<h2>Circuit construction and simulation<a class="headerlink" href="#circuit-construction-and-simulation" title="Permalink to this headline">#</a></h2>
 <p>The authors of the paper were kind enough to include <a class="reference external" href="https://gitlab.com/ishapova/qglab">a link that includes the code to build the circuits that they ran</a>.  I took their definition of the circuits, extracted the basic building blocks and converted it into a single parameterized circuit with the coupling <code class="docutils literal notranslate"><span class="pre">g</span></code> being the parameter:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -503,7 +502,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/0dd7eddbb1f44c6a0091816f8eba2e1d0f1763ab2b7c7632dab8e68561b8f2cf.png" src="../../_images/0dd7eddbb1f44c6a0091816f8eba2e1d0f1763ab2b7c7632dab8e68561b8f2cf.png" />
+<img alt="../../_images/be0623a9f5aedbf9c2ae911c6c4309a6f9c181cb630fa586a75da827b899635c.png" src="../../_images/be0623a9f5aedbf9c2ae911c6c4309a6f9c181cb630fa586a75da827b899635c.png" />
 </div>
 </div>
 <p>Now, given that this experiment is only 6 qubits it is trivial to simulate, and it is best to verify that we see what we want.  So first I will bind the values of <code class="docutils literal notranslate"><span class="pre">g</span></code> that I am interested in to the circuit.  Here I will vary <code class="docutils literal notranslate"><span class="pre">g</span></code> over <span class="math notranslate nohighlight">\(2\pi\)</span>:</p>
@@ -574,7 +573,7 @@
 </div>
 </div>
 </div>
-<p>We cannot directly simulate the circuits as is because they are not mapped to the system.  Here we will transpile them according to our Quick Start recipe where we do it multiple times and take the one with lowest <code class="docutils literal notranslate"><span class="pre">cx</span></code> gate count.  Here I work only on the unbound circuit <code class="docutils literal notranslate"><span class="pre">qc</span></code> for simplicity:</p>
+<p>We cannot directly simulate the circuits as is because they are not mapped to the system.  Here we will transpile them according to our <a class="reference internal" href="../../how-to/quick/quick-start.html"><span class="doc std std-doc">Quick Start recipe</span></a> where we do it multiple times and take the one with lowest <code class="docutils literal notranslate"><span class="pre">cx</span></code> gate count.  Here I work only on the unbound circuit <code class="docutils literal notranslate"><span class="pre">qc</span></code> for simplicity:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trans_circs</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">([</span><span class="n">qc</span><span class="p">]</span><span class="o">*</span><span class="mi">10</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">optimization_level</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">approximation_degree</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -586,7 +585,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[30 38 52 37 38 47 38 38 52 38]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[30 38 38 38 36 38 30 38 38 40]
 </pre></div>
 </div>
 </div>
@@ -640,7 +639,7 @@
 <p>So we see that, according to the noisy simulation we did, we should get about 65% of the signal at <span class="math notranslate nohighlight">\(g/2\pi=0.25\)</span>.  This is ~3x better than the results from the paper, so lets run it for real and see.</p>
 </section>
 <section id="execution-on-actual-hardware">
-<h2>Execution on actual hardware<a class="headerlink" href="#execution-on-actual-hardware" title="Permalink to this heading">#</a></h2>
+<h2>Execution on actual hardware<a class="headerlink" href="#execution-on-actual-hardware" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">real_counts</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">best_trans_circs</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="n">shots</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
@@ -670,11 +669,11 @@
 <img alt="../../_images/e65d88106f2ea6ce764da298f15723444ecb67a92b07f5cc651f32b228cd7632.png" src="../../_images/e65d88106f2ea6ce764da298f15723444ecb67a92b07f5cc651f32b228cd7632.png" />
 </div>
 </div>
-<p>Well crap.  It turns out we get basically noise across the board.  Did we do something wrong?  Not really, it turns out that <strong>if you run the above on any IBM Quantum system you get noise!</strong>.  How the paper authors got 20% signal from their “raw” experiments is still a mystery to me.  What is not a mystery is how to fix the problem, although it took a while to figure out.</p>
+<p>Well crap.  It turns out we get basically noise across the board.  Did we do something wrong?  Not really, it turns out that <strong>if you run the above on any IBM Quantum system you get noise!</strong>  How the paper authors got 20% signal from their “raw” experiments is still a mystery to me.  What is not a mystery is how to fix the problem, although it took a while to figure out.</p>
 </section>
 <section id="fixing-the-problem">
-<h2>Fixing the problem<a class="headerlink" href="#fixing-the-problem" title="Permalink to this heading">#</a></h2>
-<p>So we get junk on every system.  Do we give up?  No way.  If you read the Quick Start guide you will note that so far we did not apply our dynamical decoupling (DD) step to this problem.  That is where the solution is.  If we look at Figure 1 posted at the top of the notebook you will notice that the last qubit, the one that is being measured, is sitting idle (just an empty wire) for the majority of the circuit duration.  Thus that qubit, amongst others, is subject to dephasing unless we apply DD as an error suppression tool.</p>
+<h2>Fixing the problem<a class="headerlink" href="#fixing-the-problem" title="Permalink to this headline">#</a></h2>
+<p>So we get junk on every system.  Do we give up?  No way.  If you read the <a class="reference internal" href="../../how-to/quick/quick-start.html"><span class="doc std std-doc">Quick Start guide</span></a> you will note that so far we did not apply our dynamical decoupling (DD) step to this problem.  That is where the solution is.  If we look at Figure 1 posted at the top of the notebook you will notice that the last qubit, the one that is being measured, is sitting idle (just an empty wire) for the majority of the circuit duration.  Thus that qubit, amongst others, is subject to dephasing unless we apply DD as an error suppression tool.</p>
 <p>Our previous simulations did not pick that up because taking dephasing into account requires timing information in the circuit.  To get that information we must “schedule” our circuits.  Here we do “as-late-as-possible” scheduling, which is what the actual devices do:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -689,6 +688,9 @@
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sched_circs</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/ec1560cbc97ad223fdfd38ecef8654a1a2e8a0e4ed8ebdc3a747b776d9ce7779.png" src="../../_images/ec1560cbc97ad223fdfd38ecef8654a1a2e8a0e4ed8ebdc3a747b776d9ce7779.png" />
 </div>
 </div>
 <p>It is a bit long, but you see that there are a large number of <code class="docutils literal notranslate"><span class="pre">delay</span></code> instructions in the circuit that enforce the timing of the operations in the circuit. The <code class="docutils literal notranslate"><span class="pre">delay</span></code> are all measured in <code class="docutils literal notranslate"><span class="pre">dt</span></code>, and looking closely one can see values that go up to ~60,000 <code class="docutils literal notranslate"><span class="pre">dt</span></code>, e.g. on qubit 19.  How long is that in units of time? Well, we have to ask the backend what <code class="docutils literal notranslate"><span class="pre">dt</span></code> means in terms of seconds:</p>
@@ -748,7 +750,7 @@
 <img alt="../../_images/74edeabe5a50840ddbb8374e1d816c4703512d8bc6ac48e28be21f0ccd5ec3da.png" src="../../_images/74edeabe5a50840ddbb8374e1d816c4703512d8bc6ac48e28be21f0ccd5ec3da.png" />
 </div>
 </div>
-<p>So we see that idle times do play a big role in this problem.  Even with the idle information the simulator still shows we should be doing much better then we do, but that is often the case with simulators; simulations always yield better results than what hardware is capable of.  Let us now add our basic DD sequence from the Quick Start guide, and see if that helps.</p>
+<p>So we see that idle times do play a big role in this problem.  Even with the idle information the simulator still shows we should be doing much better then we do, but that is often the case with simulators; simulations always yield better results than what hardware is capable of.  Let us now add our basic DD sequence from the <a class="reference internal" href="../../how-to/quick/quick-start.html"><span class="doc std std-doc">Quick Start guide</span></a>, and see if that helps.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">durations</span> <span class="o">=</span> <span class="n">InstructionDurations</span><span class="o">.</span><span class="n">from_backend</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
@@ -812,7 +814,7 @@
 <p>Ok, now we see the benefit of DD.  We finally have something other than noise!  Not as good as the simulations show, but again, this is not too surprising.  We still do not have as good a result as the original authors did, but that may be because our circuit uses a <code class="docutils literal notranslate"><span class="pre">reset</span></code> instruction, where the original used a <code class="docutils literal notranslate"><span class="pre">swap</span></code> gate.  On a Falcon R4 <code class="docutils literal notranslate"><span class="pre">resets</span></code> (measurements) are very long, and thus cause a host of issues.  To find out if we can do better, let us move to a newer system.</p>
 </section>
 <section id="executing-on-a-newer-system">
-<h2>Executing on a newer system<a class="headerlink" href="#executing-on-a-newer-system" title="Permalink to this heading">#</a></h2>
+<h2>Executing on a newer system<a class="headerlink" href="#executing-on-a-newer-system" title="Permalink to this headline">#</a></h2>
 <p>As stated before, every system returns bad results for this problem unless DD is added.  Let us see what we can do on a newer system following the steps above.  Here we choose the <code class="docutils literal notranslate"><span class="pre">ibm_peekskill</span></code> Falcon R8 system.  Amongst other things, it features coherence times that are ~3x longer than that of the <code class="docutils literal notranslate"><span class="pre">ibmq_montreal</span></code> system.  So the effects of dephasing relaxation should be less. For brevity I will just do all the steps at once and produce the final plot.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1001,7 +1003,7 @@
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
 </p>
   </div>
   

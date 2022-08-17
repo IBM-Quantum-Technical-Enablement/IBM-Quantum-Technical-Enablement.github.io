@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>Mesurement error mitigation using M3 &#8212; Enabing Technologies  documentation</title>
 <script>
@@ -38,7 +38,6 @@
     <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
-    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/thebelab-helper.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -48,7 +47,7 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../../_static/design-tabs.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <script async="async" src="https://www.google-analytics.com/analytics.js"></script>
     <script>
                 window.ga = window.ga || function () {
@@ -65,7 +64,7 @@
     <link rel="next" title="Matplotlib styles" href="../../visualization/matplotlib.html" />
     <link rel="prev" title="Dynamical Decoupling" href="../../dynamical_decoupling/dynamical_decoupling.html" /> 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="docsearch:language" content="en"> 
+<meta name="docsearch:language" content="None"> 
 <link
   rel="alternate"
   type="application/atom+xml"
@@ -373,13 +372,13 @@
               
               <article class="bd-article" role="main">
                  <section class="tex2jax_ignore mathjax_ignore" id="mesurement-error-mitigation-using-m3">
-<h1>Mesurement error mitigation using M3<a class="headerlink" href="#mesurement-error-mitigation-using-m3" title="Permalink to this heading">#</a></h1>
+<h1>Mesurement error mitigation using M3<a class="headerlink" href="#mesurement-error-mitigation-using-m3" title="Permalink to this headline">#</a></h1>
 <section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
 <p>Here we show how to mitigate measurements on IBM Quantum systems in a scalable manner using the <a class="reference external" href="https://qiskit.org/documentation/partners/mthree/">M3 package</a>.</p>
 </section>
 <section id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h2>
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">#</a></h2>
 <p>For short-depth near term applications, measurement errors can greatly affect the computation of expectation values and other quantities on today’s quantum systems.  M3 allows one to easily mitigate these measurement errors up to numbers of qubits that are otherwise out of reach for other mitigation methods.  Mitigation involves three steps:</p>
 <ol class="arabic simple">
 <li><p>Construct a mitigator targeting a backend (<code class="docutils literal notranslate"><span class="pre">backend</span></code>).</p></li>
@@ -403,7 +402,7 @@
 <p>These quasiprobabilities can then be used directly to compute expectation values.  A complete users guide can be found in the <a class="reference external" href="https://qiskit.org/documentation/partners/mthree">M3 documentation</a>.  Additionally, M3 can called as an option in the Qiskit runtime base programs.</p>
 </section>
 <section id="frontmatter">
-<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this heading">#</a></h2>
+<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -422,7 +421,7 @@
 </div>
 </section>
 <section id="background">
-<h2>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h2>
+<h2>Background<a class="headerlink" href="#background" title="Permalink to this headline">#</a></h2>
 <p>Although the power of quantum computation lies in the ability to create large amounts of entanglement and explore large swaths of Hilbert space, at the end of the day the result encoded in the terminal quantum state must be converted to classical information by measuring the qubits.  There is also the possibility of mid-circuit measurements, but we will not address those here.</p>
 <p>Measurements are not perfect and have a non-negligible amount of error associated with them (taken from PRX Quantum 2, 040326 (2021))</p>
 <a class="reference internal image-reference" href="../../../_images/meas-error-table.png"><img alt="../../../_images/meas-error-table.png" src="../../../_images/meas-error-table.png" style="width: 50%;" /></a>
@@ -440,7 +439,7 @@ A \vec{p}_{\rm ideal} = \vec{p}_{\rm noisy}
 <p>Depending on the solution method, the output <span class="math notranslate nohighlight">\(\vec{p}_{\rm ideal}\)</span> is not guaranteed to be a physical probability vector.  Rather it is usually a vector of quasiprobabilities; a distribution that contains negative values but still sums to one.  Luckily this does not matter when computing expectation values, and we can use these quasiprobabilities directly in our calculations.</p>
 </section>
 <section id="expectation-values">
-<h2>Expectation values<a class="headerlink" href="#expectation-values" title="Permalink to this heading">#</a></h2>
+<h2>Expectation values<a class="headerlink" href="#expectation-values" title="Permalink to this headline">#</a></h2>
 <p>Expectation values of Hermitian operators are the observables that can be measured for a quantum state.  Given that expectation values correspond to averages, formally an expectation value is the value that one would get by measuring a given operator infinity many times and averaging over the results of these measurements.  In practice one is limited to a finite number of samples from a given state and as such expectation values computed from a quantum computer are necessarily approximations to the true value; the precision of the computed value improving as <span class="math notranslate nohighlight">\(1/\sqrt{\rm samples}\)</span>.</p>
 <p>IBM Quantum systems, like the vast majority of quantum architectures, can only measure in a single basis called the “computational basis” that defines the z-axis in the Bloch sphere representation of a single-qubit quantum state.</p>
 <a class="reference internal image-reference" href="../../../_images/empty-bloch.png"><img alt="../../../_images/empty-bloch.png" src="../../../_images/empty-bloch.png" style="width: 40%;" /></a>
@@ -460,7 +459,7 @@ X = \begin{bmatrix} 0 &amp; 1 \\ 1 &amp; 0\end{bmatrix}; \ \ Y = \begin{bmatrix}
 <p>Similarly for the <code class="docutils literal notranslate"><span class="pre">Y</span></code> operator we can append an <span class="math notranslate nohighlight">\(S^{\dagger}\)</span> gate to align the <span class="math notranslate nohighlight">\(|\pm y\rangle\)</span> states with the corresponding x-axes, and then follow that up with a <code class="docutils literal notranslate"><span class="pre">H</span></code> gate as done above.</p>
 <a class="reference internal image-reference" href="../../../_images/bloch-ybasis.png"><img alt="../../../_images/bloch-ybasis.png" src="../../../_images/bloch-ybasis.png" style="width: 40%;" /></a>
 <section id="computing-expectation-values">
-<h3>Computing expectation values<a class="headerlink" href="#computing-expectation-values" title="Permalink to this heading">#</a></h3>
+<h3>Computing expectation values<a class="headerlink" href="#computing-expectation-values" title="Permalink to this headline">#</a></h3>
 <p>We now turn to the question of how to compute the expectation value of a given operator from data returned by the quantum computer.  Coming back to the BV circuit discussed earlier, we see that at the end of the algorithm all the qubits used for encoding the secret bit-string have a Hadamard gate followed by a measurement.  From our explanation above we see this to be nothing more than measuring each of the qubits in the x-basis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -628,7 +627,7 @@ X = \begin{bmatrix} 0 &amp; 1 \\ 1 &amp; 0\end{bmatrix}; \ \ Y = \begin{bmatrix}
 </section>
 </section>
 <section id="matrix-free-measurement-mitigation-m3">
-<h2>Matrix-free Measurement Mitigation (M3)<a class="headerlink" href="#matrix-free-measurement-mitigation-m3" title="Permalink to this heading">#</a></h2>
+<h2>Matrix-free Measurement Mitigation (M3)<a class="headerlink" href="#matrix-free-measurement-mitigation-m3" title="Permalink to this headline">#</a></h2>
 <p>Here we will see how to use the M3 measurement mitigation method.  M3 is not a part of Qiskit and must be installed separately:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install mthree
 </pre></div>
@@ -637,7 +636,7 @@ X = \begin{bmatrix} 0 &amp; 1 \\ 1 &amp; 0\end{bmatrix}; \ \ Y = \begin{bmatrix}
 <img alt="../../../_images/m3-truncation.png" src="../../../_images/m3-truncation.png" />
 <p>that reduces the dimensionality to be equal to the number of unique bit-strings  in the noisy output distribution.  If the number of unique bit-strings is itself too large for explicit matrix construction then M3 will exploit the structure of the A-matrix to efficiently solve the linear system via matrix-free iterative methods.  This all sounds complicated, however the actual usage of M3 is straightforward and best demonstrated via examples.</p>
 <section id="simple-m3-example">
-<h3>Simple M3 example<a class="headerlink" href="#simple-m3-example" title="Permalink to this heading">#</a></h3>
+<h3>Simple M3 example<a class="headerlink" href="#simple-m3-example" title="Permalink to this headline">#</a></h3>
 <p>Here we look at a simple example of a 12 qubit circuit that maps directly onto a linear topology.  We begin here as there is there is no additional qubit permutations from the SWAP mapper.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -763,7 +762,7 @@ X = \begin{bmatrix} 0 &amp; 1 \\ 1 &amp; 0\end{bmatrix}; \ \ Y = \begin{bmatrix}
 </div>
 </section>
 <section id="mitigating-transpiled-circuits">
-<h3>Mitigating transpiled circuits<a class="headerlink" href="#mitigating-transpiled-circuits" title="Permalink to this heading">#</a></h3>
+<h3>Mitigating transpiled circuits<a class="headerlink" href="#mitigating-transpiled-circuits" title="Permalink to this headline">#</a></h3>
 <p>We have seen that SWAP mapping (transpiling) a circuit nominally permutes the assignment of qubits at the end of a circuit from the <code class="docutils literal notranslate"><span class="pre">initial_layout</span></code> that was supplied by the user or auto-generated.  Going back to our GHZ example:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -852,7 +851,7 @@ X = \begin{bmatrix} 0 &amp; 1 \\ 1 &amp; 0\end{bmatrix}; \ \ Y = \begin{bmatrix}
 </div>
 </section>
 <section id="getting-a-probability-distribution">
-<h3>Getting a probability distribution<a class="headerlink" href="#getting-a-probability-distribution" title="Permalink to this heading">#</a></h3>
+<h3>Getting a probability distribution<a class="headerlink" href="#getting-a-probability-distribution" title="Permalink to this headline">#</a></h3>
 <p>For those who would like to get the closest probability distribution, in the sense of <span class="math notranslate nohighlight">\(L^{2}\)</span>-norm one can use the <code class="docutils literal notranslate"><span class="pre">nearest_probability_distribution</span></code> method of the quasiprobabilites.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -913,7 +912,7 @@ X = \begin{bmatrix} 0 &amp; 1 \\ 1 &amp; 0\end{bmatrix}; \ \ Y = \begin{bmatrix}
 </section>
 </section>
 <section id="final-notes">
-<h2>Final notes<a class="headerlink" href="#final-notes" title="Permalink to this heading">#</a></h2>
+<h2>Final notes<a class="headerlink" href="#final-notes" title="Permalink to this headline">#</a></h2>
 <ol class="arabic simple">
 <li><p>Typically you know all the qubits you are using ahead of time, and therefore the calibrate procedure need only be done once by passing the entire set of qubits to <code class="docutils literal notranslate"><span class="pre">cals_from_system</span></code> (can be in the form of a list of final mappings.</p></li>
 <li><p>One can correct multiple circuits at once by supplying a list of circuits and  measured qubits or mappings to <code class="docutils literal notranslate"><span class="pre">apply_correction</span></code>.</p></li>
@@ -981,7 +980,7 @@ X = \begin{bmatrix} 0 &amp; 1 \\ 1 &amp; 0\end{bmatrix}; \ \ Y = \begin{bmatrix}
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
 </p>
   </div>
   

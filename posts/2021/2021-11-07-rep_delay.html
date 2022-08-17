@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>Improving state prep errors on IBM Quantum systems &#8212; Enabing Technologies  documentation</title>
 <script>
@@ -38,7 +38,6 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/thebelab-helper.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -48,7 +47,7 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/design-tabs.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <script async="async" src="https://www.google-analytics.com/analytics.js"></script>
     <script>
                 window.ga = window.ga || function () {
@@ -63,7 +62,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="docsearch:language" content="en"> 
+<meta name="docsearch:language" content="None"> 
 <link
   rel="alternate"
   type="application/atom+xml"
@@ -432,17 +431,17 @@
               
               <article class="bd-article" role="main">
                  <section class="tex2jax_ignore mathjax_ignore" id="improving-state-prep-errors-on-ibm-quantum-systems">
-<h1>Improving state prep errors on IBM Quantum systems<a class="headerlink" href="#improving-state-prep-errors-on-ibm-quantum-systems" title="Permalink to this heading">#</a></h1>
+<h1>Improving state prep errors on IBM Quantum systems<a class="headerlink" href="#improving-state-prep-errors-on-ibm-quantum-systems" title="Permalink to this headline">#</a></h1>
 <p>It is often taken for granted that qubits are initialized to zero when executing quantum circuits on hardware.  However, errors in the reset process mean that this initialization is not perfect leading to state preparation errors.  Here we will look at state prep errors and how to improve them on IBM Quantum systems.</p>
 <p>Here we will use two lesser known configuration variables available on IBM Quantum systems to do so.  First is <code class="docutils literal notranslate"><span class="pre">rep_delay</span></code>.  This is the delay time before the next circuit is executed.  Each backend has a different <code class="docutils literal notranslate"><span class="pre">default_rep_delay</span></code> (although as of the time of writing many are <span class="math notranslate nohighlight">\(250~\mu \rm s\)</span> or lower) and support tuning this parameter from <span class="math notranslate nohighlight">\(0\)</span> up to <span class="math notranslate nohighlight">\(500~\mu \rm s\)</span>.  Why in the world would I want to vary this parameter?  Well if I set <code class="docutils literal notranslate"><span class="pre">rep_delay=0</span></code> then I can get much faster throughput as the default delay is nominally longer than the <span class="math notranslate nohighlight">\(T_{1}\)</span> time of the system.  However when doing so you are trusting the implicit reset (called “unconditional reset”) to do its job and reset the qubits to their ground state with high-fidelity.  Failure to do so would lead to state-prep errors that propagate through the circuit.  This is why the delay is usually longer than <span class="math notranslate nohighlight">\(T_{1}\)</span>; let the enviornment help your reset fidelity.  Second is <code class="docutils literal notranslate"><span class="pre">init_qubits</span></code> that tells the hardware to not perform an unconditional reset.  As no reset at all would quickly lead to junk, this setting needs to be done in concert with <code class="docutils literal notranslate"><span class="pre">reset</span></code> instructions being added to the beginning of your circuits.  Perhaps this is better, or maybe a single reset at the beginning and the uncondtional reset.  Lets find out.</p>
 <section id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h2>
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">#</a></h2>
 <p>It is possible to vary the delay time between circuits using <code class="docutils literal notranslate"><span class="pre">rep_delay</span></code> and to turn off the implict reset done on IBM Quantum systems using <code class="docutils literal notranslate"><span class="pre">init_qubits=False</span></code>.  In the latter case, qubit initialization needs to be done using one or more <code class="docutils literal notranslate"><span class="pre">reset</span></code> instructions.  By looking a SPAM errors as we vary <code class="docutils literal notranslate"><span class="pre">rep_delay</span></code> we can see when state prep errors being to get worse.  This is quite apparent on some systems but not others.</p>
 <p>To reduce state prep errors one can try increasing the <code class="docutils literal notranslate"><span class="pre">rep_delay</span></code>.  Occasionally this is needed, and going up to <span class="math notranslate nohighlight">\(~400~\mu \rm s\)</span> is not unheard of to try and get maximum fidelity results.  In addition, or alternatively, it is in general beneficial to add a single <code class="docutils literal notranslate"><span class="pre">reset</span></code> to the beginning of a circuit (after a barrier since Qiskit will remove it otherwise).  On some systems we can use multiple resets in combination with <code class="docutils literal notranslate"><span class="pre">init_qubits=False</span></code> to get better error rates and simultaneously allow for increasing throughput through smaller (possibly zero) <code class="docutils literal notranslate"><span class="pre">rep_delay</span></code>.</p>
 <p>These features give users yet another knob to try to maximize the fidelty of their circuits, but require a fair bit of exploration and experimentation in order to get it right.}</p>
 </section>
 <section id="average-spam-error-rate-per-qubit">
-<h2>Average SPAM error rate per qubit<a class="headerlink" href="#average-spam-error-rate-per-qubit" title="Permalink to this heading">#</a></h2>
+<h2>Average SPAM error rate per qubit<a class="headerlink" href="#average-spam-error-rate-per-qubit" title="Permalink to this headline">#</a></h2>
 <p>To understand what effect the above mentioned variables have on the performance of our system we must first find a way to compute state preperation and measurement (SPAM) errors.  To do so we will assume that we want to look at the error rate for prepping and measuring a state in the computational basis.  Here we will use the all-zeros and all-ones states where each qubit undergoes the same operations.  We can ask ourselves that, given that we know the target state we want to prep, what is the average Hamming distance of our samples from the target bit string.  In formula this reads:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -457,7 +456,7 @@ p = H_{\rm frac} \equiv \frac{\bar{H}}{N_{Q}}
 <p>Thus it is quite easy to get the average error <span class="math notranslate nohighlight">\(p\)</span> we are looking for directly by computing the average Hamming distance our data is away from the target bit string.</p>
 </section>
 <section id="frontmatter">
-<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this heading">#</a></h2>
+<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -472,7 +471,7 @@ p = H_{\rm frac} \equiv \frac{\bar{H}}{N_{Q}}
 </div>
 </div>
 <section id="define-needed-functions">
-<h3>Define needed functions<a class="headerlink" href="#define-needed-functions" title="Permalink to this heading">#</a></h3>
+<h3>Define needed functions<a class="headerlink" href="#define-needed-functions" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">target_basis_circ</span><span class="p">(</span><span class="n">bitstring</span><span class="p">,</span> <span class="n">with_reset</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -547,10 +546,10 @@ p = H_{\rm frac} \equiv \frac{\bar{H}}{N_{Q}}
 </section>
 </section>
 <section id="experiments">
-<h2>Experiments<a class="headerlink" href="#experiments" title="Permalink to this heading">#</a></h2>
+<h2>Experiments<a class="headerlink" href="#experiments" title="Permalink to this headline">#</a></h2>
 <p>Here we measure the SPAM error rate per qubit for the all-zeros and all-ones states as a function of <code class="docutils literal notranslate"><span class="pre">rep_delay</span></code> and also explore the use of <code class="docutils literal notranslate"><span class="pre">resets</span></code> and the <code class="docutils literal notranslate"><span class="pre">init_qubits</span></code> functionality.  We expect these two states to be different as the all-ones state is affected by <span class="math notranslate nohighlight">\(T_{1}\)</span> whereas th all-zeros state is weakly affected by thermal excitations.  What we a priori do not know is how a change in <code class="docutils literal notranslate"><span class="pre">rep_delay</span></code> changes the per qubit SPAM error rate, nor how does the use of <code class="docutils literal notranslate"><span class="pre">reset</span></code> operations changes anything.  Things are also likely system specific so we just need to explore.</p>
 <section id="effect-of-rep-delay-on-state-prep-error">
-<h3>Effect of <code class="docutils literal notranslate"><span class="pre">rep_delay</span></code> on state prep error<a class="headerlink" href="#effect-of-rep-delay-on-state-prep-error" title="Permalink to this heading">#</a></h3>
+<h3>Effect of <code class="docutils literal notranslate"><span class="pre">rep_delay</span></code> on state prep error<a class="headerlink" href="#effect-of-rep-delay-on-state-prep-error" title="Permalink to this headline">#</a></h3>
 <p>To begin let us look at a good example of how varying the <code class="docutils literal notranslate"><span class="pre">rep_delay</span></code> can affect the error rate of our system.  Here we will look at some data taken with the above routines on the <code class="docutils literal notranslate"><span class="pre">ibmq_montreal</span></code> system which is a 27Q Falcon R4 device.  Since not everyone has access to this system I will just show the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -595,7 +594,7 @@ p = H_{\rm frac} \equiv \frac{\bar{H}}{N_{Q}}
 <p>Montreal is the system with the fastest <code class="docutils literal notranslate"><span class="pre">default_rep_delay</span></code> at <span class="math notranslate nohighlight">\(50~\mu \rm s\)</span> (vertical dashed line).  Above we see a very clear rise in error rates as the <code class="docutils literal notranslate"><span class="pre">rep_delay</span></code> increases indicating state prep errors starting to creep in.  For those users trying to maximize the fidelity of results, going up to something around <span class="math notranslate nohighlight">\(200~\mu \rm s\)</span> for <code class="docutils literal notranslate"><span class="pre">rep_delay</span></code> is likely a good thing to do here.</p>
 </section>
 <section id="q-manila-system">
-<h3>5Q Manila system<a class="headerlink" href="#q-manila-system" title="Permalink to this heading">#</a></h3>
+<h3>5Q Manila system<a class="headerlink" href="#q-manila-system" title="Permalink to this headline">#</a></h3>
 <p>Here I pick the <code class="docutils literal notranslate"><span class="pre">ibmq_manila</span></code> system as no one else is on it at the moment and it is a public system.  It is a 5Q system based on the Falcon 5.11 processor revison.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -653,7 +652,7 @@ rep delay range : [0.0, 500.0] us
 </div>
 </div>
 <section id="spam-error-rate-with-no-resets">
-<h4>SPAM error rate with no resets<a class="headerlink" href="#spam-error-rate-with-no-resets" title="Permalink to this heading">#</a></h4>
+<h4>SPAM error rate with no resets<a class="headerlink" href="#spam-error-rate-with-no-resets" title="Permalink to this headline">#</a></h4>
 <p>To begin we are going to reproduce the same plot as we did for Montreal by looping over <code class="docutils literal notranslate"><span class="pre">rep_range</span></code> and computing the Hamming fraction that is the error rate we are looking for.  Here we do not use <code class="docutils literal notranslate"><span class="pre">reset</span></code> instructions at the beginning.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -708,12 +707,12 @@ rep delay range : [0.0, 500.0] us
 <p>In the above we do see that resets help here in giving you a ~0.5% decrease in the error rates.  We are still not seeing a clear trend when verying <code class="docutils literal notranslate"><span class="pre">rep_delay</span></code> but progress is being made.</p>
 </section>
 <section id="spam-error-rate-with-reset-and-no-implicit-reset">
-<h4>SPAM error rate with reset and NO implicit reset<a class="headerlink" href="#spam-error-rate-with-reset-and-no-implicit-reset" title="Permalink to this heading">#</a></h4>
+<h4>SPAM error rate with reset and NO implicit reset<a class="headerlink" href="#spam-error-rate-with-reset-and-no-implicit-reset" title="Permalink to this headline">#</a></h4>
 <p>Just for fun, lets turn off implicit reset using <code class="docutils literal notranslate"><span class="pre">init_qubits=False</span></code> and see what the error rate looks like if we rely on a single reset alone for the state prep.</p>
 <p>So now we see some interesting stuff.  Using only a single-reset for preping the qubits to the zeros state we see that the all-ones error is overall bigger and trends higher as we decrease <code class="docutils literal notranslate"><span class="pre">rep_delay</span></code>.  However, the error in the all-zeros state is much lower than before.</p>
 </section>
 <section id="spam-error-rate-using-3x-resets">
-<h4>SPAM error rate using 3x resets<a class="headerlink" href="#spam-error-rate-using-3x-resets" title="Permalink to this heading">#</a></h4>
+<h4>SPAM error rate using 3x resets<a class="headerlink" href="#spam-error-rate-using-3x-resets" title="Permalink to this headline">#</a></h4>
 <p>The above hints that maybe good things can happen if we used more resets at the beginning.  I say this because applying more than one reset should have things looking closer to the all-zeros state when it hits the later resets where we see some improvement.  Lets see what happens.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -768,7 +767,7 @@ rep delay range : [0.0, 500.0] us
 </section>
 </section>
 <section id="q-jakarta-system">
-<h3>7Q Jakarta system<a class="headerlink" href="#q-jakarta-system" title="Permalink to this heading">#</a></h3>
+<h3>7Q Jakarta system<a class="headerlink" href="#q-jakarta-system" title="Permalink to this headline">#</a></h3>
 <p>The Jakarta system is all the rage these days, e.g. see https://twitter.com/MJBiercuk/status/1456346789561335808 and https://twitter.com/blake_johnson/status/1456687596474671110.  Lets see if we can improve things on that Falcon 5.11 based system as well.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -785,7 +784,7 @@ rep delay range : [0.0, 500.0] us
 </div>
 </div>
 <section id="spam-error-rate">
-<h4>SPAM error rate<a class="headerlink" href="#spam-error-rate" title="Permalink to this heading">#</a></h4>
+<h4>SPAM error rate<a class="headerlink" href="#spam-error-rate" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prep0_errors_jk</span> <span class="o">=</span> <span class="p">[]</span>
@@ -868,7 +867,7 @@ Use %tb to get the full traceback.
 </div>
 </section>
 <section id="id1">
-<h4>SPAM error rate using 3x resets<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h4>
+<h4>SPAM error rate using 3x resets<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prep0_errors_jk3</span> <span class="o">=</span> <span class="p">[]</span>
@@ -995,7 +994,7 @@ Use %tb to get the full traceback.
 </section>
 </section>
 <section id="data-for-other-systems">
-<h2>Data for other systems<a class="headerlink" href="#data-for-other-systems" title="Permalink to this heading">#</a></h2>
+<h2>Data for other systems<a class="headerlink" href="#data-for-other-systems" title="Permalink to this headline">#</a></h2>
 <p>Here we show some data for other systems with and without a <code class="docutils literal notranslate"><span class="pre">reset</span></code> at the beginning but all using unconditional reset.  Overall we see that a <code class="docutils literal notranslate"><span class="pre">reset</span></code> at the beginning offers improved error rates.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1005,7 +1004,7 @@ Use %tb to get the full traceback.
 </div>
 </div>
 <section id="montreal">
-<h3>Montreal<a class="headerlink" href="#montreal" title="Permalink to this heading">#</a></h3>
+<h3>Montreal<a class="headerlink" href="#montreal" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">default_rep_delay</span> <span class="o">=</span> <span class="mf">50e-6</span>
@@ -1061,7 +1060,7 @@ Use %tb to get the full traceback.
 </div>
 </section>
 <section id="hanoi">
-<h3>Hanoi<a class="headerlink" href="#hanoi" title="Permalink to this heading">#</a></h3>
+<h3>Hanoi<a class="headerlink" href="#hanoi" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">default_rep_delay</span> <span class="o">=</span> <span class="mf">250e-6</span>
@@ -1122,7 +1121,7 @@ Use %tb to get the full traceback.
 </div>
 </section>
 <section id="perth">
-<h3>Perth<a class="headerlink" href="#perth" title="Permalink to this heading">#</a></h3>
+<h3>Perth<a class="headerlink" href="#perth" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">default_rep_delay</span> <span class="o">=</span> <span class="mf">250e-6</span>
@@ -1241,7 +1240,7 @@ Use %tb to get the full traceback.
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
 </p>
   </div>
   
