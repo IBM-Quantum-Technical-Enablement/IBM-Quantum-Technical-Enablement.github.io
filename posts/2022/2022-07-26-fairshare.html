@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
@@ -38,6 +38,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/thebelab-helper.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -62,7 +63,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="docsearch:language" content="None"> 
+<meta name="docsearch:language" content="en"> 
 <link
   rel="alternate"
   type="application/atom+xml"
@@ -370,10 +371,10 @@
               
               <article class="bd-article" role="main">
                  <section class="tex2jax_ignore mathjax_ignore" id="understanding-fair-share-scheduling">
-<h1>Understanding fair-share scheduling<a class="headerlink" href="#understanding-fair-share-scheduling" title="Permalink to this headline">#</a></h1>
+<h1>Understanding fair-share scheduling<a class="headerlink" href="#understanding-fair-share-scheduling" title="Permalink to this heading">#</a></h1>
 <p>Here we will introduce the reader to Fair-share Scheduling, the method by which most IBM Quantum systems are accessed.  We will go over the basics of Fair-share and understand its behavior via simulation.</p>
 <section id="frontmatter">
-<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this headline">#</a></h2>
+<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this heading">#</a></h2>
 <p>Here we import the tools we will need to make a threaded Fair-share scheduling simulation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -392,19 +393,19 @@
 </div>
 </section>
 <section id="introduction-to-fair-share">
-<h2>Introduction to Fair-share<a class="headerlink" href="#introduction-to-fair-share" title="Permalink to this headline">#</a></h2>
+<h2>Introduction to Fair-share<a class="headerlink" href="#introduction-to-fair-share" title="Permalink to this heading">#</a></h2>
 <p>Understanding how jobs are processed by IBM Quantum computers is one of the harder things for users to grasp.  These difficulties are due to the fact that the manner in which jobs are processed by the quantum processors (QPUs) is dynamic; there is no notion of a fixed order / queue.  This makes informing users as to when their jobs will execute challenging.  Add to this the fact that many types of jobs, e.g. iterative algorithms, do not have an a priori known execution time, and things get even harder to estimate.</p>
 <p>However, the fundamental building blocks of a fair-share scheduler are fairly easy to understand.  In fact, fair-share scheduling has been around for sometime, is a standard building-block of classical operating systems, and even has a Wiki page: <a class="reference external" href="https://en.wikipedia.org/wiki/Fair-share_scheduling">Fair-share_scheduling</a>.  Moreover, even though this system is complex in practice, we can actually simulate the dynamics, and understand the behavior in certain theoretical limits.</p>
 <p>Here we introduce the reader to the fair-share scheduler used by IBM Quantum and the assumptions and limitations that come into play.  In particular, we will simulate the behavior of this model in several situations to gain understanding of how it works in ideal settings.</p>
 </section>
 <section id="scheduling-assumptions">
-<h2>Scheduling assumptions<a class="headerlink" href="#scheduling-assumptions" title="Permalink to this headline">#</a></h2>
+<h2>Scheduling assumptions<a class="headerlink" href="#scheduling-assumptions" title="Permalink to this heading">#</a></h2>
 <p>The fair-share algorithm is predicated on the validity of several assumptions.  These are laid out in the following slide:</p>
 <img alt="../../_images/assumptions.png" src="../../_images/assumptions.png" />
 <p>So, in short, the hardware is assumed to be used all the time, we cannot make the duration of the jobs longer than some threshold value, and (of course) we should give access to the hardware in proportion to what “share” is purchased or allotted.</p>
 </section>
 <section id="fair-share-basics">
-<h2>Fair-share basics<a class="headerlink" href="#fair-share-basics" title="Permalink to this headline">#</a></h2>
+<h2>Fair-share basics<a class="headerlink" href="#fair-share-basics" title="Permalink to this heading">#</a></h2>
 <p>With the assumptions and operating conditions in hand, we can now get to the basics behind fair-share.  First, we need three ingredients: The fraction of system access given to each user, the floating time span over which we aim to balance the usage, and the maximum duration of a job.</p>
 <p>To begin we focus on the simple situation where several users with different shares send jobs to a single QPU.  First, user is given some fraction of system as their access amount (if you have noticed I try to avoid saying anything about amounts of time a user gets and instead say “access”.  This is intentional).  Next, we have to compute the amount of “usage” that each user has accumulated going back in time by an amount equal to the window time and adding up the time for all jobs in this duration.  For example, with a time window of 4 weeks/ 28 days (<span class="math notranslate nohighlight">\(168 * 4=672\)</span> hours), we go back and and sum over all the prior jobs on the QPU in the last <span class="math notranslate nohighlight">\(672\)</span> hours from the user of interest.  This is the “used time” for that user.  The usage for user <span class="math notranslate nohighlight">\(i\)</span> is then given by</p>
 <div class="math notranslate nohighlight">
@@ -417,7 +418,7 @@
 An astute reader may have noticed that the "window time" is not needed in the usage expression as it is a constant used on both sides of a relative expression.  This is indeed correct, and it is used here only to make the usage unit-less.  The shares given also need not be actual percentages, and can be anything you want provided that more shares equals more access.  Below we will discuss the "queue slot" units that IBM Quantum uses.
 </div></section>
 <section id="simulating-fair-share-scheduling">
-<h2>Simulating fair-share scheduling<a class="headerlink" href="#simulating-fair-share-scheduling" title="Permalink to this headline">#</a></h2>
+<h2>Simulating fair-share scheduling<a class="headerlink" href="#simulating-fair-share-scheduling" title="Permalink to this heading">#</a></h2>
 <p>Here we will create the code needed to simulate fair-share scheduling.  There are a few limitations that we must keep in mind.  1)  It is difficult to simulate fair-share starting from anything but a simple initial state.  2) We will use our assumption that all users are continuously submitting jobs to all QPUs. 3) The duration of jobs will be chosen randomly from a uniform distribution between <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">max_job_time)</span></code>.</p>
 <p>In order to simulate fair-share we will need the notion of an “User”; a class object representing an user.  A collection of users, here called “Users” that tells the system the number of users that are available and their properties related to computing usage.  This is also important for processing jobs from multiple QPUs in parallel, which is what happens in the real world.</p>
 <p>The code below also uses “queue slots” in place of “shares” for the unit of access given to users.  This is a very IBM Quantum specific unit of access, and one queue-slot is equal to 5% access to a single QPU.  So each machine has 20 queue-slots of access; if you have a dedicated machine then you have 20 queue-slots of access.</p>
@@ -585,7 +586,7 @@ An astute reader may have noticed that the "window time" is not needed in the us
 </div>
 </section>
 <section id="fair-share-simulation-one-system-multiple-users">
-<h2>Fair-share simulation: One system, multiple users<a class="headerlink" href="#fair-share-simulation-one-system-multiple-users" title="Permalink to this headline">#</a></h2>
+<h2>Fair-share simulation: One system, multiple users<a class="headerlink" href="#fair-share-simulation-one-system-multiple-users" title="Permalink to this heading">#</a></h2>
 <p>Let us simulate scheduling for a single system with three users with total queue-slot allocations of 20; we have allocated the entire system in terms of queue-slots.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -710,12 +711,12 @@ An astute reader may have noticed that the "window time" is not needed in the us
 <img alt="../../_images/oldway.png" src="../../_images/oldway.png" />
 </section>
 <section id="minimum-access-amount">
-<h2>Minimum access amount<a class="headerlink" href="#minimum-access-amount" title="Permalink to this headline">#</a></h2>
+<h2>Minimum access amount<a class="headerlink" href="#minimum-access-amount" title="Permalink to this heading">#</a></h2>
 <p>Although we are in principle free to set queue-slot (share) values to whatever we want, in practice this is not the case.  Because jobs are not infinitesimally small in duration, giving too small an access amount can lead to users with small fractions getting more than they should under the fair-share assumptions.  Preventing this from happening requires balancing the window time with the maximum allowed job duration.  The slide below shows that in the case of IBM Quantum a quarter of a queue-slot, 1.25%, is the smallest amount of access that can be given under the current operating parameters.</p>
 <img alt="../../_images/minimum.png" src="../../_images/minimum.png" />
 </section>
 <section id="fair-share-simulation-multiple-systems-multiple-users">
-<h2>Fair-share simulation: Multiple systems, multiple users<a class="headerlink" href="#fair-share-simulation-multiple-systems-multiple-users" title="Permalink to this headline">#</a></h2>
+<h2>Fair-share simulation: Multiple systems, multiple users<a class="headerlink" href="#fair-share-simulation-multiple-systems-multiple-users" title="Permalink to this heading">#</a></h2>
 <p>In mid-April 2022, IBM Quantum changed from fair-share scheduling per system to a global version where usage is computed by summing over jobs on all systems during the floating time window.</p>
 <img alt="../../_images/newway.png" src="../../_images/newway.png" />
 <p>It is a simple extension of our code above to simulate this.  Here we just add another QPU and rerun with the same number of queue-slots allocated as before:</p>
@@ -808,7 +809,7 @@ An astute reader may have noticed that the "window time" is not needed in the us
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.<br>
 </p>
   </div>
   

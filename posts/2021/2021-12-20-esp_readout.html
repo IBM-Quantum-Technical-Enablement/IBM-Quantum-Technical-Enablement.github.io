@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
@@ -38,6 +38,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/thebelab-helper.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -62,7 +63,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="docsearch:language" content="None"> 
+<meta name="docsearch:language" content="en"> 
 <link
   rel="alternate"
   type="application/atom+xml"
@@ -350,22 +351,22 @@
               
               <article class="bd-article" role="main">
                  <section class="tex2jax_ignore mathjax_ignore" id="excited-state-promotion-esp-readout">
-<h1>Excited State Promotion (ESP) Readout<a class="headerlink" href="#excited-state-promotion-esp-readout" title="Permalink to this headline">#</a></h1>
+<h1>Excited State Promotion (ESP) Readout<a class="headerlink" href="#excited-state-promotion-esp-readout" title="Permalink to this heading">#</a></h1>
 <section id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">#</a></h2>
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h2>
 <p>Excited State Promotion (ESP) readout is method for decreasing measurement errors in quantum computing systems where decay from the excited <span class="math notranslate nohighlight">\(|1\rangle\)</span> state to <span class="math notranslate nohighlight">\(|0\rangle\)</span> is non-negligible over the measurement timescales.  Although it was originally an useful technique on the previous generation Falcon R4 systems, today it is only available on a few Falcon R5 systems where the nearly order of magnitude improvement in measurement times leaves little value in using this functionality.  In testing, it looks to even be a bit worse performing than the standard readout method.  ESP readout is on by default for those systems that support it.  To disable it run:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">backend</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">circs</span><span class="p">,</span> <span class="n">use_measure_esp</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="background">
-<h2>Background<a class="headerlink" href="#background" title="Permalink to this headline">#</a></h2>
+<h2>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h2>
 <p>On many quantum computing platforms one of the two computational basis states, the <span class="math notranslate nohighlight">\(|1\rangle\)</span> state by convention, is an excited state of the system with respect to the ground state <span class="math notranslate nohighlight">\(|0\rangle\)</span>.  The difference in energy between these two states defines the frequency of the qubit through the relation <span class="math notranslate nohighlight">\(E=hf\)</span>.  Because the <span class="math notranslate nohighlight">\(|1\rangle\)</span> state is an excited state, there is a non-zero probability that the state will decay to <span class="math notranslate nohighlight">\(|0\rangle\)</span> via interaction with the environment.  The characteristic timescale for this is the <span class="math notranslate nohighlight">\(T_{1}\)</span> time of the qubit.  When performing gate operations, or non-reversible instructions like measurements on qubits, if the time it takes to perform these operations is a non-negligible fraction of <span class="math notranslate nohighlight">\(T_{1}\)</span>, then there is a possibility that this decay has occurred.</p>
 <p>Earlier we looked that the difference between <a class="reference external" href="https://nonhermitian.org/posts/2021/2021-11-28-falcon_r5.html">Falcon R5 and R4 systems</a> and saw that on the earlier R4 devices measurements took an amount of time equivalent to 13 CNOT gates on average.  This is quite a long time, and given our discussion above, we would expect that a qubit in the <span class="math notranslate nohighlight">\(|1\rangle\)</span> state would have a non-negligible probability of decaying into the ground state during this time; our measurement of the <span class="math notranslate nohighlight">\(|1\rangle\)</span> state would incur some error from this decay process.  Indeed this is what happens.  While all qubit measurements have some associated error, there is an asymmetry between the error rates of measuring the <span class="math notranslate nohighlight">\(|0\rangle\)</span> and <span class="math notranslate nohighlight">\(|1\rangle\)</span> states due to this effect, and the error associated with measuring the <span class="math notranslate nohighlight">\(|1\rangle\)</span> state are typically larger than those of the ground state.  As such, finding a method to minimize the error associated with this environmentally induced decay would lead to higher-fidelity measurements on IBM Quantum systems and beyond.</p>
 <p><a class="reference external" href="https://arxiv.org/abs/1005.3436">Excited State Promotion</a> (ESP) readout is one such method to reduce this error.  To understand how this works we first note that qubit measurements tell you only two things; Is the qubit in the ground state, or is the qubit in any other state?  That is it.  The readout does not care if your in the <span class="math notranslate nohighlight">\(|1\rangle\)</span> state the <span class="math notranslate nohighlight">\(|2\rangle\)</span> state etc.  ESP readout takes advantage of this in the following way.  If I “promote” the <span class="math notranslate nohighlight">\(|1\rangle\)</span> state of the qubit to the <span class="math notranslate nohighlight">\(|2\rangle\)</span> state (of what is now a qudit since it is no longer two-levels) then my measurement is unaffected.  However what is affected is the timescale over which my qudit will decay into the <span class="math notranslate nohighlight">\(|0\rangle\)</span> state.  In the standard regime where single-photon processes are dominant, a qudit starting in the <span class="math notranslate nohighlight">\(|2\rangle\)</span> state must first decay into the <span class="math notranslate nohighlight">\(|1\rangle\)</span> state before decaying into the <span class="math notranslate nohighlight">\(|0\rangle\)</span> state.  Because each of these processes has a timescale associated with it, and our measurement does not care about the difference between <span class="math notranslate nohighlight">\(|2\rangle\)</span> and <span class="math notranslate nohighlight">\(|1\rangle\)</span> we have gained some amount of time before our measurement is affected by the decay; Our measurement fidelity should be improved.  The benefit of this method was demonstrated on the Falcon R4 <code class="docutils literal notranslate"><span class="pre">ibmq_montreal</span></code> system when <a class="reference external" href="https://arxiv.org/abs/2008.08571">looking at Quantum Volume</a>.  However, on newer systems, with their <a class="reference external" href="https://nonhermitian.org/posts/2021/2021-11-28-falcon_r5.html">~7x improvement in measurement time</a>, the utility of this method has not been addressed.  Here we will look to see what, if any, value this technique has.</p>
 </section>
 <section id="frontmatter">
-<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this headline">#</a></h2>
+<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -389,7 +390,7 @@
 </div>
 </section>
 <section id="load-account-and-backend-selection">
-<h2>Load account and backend selection<a class="headerlink" href="#load-account-and-backend-selection" title="Permalink to this headline">#</a></h2>
+<h2>Load account and backend selection<a class="headerlink" href="#load-account-and-backend-selection" title="Permalink to this heading">#</a></h2>
 <p>In order to play around with ESP readout we first need to find out which systems support it.  This is done by querying the system configuration for the <code class="docutils literal notranslate"><span class="pre">'measure_esp_enabled'</span></code> attribute.  Since this attribute need not be present at all, we need to be a bit careful and use a <code class="docutils literal notranslate"><span class="pre">try-except</span></code> block or, as done here, <code class="docutils literal notranslate"><span class="pre">getattr</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -432,7 +433,7 @@ ibm_perth
 </div>
 </section>
 <section id="balanced-calibrations">
-<h2>Balanced calibrations<a class="headerlink" href="#balanced-calibrations" title="Permalink to this headline">#</a></h2>
+<h2>Balanced calibrations<a class="headerlink" href="#balanced-calibrations" title="Permalink to this heading">#</a></h2>
 <p>We aim to look at the difference in error rates when using ESP readout and those with it disabled.  To do that we need to determine these error rates through calibration.  There are many ways to calibrate measurement errors.  We could prep each qubit individually in either the <span class="math notranslate nohighlight">\(|0\rangle\)</span> or <span class="math notranslate nohighlight">\(|1\rangle\)</span> state and sample the resulting output to determine the error rates (<span class="math notranslate nohighlight">\(2N\)</span> circuits in total where <span class="math notranslate nohighlight">\(N\)</span> is the number of qubits on the system). Alternatively, as done in Qiskit Ignis, we could prep just two states the <span class="math notranslate nohighlight">\(|00\dots 0\rangle\)</span> and <span class="math notranslate nohighlight">\(|11\dots 1\rangle\)</span> and take marginal counts.  While both are valid, they do have their downsides.  The first method treats each qubit individually, but is not very efficient.  The latter technique is very efficient, but is quite sensitive to state preparation errors, if they exist.</p>
 <p>Here we will use an alternative created created by yours truly for obtaining very accurate error rates while trying to minimize sensitivity to things like state-prep errors.  This “balanced” calibration method works by executing bit-strings with a pattern that allows for sampling each error rate <span class="math notranslate nohighlight">\(N*\rm shots\)</span> times in a manner that is not particularly biased in terms of sensitivity to state-prep errors.  Thus, for the same amount of work as doing each qubit individually, we get a factor of <span class="math notranslate nohighlight">\(N\)</span> enhancement in the number of samples per error rate while not being sensitive to state prep errors along a particular basis direction. We can generate these balanced calibration strings and generate the circuits.</p>
 <div class="cell docutils container">
@@ -471,7 +472,7 @@ ibm_perth
 </div>
 </section>
 <section id="experiments">
-<h2>Experiments<a class="headerlink" href="#experiments" title="Permalink to this headline">#</a></h2>
+<h2>Experiments<a class="headerlink" href="#experiments" title="Permalink to this heading">#</a></h2>
 <p>We now perform our experiments running the balanced calibration routine with and without ESP readout.  Here we use <span class="math notranslate nohighlight">\(10000\)</span> shots per circuit giving us an effectively sampling per error rate of <span class="math notranslate nohighlight">\(270,000\)</span> shots.  So our results should be pretty good.  To turn ESP on and off we need to use the <code class="docutils literal notranslate"><span class="pre">use_measure_esp</span></code> keyword argument in <code class="docutils literal notranslate"><span class="pre">backend.run()</span></code>.  When available, ESP readout is enabled by default.  The code below is mainly taken from the M3 source code for doing the marginalization over the balanced calibration data.  The important part is that the results with and without ESP are stored in <code class="docutils literal notranslate"><span class="pre">cal_result</span></code>, in that order.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -636,7 +637,7 @@ ibm_perth
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.<br>
 </p>
   </div>
   

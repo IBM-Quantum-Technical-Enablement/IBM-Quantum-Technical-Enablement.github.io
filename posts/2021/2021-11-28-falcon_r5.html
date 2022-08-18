@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
@@ -38,6 +38,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/thebelab-helper.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -62,7 +63,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="docsearch:language" content="None"> 
+<meta name="docsearch:language" content="en"> 
 <link
   rel="alternate"
   type="application/atom+xml"
@@ -356,14 +357,14 @@
               
               <article class="bd-article" role="main">
                  <section class="tex2jax_ignore mathjax_ignore" id="comparison-of-falcon-r5-processors-verse-r4">
-<h1>Comparison of Falcon R5 processors verse R4<a class="headerlink" href="#comparison-of-falcon-r5-processors-verse-r4" title="Permalink to this headline">#</a></h1>
+<h1>Comparison of Falcon R5 processors verse R4<a class="headerlink" href="#comparison-of-falcon-r5-processors-verse-r4" title="Permalink to this heading">#</a></h1>
 <p>Recently IBM Quantum announced the move to revision 5 (R5) of its Falcon processors <a class="reference external" href="https://twitter.com/jaygambetta/status/1460697559773634570">see this tweet from Jay Gambetta</a>.  In particular it was highlighted that there is a 8x reduction in meausrement time on these systems.  Lets see if this, or any other enhancements, are visible from the system calibration data.</p>
 <section id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">#</a></h2>
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h2>
 <p>The highlight of the recently released Falcon R5 “core” systems is their much improved measurement times (7x) and error rates (2x).  On these systems a measurement is roughly twice as long as a CNOT gate, compared to 13x on the old R4 systems, and allows for implimenting high-fidelity dynamic circuits with resets, mid-circuit measurements, and eventually classically-conditioned gates.  For other tasks, the modest improvements in the CNOT gate errors and <span class="math notranslate nohighlight">\(T_{1}\)</span> times are also welcomed.</p>
 </section>
 <section id="frontmatter">
-<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this headline">#</a></h2>
+<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -382,7 +383,7 @@
 </div>
 </section>
 <section id="load-account-and-backend-selection">
-<h2>Load account and backend selection<a class="headerlink" href="#load-account-and-backend-selection" title="Permalink to this headline">#</a></h2>
+<h2>Load account and backend selection<a class="headerlink" href="#load-account-and-backend-selection" title="Permalink to this heading">#</a></h2>
 <p>Loading account and making two lists; one for R5 backends and the other for R4.  Which is which can be found on the <a class="reference external" href="https://quantum-computing.ibm.com/services?services=systems">systems page</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -414,7 +415,7 @@
 </div>
 </section>
 <section id="get-the-calibration-data">
-<h2>Get the calibration data<a class="headerlink" href="#get-the-calibration-data" title="Permalink to this headline">#</a></h2>
+<h2>Get the calibration data<a class="headerlink" href="#get-the-calibration-data" title="Permalink to this heading">#</a></h2>
 <p>Here we make a function to get the calibration data and grab the results for our targeted machines.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -474,7 +475,7 @@
 </div>
 </section>
 <section id="plot-results">
-<h2>Plot results<a class="headerlink" href="#plot-results" title="Permalink to this headline">#</a></h2>
+<h2>Plot results<a class="headerlink" href="#plot-results" title="Permalink to this heading">#</a></h2>
 <p>Here we compute the improvement of R5 over R4, if any, and plot it in a bar plot.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -604,7 +605,7 @@ Median R4 measurement time: 5276.444444444443
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.<br>
 </p>
   </div>
   

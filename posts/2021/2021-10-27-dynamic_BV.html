@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
@@ -38,6 +38,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/thebelab-helper.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -60,7 +61,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="docsearch:language" content="None"> 
+<meta name="docsearch:language" content="en"> 
 <link
   rel="alternate"
   type="application/atom+xml"
@@ -363,10 +364,10 @@
               
               <article class="bd-article" role="main">
                  <section class="tex2jax_ignore mathjax_ignore" id="dynamic-bernstein-vazirani-using-mid-circuit-reset-and-measurement">
-<h1>Dynamic Bernstein-Vazirani using mid-circuit reset and measurement<a class="headerlink" href="#dynamic-bernstein-vazirani-using-mid-circuit-reset-and-measurement" title="Permalink to this headline">#</a></h1>
+<h1>Dynamic Bernstein-Vazirani using mid-circuit reset and measurement<a class="headerlink" href="#dynamic-bernstein-vazirani-using-mid-circuit-reset-and-measurement" title="Permalink to this heading">#</a></h1>
 <p>The ability to do mid-circuit reset and measurement unlocks a variety of tools for executing quantum circuits.  A brief discussion is given in this <a class="reference external" href="https://www.ibm.com/blogs/research/2021/02/quantum-mid-circuit-measurement/">IBM Research blog post</a>.  On particular possibility is the ability to reuse qubits, and in doing so reduce the hardware requirements of some algorithms.  The Bernstein-Vazirani (BV) algorithm is one such example.  In particular, when using phase-kickback, BV usually requires a high degree of qubit connectivity to impliment.  This has been used by trapped-ion hardware vendors to show that their hardware gives better fidelity on these problems, e.g. see (<a class="reference external" href="https://arxiv.org/abs/2102.00371">https://arxiv.org/abs/2102.00371</a> and <a class="reference external" href="https://www.nature.com/articles/s41467-019-13534-2">https://www.nature.com/articles/s41467-019-13534-2</a>).  However, with reset and measurement, BV requires only two qubits, making connectivity differences mute.  We showed this in a reply Tweet: <a class="reference external" href="https://twitter.com/nonhermitian/status/1362348935440986113">https://twitter.com/nonhermitian/status/1362348935440986113</a>, but did not explain how we got that figure.  So here is how I did it.</p>
 <section id="frontmatter">
-<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this headline">#</a></h2>
+<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -393,7 +394,7 @@
 </div>
 </div>
 <section id="select-the-target-backend">
-<h3>Select the target backend<a class="headerlink" href="#select-the-target-backend" title="Permalink to this headline">#</a></h3>
+<h3>Select the target backend<a class="headerlink" href="#select-the-target-backend" title="Permalink to this heading">#</a></h3>
 <p>Here we select the backend and extract its two-qubit gate coupling map.  This is not the same backend used in the original figure as, at the time or writing, that one is offline.  It is however the same processor family and revision.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -413,7 +414,7 @@
 </section>
 </section>
 <section id="create-circuits">
-<h2>Create circuits<a class="headerlink" href="#create-circuits" title="Permalink to this headline">#</a></h2>
+<h2>Create circuits<a class="headerlink" href="#create-circuits" title="Permalink to this heading">#</a></h2>
 <p>In BV each qubit corresponding to a ‘1’ bit interacts with only the target qubit.  Moreover, since the state of the target qubit is an eigenstate of the <code class="docutils literal notranslate"><span class="pre">x</span></code> operator, the qubits remain unentangled, and the whole algorithm can be written using only two qubits provided that those qubits can be measured and reset mid-circuit.  The function below will create the circuit that does this for a given input bitstring:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -449,7 +450,7 @@
 </div>
 </section>
 <section id="finding-the-best-two-qubits-to-use">
-<h2>Finding the best two-qubits to use<a class="headerlink" href="#finding-the-best-two-qubits-to-use" title="Permalink to this headline">#</a></h2>
+<h2>Finding the best two-qubits to use<a class="headerlink" href="#finding-the-best-two-qubits-to-use" title="Permalink to this heading">#</a></h2>
 <p>Let us look at an example circuit for a length 10 bitstring of all ones:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -568,7 +569,7 @@
 <p>We can see from above that there is a very wide range of fidelities that come out.  This just goes to show that, when doing this on today’s hardware, the choice of qubits matters quite a bit.  Having found the optimal edge on which to run, we now use that to do extended BV circuit runs.</p>
 </section>
 <section id="run-actual-experiment">
-<h2>Run actual experiment<a class="headerlink" href="#run-actual-experiment" title="Permalink to this headline">#</a></h2>
+<h2>Run actual experiment<a class="headerlink" href="#run-actual-experiment" title="Permalink to this heading">#</a></h2>
 <p>Here we choose a set of bitstring lengths to run and then execute this on the target backend edge that we identified earlier as the best candidate.  For fun, we will also run on the worst edge to see the difference.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -609,7 +610,7 @@
 </div>
 </div>
 <section id="plot-results">
-<h3>Plot results<a class="headerlink" href="#plot-results" title="Permalink to this headline">#</a></h3>
+<h3>Plot results<a class="headerlink" href="#plot-results" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">label_best</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">backend</span><span class="o">.</span><span class="n">name</span><span class="p">(),</span> <span class="n">sorted_edges</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -688,7 +689,7 @@
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.<br>
 </p>
   </div>
   
