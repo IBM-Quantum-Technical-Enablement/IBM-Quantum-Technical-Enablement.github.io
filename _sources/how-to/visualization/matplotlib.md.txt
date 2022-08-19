@@ -20,41 +20,37 @@ on a background of `'#161616'`. Again, the order of the colors is important. All
 
 ## Examples
 
-```{code-block} python
+```{eval-rst}
 
-import numpy as np
-import matplotlib.pyplot as plt
+.. jupyter-execute::
 
-plt.style.use('ibmq')
-fig, ax = plt.subplots()
-x = np.linspace(0,10,20)
-y1 = np.sin(x)
-y2 = np.sin(x+np.pi/2)
-y3 = np.sin(x+3*np.pi/2)
-ax.plot(x,y1, 'o--')
-ax.plot(x,y2, 'o--')
-ax.plot(x,y3, 'o--')
-ax.set_title('ibmq style');
+    import numpy as np
+    import matplotlib.pyplot as plt
+    plt.style.use('ibmq')
+
+    fig, ax = plt.subplots()
+    x = np.linspace(0,10,20)
+    y1 = np.sin(x)
+    y2 = np.sin(x+np.pi/2)
+    y3 = np.sin(x+3*np.pi/2)
+    ax.plot(x,y1, 'o--')
+    ax.plot(x,y2, 'o--')
+    ax.plot(x,y3, 'o--')
+    ax.set_title('ibmq style');
 ```
 
-```{image} mpl_imgs/ibmq.png
-:class: bg-primary
-:align: center
-```
+<br/>
 
-```{code-block} python
+```{eval-rst}
+.. jupyter-execute::
 
-plt.style.use('ibmq-dark')
-fig, ax = plt.subplots()
-ax.plot(x,y1, 'o--')
-ax.plot(x,y2, 'o--')
-ax.plot(x,y3, 'o--')
-ax.set_title('ibmq-dark style');
-```
+    plt.style.use('ibmq-dark')
 
-```{image} mpl_imgs/ibmq-dark.png
-:class: bg-primary
-:align: center
+    fig, ax = plt.subplots()
+    ax.plot(x,y1, 'o--')
+    ax.plot(x,y2, 'o--')
+    ax.plot(x,y3, 'o--')
+    ax.set_title('ibmq-dark style');
 ```
 
 ## Installation
