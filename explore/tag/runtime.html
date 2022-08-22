@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Posts tagged Falcon &#8212; Enabing Technologies  documentation</title>
+    <title>Posts tagged runtime &#8212; Enabing Technologies  documentation</title>
 <script>
   document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
   document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
@@ -65,7 +65,7 @@
   rel="alternate"
   type="application/atom+xml"
   href="../../explore/atom.xml"
-  title="Posts tagged Falcon"
+  title="Posts tagged runtime"
 />
  
 <style type="text/css">
@@ -284,20 +284,20 @@
                 
 <div class="section">
   <h1>
-     Posts tagged  Falcon 
+     Posts tagged  runtime 
   </h1>
    
 
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="../../posts/2021/2021-11-28-falcon_r5.html"
-        >Comparison of Falcon R5 processors verse R4</a
+      <a href="../../posts/2022/2022-08-22-readout_mitigation.html"
+        >[BETA] Readout error mitigation in Runtime</a
       >
     </h2>
 
     <ul class="ablog-archive">
       <li>
-         <i class="fa fa-calendar"></i> 28 November 2021 
+         <i class="fa fa-calendar"></i> 22 August 2022 
       </li>
           
 <li id="category">
@@ -305,28 +305,27 @@
     ><i class="fa-fw fa fa-folder-open"></i></span
   >
    
-  <a href="../category/hardware.html">Hardware</a>  
+  <a href="../category/runtime.html">Runtime</a>  
 </li>
  
 <li id="tags">
   <span
-    ><i
-      class="fa-fw fa fa-tag"
-    ></i
-    ></span
+    ><i class="fa-fw fa fa-tags"></i> </span
   >
    
-  <a href="#">Falcon</a>  
+  <a href="#">runtime</a>   
+  <a href="mitigation.html">mitigation</a>   
+  <a href="beta.html">beta</a>  
 </li>
  
     </ul>
     <div class="ablog-post-excerpt docutils container">
-<p>Recently IBM Quantum announced the move to revision 5 (R5) of its Falcon processors <a class="reference external" href="https://twitter.com/jaygambetta/status/1460697559773634570">see this tweet from Jay Gambetta</a>.  In particular it was highlighted that there is a 8x reduction in meausrement time on these systems.  Lets see if this, or any other enhancements, are visible from the system calibration data.</p>
-<p>The highlight of the recently released Falcon R5 “core” systems is their much improved measurement times (7x) and error rates (2x).  On these systems a measurement is roughly twice as long as a CNOT gate, compared to 13x on the old R4 systems, and allows for implimenting high-fidelity dynamic circuits with resets, mid-circuit measurements, and eventually classically-conditioned gates.  For other tasks, the modest improvements in the CNOT gate errors and <span class="math notranslate nohighlight">\(T_{1}\)</span> times are also welcomed.</p>
-<img alt="../../_images/db6dfb274bd8e4c30c266cf1efcdf79c65fce170b2f07adc6224b21785ef8766.png" src="../../_images/db6dfb274bd8e4c30c266cf1efcdf79c65fce170b2f07adc6224b21785ef8766.png" />
+<p>One of the primary goals,if not THE primary goal, of the Runtime is abstraction.  Namely, users should not have to know detailed hardware knowledge and platform specific techniques for achieving good results.  Otherwise, it is difficult to make progress moving up the software stack into algorithms and applications.</p>
+<p>One of the first examples of this is the introduction of automated readout error mitigation into the <code class="docutils literal notranslate"><span class="pre">sampler</span></code> and <code class="docutils literal notranslate"><span class="pre">estimator</span></code> Runtime primitives.  On superconducting platforms, readout error is ~2%, and is something that is readily correctable using recent mitigation methods.  The primitives use two different methods for readout mitigation:</p>
+<img alt="../../_images/e7c28a43ebd4b536b59fe33f87be56a9267a174cfe2273e1e38cde95ec62e667.png" src="../../_images/e7c28a43ebd4b536b59fe33f87be56a9267a174cfe2273e1e38cde95ec62e667.png" />
 </div>
 
-    <p class="ablog-post-expand"><a href="../../posts/2021/2021-11-28-falcon_r5.html"><em>Read more ...</em></a></p>
+    <p class="ablog-post-expand"><a href="../../posts/2022/2022-08-22-readout_mitigation.html"><em>Read more ...</em></a></p>
     <hr />
   </div>
    

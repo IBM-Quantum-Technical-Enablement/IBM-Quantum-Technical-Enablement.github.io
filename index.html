@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Recent explorations &#8212; Enabing Technologies  documentation</title>
 <script>
@@ -48,7 +48,7 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/design-tabs.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <script async="async" src="https://www.google-analytics.com/analytics.js"></script>
     <script>
                 window.ga = window.ga || function () {
@@ -256,6 +256,11 @@
 <h1>Recent explorations<a class="headerlink" href="#recent-explorations" title="Permalink to this heading">#</a></h1>
 <p>See the <a class="reference internal" href="explore.html"><span class="doc std std-doc">exploration archives</span></a> for a more complete list.</p>
 <ul class="postlist-style-none postlist">
+<li class="ablog-post"><p class="ablog-post-title">2022-08-22 - <a class="reference internal" href="posts/2022/2022-08-22-readout_mitigation.html">[BETA] Readout error mitigation in Runtime</a></p>
+<p class="ablog-post-excerpt">One of the primary goals,if not THE primary goal, of the Runtime is abstraction.  Namely, users should not have to know detailed hardware knowledge and platform specific techniques for achieving good results.  Otherwise, it is difficult to make progress moving up the software stack into algorithms and applications.</p>
+<p class="ablog-post-excerpt">One of the first examples of this is the introduction of automated readout error mitigation into the <code class="docutils literal notranslate"><span class="pre">sampler</span></code> and <code class="docutils literal notranslate"><span class="pre">estimator</span></code> Runtime primitives.  On superconducting platforms, readout error is ~2%, and is something that is readily correctable using recent mitigation methods.  The primitives use two different methods for readout mitigation:</p>
+<img alt="_images/e7c28a43ebd4b536b59fe33f87be56a9267a174cfe2273e1e38cde95ec62e667.png" class="ablog-post-excerpt" src="_images/e7c28a43ebd4b536b59fe33f87be56a9267a174cfe2273e1e38cde95ec62e667.png" />
+</li>
 <li class="ablog-post"><p class="ablog-post-title">2022-07-26 - <a class="reference internal" href="posts/2022/2022-07-26-fairshare.html">Understanding fair-share scheduling</a></p>
 <p class="ablog-post-excerpt">Here we will introduce the reader to Fair-share Scheduling, the method by which most IBM Quantum systems are accessed.  We will go over the basics of Fair-share and understand its behavior via simulation.</p>
 <p class="ablog-post-excerpt">Here we import the tools we will need to make a threaded Fair-share scheduling simulation.</p>

@@ -47,7 +47,7 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/design-tabs.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <script async="async" src="https://www.google-analytics.com/analytics.js"></script>
     <script>
                 window.ga = window.ga || function () {
@@ -221,6 +221,10 @@
   </li>
     
   <li>
+    <a href="explore/category/runtime.html">Runtime (1)</a>
+  </li>
+    
+  <li>
     <a href="explore/category/services.html">Services (1)</a>
   </li>
    
@@ -285,11 +289,23 @@
   </li>
     
   <li class="ablog-cloud ablog-cloud-1">
+    <a href="explore/tag/beta.html">beta</a>
+  </li>
+    
+  <li class="ablog-cloud ablog-cloud-1">
     <a href="explore/tag/dynamical-decoupling.html">dynamical decoupling</a>
   </li>
     
   <li class="ablog-cloud ablog-cloud-5">
     <a href="explore/tag/hardware.html">hardware</a>
+  </li>
+    
+  <li class="ablog-cloud ablog-cloud-1">
+    <a href="explore/tag/mitigation.html">mitigation</a>
+  </li>
+    
+  <li class="ablog-cloud ablog-cloud-1">
+    <a href="explore/tag/runtime.html">runtime</a>
   </li>
     
   <li class="ablog-cloud ablog-cloud-1">
@@ -304,7 +320,7 @@
 <ul>
    
   <li>
-    <a href="explore/2022.html">2022 (2)</a>
+    <a href="explore/2022.html">2022 (3)</a>
   </li>
     
   <li>
@@ -338,6 +354,48 @@
      All  Posts 
   </h1>
    
+
+  <div class="section ablog-post">
+    <h2 class="ablog-post-title">
+      <a href="posts/2022/2022-08-22-readout_mitigation.html"
+        >[BETA] Readout error mitigation in Runtime</a
+      >
+    </h2>
+
+    <ul class="ablog-archive">
+      <li>
+         <i class="fa fa-calendar"></i> 22 August 2022 
+      </li>
+          
+<li id="category">
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
+  >
+   
+  <a href="explore/category/runtime.html">Runtime</a>  
+</li>
+ 
+<li id="tags">
+  <span
+    ><i class="fa-fw fa fa-tags"></i> </span
+  >
+   
+  <a href="explore/tag/runtime.html">runtime</a>   
+  <a href="explore/tag/mitigation.html">mitigation</a>   
+  <a href="explore/tag/beta.html">beta</a>  
+</li>
+ 
+    </ul>
+    <div class="ablog-post-excerpt docutils container">
+<p>One of the primary goals,if not THE primary goal, of the Runtime is abstraction.  Namely, users should not have to know detailed hardware knowledge and platform specific techniques for achieving good results.  Otherwise, it is difficult to make progress moving up the software stack into algorithms and applications.</p>
+<p>One of the first examples of this is the introduction of automated readout error mitigation into the <code class="docutils literal notranslate"><span class="pre">sampler</span></code> and <code class="docutils literal notranslate"><span class="pre">estimator</span></code> Runtime primitives.  On superconducting platforms, readout error is ~2%, and is something that is readily correctable using recent mitigation methods.  The primitives use two different methods for readout mitigation:</p>
+<img alt="_images/e7c28a43ebd4b536b59fe33f87be56a9267a174cfe2273e1e38cde95ec62e667.png" src="_images/e7c28a43ebd4b536b59fe33f87be56a9267a174cfe2273e1e38cde95ec62e667.png" />
+</div>
+
+    <p class="ablog-post-expand"><a href="posts/2022/2022-08-22-readout_mitigation.html"><em>Read more ...</em></a></p>
+    <hr />
+  </div>
+  
 
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
