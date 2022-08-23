@@ -2,14 +2,14 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
   <id>quantum-enablement.org</id>
   <title>Quantum Explorations</title>
-  <updated>2022-08-22T13:33:20.191726+00:00</updated>
+  <updated>2022-08-23T09:15:21.042756+00:00</updated>
   <link href="quantum-enablement.org"/>
   <link href="quantum-enablement.org/explore/atom.xml" rel="self"/>
   <generator uri="https://ablog.readthedocs.org/" version="0.10.25">ABlog</generator>
   <entry>
     <id>quantum-enablement.org/posts/2021/2021-10-27-dynamic_BV.html</id>
     <title>Dynamic Bernstein-Vazirani using mid-circuit reset and measurement</title>
-    <updated>2021-10-27T00:00:00-04:00</updated>
+    <updated>2021-10-27T00:00:00+02:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;p&gt;The ability to do mid-circuit reset and measurement unlocks a variety of tools for executing quantum circuits.  A brief discussion is given in this &lt;a class="reference external" href="https://www.ibm.com/blogs/research/2021/02/quantum-mid-circuit-measurement/"&gt;IBM Research blog post&lt;/a&gt;.  On particular possibility is the ability to reuse qubits, and in doing so reduce the hardware requirements of some algorithms.  The Bernstein-Vazirani (BV) algorithm is one such example.  In particular, when using phase-kickback, BV usually requires a high degree of qubit connectivity to impliment.  This has been used by trapped-ion hardware vendors to show that their hardware gives better fidelity on these problems, e.g. see (&lt;a class="reference external" href="https://arxiv.org/abs/2102.00371"&gt;https://arxiv.org/abs/2102.00371&lt;/a&gt; and &lt;a class="reference external" href="https://www.nature.com/articles/s41467-019-13534-2"&gt;https://www.nature.com/articles/s41467-019-13534-2&lt;/a&gt;).  However, with reset and measurement, BV requires only two qubits, making connectivity differences mute.  We showed this in a reply Tweet: &lt;a class="reference external" href="https://twitter.com/nonhermitian/status/1362348935440986113"&gt;https://twitter.com/nonhermitian/status/1362348935440986113&lt;/a&gt;, but did not explain how we got that figure.  So here is how I did it.&lt;/p&gt;
 &lt;p&gt;Here we select the backend and extract its two-qubit gate coupling map.  This is not the same backend used in the original figure as, at the time or writing, that one is offline.  It is however the same processor family and revision.&lt;/p&gt;
@@ -19,12 +19,12 @@
     <link href="quantum-enablement.org/posts/2021/2021-10-27-dynamic_BV.html" rel="alternate"/>
     <summary>The ability to do mid-circuit reset and measurement unlocks a variety of tools for executing quantum circuits.  A brief discussion is given in this IBM Research blog post.  On particular possibility is the ability to reuse qubits, and in doing so reduce the hardware requirements of some algorithms.  The Bernstein-Vazirani (BV) algorithm is one such example.  In particular, when using phase-kickback, BV usually requires a high degree of qubit connectivity to impliment.  This has been used by trapped-ion hardware vendors to show that their hardware gives better fidelity on these problems, e.g. see (https://arxiv.org/abs/2102.00371 and https://www.nature.com/articles/s41467-019-13534-2).  However, with reset and measurement, BV requires only two qubits, making connectivity differences mute.  We showed this in a reply Tweet: https://twitter.com/nonhermitian/status/1362348935440986113, but did not explain how we got that figure.  So here is how I did it.Here we select the backend and extract its two-qubit gate coupling map.  This is not the same backend used in the original figure as, at the time or writing, that one is offline.  It is however the same processor family and revision.</summary>
     <category term="Dynamic" label="Dynamic"/>
-    <published>2021-10-27T00:00:00-04:00</published>
+    <published>2021-10-27T00:00:00+02:00</published>
   </entry>
   <entry>
     <id>quantum-enablement.org/posts/2021/2021-10-31-best_swap_mapper_qiskit.html</id>
     <title>Choosing the best Qiskit swap mapper</title>
-    <updated>2021-10-31T00:00:00-04:00</updated>
+    <updated>2021-10-31T00:00:00+02:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;p&gt;One of the most important (perhaps the most important) steps when compiling quantum circuits for architectures with limited connectivity is swap mapping.  If a requested two-qubit gate cannot be implimented directly on hardware, the states of the corresponding qubits must be swapped with those of their neighboors until the states reside on qubits where a two qubit gate is supported.  Swap gates are expensive, equal to three CNOT gates, and therefore moving qubit states around using the fewest number of swap gates is desireable.  Unfortunately, directly computing the minimum number of swap gates is NP-complete, and heuristics need to be developed that come close to the ideal solution while scaling favorably with the number of qubits.&lt;/p&gt;
 &lt;p&gt;Qiskit supports a variety of swap mappers and other optimization settings, and how to best set these options is important for getting high-fidelty results.  Additionally, there are other Qiskit compatible compilers out there that should also be evaluated.  To this end, here we look at a selection of circuits compiled with various Qiskit compiler settings, as well as those produced with the &lt;a class="reference external" href="https://cambridgequantum.com/home/"&gt;Cambridge Quantum Computing (CQC)&lt;/a&gt; &lt;a class="reference external" href="https://github.com/CQCL/tket"&gt;Tket compiler&lt;/a&gt;.  We will investigate the performance of these methods in terms of both number of CNOT gates in the output, as well as the associated runtimes.  Because Qiskit swap mappers are stochastic, we will run each one several times and plot the distributions of results.&lt;/p&gt;
@@ -34,12 +34,12 @@
     <link href="quantum-enablement.org/posts/2021/2021-10-31-best_swap_mapper_qiskit.html" rel="alternate"/>
     <summary>One of the most important (perhaps the most important) steps when compiling quantum circuits for architectures with limited connectivity is swap mapping.  If a requested two-qubit gate cannot be implimented directly on hardware, the states of the corresponding qubits must be swapped with those of their neighboors until the states reside on qubits where a two qubit gate is supported.  Swap gates are expensive, equal to three CNOT gates, and therefore moving qubit states around using the fewest number of swap gates is desireable.  Unfortunately, directly computing the minimum number of swap gates is NP-complete, and heuristics need to be developed that come close to the ideal solution while scaling favorably with the number of qubits.Qiskit supports a variety of swap mappers and other optimization settings, and how to best set these options is important for getting high-fidelty results.  Additionally, there are other Qiskit compatible compilers out there that should also be evaluated.  To this end, here we look at a selection of circuits compiled with various Qiskit compiler settings, as well as those produced with the Cambridge Quantum Computing (CQC) Tket compiler.  We will investigate the performance of these methods in terms of both number of CNOT gates in the output, as well as the associated runtimes.  Because Qiskit swap mappers are stochastic, we will run each one several times and plot the distributions of results.</summary>
     <category term="bestpractices" label="best practices"/>
-    <published>2021-10-31T00:00:00-04:00</published>
+    <published>2021-10-31T00:00:00+02:00</published>
   </entry>
   <entry>
     <id>quantum-enablement.org/posts/2021/2021-11-07-rep_delay.html</id>
     <title>Improving state prep errors on IBM Quantum systems</title>
-    <updated>2021-11-07T00:00:00-04:00</updated>
+    <updated>2021-11-07T00:00:00+01:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;p&gt;It is often taken for granted that qubits are initialized to zero when executing quantum circuits on hardware.  However, errors in the reset process mean that this initialization is not perfect leading to state preparation errors.  Here we will look at state prep errors and how to improve them on IBM Quantum systems.&lt;/p&gt;
 &lt;p&gt;Here we will use two lesser known configuration variables available on IBM Quantum systems to do so.  First is &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;rep_delay&lt;/span&gt;&lt;/code&gt;.  This is the delay time before the next circuit is executed.  Each backend has a different &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;default_rep_delay&lt;/span&gt;&lt;/code&gt; (although as of the time of writing many are &lt;span class="math notranslate nohighlight"&gt;\(250~\mu \rm s\)&lt;/span&gt; or lower) and support tuning this parameter from &lt;span class="math notranslate nohighlight"&gt;\(0\)&lt;/span&gt; up to &lt;span class="math notranslate nohighlight"&gt;\(500~\mu \rm s\)&lt;/span&gt;.  Why in the world would I want to vary this parameter?  Well if I set &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;rep_delay=0&lt;/span&gt;&lt;/code&gt; then I can get much faster throughput as the default delay is nominally longer than the &lt;span class="math notranslate nohighlight"&gt;\(T_{1}\)&lt;/span&gt; time of the system.  However when doing so you are trusting the implicit reset (called “unconditional reset”) to do its job and reset the qubits to their ground state with high-fidelity.  Failure to do so would lead to state-prep errors that propagate through the circuit.  This is why the delay is usually longer than &lt;span class="math notranslate nohighlight"&gt;\(T_{1}\)&lt;/span&gt;; let the enviornment help your reset fidelity.  Second is &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;init_qubits&lt;/span&gt;&lt;/code&gt; that tells the hardware to not perform an unconditional reset.  As no reset at all would quickly lead to junk, this setting needs to be done in concert with &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;reset&lt;/span&gt;&lt;/code&gt; instructions being added to the beginning of your circuits.  Perhaps this is better, or maybe a single reset at the beginning and the uncondtional reset.  Lets find out.&lt;/p&gt;
@@ -51,12 +51,12 @@
     <category term="SPAM" label="SPAM"/>
     <category term="Reset" label="Reset"/>
     <category term="Dynamic" label="Dynamic"/>
-    <published>2021-11-07T00:00:00-04:00</published>
+    <published>2021-11-07T00:00:00+01:00</published>
   </entry>
   <entry>
     <id>quantum-enablement.org/posts/2021/2021-11-28-falcon_r5.html</id>
     <title>Comparison of Falcon R5 processors verse R4</title>
-    <updated>2021-11-28T00:00:00-05:00</updated>
+    <updated>2021-11-28T00:00:00+01:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;p&gt;Recently IBM Quantum announced the move to revision 5 (R5) of its Falcon processors &lt;a class="reference external" href="https://twitter.com/jaygambetta/status/1460697559773634570"&gt;see this tweet from Jay Gambetta&lt;/a&gt;.  In particular it was highlighted that there is a 8x reduction in meausrement time on these systems.  Lets see if this, or any other enhancements, are visible from the system calibration data.&lt;/p&gt;
 &lt;p&gt;The highlight of the recently released Falcon R5 “core” systems is their much improved measurement times (7x) and error rates (2x).  On these systems a measurement is roughly twice as long as a CNOT gate, compared to 13x on the old R4 systems, and allows for implimenting high-fidelity dynamic circuits with resets, mid-circuit measurements, and eventually classically-conditioned gates.  For other tasks, the modest improvements in the CNOT gate errors and &lt;span class="math notranslate nohighlight"&gt;\(T_{1}\)&lt;/span&gt; times are also welcomed.&lt;/p&gt;
@@ -66,12 +66,12 @@
     <link href="quantum-enablement.org/posts/2021/2021-11-28-falcon_r5.html" rel="alternate"/>
     <summary>Recently IBM Quantum announced the move to revision 5 (R5) of its Falcon processors see this tweet from Jay Gambetta.  In particular it was highlighted that there is a 8x reduction in meausrement time on these systems.  Lets see if this, or any other enhancements, are visible from the system calibration data.The highlight of the recently released Falcon R5 “core” systems is their much improved measurement times (7x) and error rates (2x).  On these systems a measurement is roughly twice as long as a CNOT gate, compared to 13x on the old R4 systems, and allows for implimenting high-fidelity dynamic circuits with resets, mid-circuit measurements, and eventually classically-conditioned gates.  For other tasks, the modest improvements in the CNOT gate errors and T_{1} times are also welcomed.</summary>
     <category term="Falcon" label="Falcon"/>
-    <published>2021-11-28T00:00:00-05:00</published>
+    <published>2021-11-28T00:00:00+01:00</published>
   </entry>
   <entry>
     <id>quantum-enablement.org/posts/2021/2021-12-20-esp_readout.html</id>
     <title>Excited State Promotion (ESP) Readout</title>
-    <updated>2021-12-20T00:00:00-05:00</updated>
+    <updated>2021-12-20T00:00:00+01:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;p&gt;Excited State Promotion (ESP) readout is method for decreasing measurement errors in quantum computing systems where decay from the excited &lt;span class="math notranslate nohighlight"&gt;\(|1\rangle\)&lt;/span&gt; state to &lt;span class="math notranslate nohighlight"&gt;\(|0\rangle\)&lt;/span&gt; is non-negligible over the measurement timescales.  Although it was originally an useful technique on the previous generation Falcon R4 systems, today it is only available on a few Falcon R5 systems where the nearly order of magnitude improvement in measurement times leaves little value in using this functionality.  In testing, it looks to even be a bit worse performing than the standard readout method.  ESP readout is on by default for those systems that support it.  To disable it run:&lt;/p&gt;
 &lt;p&gt;On many quantum computing platforms one of the two computational basis states, the &lt;span class="math notranslate nohighlight"&gt;\(|1\rangle\)&lt;/span&gt; state by convention, is an excited state of the system with respect to the ground state &lt;span class="math notranslate nohighlight"&gt;\(|0\rangle\)&lt;/span&gt;.  The difference in energy between these two states defines the frequency of the qubit through the relation &lt;span class="math notranslate nohighlight"&gt;\(E=hf\)&lt;/span&gt;.  Because the &lt;span class="math notranslate nohighlight"&gt;\(|1\rangle\)&lt;/span&gt; state is an excited state, there is a non-zero probability that the state will decay to &lt;span class="math notranslate nohighlight"&gt;\(|0\rangle\)&lt;/span&gt; via interaction with the environment.  The characteristic timescale for this is the &lt;span class="math notranslate nohighlight"&gt;\(T_{1}\)&lt;/span&gt; time of the qubit.  When performing gate operations, or non-reversible instructions like measurements on qubits, if the time it takes to perform these operations is a non-negligible fraction of &lt;span class="math notranslate nohighlight"&gt;\(T_{1}\)&lt;/span&gt;, then there is a possibility that this decay has occurred.&lt;/p&gt;
@@ -80,12 +80,12 @@
 </content>
     <link href="quantum-enablement.org/posts/2021/2021-12-20-esp_readout.html" rel="alternate"/>
     <summary>Excited State Promotion (ESP) readout is method for decreasing measurement errors in quantum computing systems where decay from the excited |1\rangle state to |0\rangle is non-negligible over the measurement timescales.  Although it was originally an useful technique on the previous generation Falcon R4 systems, today it is only available on a few Falcon R5 systems where the nearly order of magnitude improvement in measurement times leaves little value in using this functionality.  In testing, it looks to even be a bit worse performing than the standard readout method.  ESP readout is on by default for those systems that support it.  To disable it run:On many quantum computing platforms one of the two computational basis states, the |1\rangle state by convention, is an excited state of the system with respect to the ground state |0\rangle.  The difference in energy between these two states defines the frequency of the qubit through the relation E=hf.  Because the |1\rangle state is an excited state, there is a non-zero probability that the state will decay to |0\rangle via interaction with the environment.  The characteristic timescale for this is the T_{1} time of the qubit.  When performing gate operations, or non-reversible instructions like measurements on qubits, if the time it takes to perform these operations is a non-negligible fraction of T_{1}, then there is a possibility that this decay has occurred.</summary>
-    <published>2021-12-20T00:00:00-05:00</published>
+    <published>2021-12-20T00:00:00+01:00</published>
   </entry>
   <entry>
     <id>quantum-enablement.org/posts/2022/2022-07-14-wormhole.html</id>
     <title>Going down the Wormhole</title>
-    <updated>2022-07-14T00:00:00-04:00</updated>
+    <updated>2022-07-14T00:00:00+02:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;p&gt;Recently our Partners over at Lawrence Berkeley National Laboratory (LBNL) published an interesting paper on probing quantum gravity in the lab: &lt;a class="reference external" href="https://arxiv.org/abs/2205.14081"&gt;arXiv:2205.14081&lt;/a&gt;.  This paper caught our eye for two reasons. First, it is about teleportation via wormholes, so why not check it out?  Second, it compares our quantum systems verses the trapped-ion systems from Quantinuum.  From a competitive standpoint, these types of papers are fun to look at and see if we can do better.  Trying to do so is the basis for this notebook.  If you want all the details you will need to see the paper, however the basics can be gathered from Figure 1 in the paper:&lt;/p&gt;
 &lt;p&gt;Basically they are creating entangled pairs of qubits at the beginning; a prerequisite of all teleportation procedures.  Doing evolution backward and forward by the same amout of time on the &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;L&lt;/span&gt;&lt;/code&gt; group, coupling the L and R groups of qubits with a tunable phase &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;g&lt;/span&gt;&lt;/code&gt;, and then performing the forward evolution again on the &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;R&lt;/span&gt;&lt;/code&gt; group of qubits, and then measuring the state on the bottom qubit.  As a function of the coupling &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;g&lt;/span&gt;&lt;/code&gt; the expectation value of the &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;Z&lt;/span&gt;&lt;/code&gt; operator on the last qubit in both simulation and on the real quantum hardware is seen to be:&lt;/p&gt;
@@ -96,12 +96,12 @@
     <summary>Recently our Partners over at Lawrence Berkeley National Laboratory (LBNL) published an interesting paper on probing quantum gravity in the lab: arXiv:2205.14081.  This paper caught our eye for two reasons. First, it is about teleportation via wormholes, so why not check it out?  Second, it compares our quantum systems verses the trapped-ion systems from Quantinuum.  From a competitive standpoint, these types of papers are fun to look at and see if we can do better.  Trying to do so is the basis for this notebook.  If you want all the details you will need to see the paper, however the basics can be gathered from Figure 1 in the paper:Basically they are creating entangled pairs of qubits at the beginning; a prerequisite of all teleportation procedures.  Doing evolution backward and forward by the same amout of time on the L group, coupling the L and R groups of qubits with a tunable phase g, and then performing the forward evolution again on the R group of qubits, and then measuring the state on the bottom qubit.  As a function of the coupling g the expectation value of the Z operator on the last qubit in both simulation and on the real quantum hardware is seen to be:</summary>
     <category term="hardware" label="hardware"/>
     <category term="dynamicaldecoupling" label="dynamical decoupling"/>
-    <published>2022-07-14T00:00:00-04:00</published>
+    <published>2022-07-14T00:00:00+02:00</published>
   </entry>
   <entry>
     <id>quantum-enablement.org/posts/2022/2022-07-26-fairshare.html</id>
     <title>Understanding fair-share scheduling</title>
-    <updated>2022-07-26T00:00:00-04:00</updated>
+    <updated>2022-07-26T00:00:00+02:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;p&gt;Here we will introduce the reader to Fair-share Scheduling, the method by which most IBM Quantum systems are accessed.  We will go over the basics of Fair-share and understand its behavior via simulation.&lt;/p&gt;
 &lt;p&gt;Here we import the tools we will need to make a threaded Fair-share scheduling simulation.&lt;/p&gt;
@@ -113,12 +113,12 @@
     <category term="services" label="services"/>
     <category term="hardware" label="hardware"/>
     <category term="admin" label="admin"/>
-    <published>2022-07-26T00:00:00-04:00</published>
+    <published>2022-07-26T00:00:00+02:00</published>
   </entry>
   <entry>
     <id>quantum-enablement.org/posts/2022/2022-08-22-readout_mitigation.html</id>
     <title>[BETA] Readout error mitigation in Runtime</title>
-    <updated>2022-08-22T00:00:00-04:00</updated>
+    <updated>2022-08-22T00:00:00+02:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;p&gt;One of the primary goals,if not THE primary goal, of the Runtime is abstraction.  Namely, users should not have to know detailed hardware knowledge and platform specific techniques for achieving good results.  Otherwise, it is difficult to make progress moving up the software stack into algorithms and applications.&lt;/p&gt;
 &lt;p&gt;One of the first examples of this is the introduction of automated readout error mitigation into the &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;sampler&lt;/span&gt;&lt;/code&gt; and &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;estimator&lt;/span&gt;&lt;/code&gt; Runtime primitives.  On superconducting platforms, readout error is ~2%, and is something that is readily correctable using recent mitigation methods.  The primitives use two different methods for readout mitigation:&lt;/p&gt;
@@ -130,6 +130,6 @@
     <category term="runtime" label="runtime"/>
     <category term="mitigation" label="mitigation"/>
     <category term="beta" label="beta"/>
-    <published>2022-08-22T00:00:00-04:00</published>
+    <published>2022-08-22T00:00:00+02:00</published>
   </entry>
 </feed>
