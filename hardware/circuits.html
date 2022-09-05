@@ -1,0 +1,714 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Number of Circuits: Why it matters &#8212; Enabing Technologies  documentation</title>
+<script>
+  document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+  document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
+</script>
+
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+
+
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/thebelab-helper.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script async="async" src="https://www.google-analytics.com/analytics.js"></script>
+    <script>
+                window.ga = window.ga || function () {
+                    (ga.q = ga.q || []).push(arguments) };
+                ga.l = +new Date;
+                ga('create', 'UA-16824831-8', 'auto');
+                ga('set', 'anonymizeIp', true);
+                ga('send', 'pageview');
+            </script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Members" href="../members.html" />
+    <link rel="prev" title="Precision, Accuracy and Number of Shots" href="precision_vs_shots.html" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="docsearch:language" content="en"> 
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../explore/atom.xml"
+  title="Quantum Explorations"
+/>
+ 
+<style type="text/css">
+  ul.ablog-archive {
+    list-style: none;
+    overflow: auto;
+    margin-left: 0px;
+  }
+  ul.ablog-archive li {
+    float: left;
+    margin-right: 5px;
+    font-size: 80%;
+  }
+  ul.postlist a {
+    font-style: italic;
+  }
+  ul.postlist-style-disc {
+    list-style-type: disc;
+  }
+  ul.postlist-style-none {
+    list-style-type: none;
+  }
+  ul.postlist-style-circle {
+    list-style-type: circle;
+  }
+</style>
+
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+    <div class="bd-header-announcement container-fluid" id="banner">
+      
+
+    </div>
+
+    
+    <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="bd-header__inner container-xl">
+
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/dark_logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="fas fa-bars"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../how-to/howto.html">
+  How to guides
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../explore.html">
+  Explorations
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="hardware.html">
+  IBM Quantum Hardware
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../members.html">
+  Members
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" >
+</form>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span id="theme-switch" class="btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/IBM-Quantum-Technical-Enablement" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="bd-container container-xl">
+      <div class="bd-container__inner row">
+          
+
+<!-- Only show if we have sidebars configured, else just a small margin  -->
+<div class="bd-sidebar-primary col-12 col-md-3 bd-sidebar">
+  <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Processor families
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="processors.html">
+   IBM Quantum processor families
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Historical data
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="historical.html">
+   Historical hardware details
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  System configuration
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="precision_vs_shots.html">
+   Precision, Accuracy and Number of Shots
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Number of Circuits: Why it matters
+  </a>
+ </li>
+</ul>
+
+  </div>
+</nav>
+  </div>
+  <div class="sidebar-end-items">
+  </div>
+</div>
+
+
+          
+
+
+<div class="bd-sidebar-secondary d-none d-xl-block col-xl-2 bd-toc">
+  
+    
+    <div class="toc-item">
+      
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-modules-account-and-backend">
+   Load modules, account and backend
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#explore-maximum-number-of-experiments-circuits">
+   Explore maximum number of experiments (circuits)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exemplary-experiment">
+   Exemplary experiment
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#low-number-of-circuits-may-lead-to-wrong-conclusions">
+   Low number of circuits may lead to wrong conclusions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#scaling-behaviour-due-to-higher-number-of-circuits">
+   Scaling behaviour due to higher number of circuits
+  </a>
+ </li>
+</ul>
+
+</nav>
+    </div>
+    
+    <div class="toc-item">
+      
+    </div>
+    
+  
+</div>
+
+
+          
+          
+          <div class="bd-content col-12 col-md-9 col-xl-7">
+              
+              <article class="bd-article" role="main">
+                 <section class="tex2jax_ignore mathjax_ignore" id="number-of-circuits-why-it-matters">
+<h1>Number of Circuits: Why it matters<a class="headerlink" href="#number-of-circuits-why-it-matters" title="Permalink to this heading">#</a></h1>
+<p>We explore why running the same circuit several times, and increasing the number of those repetitions is beneficial, even when running circuits with a <a class="reference internal" href="precision_vs_shots.html"><span class="doc std std-doc">large number of shots</span></a>.</p>
+<p>Let us state explicitly that the number of circuits is defined here as repetitions of the same circuit such as</p>
+<p><code class="docutils literal notranslate"><span class="pre">backend.run([circ]*100,</span> <span class="pre">shots=backend.configuration().max_shots)</span></code></p>
+<p>where the circuit in question is repeated 100 times, as an example.</p>
+<section id="load-modules-account-and-backend">
+<h2>Load modules, account and backend<a class="headerlink" href="#load-modules-account-and-backend" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1">#Hellinger Fidelity for comparing different count distributions</span>
+<span class="kn">from</span> <span class="nn">qiskit.quantum_info</span> <span class="kn">import</span> <span class="n">hellinger_fidelity</span>
+
+<span class="c1"># For plotting</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;ibmq-dark&#39;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format=&#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">IBMQ</span><span class="o">.</span><span class="n">load_account</span><span class="p">();</span>
+<span class="n">provider</span> <span class="o">=</span> <span class="n">IBMQ</span><span class="o">.</span><span class="n">get_provider</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="s1">&#39;deployed&#39;</span><span class="p">)</span>
+<span class="n">backend</span> <span class="o">=</span> <span class="n">provider</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">ibm_cairo</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="explore-maximum-number-of-experiments-circuits">
+<h2>Explore maximum number of experiments (circuits)<a class="headerlink" href="#explore-maximum-number-of-experiments-circuits" title="Permalink to this heading">#</a></h2>
+<p>Let us list all the attributes of <code class="docutils literal notranslate"><span class="pre">backend.configuration()</span></code> …</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">backend</span><span class="o">.</span><span class="n">configuration</span><span class="p">()</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;n_uchannels&#39;, &#39;u_channel_lo&#39;, &#39;meas_levels&#39;, &#39;qubit_lo_range&#39;, &#39;meas_lo_range&#39;, &#39;meas_kernels&#39;, &#39;discriminators&#39;, &#39;hamiltonian&#39;, &#39;rep_times&#39;, &#39;dt&#39;, &#39;dtm&#39;, &#39;channels&#39;, &#39;_qubit_channel_map&#39;, &#39;_channel_qubit_map&#39;, &#39;_control_channels&#39;, &#39;acquisition_latency&#39;, &#39;conditional_latency&#39;, &#39;meas_map&#39;, &#39;_data&#39;, &#39;backend_name&#39;, &#39;backend_version&#39;, &#39;n_qubits&#39;, &#39;basis_gates&#39;, &#39;gates&#39;, &#39;local&#39;, &#39;simulator&#39;, &#39;conditional&#39;, &#39;open_pulse&#39;, &#39;memory&#39;, &#39;max_shots&#39;, &#39;coupling_map&#39;, &#39;supported_instructions&#39;, &#39;dynamic_reprate_enabled&#39;, &#39;rep_delay_range&#39;, &#39;default_rep_delay&#39;, &#39;max_experiments&#39;, &#39;sample_name&#39;, &#39;n_registers&#39;, &#39;credits_required&#39;, &#39;online_date&#39;, &#39;description&#39;, &#39;processor_type&#39;, &#39;parametric_pulses&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<p>… to find that that the relevant attribute here is <code class="docutils literal notranslate"><span class="pre">max_experiments</span></code>, which has recently been increased to up to 300</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">backend</span><span class="o">.</span><span class="n">configuration</span><span class="p">()</span><span class="o">.</span><span class="n">max_experiments</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>300
+</pre></div>
+</div>
+</div>
+</div>
+<p>Alternatively using the new class of backends <a class="reference external" href="https://qiskit.org/documentation/stubs/qiskit.providers.BackendV2.html"><code class="docutils literal notranslate"><span class="pre">BackendV2</span></code></a>, <code class="docutils literal notranslate"><span class="pre">max_experiments</span></code> is a direct attribute of this class. At this time, access to backends using <code class="docutils literal notranslate"><span class="pre">BackendV2</span></code> is managed by qiskit-ibm-provider, which you may install by running</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">Qiskit</span><span class="o">/</span><span class="n">qiskit</span><span class="o">-</span><span class="n">ibm</span><span class="o">-</span><span class="n">provider</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">qiskit</span><span class="o">-</span><span class="n">ibm</span><span class="o">-</span><span class="n">provider</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">.</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit_ibm_provider</span> <span class="kn">import</span> <span class="n">IBMProvider</span>
+<span class="n">provider2</span> <span class="o">=</span> <span class="n">IBMProvider</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">backend2</span><span class="o">=</span><span class="n">provider2</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">ibm_cairo</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;version =&quot;</span><span class="p">,</span><span class="n">backend2</span><span class="o">.</span><span class="n">version</span><span class="p">,</span><span class="s2">&quot;, maximum number of circuits =&quot;</span><span class="p">,</span><span class="n">backend2</span><span class="o">.</span><span class="n">max_experiments</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>version = 2 , maximum number of circuits = 300
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="exemplary-experiment">
+<h2>Exemplary experiment<a class="headerlink" href="#exemplary-experiment" title="Permalink to this heading">#</a></h2>
+<p>In a recent <a class="reference internal" href="../how-to/dynamical_decoupling/dynamical_decoupling.html"><span class="doc std std-doc">post on dynamical decoupling</span></a> we compared the performance of different approaches. We do use 100.000 shots in this example. Here, we analyze the significance of using a suitable number of circuits as well. Instead of re-running the example, we show here how to load previously run jobs from the same provider, based on job tags:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">jobs</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">jobs</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span><span class="n">job_tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;dynamical decoupling&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The names of the different decoupling sequences were encoded in tags as well:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">jobtags</span><span class="o">=</span><span class="p">[</span><span class="n">thisjob</span><span class="o">.</span><span class="n">tags</span><span class="p">()</span> <span class="k">for</span> <span class="n">thisjob</span> <span class="ow">in</span> <span class="n">jobs</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">tags</span> <span class="ow">in</span> <span class="n">jobtags</span><span class="p">:</span>
+    <span class="n">tags</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;dynamical decoupling&#39;</span><span class="p">)</span>
+<span class="n">sequences</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">jobtags</span><span class="p">)</span><span class="o">.</span><span class="n">flat</span><span class="p">)</span>
+<span class="n">sequences</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;no_dd&#39;, &#39;XY8pm&#39;, &#39;XY4pm&#39;, &#39;X2pm&#39;, &#39;XY8&#39;, &#39;XY4&#39;, &#39;X2&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">jobsdict</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span><span class="n">jobs</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In order to compare the distribution of counts, we run the circuit used to create the <a class="reference internal" href="../how-to/dynamical_decoupling/dynamical_decoupling.html"><span class="doc std std-doc">results we just loaded</span></a> in a simulation</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circ</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">circ</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">circ</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">circ</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">circ</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">circ</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+<span class="n">circ</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/e21d7be4c9455c4cc84bd12fad7d10ff02fe41ba1a6e4f913828384f0724b61e.png" src="../_images/e21d7be4c9455c4cc84bd12fad7d10ff02fe41ba1a6e4f913828384f0724b61e.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sim_job</span> <span class="o">=</span> <span class="n">provider</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">ibmq_qasm_simulator</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">circ</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sim_counts</span> <span class="o">=</span> <span class="n">sim_job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We are now in position to compare the counts obtained from simulation to each entry in the retrieved jobs. We do this by means of the <a class="reference external" href="https://qiskit.org/documentation/stubs/qiskit.quantum_info.hellinger_fidelity.html">Hellinger Fidelity</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fidelities_all</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sequences</span><span class="p">))))</span>
+<span class="k">for</span> <span class="n">sequence</span> <span class="ow">in</span> <span class="n">jobsdict</span><span class="p">:</span>
+    <span class="n">fidelities_all</span><span class="p">[</span><span class="n">sequence</span><span class="p">]</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span>
+        <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">hellinger_fidelity</span><span class="p">(</span><span class="n">sim_counts</span><span class="p">,</span><span class="n">x</span><span class="p">),</span>
+        <span class="n">jobsdict</span><span class="p">[</span><span class="n">sequence</span><span class="p">]</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This allows us to plot the resulting Fidelities</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sorted_sequence</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;X2&#39;</span><span class="p">,</span><span class="s1">&#39;XY4&#39;</span><span class="p">,</span><span class="s1">&#39;XY8&#39;</span><span class="p">,</span><span class="s1">&#39;X2pm&#39;</span><span class="p">,</span><span class="s1">&#39;XY4pm&#39;</span><span class="p">,</span><span class="s1">&#39;XY8pm&#39;</span><span class="p">,</span><span class="s1">&#39;no_dd&#39;</span><span class="p">]</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">sequence</span> <span class="ow">in</span> <span class="n">sorted_sequence</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">sequence</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="n">fidelities_all</span><span class="p">[</span><span class="n">sequence</span><span class="p">],</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Hellinger fidelities of dd sequences, 100 circuits at 100.000 shots each </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="nb">min</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">fidelities_all</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span><span class="o">*</span><span class="mf">0.999</span><span class="p">,</span><span class="nb">max</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">fidelities_all</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span><span class="o">*</span><span class="mf">1.001</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/d15fda9c433b5cd9cf66a09ac6e272657b67f72f9ba4d9e29b3c9679628db5f2.png" src="../_images/d15fda9c433b5cd9cf66a09ac6e272657b67f72f9ba4d9e29b3c9679628db5f2.png" />
+</div>
+</div>
+<p>One observation that is relevant here: Despite running each circuit at 100.000 shots each, we do see a small, yet non-negligible deviation of the result from each individual circuit (i.e. each individual dot in the plot). So it is necessary to sample this distribution for each different sequence here, or reduce the deviation.</p>
+</section>
+<section id="low-number-of-circuits-may-lead-to-wrong-conclusions">
+<h2>Low number of circuits may lead to wrong conclusions<a class="headerlink" href="#low-number-of-circuits-may-lead-to-wrong-conclusions" title="Permalink to this heading">#</a></h2>
+<p>For illustration, we show the “extreme” case of using just a single circuit to prove a point may lead to wrong conclusions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bad_case_fidelities</span> <span class="o">=</span> <span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="n">fidelities_all</span><span class="p">[</span><span class="s1">&#39;X2&#39;</span><span class="p">]),</span><span class="nb">max</span><span class="p">(</span><span class="n">fidelities_all</span><span class="p">[</span><span class="s1">&#39;XY4&#39;</span><span class="p">]),</span><span class="nb">min</span><span class="p">(</span><span class="n">fidelities_all</span><span class="p">[</span><span class="s1">&#39;XY8&#39;</span><span class="p">]),</span><span class="nb">min</span><span class="p">(</span><span class="n">fidelities_all</span><span class="p">[</span><span class="s1">&#39;X2pm&#39;</span><span class="p">]),</span>
+<span class="nb">max</span><span class="p">(</span><span class="n">fidelities_all</span><span class="p">[</span><span class="s1">&#39;XY4pm&#39;</span><span class="p">]),</span><span class="nb">max</span><span class="p">(</span><span class="n">fidelities_all</span><span class="p">[</span><span class="s1">&#39;XY8pm&#39;</span><span class="p">]),</span><span class="nb">max</span><span class="p">(</span><span class="n">fidelities_all</span><span class="p">[</span><span class="s1">&#39;no_dd&#39;</span><span class="p">])]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bad_case</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">sorted_sequence</span><span class="p">,</span><span class="n">bad_case_fidelities</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="o">*</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">bad_case</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;BAD SAMPLING! (1 circuit only) </span><span class="se">\n</span><span class="s1"> Hellinger fidelities of Dynamical Decoupling sequences&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="nb">min</span><span class="p">(</span><span class="n">bad_case_fidelities</span><span class="p">)</span><span class="o">*</span><span class="mf">0.999</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">bad_case_fidelities</span><span class="p">)</span><span class="o">*</span><span class="mf">1.001</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/3a853b4b6caf9163512ea3a6aff1411f44a321b83f3f2396dc2bffae2a32b154.png" src="../_images/3a853b4b6caf9163512ea3a6aff1411f44a321b83f3f2396dc2bffae2a32b154.png" />
+</div>
+</div>
+<p>So after running just one circuit, here it looks as if the best strategy was “no_dd”, i.e. to apply no dynamical decoupling at all. It also looks as if the sequences “X2pm” and “XY4pm” perform equally well. Compare this to the full plot above using 100 circuits to see that this conclusion drawn after running a single circuit for each is not justified.</p>
+</section>
+<section id="scaling-behaviour-due-to-higher-number-of-circuits">
+<h2>Scaling behaviour due to higher number of circuits<a class="headerlink" href="#scaling-behaviour-due-to-higher-number-of-circuits" title="Permalink to this heading">#</a></h2>
+<p>Let us look more qualitatively at why running many circuits can help to draw the right conclusions. We select the best approach presented (“X2pm” sequence) and analyze how the mean value and standard deviations evolve over the number of circuits.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">averages</span><span class="o">=</span><span class="p">[]</span>
+<span class="n">std_devs</span><span class="o">=</span><span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">fidelities_all</span><span class="p">[</span><span class="s1">&#39;X2pm&#39;</span><span class="p">])):</span>
+    <span class="n">averages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">fidelities_all</span><span class="p">[</span><span class="s1">&#39;X2pm&#39;</span><span class="p">][:</span><span class="n">i</span><span class="p">]))</span>
+    <span class="n">std_devs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">fidelities_all</span><span class="p">[</span><span class="s1">&#39;X2pm&#39;</span><span class="p">][:</span><span class="n">i</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Sampling by running jobs with several circuits: </span><span class="se">\n</span><span class="s1"> effect on Hellinger Fidelity (X2pm sequence)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fidelities_all</span><span class="p">[</span><span class="s1">&#39;X2pm&#39;</span><span class="p">],</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;individual results per circuit&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">averages</span><span class="p">,</span><span class="n">std_devs</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;mean value + standard deviation&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">averages</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;mean value (moving average)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">averages</span><span class="p">,</span><span class="n">std_devs</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;mean value - standard deviation&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Number of circuits&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Fidelity&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/7db29d832d776cd21e6ecb0bbc1a22dd4537a54744f11590e2a3ed818d6c6ccd.png" src="../_images/7db29d832d776cd21e6ecb0bbc1a22dd4537a54744f11590e2a3ed818d6c6ccd.png" />
+</div>
+</div>
+<p>We observe that even when averaging over the results, there is still significant variance for a small number of circuits. As the number of circuits increases, the mean Fidelity stabilizes. We can confirm this observation by comparing the evolution of each mean Fidelity over the number of circuits, for each of the different approaches.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">averages_dict</span><span class="o">=</span><span class="p">{}</span>
+<span class="k">for</span> <span class="n">sequence</span> <span class="ow">in</span> <span class="n">sorted_sequence</span><span class="p">:</span>
+    <span class="n">averages_dict</span><span class="p">[</span><span class="n">sequence</span><span class="p">]</span><span class="o">=</span><span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">52</span><span class="p">):</span> 
+        <span class="n">averages_dict</span><span class="p">[</span><span class="n">sequence</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">fidelities_all</span><span class="p">[</span><span class="n">sequence</span><span class="p">][:</span><span class="n">i</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">sequence</span> <span class="ow">in</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">sequences</span> <span class="k">if</span> <span class="n">n</span> <span class="o">!=</span> <span class="s1">&#39;XY8pm&#39;</span><span class="p">]:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">averages_dict</span><span class="p">[</span><span class="n">sequence</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="n">sequence</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;mean Hellinger fidelities of dd sequences vs number of circuits&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.894</span><span class="p">,</span><span class="nb">max</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">averages_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span><span class="o">*</span><span class="mf">1.001</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Number of circuits&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Fidelity&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.175</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/f86ab8349484b80b34d05250bbb8c47079dfcf9aa490f8126c897f7c52f46b78.png" src="../_images/f86ab8349484b80b34d05250bbb8c47079dfcf9aa490f8126c897f7c52f46b78.png" />
+</div>
+</div>
+<p>Again, the fluctuations in the mean value naturally smooth out with more circuits. For the sequences “X2” and “XY4pm” it is quite notable that there is no clear trend of better performance until about 20 circuits are run for each approach.</p>
+<p>Finally, we consider how the accumulation of shots influences the advantages from averaging. Ideally, running the same circuit several times simply adds up the number of shots from each run.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cumulative_counts</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">averages</span><span class="p">))]</span>
+<span class="n">cumulative_std_dev</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">cumulative_counts</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Sampling by running jobs with several circuits: </span><span class="se">\n</span><span class="s1"> effect on Hellinger Fidelity (X2pm sequence)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fidelities_all</span><span class="p">[</span><span class="s1">&#39;X2pm&#39;</span><span class="p">],</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;individual results per circuit&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">averages</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="p">),</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;mean + standard deviation </span><span class="se">\n</span><span class="s1"> (from No. shots per circuit)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">averages</span><span class="p">,</span><span class="n">cumulative_std_dev</span><span class="p">),</span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;mean + standard deviation </span><span class="se">\n</span><span class="s1"> (from cumulative No. shots)&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">averages</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;mean value (moving average)&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">averages</span><span class="p">,</span><span class="n">cumulative_std_dev</span><span class="p">),</span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;mean - standard deviation </span><span class="se">\n</span><span class="s1"> (from cumulative No. shots)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">averages</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">5</span><span class="p">),</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;mean - standard deviation </span><span class="se">\n</span><span class="s1"> (from No. shots per circuit)&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Number of circuits&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Fidelity&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.02</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/509fe6d21843bc7f3a3e135427fc9bcaa2fc98e22c9bc1504d32f454401fe4f9.png" src="../_images/509fe6d21843bc7f3a3e135427fc9bcaa2fc98e22c9bc1504d32f454401fe4f9.png" />
+</div>
+</div>
+<p>The dotted lines present bounds in Fidelity for each individual run, while the solid lines close to the mean represent the increasingly narrow standard deviation from averaging over the cumulative counts.</p>
+<p>In Conclusion, it becomes obvious that a larger number of circuits helps in obtaining precise and correct results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qiskit.tools.jupyter</span>
+<span class="o">%</span><span class="k">qiskit_version_table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><h3>Version Information</h3><table><tr><th>Qiskit Software</th><th>Version</th></tr><tr><td><code>qiskit-terra</code></td><td>0.21.2</td></tr><tr><td><code>qiskit-aer</code></td><td>0.10.4</td></tr><tr><td><code>qiskit-ignis</code></td><td>0.7.1</td></tr><tr><td><code>qiskit-ibmq-provider</code></td><td>0.19.2</td></tr><tr><td><code>qiskit</code></td><td>0.37.2</td></tr><tr><td><code>qiskit-nature</code></td><td>0.4.2</td></tr><tr><td><code>qiskit-finance</code></td><td>0.3.3</td></tr><tr><td><code>qiskit-optimization</code></td><td>0.4.0</td></tr><tr><td><code>qiskit-machine-learning</code></td><td>0.4.0</td></tr><tr><th>System information</th></tr><tr><td>Python version</td><td>3.8.2</td></tr><tr><td>Python compiler</td><td>MSC v.1916 64 bit (AMD64)</td></tr><tr><td>Python build</td><td>default, Apr 14 2020 19:01:40</td></tr><tr><td>OS</td><td>Windows</td></tr><tr><td>CPUs</td><td>4</td></tr><tr><td>Memory (Gb)</td><td>7.838371276855469</td></tr><tr><td colspan='2'>Mon Sep 05 16:32:46 2022 W. Europe Summer Time</td></tr></table></div></div>
+</div>
+</section>
+</section>
+
+<div class="section">
+   
+</div>
+
+              </article>
+              
+
+              
+              <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="precision_vs_shots.html" title="previous page">
+      <i class="fas fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Precision, Accuracy and Number of Shots</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="../members.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Members</p>
+  </div>
+  <i class="fas fa-angle-right"></i>
+  </a>
+</div>
+              </footer>
+              
+          </div>
+          
+      </div>
+    </div>
+
+  
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695"></script>
+
+<footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    <p class="copyright">
+    &copy; Copyright 2022, IBM Quantum.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.<br>
+</p>
+  </div>
+  
+</div>
+</footer>
+  </body>
+</html>

@@ -21,4 +21,5 @@ historical
 :maxdepth: 2
 :hidden:
 precision_vs_shots
+circuits
 ```
