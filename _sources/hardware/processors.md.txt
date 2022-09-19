@@ -1,5 +1,16 @@
 # IBM Quantum processor families
 
+```{jupyter-execute}
+    :hide-code:
+
+    import os
+    if os.environ.get('DOCS_CI', 'False') != 'True':
+        from qiskit import IBMQ
+        IBMQ.load_account();
+        provider = IBMQ.get_provider(project='internal-test')
+        from kaleidoscope.qiskit import system_error_map
+```
+
 <!-- :::{card} How to select a quantum system?
 :link: https://quantum-computing.ibm.com/services/resources?tab=systems
 
@@ -14,12 +25,14 @@ A complete listing of available quantum systems.
 
 ## Eagle processors (127Q)
 
-```{figure} images/hw/eagle.png
----
-name: eagle-fig
----
-Entangling gate topology of a 127-qubit Eagle processor.  Qubits are color coded according to
-the multiplexed readout channels.
+```{eval-rst}
+.. jupyter-execute::
+    :hide-code:
+
+    if os.environ.get('DOCS_CI', 'False') != 'True':
+        backend = provider.get_backend('ibm_washington')
+        fig = system_error_map(backend, background_color='black')
+        display(fig)
 ```
 
 Eagle processors are 127 qubit systems that feature [3D multi-layer fabrication techniques](https://research.ibm.com/blog/127-qubit-quantum-processor-eagle)
@@ -37,11 +50,14 @@ The initial version of the Eagle processor.
 
 ## Hummingbird processors (65Q)
 
-```{figure} images/hw/hummingbird.png
----
-name: hummingbird-fig
----
-Entangling gate topology of a 65-qubit Hummingbird processor.
+```{eval-rst}
+.. jupyter-execute::
+    :hide-code:
+
+    if os.environ.get('DOCS_CI', 'False') != 'True':
+        backend = provider.get_backend('ibm_ithaca')
+        fig = system_error_map(backend, background_color='black')
+        display(fig)
 ```
 
 In essence, a scaled-up 65 qubit version of the Falcon series featuring 8x readout multiplxing.  
@@ -60,13 +76,14 @@ The initial version of the Hummingbird processor.
 
 ## Falcon processors (27Q)
 
+```{eval-rst}
+.. jupyter-execute::
+    :hide-code:
 
-```{figure} images/hw/falcon.png
----
-name: falcon-fig
----
-Entangling gate topology of a 27-qubit Falcon processor.  Qubits are color coded according to
-the multiplexed readout channels.
+    if os.environ.get('DOCS_CI', 'False') != 'True':
+        backend = provider.get_backend('ibm_peekskill')
+        fig = system_error_map(backend, background_color='black')
+        display(fig)
 ```
 
 The current systems offered by IBM Quantum.  These are 27 qubit systems that were the first

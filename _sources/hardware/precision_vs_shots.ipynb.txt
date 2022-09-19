@@ -108,28 +108,18 @@
   },
   {
    "cell_type": "markdown",
-   "id": "d49ea1f1",
-   "metadata": {},
-   "source": [
-    "Alternatively, using the new class of backends [`BackendV2`](https://qiskit.org/documentation/stubs/qiskit.providers.BackendV2.html), `max_shots` is just an attribute of this class."
-   ]
-  },
-  {
-   "cell_type": "markdown",
    "id": "fc88d19d",
    "metadata": {},
    "source": [
-    "At this time, access to backends using the new `BackendV2` class is managed by qiskit-ibm-provider, which you may install by running \n",
+    "Alternatively, using the new class of backends [`BackendV2`](https://qiskit.org/documentation/stubs/qiskit.providers.BackendV2.html), `max_shots` is just an attribute of this class. Access to backends using `BackendV2` is managed by [qiskit-ibm-provider](https://github.com/Qiskit/qiskit-ibm-provider), which you may install by running \n",
     "```\n",
-    "git clone https://github.com/Qiskit/qiskit-ibm-provider.git\n",
-    "cd qiskit-ibm-provider\n",
-    "pip install .\n",
+    "pip install qiskit-ibm-provider\n",
     "```"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 6,
+   "execution_count": 5,
    "id": "4975cfe3",
    "metadata": {},
    "outputs": [],
@@ -140,7 +130,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 7,
+   "execution_count": 6,
    "id": "fd163ede",
    "metadata": {},
    "outputs": [
@@ -175,7 +165,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 8,
+   "execution_count": 7,
    "id": "6d80be79",
    "metadata": {
     "ExecuteTime": {
@@ -191,7 +181,7 @@
        "<Figure size 658.679x325.08 with 1 Axes>"
       ]
      },
-     "execution_count": 8,
+     "execution_count": 7,
      "metadata": {
       "image/png": {
        "height": 277,
@@ -218,28 +208,22 @@
    "id": "09d8855c",
    "metadata": {},
    "source": [
-    "Let us see which expectation value this circuit produces. In order to do so, we set up the same circuit without measurements, simulate the resulting Statevector and use the method `expval` from mthree"
+    "Let us see which expectation value this circuit produces. In order to do so, we set up the same circuit without measurements, simulate the resulting Statevector and use the method `expval` from mthree. In order to get a copy of the circuit `qc` rather than modify the circuit itself, we set the argument `inplace=False` ."
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 9,
-   "id": "0a10eb41",
+   "execution_count": 8,
+   "id": "58e0ecea",
    "metadata": {},
    "outputs": [],
    "source": [
-    "N = 4\n",
-    "qc_nomeasure = QuantumCircuit(N)\n",
-    "qc_nomeasure.x(range(N))\n",
-    "qc_nomeasure.h(range(N))\n",
-    "qc_nomeasure.ch(2,1)\n",
-    "qc_nomeasure.ch(1,0)\n",
-    "qc_nomeasure.ch(2,3);"
+    "qc_nomeasure = qc.remove_final_measurements(inplace=False)"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 10,
+   "execution_count": 11,
    "id": "70d3b963",
    "metadata": {
     "ExecuteTime": {
@@ -254,7 +238,7 @@
        "0.4999999999999999"
       ]
      },
-     "execution_count": 10,
+     "execution_count": 11,
      "metadata": {},
      "output_type": "execute_result"
     }
@@ -444,14 +428,14 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 44,
+   "execution_count": 13,
    "id": "3438893d",
    "metadata": {},
    "outputs": [
     {
      "data": {
       "text/html": [
-       "<h3>Version Information</h3><table><tr><th>Qiskit Software</th><th>Version</th></tr><tr><td><code>qiskit-terra</code></td><td>0.21.1</td></tr><tr><td><code>qiskit-aer</code></td><td>0.10.4</td></tr><tr><td><code>qiskit-ignis</code></td><td>0.7.1</td></tr><tr><td><code>qiskit-ibmq-provider</code></td><td>0.19.2</td></tr><tr><td><code>qiskit</code></td><td>0.37.1</td></tr><tr><td><code>qiskit-nature</code></td><td>0.4.3</td></tr><tr><td><code>qiskit-finance</code></td><td>0.3.3</td></tr><tr><td><code>qiskit-optimization</code></td><td>0.4.0</td></tr><tr><td><code>qiskit-machine-learning</code></td><td>0.4.0</td></tr><tr><th>System information</th></tr><tr><td>Python version</td><td>3.8.2</td></tr><tr><td>Python compiler</td><td>MSC v.1916 64 bit (AMD64)</td></tr><tr><td>Python build</td><td>default, Apr 14 2020 19:01:40</td></tr><tr><td>OS</td><td>Windows</td></tr><tr><td>CPUs</td><td>4</td></tr><tr><td>Memory (Gb)</td><td>7.838371276855469</td></tr><tr><td colspan='2'>Fri Jul 29 16:00:18 2022 W. Europe Summer Time</td></tr></table>"
+       "<h3>Version Information</h3><table><tr><th>Qiskit Software</th><th>Version</th></tr><tr><td><code>qiskit-terra</code></td><td>0.21.2</td></tr><tr><td><code>qiskit-aer</code></td><td>0.10.4</td></tr><tr><td><code>qiskit-ignis</code></td><td>0.7.1</td></tr><tr><td><code>qiskit-ibmq-provider</code></td><td>0.19.2</td></tr><tr><td><code>qiskit</code></td><td>0.37.2</td></tr><tr><td><code>qiskit-nature</code></td><td>0.4.2</td></tr><tr><td><code>qiskit-finance</code></td><td>0.3.3</td></tr><tr><td><code>qiskit-optimization</code></td><td>0.4.0</td></tr><tr><td><code>qiskit-machine-learning</code></td><td>0.4.0</td></tr><tr><th>System information</th></tr><tr><td>Python version</td><td>3.8.2</td></tr><tr><td>Python compiler</td><td>MSC v.1916 64 bit (AMD64)</td></tr><tr><td>Python build</td><td>default, Apr 14 2020 19:01:40</td></tr><tr><td>OS</td><td>Windows</td></tr><tr><td>CPUs</td><td>4</td></tr><tr><td>Memory (Gb)</td><td>7.838371276855469</td></tr><tr><td colspan='2'>Tue Sep 13 14:28:37 2022 W. Europe Summer Time</td></tr></table>"
       ],
       "text/plain": [
        "<IPython.core.display.HTML object>"
