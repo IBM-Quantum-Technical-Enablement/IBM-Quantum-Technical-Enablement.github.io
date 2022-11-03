@@ -14,5 +14,6 @@ See the [exploration archives](explore.md) for a more complete list.
 how-to/howto
 explore
 hardware/hardware
+events
 members
 ```

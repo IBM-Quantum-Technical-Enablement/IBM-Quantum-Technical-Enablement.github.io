@@ -2,7 +2,7 @@
 
 We have made two Matplotlib style files that we use for formatting figures for this website, presentations, and even papers:
 
-The `ibmq` style uses the following palette of color-blind friendly colors:
+The `quantum-light` style uses the following palette of color-blind friendly colors:
 
 ```python
 ['#0075C3', '#ee7733', '#6929c4', '#009988', '#cc3311', '#33bbee', '#ee3377']
@@ -10,7 +10,7 @@ The `ibmq` style uses the following palette of color-blind friendly colors:
 
 with a background color of `'#f2f0ed'`.  The order of the colors matters as they are sorted to maximize differences amongst neighboring colors (in grayscale as well).  All text and grids are `black`.
 
-The `ibmq-dark` style uses:
+The `quantum-dark` style uses:
 
 ```python
 ['#00e5cc', '#925cdd', '#f4a67a', '#0099e6', '#f47aa6', '#7ad3f4', '#ef5c3b']
@@ -26,7 +26,7 @@ on a background of `'#161616'`. Again, the order of the colors is important. All
 
     import numpy as np
     import matplotlib.pyplot as plt
-    plt.style.use('ibmq')
+    plt.style.use('quantum-light')
 
     fig, ax = plt.subplots()
     x = np.linspace(0,10,20)
@@ -36,7 +36,7 @@ on a background of `'#161616'`. Again, the order of the colors is important. All
     ax.plot(x,y1, 'o--')
     ax.plot(x,y2, 'o--')
     ax.plot(x,y3, 'o--')
-    ax.set_title('ibmq style');
+    ax.set_title('quantum-light style');
 ```
 
 <br/>
@@ -44,18 +44,24 @@ on a background of `'#161616'`. Again, the order of the colors is important. All
 ```{eval-rst}
 .. jupyter-execute::
 
-    plt.style.use('ibmq-dark')
+    plt.style.use('quantum-dark')
 
     fig, ax = plt.subplots()
     ax.plot(x,y1, 'o--')
     ax.plot(x,y2, 'o--')
     ax.plot(x,y3, 'o--')
-    ax.set_title('ibmq-dark style');
+    ax.set_title('quantum-dark style');
 ```
 
 ## Installation
 
-The [source files are located here](https://github.com/IBM-Quantum-Technical-Enablement/visualization/tree/main/matplotlib/styles).
+### From PyPi
+
+You can install the styles using: `pip install quantum-styles`
+
+### From source
+
+Alternatively, the [source files are located here](https://github.com/IBM-Quantum-Technical-Enablement/quantum-styles).
 
 You can install the files for your local user by first finding the local Matplotlib config directory:
 
@@ -68,11 +74,11 @@ and, if needed, creating a directory called `stylelib`.  The style files should 
 
 ## Usage
 
-To load the styles for use simply do (here using the `'ibmq-dark'` style as an example):
+To load the styles for use simply do (here using the `'quantum-dark'` style as an example):
 
 ```python
 import matplotlib.pyplot as plt
-plt.style.use('ibmq-dark')
+plt.style.use('quantum-dark')
 ```
 
 before rendering the figure that you want stylized.

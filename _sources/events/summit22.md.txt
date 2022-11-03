@@ -1,0 +1,31 @@
+---
+orphan: true
+---
+
+# Quantum Practitioners Forum 2022
+(summit22)=
+
+## Overview
+
+A workshop experience focused on demonstrating the latest in IBM Quantum software and services via hands-on demonstrations and reusable building blocks.  Attention will be paid on integration with current workflows and/or how improved workflows can offer performance advantages.
+
+## Details
+
+**Date**: November 10th, 2022
+
+**Location**: 335 Madison, NYC
+
+**Invitees**: 75 advanced users from across the IBM Quantum Network
+
+## Preliminary agenda
+
+| Time | Amphitheater (1st fl) | Vanderbilt room (7th fl.) | The Commons (7th fl.) |
+| ----------- | ----------- | ----------- | ----------- |
+| **7:45-8:30** | - | - | Breakfast |
+| **8:30-10:30** | Track A: Runtime integration | Track B: Qiskit Core | Free discussions |
+| **10:30-11:00** | Break | Break | Break |
+| **11:00-12:30** | Track A: Runtime error mitigation and suppression | Track B: Dynamic circuits | Free discussions |
+| **12:30-14:00** | - | - | Lunch / Free time |
+| **14:00-15:30** | Track A: Quantum Applications on Runtime | Track B: Nested programs / circuit cutting | Free discussions |
+| **15:30-17:30** | - | Qi Gao - Keio / Thomas Wellens / Raphael Seidel - Fraunhofer / Hsi-Sheng Goan - NTU / Nicolas Renaud - QAL | Free discussions |
+| **17:30-19:00** | - | - | Dinner |

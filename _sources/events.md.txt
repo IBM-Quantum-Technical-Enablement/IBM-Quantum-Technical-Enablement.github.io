@@ -1,0 +1,11 @@
+# Events
+
+## 2022
+
+:::{card} Quantum Practitioners Forum
+:link: summit22
+:link-type: ref
+
+**Date**: November 10th, 2022 \
+**Location**: 335 Madison, NYC
+:::
