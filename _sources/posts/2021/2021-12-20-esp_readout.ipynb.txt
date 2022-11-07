@@ -8,6 +8,7 @@
     "# Excited State Promotion (ESP) Readout\n",
     "\n",
     "```{post} 2021-12-20\n",
+    ":author: Paul Nation\n",
     ":category: Hardware\n",
     "```"
    ]
@@ -533,7 +534,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.9.7"
+   "version": "3.10.6"
   }
  },
  "nbformat": 4,

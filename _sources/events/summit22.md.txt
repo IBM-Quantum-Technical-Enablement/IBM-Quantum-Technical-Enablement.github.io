@@ -18,6 +18,10 @@ A workshop experience focused on demonstrating the latest in IBM Quantum softwar
 
 **Invitees**: 75 advanced users from across the IBM Quantum Network
 
+## Like a challenge?
+
+[Quantum Practitioners Forum 2022: CHSH Distance Challenge](/posts/2022/2022-11-07-challenge)
+
 ## Speakers
 
 <table>
