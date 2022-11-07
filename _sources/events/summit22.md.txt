@@ -18,6 +18,33 @@ A workshop experience focused on demonstrating the latest in IBM Quantum softwar
 
 **Invitees**: 75 advanced users from across the IBM Quantum Network
 
+## Speakers
+
+<table>
+<tr>
+<td>
+
+- **Thomas Alexander** - Quantum Solutions Developer
+- **Mariana Bernagozzi** - Quantum Software Developer
+- **Michael Healy** - Research Staff Memeber
+- **Ali Javadi** - Principal Research Staff Member
+- **Caleb Johnson** - Quantum Developer
+- **Tushar Mital** - Sr. Quantum Product Manager
+
+</td>
+<td>
+
+- **Elena Peña** - Quantum Software Engineer
+- **Pedro Rivero** - Quantum Software Developer
+- **Max Rossmannek** - Pre-Doctoral Student
+- **Iskandar Sitdikov** - Quantum Software Engineer
+- **Matthew Treinish** - Open Source Software Engineer
+- **Jessie Yu** - IBM Quantum System Software Development
+
+</td>
+</tr>
+</table>
+
 ## Preliminary agenda
 
 | Time | Amphitheater (1st fl) | Vanderbilt room (7th fl.) | The Commons (7th fl.) |
