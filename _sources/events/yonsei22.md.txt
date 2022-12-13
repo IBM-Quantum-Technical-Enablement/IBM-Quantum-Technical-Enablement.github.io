@@ -8,7 +8,7 @@ orphan: true
 
 ## Overview
 
-An intensive three day workshop focused on building up attendees knowledge of Qiskit and IBM Quntum systems and services.  Day one provides and introductory tour.
+An intensive three day workshop focused on building up attendees knowledge of Qiskit and IBM Quntum systems and services.
 
 ## Details
 
