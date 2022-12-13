@@ -1,0 +1,1256 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Topic 4. Variational Quantum Eigensolver &#8212; Enabing Technologies  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/thebelab-helper.js"></script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-16824831-8"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-16824831-8');
+            </script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'events/yonsei-2022/Day-2/VQE';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en"> 
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../../../explore/atom.xml"
+  title="Quantum Explorations"
+/>
+ 
+<style type="text/css">
+  ul.ablog-archive {
+    list-style: none;
+    overflow: auto;
+    margin-left: 0px;
+  }
+  ul.ablog-archive li {
+    float: left;
+    margin-right: 5px;
+    font-size: 80%;
+  }
+  ul.postlist a {
+    font-style: italic;
+  }
+  ul.postlist-style-disc {
+    list-style-type: disc;
+  }
+  ul.postlist-style-none {
+    list-style-type: none;
+  }
+  ul.postlist-style-circle {
+    list-style-type: circle;
+  }
+</style>
+
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../_static/dark_logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../how-to/howto.html">
+                        How to guides
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../explore.html">
+                        Explorations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../hardware/hardware.html">
+                        IBM Hardware
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../events.html">
+                        Events
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../members.html">
+                        Members
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+      </div>
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../how-to/howto.html">
+                        How to guides
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../explore.html">
+                        Explorations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../hardware/hardware.html">
+                        IBM Hardware
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../events.html">
+                        Events
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../members.html">
+                        Members
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+      </div>
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+               <section class="tex2jax_ignore mathjax_ignore" id="topic-4-variational-quantum-eigensolver">
+<h1>Topic 4. Variational Quantum Eigensolver<a class="headerlink" href="#topic-4-variational-quantum-eigensolver" title="Permalink to this heading">#</a></h1>
+<p><strong>Instructor</strong> : Hwajung Kang, Ph.D., Education Delivery Program Manager, IBM Quantum</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit</span> <span class="kn">import</span> <span class="n">Parameter</span><span class="p">,</span><span class="n">ParameterVector</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">EfficientSU2</span>
+<span class="kn">from</span> <span class="nn">qiskit.result</span> <span class="kn">import</span> <span class="n">sampled_expectation_value</span>
+<span class="kn">from</span> <span class="nn">qiskit.quantum_info</span> <span class="kn">import</span> <span class="n">Statevector</span><span class="p">,</span> <span class="n">DensityMatrix</span>
+<span class="kn">from</span> <span class="nn">qiskit.opflow</span> <span class="kn">import</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span>
+<span class="kn">from</span> <span class="nn">qiskit.quantum_info</span> <span class="kn">import</span> <span class="n">SparsePauliOp</span>
+<span class="kn">from</span> <span class="nn">qiskit.visualization</span> <span class="kn">import</span> <span class="n">plot_error_map</span>
+<span class="kn">from</span> <span class="nn">qiskit.visualization.bloch</span> <span class="kn">import</span> <span class="n">Bloch</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy.linalg</span> <span class="k">as</span> <span class="nn">la</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="alert alert-info">
+<ul>
+    <b>What is VQE?</b>
+<li>VQE, Variational Quantum Eigensolver, uses variational method to approximate ground state of Hamiltonian.</li> 
+    <br>
+    <b>Applications</b>
+<li>Chemistry and material science : Finding the ground state and energy given Hamiltonian</li>
+<li>Optimization problem : Finding the optimal solution of the problem encoded as a Hamiltonian</li>   
+</ul>
+</div><section id="workflow">
+<h2>Workflow<a class="headerlink" href="#workflow" title="Permalink to this heading">#</a></h2>
+<p><img alt="vqe" src="../../../_images/VQEworkflow.png" /></p>
+</section>
+<section id="part-1-no-noise">
+<h2>Part 1. No noise<a class="headerlink" href="#part-1-no-noise" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">backend</span> <span class="o">=</span> <span class="n">Aer</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s1">&#39;aer_simulator&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="ex-1-estimate-the-ground-state-of-one-qubit-system-and-its-energy-for-the-given-hamiltonian-h-2x">
+<h3>Ex 1. Estimate the ground state of one qubit system and its energy for the given Hamiltonian, <span class="math notranslate nohighlight">\(H=2X\)</span>.<a class="headerlink" href="#ex-1-estimate-the-ground-state-of-one-qubit-system-and-its-energy-for-the-given-hamiltonian-h-2x" title="Permalink to this heading">#</a></h3>
+<section id="exact-answer">
+<h4>Exact Answer<a class="headerlink" href="#exact-answer" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sX</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+<span class="n">H</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">sX</span>
+<span class="n">eigvals</span><span class="p">,</span> <span class="n">eigvecs</span> <span class="o">=</span> <span class="n">la</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The ground state energy of H : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">eigvals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The ground state of H : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">eigvecs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The ground state energy of H : -2.0
+The ground state of H : [-0.707  0.707]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="using-vqe">
+<h4>Using VQE<a class="headerlink" href="#using-vqe" title="Permalink to this heading">#</a></h4>
+<p><strong>Step 1. Ansatz - State Preparation</strong></p>
+<p>Choice of ansatz</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Xop</span><span class="p">,</span> <span class="n">Yop</span><span class="p">,</span> <span class="n">Zop</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">to_matrix</span><span class="p">(),</span> <span class="n">Y</span><span class="o">.</span><span class="n">to_matrix</span><span class="p">(),</span> <span class="n">Z</span><span class="o">.</span><span class="n">to_matrix</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">state_to_bloch</span><span class="p">(</span><span class="n">state_vec</span><span class="p">):</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">bx</span> <span class="o">=</span> <span class="n">phi</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span> <span class="o">@</span> <span class="n">Xop</span> <span class="o">@</span> <span class="n">phi</span>
+    <span class="n">by</span> <span class="o">=</span> <span class="n">phi</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span> <span class="o">@</span> <span class="n">Yop</span> <span class="o">@</span> <span class="n">phi</span>
+    <span class="n">bz</span> <span class="o">=</span> <span class="n">phi</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span> <span class="o">@</span> <span class="n">Zop</span> <span class="o">@</span> <span class="n">phi</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">bx</span><span class="p">,</span> <span class="n">by</span><span class="p">,</span> <span class="n">bz</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="s1">&#39;θ&#39;</span><span class="p">)</span>
+<span class="n">angs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
+
+<span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">p</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span>
+
+<span class="n">st_all</span> <span class="o">=</span> <span class="p">[</span><span class="n">Statevector</span><span class="o">.</span><span class="n">from_instruction</span><span class="p">(</span><span class="n">qc</span><span class="o">.</span><span class="n">assign_parameters</span><span class="p">([</span><span class="n">ang</span><span class="p">]))</span> <span class="k">for</span> <span class="n">ang</span> <span class="ow">in</span> <span class="n">angs</span><span class="p">]</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Bloch</span><span class="p">(</span><span class="n">axes</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">b</span><span class="o">.</span><span class="n">point_color</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">]</span>
+<span class="n">b</span><span class="o">.</span><span class="n">point_marker</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;o&#39;</span><span class="p">]</span>
+<span class="n">b</span><span class="o">.</span><span class="n">point_size</span> <span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">st</span> <span class="ow">in</span> <span class="n">st_all</span><span class="p">:</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">state_to_bloch</span><span class="p">(</span><span class="n">st</span><span class="p">)</span>
+    <span class="n">b</span><span class="o">.</span><span class="n">add_points</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+    
+<span class="n">b</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   ┌───┐┌──────┐┌───┐
+q: ┤ H ├┤ P(θ) ├┤ H ├
+   └───┘└──────┘└───┘
+</pre></div>
+</div>
+<img alt="../../../_images/9e1a4ad9da4a57145bf63099f281e35f9e213397b7a013d865ceaa5049f68839.png" src="../../../_images/9e1a4ad9da4a57145bf63099f281e35f9e213397b7a013d865ceaa5049f68839.png" />
+</div>
+</div>
+<p>Reference: <a class="reference external" href="https://learn.qiskit.org/course/machine-learning/parameterized-quantum-circuits#parameterized-1-0">Parametrized Quantum Circuits</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># First, we need to define the circuits:</span>
+<span class="n">theta_param</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="s1">&#39;θ&#39;</span><span class="p">)</span>
+<span class="n">phi_param</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="s1">&#39;Φ&#39;</span><span class="p">)</span>
+
+<span class="c1"># Circuit A</span>
+<span class="n">qc_A</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">qc_A</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc_A</span><span class="o">.</span><span class="n">rz</span><span class="p">(</span><span class="n">theta_param</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Circuit B</span>
+<span class="n">qc_B</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">qc_B</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc_B</span><span class="o">.</span><span class="n">rz</span><span class="p">(</span><span class="n">theta_param</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">qc_B</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">phi_param</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">qc_A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">qc_B</span><span class="p">)</span>
+
+<span class="c1"># Next we uniformly sample the parameter space for the two parameters theta and phi</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">num_param</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_param</span><span class="p">)]</span>
+<span class="n">phi</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_param</span><span class="p">)]</span>
+
+<span class="c1"># Then we take the parameter value lists, build the state vectors corresponding</span>
+<span class="c1"># to each circuit, and plot them on the Bloch sphere:</span>
+<span class="kn">from</span> <span class="nn">qiskit.visualization.bloch</span> <span class="kn">import</span> <span class="n">Bloch</span>
+<span class="kn">from</span> <span class="nn">qiskit.quantum_info</span> <span class="kn">import</span> <span class="n">Statevector</span>
+
+<span class="k">def</span> <span class="nf">state_to_bloch</span><span class="p">(</span><span class="n">state_vec</span><span class="p">):</span>
+    <span class="c1"># Converts state vectors to points on the Bloch sphere</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">state_vec</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">state_vec</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">state_vec</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)]</span>
+
+<span class="c1"># Bloch sphere plot formatting</span>
+<span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figaspect</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
+<span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">),</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">b1</span><span class="p">,</span><span class="n">b2</span> <span class="o">=</span> <span class="n">Bloch</span><span class="p">(</span><span class="n">axes</span><span class="o">=</span><span class="n">ax1</span><span class="p">),</span> <span class="n">Bloch</span><span class="p">(</span><span class="n">axes</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
+<span class="n">b1</span><span class="o">.</span><span class="n">point_color</span><span class="p">,</span> <span class="n">b2</span><span class="o">.</span><span class="n">point_color</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">],[</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">]</span>
+<span class="n">b1</span><span class="o">.</span><span class="n">point_marker</span><span class="p">,</span> <span class="n">b2</span><span class="o">.</span><span class="n">point_marker</span><span class="o">=</span> <span class="p">[</span><span class="s1">&#39;o&#39;</span><span class="p">],[</span><span class="s1">&#39;o&#39;</span><span class="p">]</span>
+<span class="n">b1</span><span class="o">.</span><span class="n">point_size</span><span class="p">,</span> <span class="n">b2</span><span class="o">.</span><span class="n">point_size</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">],[</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="c1"># Calculate state vectors for circuit A and circuit B for each set of sampled parameters</span>
+<span class="c1"># and add to their respective Bloch sphere</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_param</span><span class="p">):</span>    
+    <span class="n">state_1</span><span class="o">=</span><span class="n">Statevector</span><span class="o">.</span><span class="n">from_instruction</span><span class="p">(</span><span class="n">qc_A</span><span class="o">.</span><span class="n">bind_parameters</span><span class="p">({</span><span class="n">theta_param</span><span class="p">:</span><span class="n">theta</span><span class="p">[</span><span class="n">i</span><span class="p">]}))</span>
+    <span class="n">state_2</span><span class="o">=</span><span class="n">Statevector</span><span class="o">.</span><span class="n">from_instruction</span><span class="p">(</span><span class="n">qc_B</span><span class="o">.</span><span class="n">bind_parameters</span><span class="p">({</span><span class="n">theta_param</span><span class="p">:</span><span class="n">theta</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">phi_param</span><span class="p">:</span><span class="n">phi</span><span class="p">[</span><span class="n">i</span><span class="p">]}))</span>
+    <span class="n">b1</span><span class="o">.</span><span class="n">add_points</span><span class="p">(</span><span class="n">state_to_bloch</span><span class="p">(</span><span class="n">state_1</span><span class="p">))</span>
+    <span class="n">b2</span><span class="o">.</span><span class="n">add_points</span><span class="p">(</span><span class="n">state_to_bloch</span><span class="p">(</span><span class="n">state_2</span><span class="p">))</span>
+
+<span class="n">b1</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">b2</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   ┌───┐┌───────┐
+q: ┤ H ├┤ Rz(θ) ├
+   └───┘└───────┘
+   ┌───┐┌───────┐┌───────┐
+q: ┤ H ├┤ Rz(θ) ├┤ Rx(Φ) ├
+   └───┘└───────┘└───────┘
+</pre></div>
+</div>
+<img alt="../../../_images/d6a45f9198c74c7fbdd255ad550ee92970e610e39479b763225f1a03de068b0e.png" src="../../../_images/d6a45f9198c74c7fbdd255ad550ee92970e610e39479b763225f1a03de068b0e.png" />
+</div>
+</div>
+<p>Reference : <a class="reference external" href="https://arxiv.org/pdf/1905.10876.pdf">Expressibility and entangling capability of parameterized quantum circuits</a></p>
+<p><img alt="param" src="../../../_images/paramQC.png" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">param</span> <span class="o">=</span> <span class="n">ParameterVector</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="n">ansatz</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ansatz</span><span class="o">.</span><span class="n">u</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">param</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">ansatz</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/e0f2c49fca4ab18662de81d124e4bb83994b904573521e9c57052198684d26d7.png" src="../../../_images/e0f2c49fca4ab18662de81d124e4bb83994b904573521e9c57052198684d26d7.png" />
+</div>
+</div>
+<p><strong>Step 2. Build quantum circuits to estimate the expectation value of the hamiltonian, <span class="math notranslate nohighlight">\(\langle H\rangle = \langle X\rangle\)</span></strong>.</p>
+<p>The expectation value of an operator, <span class="math notranslate nohighlight">\(O\)</span>, with respect to a state <span class="math notranslate nohighlight">\(|\psi\rangle\)</span>, can be calculated as follows.</p>
+<p><span class="math notranslate nohighlight">\(\langle O\rangle = \Sigma_{i=1}^{n}λ_{i}|\langle e_{i}|\psi\rangle|^{2}, ~~~ \)</span>where <span class="math notranslate nohighlight">\(O = \Sigma_{i=1}^{n}λ_{i}|e_{i}\rangle\)</span>.</p>
+<p>The value <span class="math notranslate nohighlight">\(|\langle e_{i}|\psi\rangle|^{2}\)</span> can be obtained by measuring a quantum circuit producing <span class="math notranslate nohighlight">\(|\psi\rangle\)</span> in the eigenbasis of <span class="math notranslate nohighlight">\(O\)</span>. The appropriate post rotation gates are applied to measure a circuit in the eigenbasis of <span class="math notranslate nohighlight">\(O\)</span> as measurement is possible only in the computational basis on IBM Quantum systems.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Circuits</span>
+
+<span class="n">meas_x</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">meas_x</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">qc_x</span> <span class="o">=</span> <span class="n">ansatz</span><span class="o">.</span><span class="n">compose</span><span class="p">(</span><span class="n">meas_x</span><span class="p">)</span>
+<span class="n">qc_x</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+<span class="n">qc_x</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/d6d3632badcea5fdb1a4e737cfd6dacb9b80155d760fc2aee0215ba1fae65731.png" src="../../../_images/d6d3632badcea5fdb1a4e737cfd6dacb9b80155d760fc2aee0215ba1fae65731.png" />
+</div>
+</div>
+<p><strong>Step 3. Optimization</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cost</span><span class="p">(</span><span class="n">param_vals</span><span class="p">):</span>
+    
+    <span class="n">bc_x</span> <span class="o">=</span> <span class="n">qc_x</span><span class="o">.</span><span class="n">assign_parameters</span><span class="p">(</span><span class="n">param_vals</span><span class="p">)</span> 
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">bc_x</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+    <span class="n">vals_x</span> <span class="o">=</span> <span class="n">sampled_expectation_value</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="s1">&#39;Z&#39;</span><span class="p">)</span> 
+    <span class="n">cost</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">vals_x</span>
+    <span class="n">cost_all</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">cost</span>    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cost_all</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">param_init</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">ansatz</span><span class="o">.</span><span class="n">num_parameters</span><span class="p">)</span>
+<span class="n">ret1qx</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">cost</span><span class="p">,</span> <span class="n">param_init</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;COBYLA&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ret1qx</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cost_all</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     fun: -1.99932
+   maxcv: 0.0
+ message: &#39;Optimization terminated successfully.&#39;
+    nfev: 42
+  status: 1
+ success: True
+       x: array([7.83343625, 3.15066154, 3.32349971])
+</pre></div>
+</div>
+<img alt="../../../_images/d4b963d32d4907e4b0c38be381aaa314cab2fcfe19fbfc481bd235b6483df741.png" src="../../../_images/d4b963d32d4907e4b0c38be381aaa314cab2fcfe19fbfc481bd235b6483df741.png" />
+</div>
+</div>
+</section>
+<section id="results">
+<h4>Results<a class="headerlink" href="#results" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The true ground state energy of H : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">eigvals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The estimated ground state energy of H : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">ret1qx</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The true ground state energy of H : -2.0
+The estimated ground state energy of H : -1.999
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">st_est</span> <span class="o">=</span> <span class="n">Statevector</span><span class="o">.</span><span class="n">from_instruction</span><span class="p">(</span><span class="n">ansatz</span><span class="o">.</span><span class="n">assign_parameters</span><span class="p">(</span><span class="n">ret1qx</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The true ground state of H : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">eigvecs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The estimated ground state energy of H : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">st_est</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+
+<span class="n">dm_est</span> <span class="o">=</span> <span class="n">DensityMatrix</span><span class="p">(</span><span class="n">ansatz</span><span class="o">.</span><span class="n">assign_parameters</span><span class="p">(</span><span class="n">ret1qx</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+<span class="n">dm_exact</span> <span class="o">=</span> <span class="n">DensityMatrix</span><span class="p">(</span><span class="n">eigvecs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">dm_diff</span> <span class="o">=</span> <span class="n">dm_exact</span><span class="o">.</span><span class="n">data</span> <span class="o">-</span> <span class="n">dm_est</span><span class="o">.</span><span class="n">data</span>
+<span class="n">dm_abs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dm_diff</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span> <span class="o">@</span> <span class="n">dm_diff</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Distance between the estimated ground state and the true ground state: </span><span class="si">{}</span><span class="s1">&#39;</span>
+      <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">dm_abs</span><span class="p">)</span><span class="o">*</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The true ground state of H : [-0.707  0.707]
+The estimated ground state energy of H : [-0.714+0.j     0.7  +0.006j]
+Distance between the estimated ground state and the true ground state: (0.011+0j)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="ex2-estimate-the-ground-state-and-its-energy-for-the-given-hamilonian-h-2x-y-z">
+<h3>Ex2. Estimate the ground state and its energy for the given hamilonian, <span class="math notranslate nohighlight">\(H = 2X + Y + Z\)</span>.<a class="headerlink" href="#ex2-estimate-the-ground-state-and-its-energy-for-the-given-hamilonian-h-2x-y-z" title="Permalink to this heading">#</a></h3>
+<section id="id1">
+<h4>Exact Answer<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sX</span><span class="p">,</span> <span class="n">sY</span><span class="p">,</span> <span class="n">sZ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="p">],[</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">sZ</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">sX</span> <span class="o">+</span> <span class="n">sY</span>
+<span class="n">eigvals</span><span class="p">,</span> <span class="n">eigvecs</span> <span class="o">=</span> <span class="n">la</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The ground state energy of H : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">eigvals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The ground state of H : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">eigvecs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The ground state energy of H : -2.449
+The ground state of H : [-0.544+0.j     0.751+0.375j]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id2">
+<h4>Using VQE<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h4>
+<p><strong>Step 1. Ansatz - State Preparation</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## your code goes here</span>
+<span class="n">param</span> <span class="o">=</span> <span class="n">ParameterVector</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="n">ansatz</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ansatz</span><span class="o">.</span><span class="n">u</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">param</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">ansatz</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/e0f2c49fca4ab18662de81d124e4bb83994b904573521e9c57052198684d26d7.png" src="../../../_images/e0f2c49fca4ab18662de81d124e4bb83994b904573521e9c57052198684d26d7.png" />
+</div>
+</div>
+<p><strong>Step 2. Build quantum circuits to estimate the expectation value of the hamiltonian, <span class="math notranslate nohighlight">\(\langle H\rangle = 2\langle X\rangle + \langle Y\rangle + \langle Z\rangle\)</span></strong>.</p>
+<ul class="simple">
+<li><p>Build the circuits for post rotation and add them to the ansatz from step 1.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Circuits</span>
+
+<span class="c1"># for &lt;X&gt;</span>
+<span class="n">meas_x</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">meas_x</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># for &lt;Y&gt;</span>
+<span class="n">meas_y</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">meas_y</span><span class="o">.</span><span class="n">sdg</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">meas_y</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># for &lt;Z&gt;</span>
+<span class="n">meas_z</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># all circuits</span>
+<span class="n">qc_x</span> <span class="o">=</span> <span class="n">ansatz</span><span class="o">.</span><span class="n">compose</span><span class="p">(</span><span class="n">meas_x</span><span class="p">)</span>
+<span class="n">qc_y</span> <span class="o">=</span> <span class="n">ansatz</span><span class="o">.</span><span class="n">compose</span><span class="p">(</span><span class="n">meas_y</span><span class="p">)</span>
+<span class="n">qc_z</span> <span class="o">=</span> <span class="n">ansatz</span><span class="o">.</span><span class="n">compose</span><span class="p">(</span><span class="n">meas_z</span><span class="p">)</span>
+
+<span class="n">qc_all</span> <span class="o">=</span> <span class="p">[</span><span class="n">qc_x</span><span class="p">,</span> <span class="n">qc_y</span><span class="p">,</span> <span class="n">qc_z</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">qc</span> <span class="ow">in</span> <span class="n">qc_all</span><span class="p">:</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">qc_all</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/d6d3632badcea5fdb1a4e737cfd6dacb9b80155d760fc2aee0215ba1fae65731.png" src="../../../_images/d6d3632badcea5fdb1a4e737cfd6dacb9b80155d760fc2aee0215ba1fae65731.png" />
+<img alt="../../../_images/a4a16271e1c8de29a6a341039bbd48078ae033e6b5bc875b73578ad8c892c179.png" src="../../../_images/a4a16271e1c8de29a6a341039bbd48078ae033e6b5bc875b73578ad8c892c179.png" />
+<img alt="../../../_images/a44488f831bddacaec57a41e92a241ee1febccc87ac1f40f59118616226f8fab.png" src="../../../_images/a44488f831bddacaec57a41e92a241ee1febccc87ac1f40f59118616226f8fab.png" />
+</div>
+</div>
+<p><strong>Step 3. Optimization</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cost</span><span class="p">(</span><span class="n">param_vals</span><span class="p">):</span>
+    
+    <span class="n">bc_all</span> <span class="o">=</span> <span class="p">[</span><span class="n">qc</span><span class="o">.</span><span class="n">assign_parameters</span><span class="p">(</span><span class="n">param_vals</span><span class="p">)</span> <span class="k">for</span> <span class="n">qc</span> <span class="ow">in</span> <span class="n">qc_all</span><span class="p">]</span>
+    <span class="n">counts_all</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">bc_all</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+    <span class="n">vals_qc</span> <span class="o">=</span> <span class="p">[</span><span class="n">sampled_expectation_value</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="s1">&#39;Z&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">counts</span> <span class="ow">in</span> <span class="n">counts_all</span><span class="p">]</span>
+    <span class="c1"># cost for &#39;2X + Y + Z&#39;</span>
+    <span class="n">cost</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">vals_qc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span> <span class="n">vals_qc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">vals_qc</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">cost_all</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">cost</span>    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cost_all</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">param_init</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">ansatz</span><span class="o">.</span><span class="n">num_parameters</span><span class="p">)</span>
+<span class="n">ret1q</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">cost</span><span class="p">,</span> <span class="n">param_init</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;COBYLA&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ret1q</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cost_all</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     fun: -2.4400399999999998
+   maxcv: 0.0
+ message: &#39;Optimization terminated successfully.&#39;
+    nfev: 43
+  status: 1
+ success: True
+       x: array([1.96702547, 3.58960093, 2.07434145])
+</pre></div>
+</div>
+<img alt="../../../_images/3eb649173980b6f92203e51a6e656ddfc846ea876d03cd88923f0dc30da1a023.png" src="../../../_images/3eb649173980b6f92203e51a6e656ddfc846ea876d03cd88923f0dc30da1a023.png" />
+</div>
+</div>
+</section>
+<section id="id3">
+<h4>Results<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The true ground state energy of H : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">eigvals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The estimated ground state energy of H : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">ret1q</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The true ground state energy of H : -2.449
+The estimated ground state energy of H : -2.44
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">st_est</span> <span class="o">=</span> <span class="n">Statevector</span><span class="o">.</span><span class="n">from_instruction</span><span class="p">(</span><span class="n">ansatz</span><span class="o">.</span><span class="n">assign_parameters</span><span class="p">(</span><span class="n">ret1q</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The true ground state of H : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">eigvecs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The estimated ground state energy of H : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">st_est</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+
+<span class="n">dm_est</span> <span class="o">=</span> <span class="n">DensityMatrix</span><span class="p">(</span><span class="n">ansatz</span><span class="o">.</span><span class="n">assign_parameters</span><span class="p">(</span><span class="n">ret1q</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+<span class="n">dm_exact</span> <span class="o">=</span> <span class="n">DensityMatrix</span><span class="p">(</span><span class="n">eigvecs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">dm_diff</span> <span class="o">=</span> <span class="n">dm_exact</span><span class="o">.</span><span class="n">data</span> <span class="o">-</span> <span class="n">dm_est</span><span class="o">.</span><span class="n">data</span>
+<span class="n">dm_abs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dm_diff</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span> <span class="o">@</span> <span class="n">dm_diff</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Distance between the estimated ground state and the true ground state: </span><span class="si">{}</span><span class="s1">&#39;</span>
+      <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">dm_abs</span><span class="p">)</span><span class="o">*</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The true ground state of H : [-0.544+0.j     0.751+0.375j]
+The estimated ground state energy of H : [ 0.554+0.j    -0.75 -0.361j]
+Distance between the estimated ground state and the true ground state: (0.014+0j)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="alert alert-success">
+    <h3>Hands-on exercise</h3>
+    <p>
+    Estimate the ground state and its energy for the given hamilonian, $H = XX + YY + ZZ$, through <b>VQE</b>.
+    </p>
+</div></section>
+<section id="id4">
+<h4>Exact Answer<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">H2q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">sX</span><span class="p">,</span> <span class="n">sX</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">sY</span><span class="p">,</span> <span class="n">sY</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">sZ</span><span class="p">,</span> <span class="n">sZ</span><span class="p">)</span>
+<span class="n">eigvals2q</span><span class="p">,</span> <span class="n">eigvecs2q</span> <span class="o">=</span> <span class="n">la</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">H2q</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;True ground state energy of H : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">eigvals2q</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True ground state energy of H : -3.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id5">
+<h4>Using VQE<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h4>
+<p><strong>Step 1. Ansatz</strong></p>
+<ul class="simple">
+<li><p>Use <a class="reference external" href="https://qiskit.org/documentation/stubs/qiskit.circuit.library.EfficientSU2.html#qiskit.circuit.library.EfficientSU2">EfficientSU2</a></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## your code goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Step 2. Build quantum circuits to estimate the expectation value of the hamiltonian, <span class="math notranslate nohighlight">\(\langle H\rangle = \langle XX\rangle + \langle YY\rangle + \langle ZZ\rangle\)</span></strong></p>
+<ul class="simple">
+<li><p>Build the circuits for post rotation and add them to the ansatz from step 1.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## your code goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Step 3. Optimization</strong></p>
+<ul class="simple">
+<li><p>Define a proper cost function</p></li>
+<li><p>Estimate the minimum energy by minimizing the cost function</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## your code goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id6">
+<h4>Results<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## your code goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="part-2-with-noise">
+<h2>Part 2. With noise<a class="headerlink" href="#part-2-with-noise" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.providers.fake_provider</span> <span class="kn">import</span> <span class="n">FakeCambridge</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">backend</span> <span class="o">=</span> <span class="n">FakeCambridge</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cost2q</span><span class="p">(</span><span class="n">param_vals</span><span class="p">):</span>
+    
+    <span class="n">bc_all</span> <span class="o">=</span> <span class="p">[</span><span class="n">qc</span><span class="o">.</span><span class="n">assign_parameters</span><span class="p">(</span><span class="n">param_vals</span><span class="p">)</span> <span class="k">for</span> <span class="n">qc</span> <span class="ow">in</span> <span class="n">circ_all_trans</span><span class="p">]</span>
+    <span class="n">counts_all</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">bc_all</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+    <span class="n">vals_qc</span> <span class="o">=</span> <span class="p">[</span><span class="n">sampled_expectation_value</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="s1">&#39;ZZ&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">counts</span> <span class="ow">in</span> <span class="n">counts_all</span><span class="p">]</span>
+    <span class="n">cost</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">vals_qc</span><span class="p">)</span>
+    <span class="n">cost2q_all</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">cost</span>  
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ansatz2q</span> <span class="o">=</span> <span class="n">EfficientSU2</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> 
+
+<span class="n">meas_xx</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">meas_xx</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="n">meas_yy</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">meas_yy</span><span class="o">.</span><span class="n">sdg</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">meas_yy</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="n">meas_zz</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">circ_all</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">qc</span> <span class="ow">in</span> <span class="p">[</span><span class="n">meas_xx</span><span class="p">,</span> <span class="n">meas_yy</span><span class="p">,</span> <span class="n">meas_zz</span><span class="p">]:</span>
+    <span class="n">circ</span> <span class="o">=</span> <span class="n">ansatz2q</span><span class="o">.</span><span class="n">compose</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span>
+    <span class="n">circ</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+    <span class="n">circ_all</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">circ</span><span class="p">)</span>
+    
+<span class="n">circ_all_trans</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">circ_all</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">optimization_level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cost2q_all</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">param_init</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">ansatz2q</span><span class="o">.</span><span class="n">num_parameters</span><span class="p">)</span>
+<span class="n">ret2q_noise</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">cost2q</span><span class="p">,</span> <span class="n">param_init</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;COBYLA&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ret2q_noise</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cost2q_all</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     fun: -2.3920399999999997
+   maxcv: 0.0
+ message: &#39;Optimization terminated successfully.&#39;
+    nfev: 160
+  status: 1
+ success: True
+       x: array([ 2.6318186 ,  4.29973072,  5.31790287,  3.12781865,  1.75493515,
+       -0.01277087,  5.30926551,  3.09469896,  3.02087796,  7.68527831,
+       -0.4444153 , -0.23760514,  5.93814814,  3.89974685,  6.30797313,
+        3.33432548])
+</pre></div>
+</div>
+<img alt="../../../_images/77337ef117cfca112efe16a6e0847540d0dfbd788c59d0c35e9286076e903050.png" src="../../../_images/77337ef117cfca112efe16a6e0847540d0dfbd788c59d0c35e9286076e903050.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The true ground state energy of H : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">eigvals2q</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The estimated ground state energy of H : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">ret2q</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The estimated ground state energy of H in the presence of noise : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">ret2q_noise</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+
+<span class="n">dm2_est_noise</span> <span class="o">=</span> <span class="n">DensityMatrix</span><span class="p">(</span><span class="n">ansatz2q</span><span class="o">.</span><span class="n">assign_parameters</span><span class="p">(</span><span class="n">ret2q_noise</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+<span class="n">dm2_exact</span> <span class="o">=</span> <span class="n">DensityMatrix</span><span class="p">(</span><span class="n">eigvecs2q</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">dm2_diff_noise</span> <span class="o">=</span> <span class="n">dm2_exact</span><span class="o">.</span><span class="n">data</span> <span class="o">-</span> <span class="n">dm2_est_noise</span><span class="o">.</span><span class="n">data</span>
+<span class="n">dm2_abs_noise</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dm2_diff_noise</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span> <span class="o">@</span> <span class="n">dm2_diff_noise</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Distance between the estimated ground state and the true ground state with noise: </span><span class="si">{}</span><span class="s1">&#39;</span>
+      <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">dm2_abs_noise</span><span class="p">)</span><span class="o">*</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The true ground state energy of H : -3.0
+The estimated ground state energy of H : -2.999
+The estimated ground state energy of H in the presence of noise : -2.392
+Distance between the estimated ground state and the true ground state with noise: (0.086+0j)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qiskit.tools.jupyter</span>
+<span class="o">%</span><span class="k">qiskit_version_table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><h3>Version Information</h3><table><tr><th>Qiskit Software</th><th>Version</th></tr><tr><td><code>qiskit-terra</code></td><td>0.22.3</td></tr><tr><td><code>qiskit-aer</code></td><td>0.11.1</td></tr><tr><td><code>qiskit-ignis</code></td><td>0.6.0</td></tr><tr><td><code>qiskit-ibmq-provider</code></td><td>0.19.2</td></tr><tr><td><code>qiskit</code></td><td>0.39.3</td></tr><tr><td><code>qiskit-nature</code></td><td>0.5.0</td></tr><tr><td><code>qiskit-optimization</code></td><td>0.4.0</td></tr><tr><th>System information</th></tr><tr><td>Python version</td><td>3.7.9</td></tr><tr><td>Python compiler</td><td>Clang 10.0.0 </td></tr><tr><td>Python build</td><td>default, Aug 31 2020 07:22:35</td></tr><tr><td>OS</td><td>Darwin</td></tr><tr><td>CPUs</td><td>8</td></tr><tr><td>Memory (Gb)</td><td>32.0</td></tr><tr><td colspan='2'>Mon Dec 12 16:54:53 2022 EST</td></tr></table></div></div>
+</div>
+</section>
+</section>
+
+<div class="section">
+   
+</div>
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#workflow">
+   Workflow
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-1-no-noise">
+   Part 1. No noise
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ex-1-estimate-the-ground-state-of-one-qubit-system-and-its-energy-for-the-given-hamiltonian-h-2x">
+     Ex 1. Estimate the ground state of one qubit system and its energy for the given Hamiltonian,
+     <span class="math notranslate nohighlight">
+      \(H=2X\)
+     </span>
+     .
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#exact-answer">
+       Exact Answer
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#using-vqe">
+       Using VQE
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#results">
+       Results
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ex2-estimate-the-ground-state-and-its-energy-for-the-given-hamilonian-h-2x-y-z">
+     Ex2. Estimate the ground state and its energy for the given hamilonian,
+     <span class="math notranslate nohighlight">
+      \(H = 2X + Y + Z\)
+     </span>
+     .
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       Exact Answer
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id2">
+       Using VQE
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id3">
+       Results
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id4">
+       Exact Answer
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id5">
+       Using VQE
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id6">
+       Results
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-2-with-noise">
+   Part 2. With noise
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../../../_sources/events/yonsei-2022/Day-2/VQE.ipynb.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+<footer class="bd-footer">
+<div>
+<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
+        Content on
+        <a property="dct:title" rel="cc:attributionURL" href="http://quantum-enablement.org">this website</a> 
+        by <span property="cc:attributionName">IBM</span> is licensed under 
+        <a href="http://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">
+                Attribution-NonCommercial 4.0 International<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1">
+                <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1">
+                <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1">
+        </a>
+</p> 
+</div>
+</footer>
+
+  </body>
+</html>

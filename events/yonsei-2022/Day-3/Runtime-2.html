@@ -1,0 +1,1133 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Qiskit Runtime - II &#8212; Enabing Technologies  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/thebelab-helper.js"></script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-16824831-8"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-16824831-8');
+            </script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'events/yonsei-2022/Day-3/Runtime-2';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en"> 
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../../../explore/atom.xml"
+  title="Quantum Explorations"
+/>
+ 
+<style type="text/css">
+  ul.ablog-archive {
+    list-style: none;
+    overflow: auto;
+    margin-left: 0px;
+  }
+  ul.ablog-archive li {
+    float: left;
+    margin-right: 5px;
+    font-size: 80%;
+  }
+  ul.postlist a {
+    font-style: italic;
+  }
+  ul.postlist-style-disc {
+    list-style-type: disc;
+  }
+  ul.postlist-style-none {
+    list-style-type: none;
+  }
+  ul.postlist-style-circle {
+    list-style-type: circle;
+  }
+</style>
+
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../_static/dark_logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../how-to/howto.html">
+                        How to guides
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../explore.html">
+                        Explorations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../hardware/hardware.html">
+                        IBM Hardware
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../events.html">
+                        Events
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../members.html">
+                        Members
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+      </div>
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../how-to/howto.html">
+                        How to guides
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../explore.html">
+                        Explorations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../hardware/hardware.html">
+                        IBM Hardware
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../events.html">
+                        Events
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../members.html">
+                        Members
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+      </div>
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+               <section class="tex2jax_ignore mathjax_ignore" id="qiskit-runtime-ii">
+<h1>Qiskit Runtime - II<a class="headerlink" href="#qiskit-runtime-ii" title="Permalink to this heading">#</a></h1>
+<div class="alert alert-warning">
+    This notebook is requires installing the <tt>qiskit-ibm-runtime</tt>:
+    <ul>
+        <li>IBM Qiskit Runtime: <tt>pip install qiskit-ibm-runtime</tt></li>
+    </ul>
+</div><section id="background">
+<h2>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h2>
+<p>Having looked at the basics of using the <code class="docutils literal notranslate"><span class="pre">Sampler</span></code> and <code class="docutils literal notranslate"><span class="pre">Estimator</span></code> primitives in Qiskit and the Aer simulator, we are now in a position to do the same for IBM Quantum systems.  The IBM Quantum implimentation of Runtime is quite a bit more involved than that in Qiskit, as it is a full execution engine rather than a wrapper over simulators.  As such, there will be more features to learn and understand.  The goal here is to cover the majority of these options using our previous examples.</p>
+</section>
+<section id="frontmatter">
+<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">qiskit.quantum_info</span> <span class="kn">import</span> <span class="n">hellinger_fidelity</span>
+
+<span class="c1"># Get the parameter object</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit</span> <span class="kn">import</span> <span class="n">Parameter</span>
+
+<span class="c1"># Get sampled expectation value function</span>
+<span class="kn">from</span> <span class="nn">qiskit.result</span> <span class="kn">import</span> <span class="n">sampled_expectation_value</span>
+
+<span class="c1"># Operators from Qiskit</span>
+<span class="kn">from</span> <span class="nn">qiskit.quantum_info</span> <span class="kn">import</span> <span class="n">SparsePauliOp</span>
+
+<span class="c1"># Get the Aer simulator</span>
+<span class="kn">from</span> <span class="nn">qiskit_aer</span> <span class="kn">import</span> <span class="n">AerSimulator</span>
+
+<span class="c1"># The IBM Quantum Runtime</span>
+<span class="kn">from</span> <span class="nn">qiskit_ibm_runtime</span> <span class="kn">import</span> <span class="n">QiskitRuntimeService</span>
+<span class="kn">from</span> <span class="nn">qiskit_ibm_runtime</span> <span class="kn">import</span> <span class="n">Sampler</span><span class="p">,</span> <span class="n">Estimator</span><span class="p">,</span> <span class="n">Session</span><span class="p">,</span> <span class="n">Options</span>
+
+<span class="c1"># Plotting tools</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;quantum-light&#39;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="using-runtime-with-ibm-quantum-systems">
+<h2>Using Runtime with IBM Quantum systems<a class="headerlink" href="#using-runtime-with-ibm-quantum-systems" title="Permalink to this heading">#</a></h2>
+<p>To get access to IBM Quantum systems via the Runtime execution environment we need to create a service object from the <code class="docutils literal notranslate"><span class="pre">qiskit_ibm_runtime</span></code> package:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">service</span> <span class="o">=</span> <span class="n">QiskitRuntimeService</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">service</span></code> object behaves very much in a similar way to the <code class="docutils literal notranslate"><span class="pre">provider</span></code> instances we have used before.  One can look at akll the available backends:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">service</span><span class="o">.</span><span class="n">backends</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;IBMBackend(&#39;ibmq_qasm_simulator&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_montreal&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_toronto&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_dublin&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_kolkata&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_mumbai&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_lima&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_belem&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_quito&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_guadalupe&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_jakarta&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_manila&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_bangkok&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_hanoi&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_kawasaki&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_lagos&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_nairobi&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_cairo&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_auckland&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_perth&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_wellington&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_peekskill&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_washington&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_ithaca&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_oslo&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_geneva&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_kyiv&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_prague&#39;)&gt;,
+ &lt;IBMBackend(&#39;alt_auckland&#39;)&gt;,
+ &lt;IBMBackend(&#39;alt_cairo&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_sherbrooke&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_qasm_simulator_de&#39;)&gt;,
+ &lt;IBMBackend(&#39;simulator_statevector&#39;)&gt;,
+ &lt;IBMBackend(&#39;simulator_mps&#39;)&gt;,
+ &lt;IBMBackend(&#39;simulator_extended_stabilizer&#39;)&gt;,
+ &lt;IBMBackend(&#39;simulator_stabilizer&#39;)&gt;,
+ &lt;IBMBackend(&#39;alt_ithaca_stretch&#39;)&gt;,
+ &lt;IBMBackend(&#39;alt_montreal&#39;)&gt;,
+ &lt;IBMBackend(&#39;simulator_qasm3&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_bogota&#39;)&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>query for the previous submitted Runtime jobs,</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">service</span><span class="o">.</span><span class="n">jobs</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;RuntimeJob(&#39;cea7taud3uqec3l4r0gg&#39;, &#39;qasm3-runner&#39;)&gt;,
+ &lt;RuntimeJob(&#39;cea791sdgh8baf1vlffg&#39;, &#39;qasm3-runner&#39;)&gt;,
+ &lt;RuntimeJob(&#39;cea6v5giir0fajoget80&#39;, &#39;qasm3-runner&#39;)&gt;,
+ &lt;RuntimeJob(&#39;cea6lio0el14mj7rbidg&#39;, &#39;qasm3-runner&#39;)&gt;,
+ &lt;RuntimeJob(&#39;cea6fud1duhkkn4buha0&#39;, &#39;qasm3-runner&#39;)&gt;,
+ &lt;RuntimeJob(&#39;cea688sdgh8baf1vbnr0&#39;, &#39;qasm3-runner&#39;)&gt;,
+ &lt;RuntimeJob(&#39;cea63a6d3uqec3l47rj0&#39;, &#39;qasm3-runner&#39;)&gt;,
+ &lt;RuntimeJob(&#39;cea617t2b2ltm2k85id0&#39;, &#39;qasm3-runner&#39;)&gt;,
+ &lt;RuntimeJob(&#39;cea5sk51duhkkn4bp5dg&#39;, &#39;qasm3-runner&#39;)&gt;,
+ &lt;RuntimeJob(&#39;cea5p40iir0fajog2o8g&#39;, &#39;qasm3-runner&#39;)&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>and, most importantly, select a backend of interest</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sim</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s1">&#39;ibmq_qasm_simulator&#39;</span><span class="p">)</span>
+<span class="n">backend</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s1">&#39;ibm_sherbrooke&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="n">sim</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bv_ones_circs</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">barrier</span><span class="p">()</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">qc</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">qc</span> <span class="o">=</span> <span class="n">bv_ones_circs</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">samp_job</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">samp_job</span><span class="o">.</span><span class="n">status</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;JobStatus.QUEUED: &#39;job is queued&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">samp_res</span> <span class="o">=</span> <span class="n">samp_job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="n">samp_res</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SamplerResult(quasi_dists=[{15: 1.0}], metadata=[{&#39;header_metadata&#39;: {}, &#39;shots&#39;: 4000, &#39;readout_mitigation_overhead&#39;: 1.0, &#39;readout_mitigation_time&#39;: 0.012638014995900448}])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="sessions">
+<h2>Sessions<a class="headerlink" href="#sessions" title="Permalink to this heading">#</a></h2>
+<p>When creating our sampler object we passed the target backend <code class="docutils literal notranslate"><span class="pre">Sampler(session=backend)</span></code> in as a “session”.  The concept of a <code class="docutils literal notranslate"><span class="pre">Session</span></code> is new, and it is a part of the IBM Quantum Runtime execution engine.</p>
+<p>In short, a <code class="docutils literal notranslate"><span class="pre">Session</span></code> is a “container” that holds a collection of jobs from primitives.  In general, there are two ways this works.  First, one can have a collection of one or more jbos that are independent.  Second, one can have two or more jobs that are interconnected, with later jobs conditioned on the results from those previously executed.  This latter case is typical for iterative algorithms such as variational methods.</p>
+<p><img alt="independent" src="../../../_images/independent.png" /></p>
+<p><img alt="related" src="../../../_images/related.png" /></p>
+<p>There are a couple of ways that Sessions can be utilized.  First, and most ideal, as a session is connected to the backend on which it is run, we can directly create a session instance from such a backend object:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="n">sim</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>we can then create a primitive instance using this <code class="docutils literal notranslate"><span class="pre">session</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>or we can do what we did above and just use the backend directly:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="n">sim</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Alternatively, we can use Python contexts and have the session setup automatically within the confines of a <code class="docutils literal notranslate"><span class="pre">with</span></code>-block:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="n">sim</span><span class="p">):</span>
+    <span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">()</span>
+    <span class="n">job</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SamplerResult(quasi_dists=[{15: 1.0}], metadata=[{&#39;header_metadata&#39;: {}, &#39;shots&#39;: 4000, &#39;readout_mitigation_overhead&#39;: 1.0, &#39;readout_mitigation_time&#39;: 0.013942512014182284}])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Everything above works for the <code class="docutils literal notranslate"><span class="pre">Estimator</span></code> as well, and we can actually mix and match within a <code class="docutils literal notranslate"><span class="pre">Session</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cntrl_hadamard_ladder</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">measurements</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+
+    <span class="n">qc</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">qc</span><span class="o">.</span><span class="n">ch</span><span class="p">(</span><span class="n">kk</span><span class="p">,</span> <span class="n">kk</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">qc</span><span class="o">.</span><span class="n">ch</span><span class="p">(</span><span class="n">kk</span><span class="p">,</span> <span class="n">kk</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">measurements</span><span class="p">:</span>
+        <span class="n">qc</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">qc</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">qc2</span> <span class="o">=</span> <span class="n">cntrl_hadamard_ladder</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> 
+<span class="n">qc2</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/f138dae14cc1e3106e672d6315cb132f4a7d237062aba46564e1c44e2b0e3fc0.png" src="../../../_images/f138dae14cc1e3106e672d6315cb132f4a7d237062aba46564e1c44e2b0e3fc0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">oper</span> <span class="o">=</span> <span class="n">SparsePauliOp</span><span class="o">.</span><span class="n">from_list</span><span class="p">([(</span><span class="s1">&#39;Z&#39;</span><span class="o">*</span><span class="n">N</span><span class="p">,</span> <span class="mi">1</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="n">sim</span><span class="p">):</span>
+    <span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">()</span>
+    <span class="n">estimator</span> <span class="o">=</span> <span class="n">Estimator</span><span class="p">()</span>
+    <span class="n">sampler_res</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+    <span class="n">estimator_res</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">qc2</span><span class="p">,</span> <span class="n">oper</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that in the above block we purposely waiting on the <code class="docutils literal notranslate"><span class="pre">sampler</span></code> result before sending the job for the <code class="docutils literal notranslate"><span class="pre">estimator</span></code> result.  This is because <strong>once the code inside the context (with-statement block) is done executing, the session is closed, and the jobs no longer run back-to-back</strong>.</p>
+<p>If instead we want to asynchrously launch several jobs within a new <code class="docutils literal notranslate"><span class="pre">Session</span></code> then we must use code like the following:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="n">sim</span><span class="p">)</span>
+<span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">)</span>
+<span class="n">estimator</span> <span class="o">=</span> <span class="n">Estimator</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">)</span>
+<span class="n">job1</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span>
+<span class="n">job2</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">qc2</span><span class="p">,</span> <span class="n">oper</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>where we do not call <code class="docutils literal notranslate"><span class="pre">session.close()</span></code>, at least until all of our jobs are done.</p>
+</section>
+<section id="setting-options">
+<h2>Setting options<a class="headerlink" href="#setting-options" title="Permalink to this heading">#</a></h2>
+<p>There are many options available to users of Runtime.  We have already changed the number of shots, but additionally, for example, we have been sending jobs to Runtime without first calling <code class="docutils literal notranslate"><span class="pre">transpile</span></code>.  Obviously there is transpilation being done by the runtime, and we should be able to modify that.  There are a couple of options to do so.  First, there is an <code class="docutils literal notranslate"><span class="pre">Options</span></code> class that allows us to set things. We can pass things in at initialization:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">options</span> <span class="o">=</span> <span class="n">Options</span><span class="p">(</span><span class="n">optimization_level</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">1234</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>or we can use autocomplete.  For example, let us turn off Runtime transpilation altogether and change the shots</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">options</span> <span class="o">=</span> <span class="n">Options</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">options</span><span class="o">.</span><span class="n">transpilation</span><span class="o">.</span><span class="n">skip_transpilation</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">options</span><span class="o">.</span><span class="n">execution</span><span class="o">.</span><span class="n">shots</span> <span class="o">=</span> <span class="mi">54321</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To see a list of all the options can just look at the <code class="docutils literal notranslate"><span class="pre">Options</span></code> class:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">options</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Options(optimization_level=3, resilience_level=1, max_execution_time=None, transpilation=TranspilationOptions(skip_transpilation=True, initial_layout=None, layout_method=None, routing_method=None, approximation_degree=None), resilience=ResilienceOptions(noise_amplifier=&#39;TwoQubitAmplifier&#39;, noise_factors=(1, 3, 5), extrapolator=&#39;LinearExtrapolator&#39;), execution=ExecutionOptions(shots=54321, init_qubits=True), environment=EnvironmentOptions(log_level=&#39;WARNING&#39;, callback=None, job_tags=[]), simulator=SimulatorOptions(noise_model=None, seed_simulator=None, coupling_map=None, basis_gates=None))
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can set the options for each primitive when we create it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="n">sim</span><span class="p">):</span>
+    <span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+    <span class="n">job1</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job1</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;shots&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>54321
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also overload subsequent calls to primitives with a subset of options like <code class="docutils literal notranslate"><span class="pre">shots</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="n">sim</span><span class="p">)</span>
+<span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+<span class="n">job1</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span>
+<span class="n">job2</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">job1</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;shots&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">job2</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;shots&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>54321
+100
+</pre></div>
+</div>
+</div>
+</div>
+<section id="sessions-options">
+<h3>Sessions options<a class="headerlink" href="#sessions-options" title="Permalink to this heading">#</a></h3>
+<p>There are a few options related to <code class="docutils literal notranslate"><span class="pre">Sessions</span></code> themselves.  Most important is the max. time of the <code class="docutils literal notranslate"><span class="pre">Session</span></code>.  For example, setting the maximum time to the 8 hour limit can be done converting the time into seconds:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="n">sim</span><span class="p">,</span> <span class="n">max_time</span><span class="o">=</span><span class="mi">8</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Other important options deal with error suppression and mitigation.  These will be covered in the next section.</p>
+</section>
+</section>
+<section id="hands-on-example-chsh-via-runtime">
+<h2>Hands on example: CHSH via Runtime<a class="headerlink" href="#hands-on-example-chsh-via-runtime" title="Permalink to this heading">#</a></h2>
+<section id="id1">
+<h3>Background<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<img alt="../../../_images/people.png" src="../../../_images/people.png" />
+<p>Alain Aspect, John Clauser and Anton Zeilinger </figcaption></p>
+<p>This years Nobel Prize for Physics was awarded to Alain Aspect, John Clauser and Anton Zeilinger, for their pioneering work in quantum information science, and in particular their experiments with entangled photons demonstrating violation of Bell’s inequalities.  An experimental method by which one can test Bell’s inequality was put forth by <a class="reference external" href="https://doi.org/10.1103/PhysRevLett.23.880">Clauser, Horne, Shimony, and Holt (CHSH) in 1969</a>.  A few years later polarization correlations in photon pairs from Calcium atoms was observed: <a class="reference external" href="https://doi.org/10.1103/PhysRevLett.28.938">Stuart J. Freedman and John F. Clauser
+Phys. Rev. Lett. 28, 938 (1972)</a>, although this experiment suffered from a number of loopholes.  These loopholes were removed in subsequent works by <a class="reference external" href="https://doi.org/10.1103/PhysRevLett.49.91">Aspect et al</a> and <a class="reference external" href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.81.5039">Zeilinger et al</a>.</p>
+<p>Of particular interest is the “locality” loophole, where measurements of each photon in an entangled pair must be space-like separated; there is no classical signal that could be sent at the speed of light from one detector to the other to influence the detection process.  On a superconducting processor such as those from IBM Quantum, there is no way around the locality loophole any time in the near future as the distances on super conducting chips is of the order of centimeters, and the speed of light (even in metal) is tens of millions of meters per second.  However, for demonstration purposes, lets try to generate CHSH violations on IBM Quantum systems and reproduce Nobel Prize winning work.</p>
+</section>
+<section id="setup">
+<h3>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h3>
+<p>CHSH violations are generated by looking at expectation values of measurements on two qubits prepared in a Bell state, where the basis of one qubit is varied relative to the other.  So first we need a Bell state:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bell_state</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">bell_state</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">bell_state</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">bell_state</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/e6ab0f7eada7937c0ac9dcbdcf60a7c6d68c60ee498d2c54a94542d01fe08667.png" src="../../../_images/e6ab0f7eada7937c0ac9dcbdcf60a7c6d68c60ee498d2c54a94542d01fe08667.png" />
+</div>
+</div>
+<p>and second, we need create measurement circuits that measure in the bases: <code class="docutils literal notranslate"><span class="pre">ZZ</span></code>, <code class="docutils literal notranslate"><span class="pre">ZX</span></code>, <code class="docutils literal notranslate"><span class="pre">XZ</span></code> and <code class="docutils literal notranslate"><span class="pre">ZZ</span></code>.  Additionally, we will apply a parameterized <code class="docutils literal notranslate"><span class="pre">ry</span></code> to qubit 0 that varies the realtive difference between the two basis measurements (this is not strictly needed, but makes for nice plots)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Circuit order is ZZ, ZX, XZ, XX</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="s1">&#39;$</span><span class="se">\\</span><span class="s1">theta$&#39;</span><span class="p">)</span>
+<span class="n">meas_circuits</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">basis</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;ZZ&#39;</span><span class="p">,</span> <span class="s1">&#39;ZX&#39;</span><span class="p">,</span> <span class="s1">&#39;XZ&#39;</span><span class="p">,</span> <span class="s1">&#39;XX&#39;</span><span class="p">]:</span>
+    <span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">ry</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">oper</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">basis</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">oper</span> <span class="o">==</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span>
+            <span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+    <span class="n">meas_circuits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>the measurement circuits are thus:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">circ</span> <span class="ow">in</span> <span class="n">meas_circuits</span><span class="p">:</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">circ</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/13dab80172bfa7f11afc230e6e3128ce86367fd12548ae66d52b1471607acb95.png" src="../../../_images/13dab80172bfa7f11afc230e6e3128ce86367fd12548ae66d52b1471607acb95.png" />
+<img alt="../../../_images/1ed56ac0b73a665a205149f094e23f09b366e94d30ec22ae9dc2122a565605ac.png" src="../../../_images/1ed56ac0b73a665a205149f094e23f09b366e94d30ec22ae9dc2122a565605ac.png" />
+<img alt="../../../_images/09808b10e9f443ca977dd57e47e4a941484190776e7f22e891eadf83097d06e5.png" src="../../../_images/09808b10e9f443ca977dd57e47e4a941484190776e7f22e891eadf83097d06e5.png" />
+<img alt="../../../_images/64b02b3efab73cd2035fcf1a2a6c5b2abc42f361f32102cb42dc5b1de74eb505.png" src="../../../_images/64b02b3efab73cd2035fcf1a2a6c5b2abc42f361f32102cb42dc5b1de74eb505.png" />
+</div>
+</div>
+<p>Now we need to set the values for the parameter <span class="math notranslate nohighlight">\(\theta\)</span> that we want to sweep over:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Select phases from [0, 2pi]</span>
+<span class="n">num_phases</span> <span class="o">=</span> <span class="mi">11</span>
+<span class="n">phase_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">num_phases</span><span class="p">)</span>
+<span class="c1"># Format for parameter binding</span>
+<span class="n">phases</span> <span class="o">=</span> <span class="p">[[</span><span class="n">ph</span><span class="p">]</span> <span class="k">for</span> <span class="n">ph</span> <span class="ow">in</span> <span class="n">phase_array</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now lets make a collection of 4 circuits by composing the measurement circuits onto the Bell state</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chsh_with_meas</span> <span class="o">=</span> <span class="p">[</span><span class="n">bell_state</span><span class="o">.</span><span class="n">compose</span><span class="p">(</span><span class="n">circ</span><span class="p">)</span> <span class="k">for</span> <span class="n">circ</span> <span class="ow">in</span> <span class="n">meas_circuits</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chsh_with_meas</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/fa91cba7a842d1b9a302c066ff91170c77ad9ca8820ae04b2ba8fd53f94e8d10.png" src="../../../_images/fa91cba7a842d1b9a302c066ff91170c77ad9ca8820ae04b2ba8fd53f94e8d10.png" />
+</div>
+</div>
+<p>Now, when it comes to binding parameters in Runtime, we have some options.  Here I am going to bind the circuits ahead of time since I will demo the output without using Runtime:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bound_circs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">circ</span> <span class="ow">in</span> <span class="n">chsh_with_meas</span><span class="p">:</span>
+    <span class="n">bound_circs</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">circ</span><span class="o">.</span><span class="n">bind_parameters</span><span class="p">(</span><span class="n">ph</span><span class="p">)</span> <span class="k">for</span> <span class="n">ph</span> <span class="ow">in</span> <span class="n">phases</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We are now in a position to simulate our circuits:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aer_sim</span> <span class="o">=</span> <span class="n">AerSimulator</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">counts</span> <span class="o">=</span> <span class="n">aer_sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">bound_circs</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mf">1e4</span><span class="p">))</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>collect the counts over all <span class="math notranslate nohighlight">\(\theta\)</span> values for each circuit</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="n">counts</span><span class="p">[</span><span class="n">kk</span><span class="o">*</span><span class="n">num_phases</span><span class="p">:</span><span class="n">num_phases</span><span class="o">*</span><span class="p">(</span><span class="n">kk</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>and compute the ZZ expectation values (we applied post-rotations) for each value of <span class="math notranslate nohighlight">\(\theta\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute ZZ expectaion values for circ ZZ at each phase angle, </span>
+<span class="c1"># ZX at each phase angle, etc...</span>
+<span class="n">arrs</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">sampled_expectation_value</span><span class="p">(</span><span class="n">cnts</span><span class="p">,</span> <span class="s1">&#39;ZZ&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">cnts</span> <span class="ow">in</span> <span class="n">item</span><span class="p">])</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">res</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>There are two-inequalities that can be formed from the returned expectation values:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Compute CHSH for each value of theta requested</span>
+<span class="n">chsh1</span> <span class="o">=</span> <span class="n">arrs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">arrs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">arrs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">arrs</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">chsh2</span> <span class="o">=</span> <span class="n">arrs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">arrs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">arrs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">arrs</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>A CHSH violation occurs when the magnitude of these CHSH values is <span class="math notranslate nohighlight">\(&gt;2\)</span>, and is a validation of Bell’s theorem; quantum mechanics cannot be desribed by local hidden variables.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">phase_array</span><span class="p">,</span> <span class="n">chsh1</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;CHSH-1&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">phase_array</span><span class="p">,</span> <span class="n">chsh2</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;CHSH-2&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.3&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;solid&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.3&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.3&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;solid&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.3&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">phase_array</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.7&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">phase_array</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.7&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Phase ($</span><span class="se">\\</span><span class="s1">theta$)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/5b0bcb2162d919afd8d36782b316ac412c704f200ea60e77eef9e6948e433c31.png" src="../../../_images/5b0bcb2162d919afd8d36782b316ac412c704f200ea60e77eef9e6948e433c31.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="hands-on-example-chsh-with-runtime">
+<h2>Hands-on example: CHSH with Runtime<a class="headerlink" href="#hands-on-example-chsh-with-runtime" title="Permalink to this heading">#</a></h2>
+<p>The goal now is to reproduce the above using Runtime.  As it is an expectation value problem we should use the <code class="docutils literal notranslate"><span class="pre">Estimator</span></code>.  We can use the <code class="docutils literal notranslate"><span class="pre">bound_circs</span></code> from above, or we can leave the circuits unbound:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unbound_circs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">circ</span> <span class="ow">in</span> <span class="n">chsh_with_meas</span><span class="p">:</span>
+    <span class="n">unbound_circs</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">circ</span><span class="p">]</span><span class="o">*</span><span class="n">num_phases</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>and let the <code class="docutils literal notranslate"><span class="pre">Estimator</span></code> handle the binding for use using:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="n">estimator</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">unbound_circs</span><span class="p">,</span> <span class="n">parameter_values</span><span class="o">=</span><span class="n">phases</span><span class="o">*</span><span class="mi">4</span><span class="p">,</span><span class="o">...</span><span class="p">)</span>
+
+</pre></div>
+</div>
+<p>Try either of the methods on a real IBM Quantum system and see if you can get a CHSH violation.  <strong>For testing purposes, it is best to start with the simulator first to verify your code works</strong></p>
+</section>
+</section>
+
+<div class="section">
+   
+</div>
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#background">
+   Background
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#frontmatter">
+   Frontmatter
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#using-runtime-with-ibm-quantum-systems">
+   Using Runtime with IBM Quantum systems
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sessions">
+   Sessions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setting-options">
+   Setting options
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sessions-options">
+     Sessions options
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hands-on-example-chsh-via-runtime">
+   Hands on example: CHSH via Runtime
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Background
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#setup">
+     Setup
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hands-on-example-chsh-with-runtime">
+   Hands-on example: CHSH with Runtime
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../../../_sources/events/yonsei-2022/Day-3/Runtime-2.ipynb.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+<footer class="bd-footer">
+<div>
+<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
+        Content on
+        <a property="dct:title" rel="cc:attributionURL" href="http://quantum-enablement.org">this website</a> 
+        by <span property="cc:attributionName">IBM</span> is licensed under 
+        <a href="http://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">
+                Attribution-NonCommercial 4.0 International<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1">
+                <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1">
+                <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1">
+        </a>
+</p> 
+</div>
+</footer>
+
+  </body>
+</html>

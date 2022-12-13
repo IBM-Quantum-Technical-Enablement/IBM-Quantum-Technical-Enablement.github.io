@@ -1,0 +1,1217 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Topic 3. Parametrized circuit &#8212; Enabing Technologies  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/thebelab-helper.js"></script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-16824831-8"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-16824831-8');
+            </script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'events/yonsei-2022/Day-2/ParametrizedQC';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en"> 
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../../../explore/atom.xml"
+  title="Quantum Explorations"
+/>
+ 
+<style type="text/css">
+  ul.ablog-archive {
+    list-style: none;
+    overflow: auto;
+    margin-left: 0px;
+  }
+  ul.ablog-archive li {
+    float: left;
+    margin-right: 5px;
+    font-size: 80%;
+  }
+  ul.postlist a {
+    font-style: italic;
+  }
+  ul.postlist-style-disc {
+    list-style-type: disc;
+  }
+  ul.postlist-style-none {
+    list-style-type: none;
+  }
+  ul.postlist-style-circle {
+    list-style-type: circle;
+  }
+</style>
+
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../_static/dark_logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../how-to/howto.html">
+                        How to guides
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../explore.html">
+                        Explorations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../hardware/hardware.html">
+                        IBM Hardware
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../events.html">
+                        Events
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../members.html">
+                        Members
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+      </div>
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../how-to/howto.html">
+                        How to guides
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../explore.html">
+                        Explorations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../hardware/hardware.html">
+                        IBM Hardware
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../events.html">
+                        Events
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../members.html">
+                        Members
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+      </div>
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+               <section class="tex2jax_ignore mathjax_ignore" id="topic-3-parametrized-circuit">
+<h1>Topic 3. Parametrized circuit<a class="headerlink" href="#topic-3-parametrized-circuit" title="Permalink to this heading">#</a></h1>
+<p><strong>Instructor</strong> : Hwajung Kang, Ph.D., Education Delivery Program Manager, IBM Quantum</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">qiskit.result</span> <span class="kn">import</span> <span class="n">sampled_expectation_value</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit</span> <span class="kn">import</span> <span class="n">Parameter</span><span class="p">,</span> <span class="n">ParameterVector</span>
+<span class="kn">from</span> <span class="nn">qiskit.providers.fake_provider</span> <span class="kn">import</span> <span class="n">FakeLima</span><span class="p">,</span> <span class="n">FakeWashington</span>
+<span class="kn">from</span> <span class="nn">qiskit.quantum_info</span> <span class="kn">import</span> <span class="n">Statevector</span>
+<span class="kn">from</span> <span class="nn">qiskit.opflow</span> <span class="kn">import</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span>
+<span class="kn">from</span> <span class="nn">qiskit.visualization.bloch</span> <span class="kn">import</span> <span class="n">Bloch</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">ZZFeatureMap</span><span class="p">,</span> <span class="n">EfficientSU2</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="alert alert-info">
+<ul>
+    <b>When to use?</b>
+<li>The computation requires executing circuits with the same structure</li> 
+    <br>
+    <b>Why to use?</b>
+<li>No need to construct multiple circuits - build one circuit </li>
+<li>No need to transpile circuit multiple times - transpile circuit once</li>   
+</ul>
+</div><section id="basics">
+<h2>Basics<a class="headerlink" href="#basics" title="Permalink to this heading">#</a></h2>
+<section id="phase-kickback">
+<h3>Phase kickback<a class="headerlink" href="#phase-kickback" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">backend</span> <span class="o">=</span> <span class="n">FakeLima</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="without-using-parametrized-circuit">
+<h4>Without using parametrized circuit<a class="headerlink" href="#without-using-parametrized-circuit" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="n">qc_all</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">ang</span> <span class="ow">in</span> <span class="n">angles</span><span class="p">:</span>
+    <span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">cp</span><span class="p">(</span><span class="n">ang</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">qc_all</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span>
+
+<span class="n">qc_trans_all</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc_all</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">optimization_level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">finish</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">del_time1</span> <span class="o">=</span> <span class="p">(</span><span class="n">finish</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;transpile time : </span><span class="si">{}</span><span class="s1">s&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">del_time1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>transpile time : 2.981s
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="parametrized-circuit-version">
+<h4>Parametrized circuit version<a class="headerlink" href="#parametrized-circuit-version" title="Permalink to this heading">#</a></h4>
+<p>Build a parametrized circuit</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;θ&#39;</span><span class="p">)</span>
+
+<span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">cp</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/441e87aab14d53f098fae62620ffb427f493f806489a32a9688aa3a90e2890fd.png" src="../../../_images/441e87aab14d53f098fae62620ffb427f493f806489a32a9688aa3a90e2890fd.png" />
+</div>
+</div>
+<p>Transpile parameterized circuit</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="n">theta</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;θ&#39;</span><span class="p">)</span>
+
+<span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">cp</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">qc_trans</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">optimization_level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1">#Assign numerical values to the parameter</span>
+<span class="n">qc_trans_all2</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">ang</span> <span class="ow">in</span> <span class="n">angles</span><span class="p">:</span>
+    <span class="n">qc_trans_all2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">qc_trans</span><span class="o">.</span><span class="n">bind_parameters</span><span class="p">({</span><span class="n">theta</span><span class="p">:</span><span class="n">ang</span><span class="p">}))</span>
+    
+<span class="n">finish</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">del_time2</span> <span class="o">=</span> <span class="n">finish</span> <span class="o">-</span> <span class="n">start</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;transpile time : </span><span class="si">{}</span><span class="s1">s&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">del_time2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>transpile time : 0.072s
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Things to note</strong></p>
+<ul class="simple">
+<li><p>Benefit of parametrized circuits grows with the number of circuits, circuit complexity, and the size of the backend as the time it takes for transpilation grows polynomially with the circuit size</p></li>
+<li><p>As numerical parameter values are needed for many optimization steps, transpiling parameterized circuits may not yeild optimal results.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;without parametrizing circuit&#39;</span><span class="p">)</span>
+<span class="n">qc_trans_all</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>without parametrizing circuit
+</pre></div>
+</div>
+<img alt="../../../_images/4f735a04fd6c7cf89cb4ed14cec10d7a73ee36dbbedd01858bed67d6b97b4460.png" src="../../../_images/4f735a04fd6c7cf89cb4ed14cec10d7a73ee36dbbedd01858bed67d6b97b4460.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;using parametrized circuit&#39;</span><span class="p">)</span>
+<span class="n">qc_trans_all2</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>using parametrized circuit
+</pre></div>
+</div>
+<img alt="../../../_images/26fe37e725f8f59e04605e27fb5247d40e6242f3bb5d9d0578e4d898ccbe9d34.png" src="../../../_images/26fe37e725f8f59e04605e27fb5247d40e6242f3bb5d9d0578e4d898ccbe9d34.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="build-parametrized-circuit">
+<h3>Build parametrized circuit<a class="headerlink" href="#build-parametrized-circuit" title="Permalink to this heading">#</a></h3>
+<p><a class="reference external" href="https://qiskit.org/documentation/tutorials/circuits/3_summary_of_quantum_operations.html#Single-Qubit-Gates">u gate</a></p>
+<section id="parameter">
+<h4>parameter<a class="headerlink" href="#parameter" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">lam</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="s1">&#39;θ&#39;</span><span class="p">),</span> <span class="n">Parameter</span><span class="p">(</span><span class="s1">&#39;γ&#39;</span><span class="p">),</span> <span class="n">Parameter</span><span class="p">(</span><span class="s1">&#39;λ&#39;</span><span class="p">)</span> 
+<span class="n">myqc1</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">myqc1</span><span class="o">.</span><span class="n">u</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">lam</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">myqc1</span><span class="p">)</span>
+
+<span class="n">myvals</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">mybc1</span> <span class="o">=</span> <span class="n">myqc1</span><span class="o">.</span><span class="n">bind_parameters</span><span class="p">({</span><span class="n">theta</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="n">gamma</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="n">lam</span><span class="p">:</span><span class="mi">3</span><span class="p">})</span>
+<span class="c1">#mybc1 = myqc1.assign_parameters(myvals)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mybc1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   ┌──────────┐
+q: ┤ U(θ,γ,λ) ├
+   └──────────┘
+   ┌──────────┐
+q: ┤ U(1,2,3) ├
+   └──────────┘
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note: The parameter values are assigned in the alphabetical order rather than the insertion order when <code class="docutils literal notranslate"><span class="pre">assign_parameters</span></code> method is used.</p>
+</section>
+<section id="parameter-vector">
+<h4>parameter vector<a class="headerlink" href="#parameter-vector" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ang</span> <span class="o">=</span> <span class="n">ParameterVector</span><span class="p">(</span><span class="s1">&#39;φ&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">myqc2</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> 
+<span class="n">myqc2</span><span class="o">.</span><span class="n">u</span><span class="p">(</span><span class="o">*</span><span class="n">ang</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">myqc2</span><span class="p">)</span>
+
+<span class="n">mybc2</span> <span class="o">=</span> <span class="n">myqc2</span><span class="o">.</span><span class="n">assign_parameters</span><span class="p">(</span><span class="n">myvals</span><span class="p">)</span>
+<span class="c1">#mybc2 = myqc2.bind_parameters({ang:myvals})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mybc2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   ┌───────────────────┐
+q: ┤ U(φ[0],φ[1],φ[2]) ├
+   └───────────────────┘
+   ┌──────────┐
+q: ┤ U(1,2,3) ├
+   └──────────┘
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="partial-binding">
+<h4>partial binding<a class="headerlink" href="#partial-binding" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">lam</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="s1">&#39;θ&#39;</span><span class="p">),</span> <span class="n">Parameter</span><span class="p">(</span><span class="s1">&#39;γ&#39;</span><span class="p">),</span> <span class="n">Parameter</span><span class="p">(</span><span class="s1">&#39;λ&#39;</span><span class="p">)</span> 
+<span class="n">myqc1</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">myqc1</span><span class="o">.</span><span class="n">u</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">lam</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">myqc1</span><span class="p">)</span>
+
+<span class="n">myvals</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">mybc1</span> <span class="o">=</span> <span class="n">myqc1</span><span class="o">.</span><span class="n">bind_parameters</span><span class="p">({</span><span class="n">theta</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="n">gamma</span><span class="p">:</span><span class="mi">2</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mybc1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   ┌──────────┐
+q: ┤ U(θ,γ,λ) ├
+   └──────────┘
+   ┌──────────┐
+q: ┤ U(1,2,λ) ├
+   └──────────┘
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">two_angs</span><span class="p">,</span> <span class="n">one_ang</span> <span class="o">=</span> <span class="n">ParameterVector</span><span class="p">(</span><span class="s1">&#39;δ&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">Parameter</span><span class="p">(</span><span class="s1">&#39;ε&#39;</span><span class="p">)</span>
+<span class="n">myqc3</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">myqc3</span><span class="o">.</span><span class="n">u</span><span class="p">(</span><span class="o">*</span><span class="n">two_angs</span><span class="p">,</span> <span class="n">one_ang</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">myqc3</span><span class="p">)</span>
+
+<span class="n">mybc3</span> <span class="o">=</span> <span class="n">myqc3</span><span class="o">.</span><span class="n">bind_parameters</span><span class="p">({</span><span class="n">two_angs</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mybc3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   ┌────────────────┐
+q: ┤ U(δ[0],δ[1],ε) ├
+   └────────────────┘
+   ┌──────────┐
+q: ┤ U(1,2,ε) ├
+   └──────────┘
+</pre></div>
+</div>
+</div>
+</div>
+<div class="alert alert-success">
+    <h3>Hands-on exercise 1.</h3>
+    <p>
+    Build a five qubit quantum circuit where a `rx` gate with an unique parametrized angle is applied to each qubit. Then apply `cp` gates with different parametrized angles between the $k$th and $k$th+1 qubits.
+Assign numerical values that you want only to `cp` gates.
+    </p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## your code goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="usecase-1-data-encoding-quantum-feature-map-for-qsvm">
+<h2>Usecase 1. Data Encoding - Quantum feature map for QSVM<a class="headerlink" href="#usecase-1-data-encoding-quantum-feature-map-for-qsvm" title="Permalink to this heading">#</a></h2>
+<p>QSVM : Quantum Support Vector Machine</p>
+<ul class="simple">
+<li><p>Reference : <a class="reference external" href="https://www.nature.com/articles/s41586-019-0980-2"><em>Havlicek et al</em>.  Nature <strong>567</strong>, 209-212 (2019)</a></p></li>
+</ul>
+<p><img alt="QSVM" src="../../../_images/QSVM_1d.png" /></p>
+<section id="dim-data">
+<h3>1-dim data<a class="headerlink" href="#dim-data" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">data</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="mi">5</span><span class="p">])</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">qc_data</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">qc_data</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc_data</span><span class="o">.</span><span class="n">rz</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">qc_data</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc_data</span><span class="o">.</span><span class="n">rz</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">qc_data</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1.80770902 3.75492036 2.34022183 1.86887147 2.55570434]
+</pre></div>
+</div>
+<img alt="../../../_images/1a0aa3b47aaddcad9f6816029af71758821d46b75f9aa65fa73ddf3be76a4c2b.png" src="../../../_images/1a0aa3b47aaddcad9f6816029af71758821d46b75f9aa65fa73ddf3be76a4c2b.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Xop</span><span class="p">,</span> <span class="n">Yop</span><span class="p">,</span> <span class="n">Zop</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">to_matrix</span><span class="p">(),</span> <span class="n">Y</span><span class="o">.</span><span class="n">to_matrix</span><span class="p">(),</span> <span class="n">Z</span><span class="o">.</span><span class="n">to_matrix</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">state_to_bloch</span><span class="p">(</span><span class="n">state_vec</span><span class="p">):</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">bx</span> <span class="o">=</span> <span class="n">phi</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span> <span class="o">@</span> <span class="n">Xop</span> <span class="o">@</span> <span class="n">phi</span>
+    <span class="n">by</span> <span class="o">=</span> <span class="n">phi</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span> <span class="o">@</span> <span class="n">Yop</span> <span class="o">@</span> <span class="n">phi</span>
+    <span class="n">bz</span> <span class="o">=</span> <span class="n">phi</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span> <span class="o">@</span> <span class="n">Zop</span> <span class="o">@</span> <span class="n">phi</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">bx</span><span class="p">,</span> <span class="n">by</span><span class="p">,</span> <span class="n">bz</span><span class="p">]</span>
+
+
+<span class="n">st_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">Statevector</span><span class="o">.</span><span class="n">from_instruction</span><span class="p">(</span><span class="n">qc_data</span><span class="o">.</span><span class="n">assign_parameters</span><span class="p">([</span><span class="n">dat</span><span class="p">]))</span><span class="k">for</span> <span class="n">dat</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Bloch</span><span class="p">(</span><span class="n">axes</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">b</span><span class="o">.</span><span class="n">point_color</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">]</span>
+<span class="n">b</span><span class="o">.</span><span class="n">point_marker</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;o&#39;</span><span class="p">]</span>
+<span class="n">b</span><span class="o">.</span><span class="n">point_size</span> <span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">st</span> <span class="ow">in</span> <span class="n">st_data</span><span class="p">:</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">state_to_bloch</span><span class="p">(</span><span class="n">st</span><span class="p">)</span>
+    <span class="n">b</span><span class="o">.</span><span class="n">add_points</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+    
+<span class="n">b</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/ed6bc6214b5953e8a53e6e0de098a23779e9f8daefcefb6f114df44e9d9fdf9d.png" src="../../../_images/ed6bc6214b5953e8a53e6e0de098a23779e9f8daefcefb6f114df44e9d9fdf9d.png" />
+</div>
+</div>
+</section>
+<section id="n-dim-data">
+<h3>N-dim data<a class="headerlink" href="#n-dim-data" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Check out <strong>Data encoding circuits</strong> in <a class="reference external" href="https://qiskit.org/documentation/apidoc/circuit_library.html">Qiskit circuit library</a></p></li>
+</ul>
+<p><strong><a class="reference external" href="https://qiskit.org/documentation/stubs/qiskit.circuit.library.ZZFeatureMap.html">ZZFeatureMap</a></strong></p>
+<div class="math notranslate nohighlight">
+\[\mathcal{U}_{\Phi(\mathbf{x})} = \left( \exp\left(i\sum_{jk} \phi_{\{j,k\}}(\mathbf{x}) \, Z_j \otimes Z_k\right) \, \exp\left(i\sum_j \phi_{\{j\}}(\mathbf{x}) \, Z_j\right) \, H^{\otimes n} \right)^d,\]</div>
+<p>where $<span class="math notranslate nohighlight">\(\phi_S:\mathbf{x}\mapsto \Bigg\{\begin{array}{ll}
+    x_i &amp; \mbox{if}\ S=\{i\} \\
+        (\pi-x_i)(\pi-x_j) &amp; \mbox{if}\ S=\{i,j\}
+    \end{array}.\)</span>$</p>
+<p><code class="docutils literal notranslate"><span class="pre">ZZFeatureMap</span></code> is defined as:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ZZFeatureMap</span><span class="p">(</span><span class="n">feature_dimension</span><span class="p">,</span> <span class="n">reps</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> 
+             <span class="n">entanglement</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">,</span> <span class="n">data_map_func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="n">parameter_prefix</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">insert_barriers</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;feat1&#39;</span><span class="p">,</span> <span class="s1">&#39;feat2&#39;</span><span class="p">,</span> <span class="s1">&#39;feat3&#39;</span><span class="p">])))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>feat1</th>
+      <th>feat2</th>
+      <th>feat3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.881035</td>
+      <td>1.934132</td>
+      <td>1.968311</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2.585428</td>
+      <td>4.760217</td>
+      <td>4.896926</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2.622616</td>
+      <td>3.616151</td>
+      <td>3.946556</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3.205027</td>
+      <td>0.563507</td>
+      <td>2.827244</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4.247817</td>
+      <td>4.194069</td>
+      <td>0.468430</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">feat_map</span> <span class="o">=</span> <span class="n">ZZFeatureMap</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">reps</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">feat_map</span><span class="o">.</span><span class="n">decompose</span><span class="p">()</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/57483c3eb0bfed9ff6ee95aa0a4a03f8f3051c3a785351f5d5d6df1c8229e6ad.png" src="../../../_images/57483c3eb0bfed9ff6ee95aa0a4a03f8f3051c3a785351f5d5d6df1c8229e6ad.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">feat_map_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">feat_map</span><span class="o">.</span><span class="n">assign_parameters</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span> <span class="k">for</span> <span class="n">dat</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;the number of quantum circuits : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">feat_map_data</span><span class="p">)))</span>
+<span class="n">feat_map_data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">decompose</span><span class="p">()</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>the number of quantum circuits : 5
+</pre></div>
+</div>
+<img alt="../../../_images/3845554cea07256b7fba1d7b2049c6b5a7a457a814ede57f60825d50a3f0c314.png" src="../../../_images/3845554cea07256b7fba1d7b2049c6b5a7a457a814ede57f60825d50a3f0c314.png" />
+</div>
+</div>
+<div class="alert alert-success">
+    <h3>Hands-on exercise 2.</h3>
+    <p>
+    Encode the following data, `data_ex`, using the `ZZFeatureMap` with 2 repetition.</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_ex</span> <span class="o">=</span> <span class="mi">7</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="n">df_ex</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_ex</span><span class="p">)</span>
+<span class="n">df_ex</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">df_ex</span><span class="o">.</span><span class="n">columns</span><span class="p">,[</span><span class="s1">&#39;feat1&#39;</span><span class="p">,</span> <span class="s1">&#39;feat2&#39;</span><span class="p">,</span> <span class="s1">&#39;feat3&#39;</span><span class="p">,</span> <span class="s1">&#39;feat4&#39;</span><span class="p">,</span> <span class="s1">&#39;feat5&#39;</span><span class="p">])))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>feat1</th>
+      <th>feat2</th>
+      <th>feat3</th>
+      <th>feat4</th>
+      <th>feat5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3.704409</td>
+      <td>1.459107</td>
+      <td>6.739444</td>
+      <td>4.323264</td>
+      <td>0.086875</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.241889</td>
+      <td>0.249897</td>
+      <td>2.312293</td>
+      <td>6.213391</td>
+      <td>1.473847</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>6.876573</td>
+      <td>3.490116</td>
+      <td>4.389322</td>
+      <td>2.049181</td>
+      <td>2.007776</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>6.122943</td>
+      <td>5.922220</td>
+      <td>5.803088</td>
+      <td>3.855043</td>
+      <td>0.672778</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>6.881514</td>
+      <td>1.513573</td>
+      <td>1.769233</td>
+      <td>4.358420</td>
+      <td>5.626670</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6.151869</td>
+      <td>6.406123</td>
+      <td>0.927164</td>
+      <td>0.141903</td>
+      <td>0.015043</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>4.336908</td>
+      <td>4.309183</td>
+      <td>4.286459</td>
+      <td>2.714046</td>
+      <td>5.321975</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>6.416338</td>
+      <td>5.221135</td>
+      <td>6.280145</td>
+      <td>1.136737</td>
+      <td>1.975622</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>5.557404</td>
+      <td>2.722492</td>
+      <td>0.062022</td>
+      <td>0.001664</td>
+      <td>4.878389</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2.420501</td>
+      <td>1.576014</td>
+      <td>5.970689</td>
+      <td>1.451910</td>
+      <td>2.274011</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## your code goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="usecase-2-ansatz-preparation-vqa">
+<h2>Usecase 2. Ansatz preparation- VQA<a class="headerlink" href="#usecase-2-ansatz-preparation-vqa" title="Permalink to this heading">#</a></h2>
+<p>VQA : Variational Quantum Algorithm</p>
+<ul class="simple">
+<li><p>Check out the section <strong>N-local circuits</strong> in <a class="reference external" href="https://qiskit.org/documentation/apidoc/circuit_library.html">Qiskit circuit library</a></p></li>
+</ul>
+<p><strong><a class="reference external" href="https://qiskit.org/documentation/stubs/qiskit.circuit.library.EfficientSU2.html#qiskit.circuit.library.EfficientSU2">EfficientSU2</a></strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">EfficientSU2</span></code> is a parametrized quantum circuit generating a hardware efficient, heuristic ansatz with alternating rotation and entanglement layer, which is used for variational quantum algorithms or classification circuit for machine learning.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">EfficientSU2</span><span class="p">(</span><span class="n">num_qubits</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">su2_gates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">entanglement</span><span class="o">=</span><span class="s1">&#39;reverse_linear&#39;</span><span class="p">,</span> 
+             <span class="n">reps</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">skip_unentangled_qubits</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+             <span class="n">skip_final_rotation_layer</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">parameter_prefix</span><span class="o">=</span><span class="s1">&#39;θ&#39;</span><span class="p">,</span>
+             <span class="n">insert_barriers</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">initial_state</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Check <a class="reference external" href="https://qiskit.org/documentation/stubs/qiskit.circuit.library.TwoLocal.html#qiskit.circuit.library.TwoLocal">TwoLocal</a> for entanglement strategies.</p>
+<div class="alert alert-success">
+    <h3>Hands-on exercise 3.</h3>
+    <p>
+    Build a circuit to generate a hardware efficient ansatz for a 5 qubit system through `EfficientSU2` with 3 repetitions, using `h` and `rz` gates for `su2_gates`, implementing the `entangler_map` $= [[2, 1], ~ [1, 0], ~ [2, 3], ~[3, 4]]$.</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## your code goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Further Reading</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://learn.qiskit.org/course/machine-learning/parameterized-quantum-circuits#parameterized-1-0">Parametrized quantum circuits</a></p></li>
+<li><p><a class="reference external" href="https://qiskit.org/documentation/tutorials/circuits_advanced/01_advanced_circuits.html">Advanced Circuit</a></p></li>
+<li><p><a class="reference external" href="https://qiskit.org/documentation/stubs/qiskit.circuit.library.PauliFeatureMap.html#qiskit.circuit.library.PauliFeatureMap">PauliFeatureMap</a></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qiskit.tools.jupyter</span>
+<span class="o">%</span><span class="k">qiskit_version_table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><h3>Version Information</h3><table><tr><th>Qiskit Software</th><th>Version</th></tr><tr><td><code>qiskit-terra</code></td><td>0.22.3</td></tr><tr><td><code>qiskit-aer</code></td><td>0.11.1</td></tr><tr><td><code>qiskit-ignis</code></td><td>0.6.0</td></tr><tr><td><code>qiskit-ibmq-provider</code></td><td>0.19.2</td></tr><tr><td><code>qiskit</code></td><td>0.39.3</td></tr><tr><td><code>qiskit-nature</code></td><td>0.5.0</td></tr><tr><td><code>qiskit-optimization</code></td><td>0.4.0</td></tr><tr><th>System information</th></tr><tr><td>Python version</td><td>3.7.9</td></tr><tr><td>Python compiler</td><td>Clang 10.0.0 </td></tr><tr><td>Python build</td><td>default, Aug 31 2020 07:22:35</td></tr><tr><td>OS</td><td>Darwin</td></tr><tr><td>CPUs</td><td>8</td></tr><tr><td>Memory (Gb)</td><td>32.0</td></tr><tr><td colspan='2'>Mon Dec 12 16:35:09 2022 EST</td></tr></table></div></div>
+</div>
+</section>
+</section>
+
+<div class="section">
+   
+</div>
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#basics">
+   Basics
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#phase-kickback">
+     Phase kickback
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#without-using-parametrized-circuit">
+       Without using parametrized circuit
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#parametrized-circuit-version">
+       Parametrized circuit version
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#build-parametrized-circuit">
+     Build parametrized circuit
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#parameter">
+       parameter
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#parameter-vector">
+       parameter vector
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#partial-binding">
+       partial binding
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#usecase-1-data-encoding-quantum-feature-map-for-qsvm">
+   Usecase 1. Data Encoding - Quantum feature map for QSVM
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dim-data">
+     1-dim data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#n-dim-data">
+     N-dim data
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#usecase-2-ansatz-preparation-vqa">
+   Usecase 2. Ansatz preparation- VQA
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../../../_sources/events/yonsei-2022/Day-2/ParametrizedQC.ipynb.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+<footer class="bd-footer">
+<div>
+<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
+        Content on
+        <a property="dct:title" rel="cc:attributionURL" href="http://quantum-enablement.org">this website</a> 
+        by <span property="cc:attributionName">IBM</span> is licensed under 
+        <a href="http://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">
+                Attribution-NonCommercial 4.0 International<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1">
+                <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1">
+                <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1">
+        </a>
+</p> 
+</div>
+</footer>
+
+  </body>
+</html>

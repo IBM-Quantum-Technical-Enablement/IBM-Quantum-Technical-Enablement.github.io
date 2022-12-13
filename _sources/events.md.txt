@@ -2,6 +2,14 @@
 
 ## 2022
 
+:::{card} Using Qiskit and IBM Quantum Hardware
+:link: yonsei22
+:link-type: ref
+
+**Date**: December 19th-21st, 2022 \
+**Location**: Yonsei University, Seoul Korea
+:::
+
 :::{card} Quantum Practitioners Forum
 :link: summit22
 :link-type: ref

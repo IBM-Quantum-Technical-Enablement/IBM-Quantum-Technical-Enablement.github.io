@@ -1,4 +1,4 @@
-# IBM Quantum Hardware
+# IBM Hardware
 
 A collection of hardware specific details and configuration information.
 
