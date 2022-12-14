@@ -58,11 +58,10 @@ Download all workshop content
 | [Measurement error mitigation II](yonsei-2022/Day-2/measurement-error-mitigation-2)      |
 | [Circuit timing](yonsei-2022/Day-2/Circuit-timing)  |
 | [Dynamical decoupling](yonsei-2022/Day-2/Dynamical-decoupling)   |
-| [Dynamic circuits I](yonsei-2022/Day-3/dynamic-circuits-1)      |
-| [Dynamic circuits II](yonsei-2022/Day-3/dynamic-circuits-2)    |
-| [Dynamic circuits III](yonsei-2022/Day-3/dynamic-circuits-3)     |
 | [Runtime I](yonsei-2022/Day-3/Runtime-1)     |
 | [Runtime II](yonsei-2022/Day-3/Runtime-2)     |
 | [Runtime III](yonsei-2022/Day-3/Runtime-3)     |
 | [Runtime IV](yonsei-2022/Day-3/Runtime-4)     |
-
+| [Dynamic circuits I](yonsei-2022/Day-3/dynamic-circuits-1)      |
+| [Dynamic circuits II](yonsei-2022/Day-3/dynamic-circuits-2)    |
+| [Dynamic circuits III](yonsei-2022/Day-3/dynamic-circuits-3)     |
