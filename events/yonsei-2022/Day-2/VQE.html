@@ -917,9 +917,24 @@ Distance between the estimated ground state and the true ground state: (0.014+0j
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## your code goes here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">EfficientSU2</span>
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## your code goes here</span>
+
+<span class="n">ansatz2q</span> <span class="o">=</span> <span class="n">EfficientSU2</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> 
+<span class="n">display</span><span class="p">(</span><span class="n">ansatz2q</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">ansatz2q</span><span class="o">.</span><span class="n">decompose</span><span class="p">()</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/94ec4e8c4ab5189c9cf93cb0873b208e20b9690cd20c17079a97f0312e4b5514.png" src="../../../_images/94ec4e8c4ab5189c9cf93cb0873b208e20b9690cd20c17079a97f0312e4b5514.png" />
+<img alt="../../../_images/036cc1d037b71a68edc200c9c78a463dffb8afefb881f9eb1a8af994ea911c23.png" src="../../../_images/036cc1d037b71a68edc200c9c78a463dffb8afefb881f9eb1a8af994ea911c23.png" />
 </div>
 </div>
 <p><strong>Step 2. Build quantum circuits to estimate the expectation value of the hamiltonian, <span class="math notranslate nohighlight">\(\langle H\rangle = \langle XX\rangle + \langle YY\rangle + \langle ZZ\rangle\)</span></strong></p>
@@ -929,6 +944,29 @@ Distance between the estimated ground state and the true ground state: (0.014+0j
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## your code goes here</span>
+
+<span class="c1"># circuits</span>
+<span class="n">meas_xx</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">meas_xx</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="n">meas_yy</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">meas_yy</span><span class="o">.</span><span class="n">sdg</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">meas_yy</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="n">meas_zz</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">circ_all</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">qc</span> <span class="ow">in</span> <span class="p">[</span><span class="n">meas_xx</span><span class="p">,</span> <span class="n">meas_yy</span><span class="p">,</span> <span class="n">meas_zz</span><span class="p">]:</span>
+    <span class="n">circ</span> <span class="o">=</span> <span class="n">ansatz2q</span><span class="o">.</span><span class="n">compose</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span>
+    <span class="n">circ</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+    <span class="n">circ_all</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">circ</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circ_all_trans</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">circ_all</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -941,8 +979,51 @@ Distance between the estimated ground state and the true ground state: (0.014+0j
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## your code goes here</span>
+
+<span class="k">def</span> <span class="nf">cost2q</span><span class="p">(</span><span class="n">param_vals</span><span class="p">):</span>
+    
+    <span class="n">bc_all</span> <span class="o">=</span> <span class="p">[</span><span class="n">qc</span><span class="o">.</span><span class="n">assign_parameters</span><span class="p">(</span><span class="n">param_vals</span><span class="p">)</span> <span class="k">for</span> <span class="n">qc</span> <span class="ow">in</span> <span class="n">circ_all_trans</span><span class="p">]</span>
+    <span class="n">counts_all</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">bc_all</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+    <span class="n">vals_qc</span> <span class="o">=</span> <span class="p">[</span><span class="n">sampled_expectation_value</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="s1">&#39;ZZ&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">counts</span> <span class="ow">in</span> <span class="n">counts_all</span><span class="p">]</span>
+    <span class="c1"># cost for &#39;XX + YY + ZZ&#39;</span>
+    <span class="n">cost</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">vals_qc</span><span class="p">)</span>
+    <span class="n">cost2q_all</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">cost</span>  
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cost2q_all</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">param_init</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">ansatz2q</span><span class="o">.</span><span class="n">num_parameters</span><span class="p">)</span>
+<span class="n">ret2q</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">cost2q</span><span class="p">,</span> <span class="n">param_init</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;COBYLA&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ret2q</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cost2q_all</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     fun: -2.99992
+   maxcv: 0.0
+ message: &#39;Optimization terminated successfully.&#39;
+    nfev: 188
+  status: 1
+ success: True
+       x: array([4.78900587, 5.53795504, 0.55444083, 1.09091408, 1.4652982 ,
+       6.39050172, 4.91875615, 0.74445591, 0.36652501, 6.95112466,
+       0.22672727, 3.17598319, 1.50686738, 2.56596336, 0.15841659,
+       4.28123084])
+</pre></div>
+</div>
+<img alt="../../../_images/ba78860f07fbc5bbca67ed45b262023c9d871576736c8d50fb5f488ea7e3e321.png" src="../../../_images/ba78860f07fbc5bbca67ed45b262023c9d871576736c8d50fb5f488ea7e3e321.png" />
 </div>
 </div>
 </section>
@@ -951,6 +1032,38 @@ Distance between the estimated ground state and the true ground state: (0.014+0j
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## your code goes here</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The true ground state energy of H : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">eigvals2q</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The estimated ground state energy of H : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">ret2q</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The true ground state energy of H : -3.0
+The estimated ground state energy of H : -3.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">st2_est</span> <span class="o">=</span> <span class="n">Statevector</span><span class="o">.</span><span class="n">from_instruction</span><span class="p">(</span><span class="n">ansatz2q</span><span class="o">.</span><span class="n">assign_parameters</span><span class="p">(</span><span class="n">ret2q</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The true ground state of H : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">eigvecs2q</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The estimated ground state energy of H : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">st2_est</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+
+<span class="n">dm2_est</span> <span class="o">=</span> <span class="n">DensityMatrix</span><span class="p">(</span><span class="n">ansatz2q</span><span class="o">.</span><span class="n">assign_parameters</span><span class="p">(</span><span class="n">ret2q</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+<span class="n">dm2_exact</span> <span class="o">=</span> <span class="n">DensityMatrix</span><span class="p">(</span><span class="n">eigvecs2q</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">dm2_diff</span> <span class="o">=</span> <span class="n">dm2_exact</span><span class="o">.</span><span class="n">data</span> <span class="o">-</span> <span class="n">dm2_est</span><span class="o">.</span><span class="n">data</span>
+<span class="n">dm2_abs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dm2_diff</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span> <span class="o">@</span> <span class="n">dm2_diff</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Distance between the estimated ground state and the true ground state: </span><span class="si">{}</span><span class="s1">&#39;</span>
+      <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">dm2_abs</span><span class="p">)</span><span class="o">*</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The true ground state of H : [ 0.   +0.j  0.707+0.j -0.707+0.j  0.   +0.j]
+The estimated ground state energy of H : [-0.003-0.002j  0.502-0.498j -0.501+0.499j -0.001-0.001j]
+Distance between the estimated ground state and the true ground state: (0.005+0j)
 </pre></div>
 </div>
 </div>

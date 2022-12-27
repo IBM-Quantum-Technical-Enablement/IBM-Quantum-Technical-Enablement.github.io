@@ -1058,6 +1058,83 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/323cfe7ce014f9f6e6adab02a5f89a35bd5685a26a73fa1296a7336429e99745.png" src="../../../_images/323cfe7ce014f9f6e6adab02a5f89a35bd5685a26a73fa1296a7336429e99745.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_phases</span> <span class="o">=</span> <span class="mi">11</span>
+
+<span class="n">g_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">num_phases</span><span class="p">)</span>
+
+<span class="n">ideal_circs</span> <span class="o">=</span> <span class="p">[</span><span class="n">qc</span><span class="o">.</span><span class="n">assign_parameters</span><span class="p">([</span><span class="n">val</span><span class="p">])</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">g_vals</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wormhole_oper</span> <span class="o">=</span> <span class="n">SparsePauliOp</span><span class="p">(</span><span class="s1">&#39;ZIIIII&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">Estimator</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="n">sim</span><span class="p">)</span>
+<span class="n">ideal_result</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">ideal_circs</span><span class="p">,</span> <span class="p">[</span><span class="n">wormhole_oper</span><span class="p">]</span><span class="o">*</span><span class="n">num_phases</span><span class="p">,</span> 
+                      <span class="n">shots</span><span class="o">=</span><span class="mf">1e4</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wormhole_jobs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">)</span>
+<span class="n">estimator</span> <span class="o">=</span> <span class="n">Estimator</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">)</span>
+<span class="n">wormhole_jobs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">estimator</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">ideal_circs</span><span class="p">,</span> <span class="p">[</span><span class="n">wormhole_oper</span><span class="p">]</span><span class="o">*</span><span class="n">num_phases</span><span class="p">,</span> 
+                                   <span class="n">shots</span><span class="o">=</span><span class="mf">1e4</span><span class="p">,</span> 
+                                   <span class="n">optimization_level</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                                   <span class="n">resilience_level</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="n">wormhole_jobs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">estimator</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">ideal_circs</span><span class="p">,</span> <span class="p">[</span><span class="n">wormhole_oper</span><span class="p">]</span><span class="o">*</span><span class="n">num_phases</span><span class="p">,</span>
+                                   <span class="n">shots</span><span class="o">=</span><span class="mf">1e4</span><span class="p">,</span> 
+                                   <span class="n">optimization_level</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                                   <span class="n">resilience_level</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="n">wormhole_jobs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">estimator</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">ideal_circs</span><span class="p">,</span> <span class="p">[</span><span class="n">wormhole_oper</span><span class="p">]</span><span class="o">*</span><span class="n">num_phases</span><span class="p">,</span> 
+                                   <span class="n">shots</span><span class="o">=</span><span class="mf">1e4</span><span class="p">,</span> 
+                                   <span class="n">optimization_level</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                                   <span class="n">resilience_level</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wormhole_results</span> <span class="o">=</span> <span class="p">[</span><span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">values</span> <span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">wormhole_jobs</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">g_vals</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span> <span class="n">ideal_result</span><span class="p">,</span> <span class="s1">&#39;o--&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Ideal&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">g_vals</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span> <span class="n">wormhole_results</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;o--&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;-O2 -R0&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">g_vals</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span> <span class="n">wormhole_results</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;o--&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;-O3 -R0&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">g_vals</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span> <span class="n">wormhole_results</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;o--&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;-O3 -R1&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$g/2\pi$&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/0ab08749f5503df212ae45ba843571064dd39623290a91a8763ffe8e56e12ff0.png" src="../../../_images/0ab08749f5503df212ae45ba843571064dd39623290a91a8763ffe8e56e12ff0.png" />
+</div>
 </div>
 </section>
 </section>

@@ -986,6 +986,84 @@ Phys. Rev. Lett. 28, 938 (1972)</a>, although this experiment suffered from a nu
 </pre></div>
 </div>
 <p>Try either of the methods on a real IBM Quantum system and see if you can get a CHSH violation.  <strong>For testing purposes, it is best to start with the simulator first to verify your code works</strong></p>
+<section id="possible-solution">
+<h3>Possible solution<a class="headerlink" href="#possible-solution" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ZZ_oper</span> <span class="o">=</span> <span class="n">SparsePauliOp</span><span class="p">(</span><span class="s1">&#39;ZZ&#39;</span><span class="p">)</span>
+
+<span class="n">opers</span> <span class="o">=</span> <span class="p">[</span><span class="n">ZZ_oper</span><span class="p">]</span><span class="o">*</span><span class="n">num_phases</span><span class="o">*</span><span class="mi">4</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">REAL_HW</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">if</span> <span class="n">REAL_HW</span><span class="p">:</span>
+    <span class="n">target_backend</span> <span class="o">=</span> <span class="n">backend</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">target_backend</span> <span class="o">=</span> <span class="n">sim</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="n">target_backend</span><span class="p">)</span>
+<span class="n">estimator</span> <span class="o">=</span> <span class="n">Estimator</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">)</span>
+<span class="n">estimator_job1</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">bound_circs</span><span class="p">,</span> <span class="n">observables</span><span class="o">=</span><span class="n">opers</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mf">1e4</span><span class="p">))</span>
+<span class="n">estimator_job2</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">unbound_circs</span><span class="p">,</span> <span class="n">parameter_values</span><span class="o">=</span><span class="n">phases</span><span class="o">*</span><span class="mi">4</span><span class="p">,</span>
+                               <span class="n">observables</span><span class="o">=</span><span class="n">opers</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mf">1e4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expvals</span> <span class="o">=</span> <span class="n">estimator_job2</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+<span class="c1"># Close session after results come back</span>
+<span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arrs</span> <span class="o">=</span> <span class="p">[</span><span class="n">expvals</span><span class="p">[</span><span class="n">kk</span><span class="o">*</span><span class="n">num_phases</span><span class="p">:</span><span class="n">num_phases</span><span class="o">*</span><span class="p">(</span><span class="n">kk</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chsh1</span> <span class="o">=</span> <span class="n">arrs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">arrs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">arrs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">arrs</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">chsh2</span> <span class="o">=</span> <span class="n">arrs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">arrs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">arrs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">arrs</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">phase_array</span><span class="p">,</span> <span class="n">chsh1</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;CHSH-1&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">phase_array</span><span class="p">,</span> <span class="n">chsh2</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;CHSH-2&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.3&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;solid&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.3&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.3&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;solid&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.3&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">phase_array</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.7&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">phase_array</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.7&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Phase ($</span><span class="se">\\</span><span class="s1">theta$)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/ac0f2702d268f42808c9222df0fa88f9dd3ed711786ffadc90613c42a1773d3c.png" src="../../../_images/ac0f2702d268f42808c9222df0fa88f9dd3ed711786ffadc90613c42a1773d3c.png" />
+</div>
+</div>
+</section>
 </section>
 </section>
 
@@ -1069,6 +1147,13 @@ Phys. Rev. Lett. 28, 938 (1972)</a>, although this experiment suffered from a nu
   <a class="reference internal nav-link" href="#hands-on-example-chsh-with-runtime">
    Hands-on example: CHSH with Runtime
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#possible-solution">
+     Possible solution
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 

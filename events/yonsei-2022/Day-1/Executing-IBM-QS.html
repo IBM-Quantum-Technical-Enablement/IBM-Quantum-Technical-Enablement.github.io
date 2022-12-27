@@ -505,7 +505,8 @@
  &lt;IBMQBackend(&#39;ibm_perth&#39;) from IBMQ(hub=&#39;ibm-q-internal&#39;, group=&#39;deployed&#39;, project=&#39;default&#39;)&gt;,
  &lt;IBMQBackend(&#39;ibm_washington&#39;) from IBMQ(hub=&#39;ibm-q-internal&#39;, group=&#39;deployed&#39;, project=&#39;default&#39;)&gt;,
  &lt;IBMQBackend(&#39;ibm_oslo&#39;) from IBMQ(hub=&#39;ibm-q-internal&#39;, group=&#39;deployed&#39;, project=&#39;default&#39;)&gt;,
- &lt;IBMQBackend(&#39;ibm_geneva&#39;) from IBMQ(hub=&#39;ibm-q-internal&#39;, group=&#39;deployed&#39;, project=&#39;default&#39;)&gt;]
+ &lt;IBMQBackend(&#39;ibm_geneva&#39;) from IBMQ(hub=&#39;ibm-q-internal&#39;, group=&#39;deployed&#39;, project=&#39;default&#39;)&gt;,
+ &lt;IBMQBackend(&#39;ibm_sherbrooke&#39;) from IBMQ(hub=&#39;ibm-q-internal&#39;, group=&#39;deployed&#39;, project=&#39;default&#39;)&gt;]
 </pre></div>
 </div>
 </div>
@@ -1016,14 +1017,21 @@ qc:4   qc_trans:10
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/59169e7db02c25ad59705446bc035db50b1bb47ddcc6c384332dccc1d9a7e4cd.png" src="../../../_images/59169e7db02c25ad59705446bc035db50b1bb47ddcc6c384332dccc1d9a7e4cd.png" />
+<img alt="../../../_images/6b2109a502188454df01d609e484a11fbf024d7968fd78c03819df1f9f1bc220.png" src="../../../_images/6b2109a502188454df01d609e484a11fbf024d7968fd78c03819df1f9f1bc220.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## your code goes here</span>
+
+<span class="n">backend_ex</span> <span class="o">=</span> <span class="n">prov</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s1">&#39;ibm_perth&#39;</span><span class="p">)</span>
+<span class="n">qc_ex_trans</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc_ex</span><span class="p">,</span> <span class="n">backend_ex</span><span class="p">)</span>
+<span class="n">qc_ex_trans</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/f7cb850c9e68a3e62d320232e77364d702793b0a4f65e6023f01eb86a1dc486d.png" src="../../../_images/f7cb850c9e68a3e62d320232e77364d702793b0a4f65e6023f01eb86a1dc486d.png" />
 </div>
 </div>
 <p>List of physical qubits mapped to the virtual qubits [0, 1, 2, 3]</p>
@@ -1146,6 +1154,93 @@ Gate counts: OrderedDict([(&#39;rz&#39;, 18), (&#39;cx&#39;, 12), (&#39;sx&#39;,
 </div><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## your code goes here</span>
+
+<span class="n">nq</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">backend</span> <span class="o">=</span> <span class="n">prov</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">ibmq_kolkata</span>
+
+<span class="c1"># worst</span>
+<span class="n">qc_worst</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">nq</span><span class="p">)</span>
+<span class="n">qc_worst</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc_worst</span><span class="o">.</span><span class="n">cx</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">nq</span><span class="p">))</span>
+
+<span class="c1"># ok</span>
+<span class="n">qc_ok</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">nq</span><span class="p">)</span>
+<span class="n">qc_ok</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc_ok</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">nq</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nq</span><span class="p">))</span>
+
+<span class="c1"># best</span>
+<span class="n">qc_best</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">nq</span><span class="p">)</span>
+<span class="n">qc_best</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">qc_best</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">qc_best</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">qc_best</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="c1"># qc_best = QuantumCircuit(nq)</span>
+<span class="c1"># qc_best.h(2)</span>
+<span class="c1"># qc_best.cx(2, [1, 3, 4])</span>
+<span class="c1"># qc_best.cx(1, 0)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">qc_worst</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">qc_ok</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">qc_best</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     ┌───┐                    
+q_0: ┤ H ├──■────■────■────■──
+     └───┘┌─┴─┐  │    │    │  
+q_1: ─────┤ X ├──┼────┼────┼──
+          └───┘┌─┴─┐  │    │  
+q_2: ──────────┤ X ├──┼────┼──
+               └───┘┌─┴─┐  │  
+q_3: ───────────────┤ X ├──┼──
+                    └───┘┌─┴─┐
+q_4: ────────────────────┤ X ├
+                         └───┘
+     ┌───┐                    
+q_0: ┤ H ├──■─────────────────
+     └───┘┌─┴─┐               
+q_1: ─────┤ X ├──■────────────
+          └───┘┌─┴─┐          
+q_2: ──────────┤ X ├──■───────
+               └───┘┌─┴─┐     
+q_3: ───────────────┤ X ├──■──
+                    └───┘┌─┴─┐
+q_4: ────────────────────┤ X ├
+                         └───┘
+               ┌───┐     
+q_0: ──────────┤ X ├─────
+          ┌───┐└─┬─┘     
+q_1: ─────┤ X ├──■───────
+     ┌───┐└─┬─┘          
+q_2: ┤ H ├──■────■───────
+     └───┘     ┌─┴─┐     
+q_3: ──────────┤ X ├──■──
+               └───┘┌─┴─┐
+q_4: ───────────────┤ X ├
+                    └───┘
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc_worst_trans</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc_worst</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">optimization_level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">qc_ok_trans</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc_ok</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">optimization_level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">qc_best_trans</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc_best</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">optimization_level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">qc_worst_trans</span><span class="o">.</span><span class="n">depth</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">qc_ok_trans</span><span class="o">.</span><span class="n">depth</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">qc_best_trans</span><span class="o">.</span><span class="n">depth</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>12
+7
+6
 </pre></div>
 </div>
 </div>

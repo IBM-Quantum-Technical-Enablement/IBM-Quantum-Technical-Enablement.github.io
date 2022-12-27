@@ -398,8 +398,8 @@
   <span><i class="fa-fw fa fa-tags"></i> </span
   >
    
-  <a href="../../explore/tag/hardware.html">hardware</a>   
-  <a href="../../explore/tag/dynamical-decoupling.html">dynamical decoupling</a>  
+  <a href="../../explore/tag/dynamical-decoupling.html">dynamical decoupling</a>   
+  <a href="../../explore/tag/hardware.html">hardware</a>  
 </li>
  
 </ul>
@@ -500,7 +500,7 @@
 <p>Recently our Partners over at Lawrence Berkeley National Laboratory (LBNL) published an interesting paper on probing quantum gravity in the lab: <a class="reference external" href="https://arxiv.org/abs/2205.14081">arXiv:2205.14081</a>.  This paper caught our eye for two reasons. First, it is about teleportation via wormholes, so why not check it out?  Second, it compares our quantum systems verses the trapped-ion systems from Quantinuum.  From a competitive standpoint, these types of papers are fun to look at and see if we can do better.  Trying to do so is the basis for this notebook.  If you want all the details you will need to see the paper, however the basics can be gathered from Figure 1 in the paper:</p>
 <img alt="../../_images/circuit.png" src="../../_images/circuit.png" />
 <p>Basically they are creating entangled pairs of qubits at the beginning; a prerequisite of all teleportation procedures.  Doing evolution backward and forward by the same amout of time on the <code class="docutils literal notranslate"><span class="pre">L</span></code> group, coupling the L and R groups of qubits with a tunable phase <code class="docutils literal notranslate"><span class="pre">g</span></code>, and then performing the forward evolution again on the <code class="docutils literal notranslate"><span class="pre">R</span></code> group of qubits, and then measuring the state on the bottom qubit.  As a function of the coupling <code class="docutils literal notranslate"><span class="pre">g</span></code> the expectation value of the <code class="docutils literal notranslate"><span class="pre">Z</span></code> operator on the last qubit in both simulation and on the real quantum hardware is seen to be:</p>
-<img alt="../../_images/results1.png" src="../../_images/results1.png" />
+<img alt="../../_images/results2.png" src="../../_images/results2.png" />
 <p>We see the signal oscillates as a function of <code class="docutils literal notranslate"><span class="pre">g</span></code> with the minimum “signal” at <span class="math notranslate nohighlight">\(g/2\pi=0.25\)</span>.  Quantinuum gets close to 80% of this value while IBM Quantum obtains at most ~35% with error mitigation turned on, and 20% with it off on the <code class="docutils literal notranslate"><span class="pre">ibmq_montreal</span></code> Falcon R4 system.  Our goal is to see if we can do better.</p>
 <section id="frontmatter">
 <h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this heading">#</a></h2>

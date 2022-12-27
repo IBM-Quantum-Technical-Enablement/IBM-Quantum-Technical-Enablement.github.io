@@ -1,0 +1,52 @@
+---
+orphan: true
+---
+
+# Using Qiskit and IBM Quantum Hardware
+
+(skku22)=
+
+## Overview
+
+Utilizing new IBM Quantum services
+
+## Details
+
+**Date**: December 22nd, 2022
+
+**Location**:  SKKU, Suwon Korea
+
+## Workshop materials
+
+```{toctree}
+:caption: Day 1
+:maxdepth: 1
+:hidden:
+skku-2022/Circuit-timing
+skku-2022/Dynamical-decoupling
+skku-2022/dynamic-circuits-1
+skku-2022/dynamic-circuits-2
+skku-2022/dynamic-circuits-3
+skku-2022/Runtime-1
+skku-2022/Runtime-2
+skku-2022/Runtime-3
+skku-2022/Runtime-4
+```
+
+```{button-link} https://github.com/IBM-Quantum-Technical-Enablement/skku-2022/archive/refs/heads/main.zip
+:color: primary
+:shadow:
+Download all workshop content
+```
+
+| Files | 
+| :--- |
+| [Circuit timing](skku-2022/Circuit-timing)  |
+| [Dynamical decoupling](skku-2022/Dynamical-decoupling)   |
+| [Dynamic circuits I](skku-2022/dynamic-circuits-1)      |
+| [Dynamic circuits II](skku-2022/dynamic-circuits-2)    |
+| [Dynamic circuits III](skku-2022/dynamic-circuits-3)     |
+| [Runtime I](skku-2022/Runtime-1)     |
+| [Runtime II](skku-2022/Runtime-2)     |
+| [Runtime III](skku-2022/Runtime-3)     |
+| [Runtime IV](skku-2022/Runtime-4)     |
