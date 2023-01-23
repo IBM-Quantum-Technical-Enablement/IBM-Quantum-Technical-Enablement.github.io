@@ -1,21 +1,31 @@
 # Historical hardware details
 
-## Historical two-qubit error rates
 
-### Best average error rates
+## Best 2Q-gate error rates
 
-```{figure} images/history/avg_cx_error_historical.png
+```{figure} images/history/best_error_historical.svg
 ---
-name: avg-cx-history-fig
+name: best-2Q-history-fig
+---
+Best single-gate entangling gate error rates for deployed IBM Quantum systems.
+```
+
+## Best average 2Q-gate error rates
+
+```{figure} images/history/avg_error_historical.svg
+---
+name: avg-history-fig
 ---
 Best average entangling gate error rates for deployed IBM Quantum systems.
 ```
 
-### Best single gate error rates
+## Best median 2Q-gate error rates
 
-```{figure} images/history/best_cx_error_historical.png
+There is less data in this plot as we have not been tracking median performance since the beginning.
+
+```{figure} images/history/median_error_historical.svg
 ---
-name: best-cx-history-fig
+name: median-history-fig
 ---
-Best single-gate entangling gate error rates for deployed IBM Quantum systems.
+Best median entangling gate error rates for deployed IBM Quantum systems.
 ```

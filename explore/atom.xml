@@ -2,14 +2,14 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
   <id>quantum-enablement.org</id>
   <title>Quantum Explorations</title>
-  <updated>2022-12-27T22:52:40.158542+00:00</updated>
+  <updated>2023-01-23T17:16:14.074887+00:00</updated>
   <link href="quantum-enablement.org"/>
   <link href="quantum-enablement.org/explore/atom.xml" rel="self"/>
   <generator uri="https://ablog.readthedocs.org/" version="0.10.33">ABlog</generator>
   <entry>
     <id>quantum-enablement.org/posts/2021/2021-10-27-dynamic_BV.html</id>
     <title>Dynamic Bernstein-Vazirani using mid-circuit reset and measurement</title>
-    <updated>2021-10-27T00:00:00+09:00</updated>
+    <updated>2021-10-27T00:00:00-04:00</updated>
     <author>
       <name>Paul Nation</name>
     </author>
@@ -22,12 +22,12 @@
     <link href="quantum-enablement.org/posts/2021/2021-10-27-dynamic_BV.html" rel="alternate"/>
     <summary>The ability to do mid-circuit reset and measurement unlocks a variety of tools for executing quantum circuits.  A brief discussion is given in this IBM Research blog post.  On particular possibility is the ability to reuse qubits, and in doing so reduce the hardware requirements of some algorithms.  The Bernstein-Vazirani (BV) algorithm is one such example.  In particular, when using phase-kickback, BV usually requires a high degree of qubit connectivity to impliment.  This has been used by trapped-ion hardware vendors to show that their hardware gives better fidelity on these problems, e.g. see (https://arxiv.org/abs/2102.00371 and https://www.nature.com/articles/s41467-019-13534-2).  However, with reset and measurement, BV requires only two qubits, making connectivity differences mute.  We showed this in a reply Tweet: https://twitter.com/nonhermitian/status/1362348935440986113, but did not explain how we got that figure.  So here is how I did it.Here we select the backend and extract its two-qubit gate coupling map.  This is not the same backend used in the original figure as, at the time or writing, that one is offline.  It is however the same processor family and revision.</summary>
     <category term="Dynamic" label="Dynamic"/>
-    <published>2021-10-27T00:00:00+09:00</published>
+    <published>2021-10-27T00:00:00-04:00</published>
   </entry>
   <entry>
     <id>quantum-enablement.org/posts/2021/2021-10-31-best_swap_mapper_qiskit.html</id>
     <title>Choosing the best Qiskit swap mapper</title>
-    <updated>2021-10-31T00:00:00+09:00</updated>
+    <updated>2021-10-31T00:00:00-04:00</updated>
     <author>
       <name>Paul Nation</name>
     </author>
@@ -40,12 +40,12 @@
     <link href="quantum-enablement.org/posts/2021/2021-10-31-best_swap_mapper_qiskit.html" rel="alternate"/>
     <summary>One of the most important (perhaps the most important) steps when compiling quantum circuits for architectures with limited connectivity is swap mapping.  If a requested two-qubit gate cannot be implimented directly on hardware, the states of the corresponding qubits must be swapped with those of their neighboors until the states reside on qubits where a two qubit gate is supported.  Swap gates are expensive, equal to three CNOT gates, and therefore moving qubit states around using the fewest number of swap gates is desireable.  Unfortunately, directly computing the minimum number of swap gates is NP-complete, and heuristics need to be developed that come close to the ideal solution while scaling favorably with the number of qubits.Qiskit supports a variety of swap mappers and other optimization settings, and how to best set these options is important for getting high-fidelty results.  Additionally, there are other Qiskit compatible compilers out there that should also be evaluated.  To this end, here we look at a selection of circuits compiled with various Qiskit compiler settings, as well as those produced with the Cambridge Quantum Computing (CQC) Tket compiler.  We will investigate the performance of these methods in terms of both number of CNOT gates in the output, as well as the associated runtimes.  Because Qiskit swap mappers are stochastic, we will run each one several times and plot the distributions of results.</summary>
     <category term="bestpractices" label="best practices"/>
-    <published>2021-10-31T00:00:00+09:00</published>
+    <published>2021-10-31T00:00:00-04:00</published>
   </entry>
   <entry>
     <id>quantum-enablement.org/posts/2021/2021-11-07-rep_delay.html</id>
     <title>Improving state prep errors on IBM Quantum systems</title>
-    <updated>2021-11-07T00:00:00+09:00</updated>
+    <updated>2021-11-07T00:00:00-04:00</updated>
     <author>
       <name>Paul Nation</name>
     </author>
@@ -60,12 +60,12 @@
     <category term="Dynamic" label="Dynamic"/>
     <category term="Reset" label="Reset"/>
     <category term="SPAM" label="SPAM"/>
-    <published>2021-11-07T00:00:00+09:00</published>
+    <published>2021-11-07T00:00:00-04:00</published>
   </entry>
   <entry>
     <id>quantum-enablement.org/posts/2021/2021-11-28-falcon_r5.html</id>
     <title>Comparison of Falcon R5 processors verse R4</title>
-    <updated>2021-11-28T00:00:00+09:00</updated>
+    <updated>2021-11-28T00:00:00-05:00</updated>
     <author>
       <name>Paul Nation</name>
     </author>
@@ -78,12 +78,12 @@
     <link href="quantum-enablement.org/posts/2021/2021-11-28-falcon_r5.html" rel="alternate"/>
     <summary>Recently IBM Quantum announced the move to revision 5 (R5) of its Falcon processors see this tweet from Jay Gambetta.  In particular it was highlighted that there is a 8x reduction in meausrement time on these systems.  Lets see if this, or any other enhancements, are visible from the system calibration data.The highlight of the recently released Falcon R5 “core” systems is their much improved measurement times (7x) and error rates (2x).  On these systems a measurement is roughly twice as long as a CNOT gate, compared to 13x on the old R4 systems, and allows for implimenting high-fidelity dynamic circuits with resets, mid-circuit measurements, and eventually classically-conditioned gates.  For other tasks, the modest improvements in the CNOT gate errors and T_{1} times are also welcomed.</summary>
     <category term="Falcon" label="Falcon"/>
-    <published>2021-11-28T00:00:00+09:00</published>
+    <published>2021-11-28T00:00:00-05:00</published>
   </entry>
   <entry>
     <id>quantum-enablement.org/posts/2021/2021-12-20-esp_readout.html</id>
     <title>Excited State Promotion (ESP) Readout</title>
-    <updated>2021-12-20T00:00:00+09:00</updated>
+    <updated>2021-12-20T00:00:00-05:00</updated>
     <author>
       <name>Paul Nation</name>
     </author>
@@ -95,12 +95,12 @@
 </content>
     <link href="quantum-enablement.org/posts/2021/2021-12-20-esp_readout.html" rel="alternate"/>
     <summary>Excited State Promotion (ESP) readout is method for decreasing measurement errors in quantum computing systems where decay from the excited |1\rangle state to |0\rangle is non-negligible over the measurement timescales.  Although it was originally an useful technique on the previous generation Falcon R4 systems, today it is only available on a few Falcon R5 systems where the nearly order of magnitude improvement in measurement times leaves little value in using this functionality.  In testing, it looks to even be a bit worse performing than the standard readout method.  ESP readout is on by default for those systems that support it.  To disable it run:On many quantum computing platforms one of the two computational basis states, the |1\rangle state by convention, is an excited state of the system with respect to the ground state |0\rangle.  The difference in energy between these two states defines the frequency of the qubit through the relation E=hf.  Because the |1\rangle state is an excited state, there is a non-zero probability that the state will decay to |0\rangle via interaction with the environment.  The characteristic timescale for this is the T_{1} time of the qubit.  When performing gate operations, or non-reversible instructions like measurements on qubits, if the time it takes to perform these operations is a non-negligible fraction of T_{1}, then there is a possibility that this decay has occurred.</summary>
-    <published>2021-12-20T00:00:00+09:00</published>
+    <published>2021-12-20T00:00:00-05:00</published>
   </entry>
   <entry>
     <id>quantum-enablement.org/posts/2022/2022-07-14-wormhole.html</id>
     <title>Going down the Wormhole</title>
-    <updated>2022-07-14T00:00:00+09:00</updated>
+    <updated>2022-07-14T00:00:00-04:00</updated>
     <author>
       <name>Paul Nation</name>
     </author>
@@ -114,12 +114,12 @@
     <summary>Recently our Partners over at Lawrence Berkeley National Laboratory (LBNL) published an interesting paper on probing quantum gravity in the lab: arXiv:2205.14081.  This paper caught our eye for two reasons. First, it is about teleportation via wormholes, so why not check it out?  Second, it compares our quantum systems verses the trapped-ion systems from Quantinuum.  From a competitive standpoint, these types of papers are fun to look at and see if we can do better.  Trying to do so is the basis for this notebook.  If you want all the details you will need to see the paper, however the basics can be gathered from Figure 1 in the paper:Basically they are creating entangled pairs of qubits at the beginning; a prerequisite of all teleportation procedures.  Doing evolution backward and forward by the same amout of time on the L group, coupling the L and R groups of qubits with a tunable phase g, and then performing the forward evolution again on the R group of qubits, and then measuring the state on the bottom qubit.  As a function of the coupling g the expectation value of the Z operator on the last qubit in both simulation and on the real quantum hardware is seen to be:</summary>
     <category term="dynamicaldecoupling" label="dynamical decoupling"/>
     <category term="hardware" label="hardware"/>
-    <published>2022-07-14T00:00:00+09:00</published>
+    <published>2022-07-14T00:00:00-04:00</published>
   </entry>
   <entry>
     <id>quantum-enablement.org/posts/2022/2022-07-26-fairshare.html</id>
     <title>Understanding fair-share scheduling</title>
-    <updated>2022-07-26T00:00:00+09:00</updated>
+    <updated>2022-07-26T00:00:00-04:00</updated>
     <author>
       <name>Paul Nation</name>
     </author>
@@ -134,12 +134,12 @@
     <category term="admin" label="admin"/>
     <category term="hardware" label="hardware"/>
     <category term="services" label="services"/>
-    <published>2022-07-26T00:00:00+09:00</published>
+    <published>2022-07-26T00:00:00-04:00</published>
   </entry>
   <entry>
     <id>quantum-enablement.org/posts/2022/2022-08-22-readout_mitigation.html</id>
     <title>[BETA] Readout error mitigation in Runtime</title>
-    <updated>2022-08-22T00:00:00+09:00</updated>
+    <updated>2022-08-22T00:00:00-04:00</updated>
     <author>
       <name>Paul Nation</name>
     </author>
@@ -154,12 +154,12 @@
     <category term="beta" label="beta"/>
     <category term="mitigation" label="mitigation"/>
     <category term="runtime" label="runtime"/>
-    <published>2022-08-22T00:00:00+09:00</published>
+    <published>2022-08-22T00:00:00-04:00</published>
   </entry>
   <entry>
     <id>quantum-enablement.org/posts/2022/2022-11-07-challenge.html</id>
     <title>Quantum Practitioners Forum 2022: CHSH Distance Challenge</title>
-    <updated>2022-11-07T00:00:00+09:00</updated>
+    <updated>2022-11-07T00:00:00-05:00</updated>
     <author>
       <name>Paul Nation</name>
     </author>
@@ -173,6 +173,6 @@
     <summary>The goal of this challenge is to entangle a pair of qubits, as far away as possible (to be defined below) from the other and still recover a CHSH violation.  How best to generate long-range entanglement an interesting challenge, and there are multiple possible techniques, some introduced in the Quantum Practitioners Forum, that might help in this process.  Other tools might also help increase the fidelity of the final CHSH signal.Participants are tasked with generating long-range entanglement on real quantum hardware through the generation of Bell states such that measurements on qubits in the Bell pair are as distant as possible while still recovering a signal that shows a CHSH violation.  Here distance is defined to be the shortest path connecting qubits on a graph of the systems coupling_map:</summary>
     <category term="dynamicaldecoupling" label="dynamical decoupling"/>
     <category term="hardware" label="hardware"/>
-    <published>2022-11-07T00:00:00+09:00</published>
+    <published>2022-11-07T00:00:00-05:00</published>
   </entry>
 </feed>

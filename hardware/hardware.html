@@ -57,7 +57,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'hardware/hardware';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="IBM Quantum processor families" href="processors.html" />
+    <link rel="next" title="Historical hardware details" href="historical.html" />
     <link rel="prev" title="Explorations" href="../explore.html" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="docsearch:language" content="en"> 
@@ -377,18 +377,9 @@
     Section Navigation
   </p>
   <div class="bd-toc-item navbar-nav">
-    <p aria-level="2" class="caption" role="heading"><span class="caption-text">Processor families</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="processors.html">IBM Quantum processor families</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Historical data</span></p>
+    <p aria-level="2" class="caption" role="heading"><span class="caption-text">Historical data</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="historical.html">Historical hardware details</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">System configuration</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="precision_vs_shots.html">Precision, Accuracy and Number of Shots</a></li>
-<li class="toctree-l1"><a class="reference internal" href="circuits.html">Number of Circuits: Why it matters</a></li>
 </ul>
 
   </div>
@@ -421,13 +412,19 @@
             <article class="bd-article" role="main">
                <section class="tex2jax_ignore mathjax_ignore" id="ibm-hardware">
 <h1>IBM Hardware<a class="headerlink" href="#ibm-hardware" title="Permalink to this heading">#</a></h1>
-<p>A collection of hardware specific details and configuration information.</p>
+<p>A collection of information on IBM Quantum systems.</p>
+<section id="which-device-to-use">
+<h2>Which device to use?<a class="headerlink" href="#which-device-to-use" title="Permalink to this heading">#</a></h2>
+<p>Deciding which quantum system to use is one of the more challenging questions to answer.  At the level of single qubits, and one- and two-qubit gates, randomized benchmarking is used to give microscope performance information.  However, for quantum circuits over many qubits, this information often does not capture the true performance of a system, and other benchmarks such as <a class="reference external" href="https://arxiv.org/abs/1811.12926">Quantum Volume</a> are often used.  Additionally, there are a host of application circuit test suites that look to measure performance over families of circuits for near-term applications.</p>
+<p>Here we measure device-wide performance using <a class="reference external" href="https://arxiv.org/abs/2301.07625">discrete time crystal (DTC) characterization</a>.  In short, the system with the longest bar below is the current top-performing system according to our metric and, all else being equal, the system you should use for best results.  Not surprisingly, the latest systems outperform their older counterparts.</p>
+<figure class="align-default" id="processor-performance">
+<img alt="../_images/processor_performance.svg" src="../_images/processor_performance.svg" /><figcaption>
+<p><span class="caption-text">Top performing IBM Quantum systems with 27+ qubits, as measured by 20-qubit DTC characterization.  Performance is measured relative to the average results from Falcon R5 systems.  Dates indicate when the device was first online.</span><a class="headerlink" href="#processor-performance" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 <div class="toctree-wrapper compound">
 </div>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
+</section>
 </section>
 
 <div class="section">
@@ -448,10 +445,10 @@
           <p class="prev-next-title">Explorations</p>
       </div>
   </a>
-  <a class='right-next' id="next-link" href="processors.html" title="next page">
+  <a class='right-next' id="next-link" href="historical.html" title="next page">
   <div class="prev-next-info">
       <p class="prev-next-subtitle">next</p>
-      <p class="prev-next-title">IBM Quantum processor families</p>
+      <p class="prev-next-title">Historical hardware details</p>
   </div>
   <i class="fa-solid fa-angle-right"></i>
   </a>
@@ -464,6 +461,23 @@
           
             <div class="bd-sidebar-secondary bd-toc">
               
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#which-device-to-use">
+   Which device to use?
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
 <div class="toc-item">
   
 <div id="searchbox"></div>
