@@ -17,10 +17,11 @@ compiling/compiling
 ```
 
 ```{toctree}
-:caption: Error suppression
+:caption: Circuit timing
 :maxdepth: 2
 :hidden:
-dynamical_decoupling/dynamical_decoupling
+timing/circuit-timing
+timing/dynamical-decoupling
 ```
 
 ```{toctree}
