@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
   <id>quantum-enablement.org</id>
   <title>Quantum Explorations</title>
-  <updated>2023-01-25T18:32:15.111477+00:00</updated>
+  <updated>2023-01-28T12:34:41.731129+00:00</updated>
   <link href="quantum-enablement.org"/>
   <link href="quantum-enablement.org/explore/atom.xml" rel="self"/>
   <generator uri="https://ablog.readthedocs.org/" version="0.10.33">ABlog</generator>
@@ -174,5 +174,23 @@
     <category term="dynamicaldecoupling" label="dynamical decoupling"/>
     <category term="hardware" label="hardware"/>
     <published>2022-11-07T00:00:00-05:00</published>
+  </entry>
+  <entry>
+    <id>quantum-enablement.org/posts/2023/2023-01-28-directed_cmap.html</id>
+    <title>How to make your backend a directed backend</title>
+    <updated>2023-01-28T00:00:00-05:00</updated>
+    <author>
+      <name>Paul Nation</name>
+    </author>
+    <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
+&lt;p&gt;Here we show the reader how to construct a directed IBM Quantum backend from an undirected one.  This yields some performance benefits as the Qiskit transpiler can better optimize single-qubit gates within the circuit.&lt;/p&gt;
+&lt;p&gt;Recently IBM Quantum announced its new &lt;a class="reference external" href="https://research.ibm.com/blog/eagle-quantum-error-mitigation"&gt;Sherbrooke device&lt;/a&gt; that allows users to directly work with cross-resonance gates, and exposes only the natural direction that the gates operate in.  CNOT gates, which are comprised of cross-resonance gates on IBM Quantum systems, also have a natural direction, but current devices that use CNOT gates as their two-qubit basis gate do not directly express this directionality.  Indeed, the coupling map (topology) for these systems is symmetric / bi-directional; if you query the system you will see that it indicates that a backend can do a CNOT gate between qubits A &amp;amp; B (control and target), as well as B &amp;amp; A.  If a CX gate that is used in a circuit is not in the natural direction, the system will transparently flip it around in software and execute the circuit.  This comes with a cost however.  To see this, lets make a Bell state in the usual fashion (ignoring measurements for brevity):&lt;/p&gt;
+&lt;img alt="_images/e5dcfd9044e8af915d4469cdcc3105876785a0d7b60b4c63e0e64b29fa9ad38b.png" src="_images/e5dcfd9044e8af915d4469cdcc3105876785a0d7b60b4c63e0e64b29fa9ad38b.png" /&gt;
+&lt;/div&gt;
+</content>
+    <link href="quantum-enablement.org/posts/2023/2023-01-28-directed_cmap.html" rel="alternate"/>
+    <summary>Here we show the reader how to construct a directed IBM Quantum backend from an undirected one.  This yields some performance benefits as the Qiskit transpiler can better optimize single-qubit gates within the circuit.Recently IBM Quantum announced its new Sherbrooke device that allows users to directly work with cross-resonance gates, and exposes only the natural direction that the gates operate in.  CNOT gates, which are comprised of cross-resonance gates on IBM Quantum systems, also have a natural direction, but current devices that use CNOT gates as their two-qubit basis gate do not directly express this directionality.  Indeed, the coupling map (topology) for these systems is symmetric / bi-directional; if you query the system you will see that it indicates that a backend can do a CNOT gate between qubits A &amp; B (control and target), as well as B &amp; A.  If a CX gate that is used in a circuit is not in the natural direction, the system will transparently flip it around in software and execute the circuit.  This comes with a cost however.  To see this, lets make a Bell state in the usual fashion (ignoring measurements for brevity):</summary>
+    <category term="hardware" label="hardware"/>
+    <published>2023-01-28T00:00:00-05:00</published>
   </entry>
 </feed>
