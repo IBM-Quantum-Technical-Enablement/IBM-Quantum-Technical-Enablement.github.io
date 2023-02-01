@@ -4,8 +4,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Posts tagged Reset &#8212; Enabing Technologies  documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Circuit execution within a job &#8212; Enabing Technologies  documentation</title>
   
   
   
@@ -53,16 +54,18 @@
                 gtag('js', new Date());
                 gtag('config', 'UA-16824831-8');
             </script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'explore/tag/reset';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'hardware/jobs/circuits';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" /> 
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Ahead of time circuit compilation" href="aot.html" />
+    <link rel="prev" title="IBM Hardware" href="../hardware.html" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="docsearch:language" content="en"> 
 <link
   rel="alternate"
   type="application/atom+xml"
   href="../../explore/atom.xml"
-  title="Posts tagged Reset"
+  title="Quantum Explorations"
 />
  
 <style type="text/css">
@@ -175,8 +178,8 @@
                     </li>
                 
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../hardware/hardware.html">
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../hardware.html">
                         IBM Hardware
                       </a>
                     </li>
@@ -299,8 +302,8 @@
                     </li>
                 
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../hardware/hardware.html">
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../hardware.html">
                         IBM Hardware
                       </a>
                     </li>
@@ -369,76 +372,23 @@
 
   
   <div class="sidebar-start-items sidebar-primary__section">
-    <div class="sidebar-start-items__item">
-    </div>
-    <div class="sidebar-start-items__item"><div class="dropdown-buttons">
-    <!-- ipynb file if we had a myst markdown file -->
-    
-    <!-- Download raw file -->
-    <a class="dropdown-buttons" href="../../_sources/"><button type="button"
-            class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-            data-placement="left"></button></a>
-</div>
-    </div>
-    <div class="sidebar-start-items__item">
-<h3>
-  <a href="../../explore.html">Recent Posts</a>
-</h3>
-<ul>
-   
-  <li>
-    <a href="../../posts/2023/2023-01-28-directed_cmap.html"
-      >28 January - How to make your backend a directed backend</a
-    >
-  </li>
-  
-  <li>
-    <a href="../../posts/2022/2022-11-07-challenge.html"
-      >07 November - Quantum Practitioners Forum 2022: CHSH Distance Challenge</a
-    >
-  </li>
-  
-  <li>
-    <a href="../../posts/2022/2022-08-22-readout_mitigation.html"
-      >22 August - [BETA] Readout error mitigation in Runtime</a
-    >
-  </li>
-  
-  <li>
-    <a href="../../posts/2022/2022-07-26-fairshare.html"
-      >26 July - Understanding fair-share scheduling</a
-    >
-  </li>
-  
-  <li>
-    <a href="../../posts/2022/2022-07-14-wormhole.html"
-      >14 July - Going down the Wormhole</a
-    >
-  </li>
-  
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <p aria-level="2" class="caption" role="heading"><span class="caption-text">Job execution</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Circuit execution within a job</a></li>
+<li class="toctree-l1"><a class="reference internal" href="aot.html">Ahead of time circuit compilation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Historial system information</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../historical.html">Historical hardware details</a></li>
 </ul>
 
-    </div>
-    <div class="sidebar-start-items__item">
-<h3>
-  <a href="../archive.html">Archives</a>
-</h3>
-<ul>
-   
-  <li>
-    <a href="../2023.html">2023 (1)</a>
-  </li>
-    
-  <li>
-    <a href="../2022.html">2022 (4)</a>
-  </li>
-    
-  <li>
-    <a href="../2021.html">2021 (5)</a>
-  </li>
-   
-</ul>
-
+  </div>
+</nav>
     </div>
   </div>
   
@@ -465,57 +415,82 @@
             
             
             <article class="bd-article" role="main">
-              
+               <section class="tex2jax_ignore mathjax_ignore" id="circuit-execution-within-a-job">
+<h1>Circuit execution within a job<a class="headerlink" href="#circuit-execution-within-a-job" title="Permalink to this heading">#</a></h1>
+<section id="multi-circuit-jobs">
+<h2>Multi-circuit jobs<a class="headerlink" href="#multi-circuit-jobs" title="Permalink to this heading">#</a></h2>
+<p>IBM Quantum systems allow you to submit multiple circuits within a single job.  Attached to each job is a number of shots, that tells the system how many times to sample each circuit.  The question then arrises, how are the circuits and shots executed within a muti-circuit job?</p>
+<p><img alt="Circuit matrix" src="../../_images/circuit_matrix.png" /></p>
+<p>This columnwise execution pattern for multi-circuit jobs in the underlying reason why there is a fixed number of shots for each circuit within a job.</p>
+</section>
+<section id="repetition-delay">
+<h2>Repetition delay<a class="headerlink" href="#repetition-delay" title="Permalink to this heading">#</a></h2>
+<p>The above description of circuit execution is a bit simplified.  Namely, when a circuit is executed, there are additional operations that are performed after the circuit itself is done executing.  First, the qubits need to be reset after measurement.  Second, there is an additional repetition delay, or rep-delay for short, that is padded after the reset to help the qubits further relax into the ground state before the next circuit is executed.</p>
+<p><img alt="rep-delay" src="../../_images/rep_delay.png" /></p>
+<p>The rep-delay for a given quantum system can be found in the calibration data for the device.  Here we give an example for querying the default <code class="docutils literal notranslate"><span class="pre">rep_delay</span></code> for a IBM Quantum backend:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">qiskit_ibm_provider</span> <span class="kn">import</span> <span class="n">IBMProvider</span>
+
+<span class="n">provider</span> <span class="o">=</span> <span class="n">IBMProvider</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">backend</span> <span class="o">=</span> <span class="n">provider</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s1">&#39;ibm_sherbrooke&#39;</span><span class="p">)</span>
+<span class="n">backend</span><span class="o">.</span><span class="n">configuration</span><span class="p">()</span><span class="o">.</span><span class="n">default_rep_delay</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.00025
+</pre></div>
+</div>
+</div>
+</div>
+<p>The above time, in units of seconds, is the default rep-delay used by the system.  An user can change this value to any value within the range specified by the device:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">backend</span><span class="o">.</span><span class="n">configuration</span><span class="p">()</span><span class="o">.</span><span class="n">rep_delay_range</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.0, 0.0005]
+</pre></div>
+</div>
+</div>
+</div>
+<section id="using-custom-rep-delay">
+<h3>Using custom <code class="docutils literal notranslate"><span class="pre">rep_delay</span></code><a class="headerlink" href="#using-custom-rep-delay" title="Permalink to this heading">#</a></h3>
+<p>To set your own <code class="docutils literal notranslate"><span class="pre">rep_delay</span></code> you can pass the desired value into <code class="docutils literal notranslate"><span class="pre">backend.run()</span></code> as a keyword argument.  E.g.:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+
+<span class="n">trans_qc</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">trans_qc</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mf">1e4</span><span class="p">,</span> <span class="n">rep_delay</span><span class="o">=</span><span class="mf">100e-6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
 
 <div class="section">
-  <h1>
-     Posts tagged  Reset 
-  </h1>
-   
-
-  <div class="section ablog-post">
-    <h2 class="ablog-post-title">
-      <a href="../../posts/2021/2021-11-07-rep_delay.html">Improving state prep errors on IBM Quantum systems</a>
-    </h2>
-
-    <ul class="ablog-archive">
-      <li>
-         <i class="fa fa-calendar"></i> 07 November 2021 
-      </li>
-       
-<li id="author">
-  <span><i class="fa-fw fa fa-user"></i></span
-  >
-   
-  <a href="../author/paul-nation.html">Paul Nation</a>  
-</li>
-   
-<li id="category">
-  <span><i class="fa-fw fa fa-folder-open"></i></span
-  >
-   
-  <a href="../category/hardware.html">Hardware</a>  
-</li>
- 
-<li id="tags">
-  <span><i class="fa-fw fa fa-tags"></i> </span
-  >
-   
-  <a href="spam.html">SPAM</a>   
-  <a href="dynamic.html">Dynamic</a>   
-  <a href="#">Reset</a>  
-</li>
- 
-    </ul>
-    <div class="ablog-post-excerpt docutils container">
-<p>It is often taken for granted that qubits are initialized to zero when executing quantum circuits on hardware.  However, errors in the reset process mean that this initialization is not perfect leading to state preparation errors.  Here we will look at state prep errors and how to improve them on IBM Quantum systems.</p>
-<p>Here we will use two lesser known configuration variables available on IBM Quantum systems to do so.  First is <code class="docutils literal notranslate"><span class="pre">rep_delay</span></code>.  This is the delay time before the next circuit is executed.  Each backend has a different <code class="docutils literal notranslate"><span class="pre">default_rep_delay</span></code> (although as of the time of writing many are <span class="math notranslate nohighlight">\(250~\mu \rm s\)</span> or lower) and support tuning this parameter from <span class="math notranslate nohighlight">\(0\)</span> up to <span class="math notranslate nohighlight">\(500~\mu \rm s\)</span>.  Why in the world would I want to vary this parameter?  Well if I set <code class="docutils literal notranslate"><span class="pre">rep_delay=0</span></code> then I can get much faster throughput as the default delay is nominally longer than the <span class="math notranslate nohighlight">\(T_{1}\)</span> time of the system.  However when doing so you are trusting the implicit reset (called “unconditional reset”) to do its job and reset the qubits to their ground state with high-fidelity.  Failure to do so would lead to state-prep errors that propagate through the circuit.  This is why the delay is usually longer than <span class="math notranslate nohighlight">\(T_{1}\)</span>; let the enviornment help your reset fidelity.  Second is <code class="docutils literal notranslate"><span class="pre">init_qubits</span></code> that tells the hardware to not perform an unconditional reset.  As no reset at all would quickly lead to junk, this setting needs to be done in concert with <code class="docutils literal notranslate"><span class="pre">reset</span></code> instructions being added to the beginning of your circuits.  Perhaps this is better, or maybe a single reset at the beginning and the uncondtional reset.  Lets find out.</p>
-<img alt="../../_images/9bd1e7b458a6bd9b2721b691d5946ebd4f465feac96980527863caeea3cd2c7e.png" src="../../_images/9bd1e7b458a6bd9b2721b691d5946ebd4f465feac96980527863caeea3cd2c7e.png" />
-</div>
-
-    <p class="ablog-post-expand"><a href="../../posts/2021/2021-11-07-rep_delay.html"><em>Read more ...</em></a></p>
-    <hr/>
-  </div>
    
 </div>
 
@@ -526,6 +501,20 @@
             <footer class="bd-footer-article">
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="../hardware.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">IBM Hardware</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="aot.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Ahead of time circuit compilation</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
 </div>
             </footer>
             
@@ -537,6 +526,40 @@
               
 <div class="toc-item">
   
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#multi-circuit-jobs">
+   Multi-circuit jobs
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#repetition-delay">
+   Repetition delay
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-custom-rep-delay">
+     Using custom
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       rep_delay
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
 <div id="searchbox"></div>
 </div>
 
@@ -546,6 +569,12 @@
 
 <div class="toc-item">
   
+<div class="tocsection sourcelink">
+    <a href="../../_sources/hardware/jobs/circuits.ipynb.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
 </div>
 
             </div>

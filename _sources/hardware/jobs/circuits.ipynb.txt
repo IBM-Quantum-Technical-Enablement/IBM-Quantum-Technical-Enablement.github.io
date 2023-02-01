@@ -1,0 +1,186 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "a0114381",
+   "metadata": {},
+   "source": [
+    "# Circuit execution within a job"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "9875964c",
+   "metadata": {},
+   "source": [
+    "## Multi-circuit jobs\n",
+    "\n",
+    "IBM Quantum systems allow you to submit multiple circuits within a single job.  Attached to each job is a number of shots, that tells the system how many times to sample each circuit.  The question then arrises, how are the circuits and shots executed within a muti-circuit job?  \n",
+    "\n",
+    "![Circuit matrix](images/circuit_matrix.png)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "10072cec",
+   "metadata": {},
+   "source": [
+    "This columnwise execution pattern for multi-circuit jobs in the underlying reason why there is a fixed number of shots for each circuit within a job."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ad239e38",
+   "metadata": {},
+   "source": [
+    "## Repetition delay\n",
+    "\n",
+    "The above description of circuit execution is a bit simplified.  Namely, when a circuit is executed, there are additional operations that are performed after the circuit itself is done executing.  First, the qubits need to be reset after measurement.  Second, there is an additional repetition delay, or rep-delay for short, that is padded after the reset to help the qubits further relax into the ground state before the next circuit is executed.\n",
+    "\n",
+    "![rep-delay](images/rep_delay.png)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "503247a5",
+   "metadata": {},
+   "source": [
+    "The rep-delay for a given quantum system can be found in the calibration data for the device.  Here we give an example for querying the default `rep_delay` for a IBM Quantum backend:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "id": "beaca1a2",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from qiskit import *\n",
+    "from qiskit_ibm_provider import IBMProvider\n",
+    "\n",
+    "provider = IBMProvider()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "id": "e00ef9de",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.00025"
+      ]
+     },
+     "execution_count": 20,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "backend = provider.get_backend('ibm_sherbrooke')\n",
+    "backend.configuration().default_rep_delay"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "8a430351",
+   "metadata": {},
+   "source": [
+    "The above time, in units of seconds, is the default rep-delay used by the system.  An user can change this value to any value within the range specified by the device:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "id": "bacf38a7",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[0.0, 0.0005]"
+      ]
+     },
+     "execution_count": 16,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "backend.configuration().rep_delay_range"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "12e9686d",
+   "metadata": {},
+   "source": [
+    "### Using custom `rep_delay`"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "8775b607",
+   "metadata": {},
+   "source": [
+    "To set your own `rep_delay` you can pass the desired value into `backend.run()` as a keyword argument.  E.g.:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "id": "0f5f19a7",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "qc = QuantumCircuit(2)\n",
+    "qc.h(0)\n",
+    "qc.cx(0,1)\n",
+    "qc.measure_all()\n",
+    "\n",
+    "trans_qc = transpile(qc, backend)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "id": "06ecdf3d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "job = backend.run(trans_qc, shots=1e4, rep_delay=100e-6)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "0d693875",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

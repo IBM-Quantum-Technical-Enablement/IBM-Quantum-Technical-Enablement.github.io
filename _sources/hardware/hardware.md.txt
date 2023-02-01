@@ -20,7 +20,16 @@ Top performing IBM Quantum systems with 27+ qubits, as measured by 20-qubit DTC 
 The figure above includes only those systems that perform above average according to our metric.  Thus any device that is not listed above performs below average, and one may find improvement in results by switching to one of the top performing systems.  Note however that, given the fast pace in quantum computing hardware development, a researcher starting a project on a top performing machine may find that that same machine is no longer listed at a later date.  Given any meaningful project lasts at least 6-12 months, and typically utilizes a single machine, this is to be expected.
 
 ```{toctree}
-:caption: Historical data
+:caption: Job execution
+:maxdepth: 2
+:hidden:
+jobs/circuits
+jobs/aot
+```
+
+
+```{toctree}
+:caption: Historial system information
 :maxdepth: 2
 :hidden:
 historical

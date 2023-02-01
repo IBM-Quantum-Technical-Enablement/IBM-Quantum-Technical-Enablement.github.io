@@ -4,8 +4,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Posts tagged Reset &#8212; Enabing Technologies  documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Ahead of time circuit compilation &#8212; Enabing Technologies  documentation</title>
   
   
   
@@ -53,16 +54,18 @@
                 gtag('js', new Date());
                 gtag('config', 'UA-16824831-8');
             </script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'explore/tag/reset';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'hardware/jobs/aot';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" /> 
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Historical hardware details" href="../historical.html" />
+    <link rel="prev" title="Circuit execution within a job" href="circuits.html" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="docsearch:language" content="en"> 
 <link
   rel="alternate"
   type="application/atom+xml"
   href="../../explore/atom.xml"
-  title="Posts tagged Reset"
+  title="Quantum Explorations"
 />
  
 <style type="text/css">
@@ -175,8 +178,8 @@
                     </li>
                 
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../hardware/hardware.html">
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../hardware.html">
                         IBM Hardware
                       </a>
                     </li>
@@ -299,8 +302,8 @@
                     </li>
                 
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../hardware/hardware.html">
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../hardware.html">
                         IBM Hardware
                       </a>
                     </li>
@@ -369,76 +372,23 @@
 
   
   <div class="sidebar-start-items sidebar-primary__section">
-    <div class="sidebar-start-items__item">
-    </div>
-    <div class="sidebar-start-items__item"><div class="dropdown-buttons">
-    <!-- ipynb file if we had a myst markdown file -->
-    
-    <!-- Download raw file -->
-    <a class="dropdown-buttons" href="../../_sources/"><button type="button"
-            class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-            data-placement="left"></button></a>
-</div>
-    </div>
-    <div class="sidebar-start-items__item">
-<h3>
-  <a href="../../explore.html">Recent Posts</a>
-</h3>
-<ul>
-   
-  <li>
-    <a href="../../posts/2023/2023-01-28-directed_cmap.html"
-      >28 January - How to make your backend a directed backend</a
-    >
-  </li>
-  
-  <li>
-    <a href="../../posts/2022/2022-11-07-challenge.html"
-      >07 November - Quantum Practitioners Forum 2022: CHSH Distance Challenge</a
-    >
-  </li>
-  
-  <li>
-    <a href="../../posts/2022/2022-08-22-readout_mitigation.html"
-      >22 August - [BETA] Readout error mitigation in Runtime</a
-    >
-  </li>
-  
-  <li>
-    <a href="../../posts/2022/2022-07-26-fairshare.html"
-      >26 July - Understanding fair-share scheduling</a
-    >
-  </li>
-  
-  <li>
-    <a href="../../posts/2022/2022-07-14-wormhole.html"
-      >14 July - Going down the Wormhole</a
-    >
-  </li>
-  
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Section navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">
+    Section Navigation
+  </p>
+  <div class="bd-toc-item navbar-nav">
+    <p aria-level="2" class="caption" role="heading"><span class="caption-text">Job execution</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="circuits.html">Circuit execution within a job</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Ahead of time circuit compilation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Historial system information</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../historical.html">Historical hardware details</a></li>
 </ul>
 
-    </div>
-    <div class="sidebar-start-items__item">
-<h3>
-  <a href="../archive.html">Archives</a>
-</h3>
-<ul>
-   
-  <li>
-    <a href="../2023.html">2023 (1)</a>
-  </li>
-    
-  <li>
-    <a href="../2022.html">2022 (4)</a>
-  </li>
-    
-  <li>
-    <a href="../2021.html">2021 (5)</a>
-  </li>
-   
-</ul>
-
+  </div>
+</nav>
     </div>
   </div>
   
@@ -465,57 +415,19 @@
             
             
             <article class="bd-article" role="main">
-              
+               <section class="tex2jax_ignore mathjax_ignore" id="ahead-of-time-circuit-compilation">
+<h1>Ahead of time circuit compilation<a class="headerlink" href="#ahead-of-time-circuit-compilation" title="Permalink to this heading">#</a></h1>
+<p>When submitting a job to an IBM Quantum system, there is a lot that goes on behind the scenes.  Some of this is visible if, for example, you go look at your jobs on the IBM Quantum website (https://quantum-computing.ibm.com/).</p>
+<img alt="../../_images/timeline.png" src="../../_images/timeline.png" />
+<p>Here we are concerned with what is happening during the “Running” stage of the process, where the target quantum system has pulled the job from the queue, and is starting its execution.</p>
+<p>Circuit execution can be thought of as consisting of three pieces. 1) A pre-processing step, where an input circuit (represented in a serializable format such as QASM3) is converted into an intermediate representation, and the gates / instructions in the circuit converted into waveforms.  2)  The waveforms are triggered to perfrom the actual circuit executions. 3) Finally there is a post-processing step that takes all of the samples collected via qubit measurements and returns them as a result.  If jobs are executed in serial, this can lead to non-negligible amounts of idle time on the processor:</p>
+<p><img alt="Serial execution" src="../../_images/serial_execution.png" /></p>
+<p>As circuit compilation and waveform generation for one job is independent from others, it is possible to perform these operations ahead of time if the output can be cached until the circuits are ready to be executed.</p>
+<p>Starting at the beginning of 2023, IBM Quantum systems began doing this compilation and waveform generation simultaneously for a collection of jobs ahead of their actual execution time.  This “ahead of time compilation” (AoT) removes the overhead from this pre-processing step, yielding additional throughput on the machines.</p>
+<p><img alt="AoT execution" src="../../_images/aot_execution.png" /></p>
+</section>
 
 <div class="section">
-  <h1>
-     Posts tagged  Reset 
-  </h1>
-   
-
-  <div class="section ablog-post">
-    <h2 class="ablog-post-title">
-      <a href="../../posts/2021/2021-11-07-rep_delay.html">Improving state prep errors on IBM Quantum systems</a>
-    </h2>
-
-    <ul class="ablog-archive">
-      <li>
-         <i class="fa fa-calendar"></i> 07 November 2021 
-      </li>
-       
-<li id="author">
-  <span><i class="fa-fw fa fa-user"></i></span
-  >
-   
-  <a href="../author/paul-nation.html">Paul Nation</a>  
-</li>
-   
-<li id="category">
-  <span><i class="fa-fw fa fa-folder-open"></i></span
-  >
-   
-  <a href="../category/hardware.html">Hardware</a>  
-</li>
- 
-<li id="tags">
-  <span><i class="fa-fw fa fa-tags"></i> </span
-  >
-   
-  <a href="spam.html">SPAM</a>   
-  <a href="dynamic.html">Dynamic</a>   
-  <a href="#">Reset</a>  
-</li>
- 
-    </ul>
-    <div class="ablog-post-excerpt docutils container">
-<p>It is often taken for granted that qubits are initialized to zero when executing quantum circuits on hardware.  However, errors in the reset process mean that this initialization is not perfect leading to state preparation errors.  Here we will look at state prep errors and how to improve them on IBM Quantum systems.</p>
-<p>Here we will use two lesser known configuration variables available on IBM Quantum systems to do so.  First is <code class="docutils literal notranslate"><span class="pre">rep_delay</span></code>.  This is the delay time before the next circuit is executed.  Each backend has a different <code class="docutils literal notranslate"><span class="pre">default_rep_delay</span></code> (although as of the time of writing many are <span class="math notranslate nohighlight">\(250~\mu \rm s\)</span> or lower) and support tuning this parameter from <span class="math notranslate nohighlight">\(0\)</span> up to <span class="math notranslate nohighlight">\(500~\mu \rm s\)</span>.  Why in the world would I want to vary this parameter?  Well if I set <code class="docutils literal notranslate"><span class="pre">rep_delay=0</span></code> then I can get much faster throughput as the default delay is nominally longer than the <span class="math notranslate nohighlight">\(T_{1}\)</span> time of the system.  However when doing so you are trusting the implicit reset (called “unconditional reset”) to do its job and reset the qubits to their ground state with high-fidelity.  Failure to do so would lead to state-prep errors that propagate through the circuit.  This is why the delay is usually longer than <span class="math notranslate nohighlight">\(T_{1}\)</span>; let the enviornment help your reset fidelity.  Second is <code class="docutils literal notranslate"><span class="pre">init_qubits</span></code> that tells the hardware to not perform an unconditional reset.  As no reset at all would quickly lead to junk, this setting needs to be done in concert with <code class="docutils literal notranslate"><span class="pre">reset</span></code> instructions being added to the beginning of your circuits.  Perhaps this is better, or maybe a single reset at the beginning and the uncondtional reset.  Lets find out.</p>
-<img alt="../../_images/9bd1e7b458a6bd9b2721b691d5946ebd4f465feac96980527863caeea3cd2c7e.png" src="../../_images/9bd1e7b458a6bd9b2721b691d5946ebd4f465feac96980527863caeea3cd2c7e.png" />
-</div>
-
-    <p class="ablog-post-expand"><a href="../../posts/2021/2021-11-07-rep_delay.html"><em>Read more ...</em></a></p>
-    <hr/>
-  </div>
    
 </div>
 
@@ -526,6 +438,20 @@
             <footer class="bd-footer-article">
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="circuits.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Circuit execution within a job</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="../historical.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Historical hardware details</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
 </div>
             </footer>
             
@@ -546,6 +472,12 @@
 
 <div class="toc-item">
   
+<div class="tocsection sourcelink">
+    <a href="../../_sources/hardware/jobs/aot.ipynb.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
 </div>
 
             </div>
