@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Posts tagged mitigation &#8212; Enabing Technologies  documentation</title>
+    <title>Posts in Software &#8212; Enabing Technologies  documentation</title>
   
   
   
@@ -53,7 +53,7 @@
                 gtag('js', new Date());
                 gtag('config', 'UA-16824831-8');
             </script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'explore/tag/mitigation';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'explore/category/software';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -62,7 +62,7 @@
   rel="alternate"
   type="application/atom+xml"
   href="../../explore/atom.xml"
-  title="Posts tagged mitigation"
+  title="Posts in Software"
 />
  
 <style type="text/css">
@@ -469,18 +469,18 @@
 
 <div class="section">
   <h1>
-     Posts tagged  mitigation 
+     Posts in  Software 
   </h1>
    
 
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="../../posts/2022/2022-08-22-readout_mitigation.html">[BETA] Readout error mitigation in Runtime</a>
+      <a href="../../posts/2023/2023-02-02-pauli_twirling.html">Generating Pauli-twirled circuits in Qiskit</a>
     </h2>
 
     <ul class="ablog-archive">
       <li>
-         <i class="fa fa-calendar"></i> 22 August 2022 
+         <i class="fa fa-calendar"></i> 02 February 2023 
       </li>
        
 <li id="author">
@@ -494,26 +494,25 @@
   <span><i class="fa-fw fa fa-folder-open"></i></span
   >
    
-  <a href="../category/runtime.html">Runtime</a>  
+  <a href="#">Software</a>  
 </li>
  
 <li id="tags">
   <span><i class="fa-fw fa fa-tags"></i> </span
   >
    
-  <a href="beta.html">beta</a>   
-  <a href="#">mitigation</a>   
-  <a href="runtime.html">runtime</a>  
+  <a href="../tag/error-suppression.html">Error Suppression</a>   
+  <a href="../tag/software.html">Software</a>  
 </li>
  
     </ul>
     <div class="ablog-post-excerpt docutils container">
-<p>One of the primary goals,if not THE primary goal, of the Runtime is abstraction.  Namely, users should not have to know detailed hardware knowledge and platform specific techniques for achieving good results.  Otherwise, it is difficult to make progress moving up the software stack into algorithms and applications.</p>
-<p>One of the first examples of this is the introduction of automated readout error mitigation into the <code class="docutils literal notranslate"><span class="pre">sampler</span></code> and <code class="docutils literal notranslate"><span class="pre">estimator</span></code> Runtime primitives.  On superconducting platforms, readout error is ~2%, and is something that is readily correctable using recent mitigation methods.  The primitives use two different methods for readout mitigation:</p>
-<img alt="../../_images/e7c28a43ebd4b536b59fe33f87be56a9267a174cfe2273e1e38cde95ec62e667.png" src="../../_images/e7c28a43ebd4b536b59fe33f87be56a9267a174cfe2273e1e38cde95ec62e667.png" />
+<p>Pauli-twirling is a quantum error suppression technique that uses randomization to noise shape coherent error into stochastic erors, by combining the results from many random, but logically equivilent circuits, together.  This is beneficial because while incoherent errors add up linearly with circuit depth, coherent errors can scale quadratically.  Here we will show how to generate Pauli-twirled circuits, where we focus on twirling two-qubit gates within a circuit.  This technique has been used, for example, in this work by Kim et al.: <a class="reference external" href="https://arxiv.org/abs/2108.09197">arXiv:2108.09197</a>.  We will show how to compute the possible Pauli sets for any two-qubit gate, and show how to create a Qiskit <code class="docutils literal notranslate"><span class="pre">Passmanager</span></code> that impliments the routine, and can be combined with other transpilation techniques.</p>
+<p>Here are all of the imports used in this notebook.</p>
+<img alt="../../_images/7e638917f9ede5dea8567f2dedfb2f5e5b473f8cbeb71c9d0cc408e70c967f1c.png" src="../../_images/7e638917f9ede5dea8567f2dedfb2f5e5b473f8cbeb71c9d0cc408e70c967f1c.png" />
 </div>
 
-    <p class="ablog-post-expand"><a href="../../posts/2022/2022-08-22-readout_mitigation.html"><em>Read more ...</em></a></p>
+    <p class="ablog-post-expand"><a href="../../posts/2023/2023-02-02-pauli_twirling.html"><em>Read more ...</em></a></p>
     <hr/>
   </div>
    

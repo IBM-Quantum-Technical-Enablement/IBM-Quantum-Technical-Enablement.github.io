@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
   <id>quantum-enablement.org</id>
   <title>Quantum Explorations</title>
-  <updated>2023-02-01T21:46:51.401436+00:00</updated>
+  <updated>2023-02-02T19:18:33.419542+00:00</updated>
   <link href="quantum-enablement.org"/>
   <link href="quantum-enablement.org/explore/atom.xml" rel="self"/>
   <generator uri="https://ablog.readthedocs.org/" version="0.10.33">ABlog</generator>
@@ -192,5 +192,24 @@
     <summary>Here we show the reader how to construct a directed IBM Quantum backend from an undirected one.  This yields some performance benefits as the Qiskit transpiler can better optimize single-qubit gates within the circuit.Recently IBM Quantum announced its new Sherbrooke device that allows users to directly work with cross-resonance gates, and exposes only the natural direction that the gates operate in.  CNOT gates, which are comprised of cross-resonance gates on IBM Quantum systems, also have a natural direction, but current devices that use CNOT gates as their two-qubit basis gate do not directly express this directionality.  Indeed, the coupling map (topology) for these systems is symmetric / bi-directional; if you query the system you will see that it indicates that a backend can do a CNOT gate between qubits A &amp; B (control and target), as well as B &amp; A.  If a CX gate that is used in a circuit is not in the natural direction, the system will transparently flip it around in software and execute the circuit.  This comes with a cost however.  To see this, lets make a Bell state in the usual fashion (ignoring measurements for brevity):</summary>
     <category term="hardware" label="hardware"/>
     <published>2023-01-28T00:00:00-05:00</published>
+  </entry>
+  <entry>
+    <id>quantum-enablement.org/posts/2023/2023-02-02-pauli_twirling.html</id>
+    <title>Generating Pauli-twirled circuits in Qiskit</title>
+    <updated>2023-02-02T00:00:00-05:00</updated>
+    <author>
+      <name>Paul Nation</name>
+    </author>
+    <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
+&lt;p&gt;Pauli-twirling is a quantum error suppression technique that uses randomization to noise shape coherent error into stochastic erors, by combining the results from many random, but logically equivilent circuits, together.  This is beneficial because while incoherent errors add up linearly with circuit depth, coherent errors can scale quadratically.  Here we will show how to generate Pauli-twirled circuits, where we focus on twirling two-qubit gates within a circuit.  This technique has been used, for example, in this work by Kim et al.: &lt;a class="reference external" href="https://arxiv.org/abs/2108.09197"&gt;arXiv:2108.09197&lt;/a&gt;.  We will show how to compute the possible Pauli sets for any two-qubit gate, and show how to create a Qiskit &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;Passmanager&lt;/span&gt;&lt;/code&gt; that impliments the routine, and can be combined with other transpilation techniques.&lt;/p&gt;
+&lt;p&gt;Here are all of the imports used in this notebook.&lt;/p&gt;
+&lt;img alt="_images/7e638917f9ede5dea8567f2dedfb2f5e5b473f8cbeb71c9d0cc408e70c967f1c.png" src="_images/7e638917f9ede5dea8567f2dedfb2f5e5b473f8cbeb71c9d0cc408e70c967f1c.png" /&gt;
+&lt;/div&gt;
+</content>
+    <link href="quantum-enablement.org/posts/2023/2023-02-02-pauli_twirling.html" rel="alternate"/>
+    <summary>Pauli-twirling is a quantum error suppression technique that uses randomization to noise shape coherent error into stochastic erors, by combining the results from many random, but logically equivilent circuits, together.  This is beneficial because while incoherent errors add up linearly with circuit depth, coherent errors can scale quadratically.  Here we will show how to generate Pauli-twirled circuits, where we focus on twirling two-qubit gates within a circuit.  This technique has been used, for example, in this work by Kim et al.: arXiv:2108.09197.  We will show how to compute the possible Pauli sets for any two-qubit gate, and show how to create a Qiskit Passmanager that impliments the routine, and can be combined with other transpilation techniques.Here are all of the imports used in this notebook.</summary>
+    <category term="ErrorSuppression" label="Error Suppression"/>
+    <category term="Software" label="Software"/>
+    <published>2023-02-02T00:00:00-05:00</published>
   </entry>
 </feed>

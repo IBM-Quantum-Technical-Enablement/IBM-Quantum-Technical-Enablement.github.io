@@ -1,0 +1,983 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Generating Pauli-twirled circuits in Qiskit &#8212; Enabing Technologies  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/thebelab-helper.js"></script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-16824831-8"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-16824831-8');
+            </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'posts/2023/2023-02-02-pauli_twirling';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en"> 
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../../explore/atom.xml"
+  title="Quantum Explorations"
+/>
+ 
+<style type="text/css">
+  ul.ablog-archive {
+    list-style: none;
+    overflow: auto;
+    margin-left: 0px;
+  }
+  ul.ablog-archive li {
+    float: left;
+    margin-right: 5px;
+    font-size: 80%;
+  }
+  ul.postlist a {
+    font-style: italic;
+  }
+  ul.postlist-style-disc {
+    list-style-type: disc;
+  }
+  ul.postlist-style-none {
+    list-style-type: none;
+  }
+  ul.postlist-style-circle {
+    list-style-type: circle;
+  }
+</style>
+
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../_static/dark_logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../how-to/howto.html">
+                        How to guides
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../explore.html">
+                        Explorations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../hardware/hardware.html">
+                        IBM Hardware
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../events.html">
+                        Events
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../members.html">
+                        Members
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+      </div>
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../how-to/howto.html">
+                        How to guides
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../explore.html">
+                        Explorations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../hardware/hardware.html">
+                        IBM Hardware
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../events.html">
+                        Events
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../members.html">
+                        Members
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+      </div>
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">  
+<h2>
+   <i class="fa fa-calendar"></i>
+  02 February 2023 
+</h2>
+
+<ul>
+   
+<li id="author">
+  <span><i class="fa-fw fa fa-user"></i></span
+  >
+   
+  <a href="../../explore/author/paul-nation.html">Paul Nation</a>  
+</li>
+   
+<li id="category">
+  <span><i class="fa-fw fa fa-folder-open"></i></span
+  >
+   
+  <a href="../../explore/category/software.html">Software</a>  
+</li>
+ 
+<li id="tags">
+  <span><i class="fa-fw fa fa-tags"></i> </span
+  >
+   
+  <a href="../../explore/tag/error-suppression.html">Error Suppression</a>   
+  <a href="../../explore/tag/software.html">Software</a>  
+</li>
+ 
+</ul>
+
+    </div>
+    <div class="sidebar-start-items__item"><div class="dropdown-buttons">
+    <!-- ipynb file if we had a myst markdown file -->
+    
+    <!-- Download raw file -->
+    <a class="dropdown-buttons" href="../../_sources/posts/2023/2023-02-02-pauli_twirling.ipynb.txt"><button type="button"
+            class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+            data-placement="left">.ipynb</button></a>
+</div>
+    </div>
+    <div class="sidebar-start-items__item">
+<h3>
+  <a href="../../explore.html">Recent Posts</a>
+</h3>
+<ul>
+   
+  <li>
+    <a href="2023-01-28-directed_cmap.html"
+      >28 January - How to make your backend a directed backend</a
+    >
+  </li>
+  
+  <li>
+    <a href="../2022/2022-11-07-challenge.html"
+      >07 November - Quantum Practitioners Forum 2022: CHSH Distance Challenge</a
+    >
+  </li>
+  
+  <li>
+    <a href="../2022/2022-08-22-readout_mitigation.html"
+      >22 August - [BETA] Readout error mitigation in Runtime</a
+    >
+  </li>
+  
+  <li>
+    <a href="../2022/2022-07-26-fairshare.html"
+      >26 July - Understanding fair-share scheduling</a
+    >
+  </li>
+  
+  <li>
+    <a href="../2022/2022-07-14-wormhole.html"
+      >14 July - Going down the Wormhole</a
+    >
+  </li>
+  
+</ul>
+
+    </div>
+    <div class="sidebar-start-items__item">
+<h3>
+  <a href="../../explore/archive.html">Archives</a>
+</h3>
+<ul>
+   
+  <li>
+    <a href="../../explore/2023.html">2023 (2)</a>
+  </li>
+    
+  <li>
+    <a href="../../explore/2022.html">2022 (4)</a>
+  </li>
+    
+  <li>
+    <a href="../../explore/2021.html">2021 (5)</a>
+  </li>
+   
+</ul>
+
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+               <section class="tex2jax_ignore mathjax_ignore" id="generating-pauli-twirled-circuits-in-qiskit">
+<h1>Generating Pauli-twirled circuits in Qiskit<a class="headerlink" href="#generating-pauli-twirled-circuits-in-qiskit" title="Permalink to this heading">#</a></h1>
+<section id="background">
+<h2>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h2>
+<p>Pauli-twirling is a quantum error suppression technique that uses randomization to noise shape coherent error into stochastic erors, by combining the results from many random, but logically equivilent circuits, together.  This is beneficial because while incoherent errors add up linearly with circuit depth, coherent errors can scale quadratically.  Here we will show how to generate Pauli-twirled circuits, where we focus on twirling two-qubit gates within a circuit.  This technique has been used, for example, in this work by Kim et al.: <a class="reference external" href="https://arxiv.org/abs/2108.09197">arXiv:2108.09197</a>.  We will show how to compute the possible Pauli sets for any two-qubit gate, and show how to create a Qiskit <code class="docutils literal notranslate"><span class="pre">Passmanager</span></code> that impliments the routine, and can be combined with other transpilation techniques.</p>
+</section>
+<section id="frontmatter">
+<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this heading">#</a></h2>
+<p>Here are all of the imports used in this notebook.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">combinations</span>
+
+<span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="c1"># Need gate classes for generating the Pauli twirling sets</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="p">(</span><span class="n">IGate</span><span class="p">,</span> <span class="n">XGate</span><span class="p">,</span> <span class="n">YGate</span><span class="p">,</span> <span class="n">ZGate</span><span class="p">,</span>
+                                    <span class="n">CXGate</span><span class="p">,</span> <span class="n">CZGate</span><span class="p">,</span> <span class="n">ECRGate</span><span class="p">,</span> <span class="n">iSwapGate</span><span class="p">)</span>
+
+<span class="c1"># Classes for building up a directed-acyclic graph (DAG) structure</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit</span> <span class="kn">import</span> <span class="n">QuantumRegister</span>
+<span class="kn">from</span> <span class="nn">qiskit.dagcircuit</span> <span class="kn">import</span> <span class="n">DAGCircuit</span>
+<span class="c1"># Transpiler stuff neded to make a pass and passmanager</span>
+<span class="kn">from</span> <span class="nn">qiskit.transpiler</span> <span class="kn">import</span> <span class="n">PassManager</span>
+<span class="kn">from</span> <span class="nn">qiskit.transpiler.basepasses</span> <span class="kn">import</span> <span class="n">TransformationPass</span>
+<span class="kn">from</span> <span class="nn">qiskit.transpiler.passes</span> <span class="kn">import</span> <span class="n">Optimize1qGatesDecomposition</span>
+
+<span class="c1"># A fake system to transpile against</span>
+<span class="kn">from</span> <span class="nn">qiskit.providers.fake_provider</span> <span class="kn">import</span> <span class="n">FakeHanoiV2</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="computing-pauli-twirling-gate-sets">
+<h2>Computing Pauli twirling gate sets<a class="headerlink" href="#computing-pauli-twirling-gate-sets" title="Permalink to this heading">#</a></h2>
+<p>As the name suggests, we are going to look at using single qubit Pauli operators to reshape the noise in our circuits.  Because the bulk of the error in a circuit resides with the two-qubit gates, here we focus on Pauli twirling two-qubit gates only.</p>
+<p>We are looking for sets of 4 Pauli gates that when prepended and appended to a cicuit containing a two-qubit gate, the unitary is equal to that of the single two-qubit gate alone.  This makes sense of course, as otherwise our circuit would not do what we want it to.  We now need to figure out which combinations of Pauli gates satisfies this requirement.  IBM Quantum systems have 3 different two-qubit entangling gates: CNOT, CZ, and ECR, and the corresponding Pauli combinations are obviously going to depend on which gate we are looking at.  Now for common gates like CNOT, one can find tables of Paulis in the literature.  However, for a gate like ECR, I am not sure such a table exists.  We could compute these by hand, but here we are going to be smarter and let the computer do all the work for us.</p>
+<p>First, let us generate some instances of the Pauli gates, as well as a collection of 2Q gates:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Single qubit Pauli gates</span>
+<span class="n">I</span> <span class="o">=</span> <span class="n">IGate</span><span class="p">()</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">ZGate</span><span class="p">()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">XGate</span><span class="p">()</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">YGate</span><span class="p">()</span>
+
+<span class="c1"># 2Q entangling gates</span>
+<span class="n">CX</span> <span class="o">=</span> <span class="n">CXGate</span><span class="p">()</span>
+<span class="n">CZ</span> <span class="o">=</span> <span class="n">CZGate</span><span class="p">()</span>
+<span class="n">ECR</span> <span class="o">=</span> <span class="n">ECRGate</span><span class="p">()</span>
+<span class="n">iSwap</span> <span class="o">=</span> <span class="n">iSwapGate</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let us put the computer to work finding all possible combinations of Paulis that leave the action of a two-qubit gate unchanged.  Below we create a function that takes a Qiskit two-qubit gate as the input, and finds all the Pauli combinations by treating it as a 16 choose 4 problem, and letting Python generate all the possibilities.  If the unitary remains unchanged, then we add the combination of Paulis to the output list.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_pauli_twirling_sets</span><span class="p">(</span><span class="n">two_qubit_gate</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generate the Pauli twirling sets for a given 2Q gate</span>
+<span class="sd">    </span>
+<span class="sd">    Sets are ordered such that gate[0] and gate[1] are pre-roations</span>
+<span class="sd">    applied to control and target, respectively.  gate[2] and gate[3]</span>
+<span class="sd">    are post-rotations for control and target, respectively.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">        two_qubit_gate (Gate): Input two-qubit gate</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        list: List of all twirling gate sets</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Generate 16 element list of Pauli gates, each repeated 4 times</span>
+    <span class="n">operator_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">I</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">]</span><span class="o">*</span><span class="mi">4</span>
+    <span class="c1"># This is the target unitary to which our twirled circuit should match</span>
+    <span class="n">target_unitary</span> <span class="o">=</span> <span class="n">Operator</span><span class="p">(</span><span class="n">two_qubit_gate</span><span class="o">.</span><span class="n">to_matrix</span><span class="p">())</span>
+    <span class="n">twirling_sets</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># For every combination in 16 choose 4 make a circuit and look for equivilence</span>
+    <span class="k">for</span> <span class="n">gates</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">(</span><span class="n">operator_list</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="c1"># Build a circuit for our twirled 2Q gate</span>
+        <span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">qc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gates</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">qc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gates</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">qc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">two_qubit_gate</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">qc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gates</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">qc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gates</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="c1"># If unitaries match, we have found a set</span>
+        <span class="k">if</span> <span class="n">Operator</span><span class="o">.</span><span class="n">from_circuit</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span> <span class="o">==</span> <span class="n">target_unitary</span><span class="p">:</span>
+            <span class="c1"># There are some repeats so check for those</span>
+            <span class="k">if</span> <span class="n">gates</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">twirling_sets</span><span class="p">:</span>
+                <span class="n">twirling_sets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gates</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">twirling_sets</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With this funciton in hand, we are now in a position to generate the Pauli twirling sets for any two-qubit gate that Qiskit understands.  Here we generate the sets for each of the two-qubit gate instances above.  In preparation for using them later, we store the sets in a dictionary with the gate name as the key.  In practicem you should do this once, and then cache / hard-code the results for fast retrieval.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">twirling_groups</span> <span class="o">=</span> <span class="p">{}</span> 
+
+<span class="k">for</span> <span class="n">gate</span> <span class="ow">in</span> <span class="p">[</span><span class="n">CX</span><span class="p">,</span> <span class="n">CZ</span><span class="p">,</span> <span class="n">ECR</span><span class="p">,</span> <span class="n">iSwap</span><span class="p">]:</span>
+    <span class="n">twirl_set</span> <span class="o">=</span> <span class="n">generate_pauli_twirling_sets</span><span class="p">(</span><span class="n">gate</span><span class="p">)</span>
+    <span class="n">twirling_groups</span><span class="p">[</span><span class="n">gate</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">twirl_set</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For example, here is the set for the CNOT (CX) gate:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">twirling_groups</span><span class="p">[</span><span class="s1">&#39;cx&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(Instruction(name=&#39;id&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;z&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;z&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;z&#39;, num_qubits=1, num_clbits=0, params=[])),
+ (Instruction(name=&#39;id&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;x&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;id&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;x&#39;, num_qubits=1, num_clbits=0, params=[])),
+ (Instruction(name=&#39;id&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;y&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;z&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;y&#39;, num_qubits=1, num_clbits=0, params=[])),
+ (Instruction(name=&#39;id&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;id&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;id&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;id&#39;, num_qubits=1, num_clbits=0, params=[])),
+ (Instruction(name=&#39;z&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;x&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;z&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;x&#39;, num_qubits=1, num_clbits=0, params=[])),
+ (Instruction(name=&#39;z&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;y&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;id&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;y&#39;, num_qubits=1, num_clbits=0, params=[])),
+ (Instruction(name=&#39;z&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;id&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;z&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;id&#39;, num_qubits=1, num_clbits=0, params=[])),
+ (Instruction(name=&#39;z&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;z&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;id&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;z&#39;, num_qubits=1, num_clbits=0, params=[])),
+ (Instruction(name=&#39;x&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;y&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;y&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;z&#39;, num_qubits=1, num_clbits=0, params=[])),
+ (Instruction(name=&#39;x&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;id&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;x&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;x&#39;, num_qubits=1, num_clbits=0, params=[])),
+ (Instruction(name=&#39;x&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;x&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;x&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;id&#39;, num_qubits=1, num_clbits=0, params=[])),
+ (Instruction(name=&#39;y&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;id&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;y&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;x&#39;, num_qubits=1, num_clbits=0, params=[])),
+ (Instruction(name=&#39;y&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;z&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;x&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;y&#39;, num_qubits=1, num_clbits=0, params=[])),
+ (Instruction(name=&#39;y&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;x&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;y&#39;, num_qubits=1, num_clbits=0, params=[]),
+  Instruction(name=&#39;id&#39;, num_qubits=1, num_clbits=0, params=[]))]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="twirling-qiskit-circuits">
+<h2>Twirling Qiskit circuits<a class="headerlink" href="#twirling-qiskit-circuits" title="Permalink to this heading">#</a></h2>
+<p>With our twirling sets in hand, we are now in a position to apply Pauli twirling to a given circuit.  Pauli twirling is a circuit transformation and thus is best utilized as a transpilation pass.  Below is a pass called <code class="docutils literal notranslate"><span class="pre">PauliTwirling</span></code> that performs twirling on a specificed two-qubit gate, and utilizes the dictionary of twirling sets that we generated above.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PauliTwirling</span><span class="p">(</span><span class="n">TransformationPass</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Pauli twirl an input circuit.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">twirling_gate</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            twirling_gate (str): Which gate to twirl</span>
+<span class="sd">            seed (int): Seed for RNG, should be &lt; 2e32</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="c1"># This is the target gate to twirl</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">twirling_gate</span> <span class="o">=</span> <span class="n">twirling_gate</span>
+        <span class="c1"># Get the twirling set from the dict we generated above</span>
+        <span class="c1"># This should be repalced by a cached version in practice</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">twirling_set</span> <span class="o">=</span> <span class="n">twirling_groups</span><span class="p">[</span><span class="n">twirling_gate</span><span class="p">]</span>
+        <span class="c1"># Length of the twirling set to bound RNG generation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">twirling_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">twirling_set</span><span class="p">)</span>
+        <span class="c1"># Seed the NumPy RNG</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dag</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Insert Pauli twirls into input DAG</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            dag (DAGCircuit): Input DAG</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dag: DAG with twirls added in-place</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="n">dag</span><span class="o">.</span><span class="n">collect_runs</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">twirling_gate</span><span class="p">]):</span>
+            <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">run</span><span class="p">:</span>
+                <span class="c1"># Generate a random int to specify the twirling gates</span>
+                <span class="n">twirl_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">twirling_len</span><span class="p">)</span>
+                <span class="c1"># Get the randomly selected twirling set</span>
+                <span class="n">twirl_gates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">twirling_set</span><span class="p">[</span><span class="n">twirl_idx</span><span class="p">]</span>
+                <span class="c1"># Make a small DAG for the twirled circuit we are going to insert</span>
+                <span class="n">twirl_dag</span> <span class="o">=</span> <span class="n">DAGCircuit</span><span class="p">()</span>
+                <span class="c1"># Add a register of qubits (here always 2Q)</span>
+                <span class="n">qreg</span> <span class="o">=</span> <span class="n">QuantumRegister</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                <span class="n">twirl_dag</span><span class="o">.</span><span class="n">add_qreg</span><span class="p">(</span><span class="n">qreg</span><span class="p">)</span>
+                <span class="c1"># gate[0] pre-applied to control</span>
+                <span class="n">twirl_dag</span><span class="o">.</span><span class="n">apply_operation_back</span><span class="p">(</span><span class="n">twirl_gates</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">qreg</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+                <span class="c1"># gate[1] pre-applied to target</span>
+                <span class="n">twirl_dag</span><span class="o">.</span><span class="n">apply_operation_back</span><span class="p">(</span><span class="n">twirl_gates</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="n">qreg</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+                <span class="c1"># Insert original gate</span>
+                <span class="n">twirl_dag</span><span class="o">.</span><span class="n">apply_operation_back</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">op</span><span class="p">,</span> <span class="p">[</span><span class="n">qreg</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">qreg</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+                <span class="c1"># gate[2] pre-applied to control</span>
+                <span class="n">twirl_dag</span><span class="o">.</span><span class="n">apply_operation_back</span><span class="p">(</span><span class="n">twirl_gates</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="n">qreg</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+                <span class="c1"># gate[3] pre-applied to target</span>
+                <span class="n">twirl_dag</span><span class="o">.</span><span class="n">apply_operation_back</span><span class="p">(</span><span class="n">twirl_gates</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="n">qreg</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+                <span class="c1"># Replace the target gate with the twirled version</span>
+                <span class="n">dag</span><span class="o">.</span><span class="n">substitute_node_with_dag</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">twirl_dag</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dag</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let us test our pass on a small circuit, here a GHZ circuit:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/7e638917f9ede5dea8567f2dedfb2f5e5b473f8cbeb71c9d0cc408e70c967f1c.png" src="../../_images/7e638917f9ede5dea8567f2dedfb2f5e5b473f8cbeb71c9d0cc408e70c967f1c.png" />
+</div>
+</div>
+<p>In order to use the pass, we must attach it to a <code class="docutils literal notranslate"><span class="pre">PassManager</span></code>.  Here we do that, and tell our <code class="docutils literal notranslate"><span class="pre">PauliTwirling</span></code> pass to twirl <code class="docutils literal notranslate"><span class="pre">cx</span></code> gates, and we see the pass for reproducibility.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span> <span class="o">=</span> <span class="n">PassManager</span><span class="p">([</span><span class="n">PauliTwirling</span><span class="p">(</span><span class="s1">&#39;cx&#39;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">54321</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Calling <code class="docutils literal notranslate"><span class="pre">pm.run</span></code> once will generate the following circuit:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">twirl_qc</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">qc</span><span class="p">])</span>
+<span class="n">twirl_qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/0fa598939e4533065e2e2ff3773a50e7293fa143cf10d116295f94e77f0a8683.png" src="../../_images/0fa598939e4533065e2e2ff3773a50e7293fa143cf10d116295f94e77f0a8683.png" />
+</div>
+</div>
+<p>Calling it again, will yield another:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">twirl_qc2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">qc</span><span class="p">])</span>
+<span class="n">twirl_qc2</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/c60c17dc93cc8c5e022c80f990827ddb1d3cda8bab1d0d47b6325a9292dcc784.png" src="../../_images/c60c17dc93cc8c5e022c80f990827ddb1d3cda8bab1d0d47b6325a9292dcc784.png" />
+</div>
+</div>
+<p>We can see that our routine is working as expected, and we are able to generate new circuits that have been randomly twirled.  In practice, the goal is to create a sizeable collection of these circuits for execution on a real quantum system.</p>
+<section id="usecases">
+<h3>Usecases<a class="headerlink" href="#usecases" title="Permalink to this heading">#</a></h3>
+<p>There are a couple of ways that our new pass can be used.  First, if the input circuit was generated using the same two-qubit gate (and no 3+ qubit gates) as the target processor supports, then we can twirl before passing to the Qiskit transpiler:</p>
+<p>Let’s pick a target backend (here a version 2 backend)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">backend</span> <span class="o">=</span> <span class="n">FakeHanoiV2</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we transpile our pre-twirled circuit:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trans_twirl_qc</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">twirl_qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+<span class="n">trans_twirl_qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">idle_wires</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/38a97b38053b423543b46cd56fde5b0276ad4f38189b38bb817d5e10a276b413.png" src="../../_images/38a97b38053b423543b46cd56fde5b0276ad4f38189b38bb817d5e10a276b413.png" />
+</div>
+</div>
+<p>We are left with a new circuit that is compiled and mapped, ready to be sent to the machine.</p>
+<p>However, more often than not, a circuit is written using whatever gates are most convienent, e.g. 3+ qubit gates, non-basis gates, etc.  When the gates do not match the two-qubit basis gate of the system, we need ot transpile first, and then twirl.  However, when doing so, we are left with a circuit that can be further optimized in terms of the one-qubit gates.  As such, we construct as new <code class="docutils literal notranslate"><span class="pre">Passmanager</span></code> that does the Pauli twirling, and then performs single-qubit gate optimization.  There is also the possibility that this single-qubit gate optimization might result in fortuitous cancellations where we might be able to remove some two-qubit gates.  However, we do not address that here as it would make the <code class="docutils literal notranslate"><span class="pre">PassManager</span></code> a bit more complex, and out of scope for this demo.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">post_pm</span> <span class="o">=</span> <span class="n">PassManager</span><span class="p">([</span><span class="n">PauliTwirling</span><span class="p">(</span><span class="s1">&#39;cx&#39;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">54321</span><span class="p">),</span> 
+                       <span class="n">Optimize1qGatesDecomposition</span><span class="p">(</span><span class="n">backend</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">operation_names</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here we transpile first:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trans_qc</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And now apply our new <code class="docutils literal notranslate"><span class="pre">PassManager</span></code> post-transpilation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">post_twirl_qc</span> <span class="o">=</span> <span class="n">post_pm</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">trans_qc</span><span class="p">])</span>
+<span class="n">post_twirl_qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">idle_wires</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/41f006360fb9448f70848aa0eeb1a8d5000d020f4db408513609a6b403e070e5.png" src="../../_images/41f006360fb9448f70848aa0eeb1a8d5000d020f4db408513609a6b403e070e5.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="where-to-go-from-here">
+<h2>Where to go from here<a class="headerlink" href="#where-to-go-from-here" title="Permalink to this heading">#</a></h2>
+<p>You now have all that you need to try out Pauli twirling.  First, generate a collection of twirled circuits, and execute each on hardware, collecting the results together at the end since one is executing many circuits that perform the same unitary.  When twirling, the number of shots per circuit is usually reduced.  That is to say that, if before you ran one circuit 10000 times, then you can try executing 10 twirled circuits with 1000 shots each, or 100 circuits at 100 shots, etc.  Keep in mind that the IBM Quantum infrastructure is optimized for many shots per circuit, and therefore it will take longer to run more circuits at fewer shots.  But, if you want to try to improve your results,  it might be a tradeoff worth making.</p>
+</section>
+</section>
+
+<div class="section">
+    
+
+<div class="section">
+  <span style="float: left">
+     
+    <a href="2023-01-28-directed_cmap.html">
+      <i class="fa fa-arrow-circle-left"></i> How to make your backend a directed backend
+    </a>
+    
+  </span>
+  <span>&nbsp;</span>
+  <span style="float: right">
+    
+  </span>
+</div>
+  
+</div>
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#background">
+   Background
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#frontmatter">
+   Frontmatter
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#computing-pauli-twirling-gate-sets">
+   Computing Pauli twirling gate sets
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#twirling-qiskit-circuits">
+   Twirling Qiskit circuits
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#usecases">
+     Usecases
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#where-to-go-from-here">
+   Where to go from here
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../../_sources/posts/2023/2023-02-02-pauli_twirling.ipynb.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+<footer class="bd-footer">
+<div>
+<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
+        Content on
+        <a property="dct:title" rel="cc:attributionURL" href="http://quantum-enablement.org">this website</a> 
+        by <span property="cc:attributionName">IBM</span> is licensed under 
+        <a href="http://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">
+                Attribution-NonCommercial 4.0 International<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1">
+                <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1">
+                <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1">
+        </a>
+</p> 
+</div>
+</footer>
+
+  </body>
+</html>
