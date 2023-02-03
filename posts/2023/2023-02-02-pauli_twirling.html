@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Generating Pauli-twirled circuits in Qiskit &#8212; Enabing Technologies  documentation</title>
   
@@ -27,7 +27,8 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
@@ -44,9 +45,14 @@
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/thebelab-helper.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/design-tabs.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-16824831-8"></script>
     <script>
                 window.dataLayer = window.dataLayer || [];
@@ -379,25 +385,28 @@
 <ul>
    
 <li id="author">
-  <span><i class="fa-fw fa fa-user"></i></span
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
   >
    
   <a href="../../explore/author/paul-nation.html">Paul Nation</a>  
 </li>
    
 <li id="category">
-  <span><i class="fa-fw fa fa-folder-open"></i></span
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
   >
    
   <a href="../../explore/category/software.html">Software</a>  
 </li>
  
 <li id="tags">
-  <span><i class="fa-fw fa fa-tags"></i> </span
+  <span
+    ><i class="fa-fw fa fa-tags"></i> </span
   >
    
-  <a href="../../explore/tag/error-suppression.html">Error Suppression</a>   
-  <a href="../../explore/tag/software.html">Software</a>  
+  <a href="../../explore/tag/software.html">Software</a>   
+  <a href="../../explore/tag/error-suppression.html">Error Suppression</a>  
 </li>
  
 </ul>
@@ -501,7 +510,7 @@
 <h1>Generating Pauli-twirled circuits in Qiskit<a class="headerlink" href="#generating-pauli-twirled-circuits-in-qiskit" title="Permalink to this heading">#</a></h1>
 <section id="background">
 <h2>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h2>
-<p>Pauli-twirling is a quantum error suppression technique that uses randomization to noise shape coherent error into stochastic errors, by combining the results from many random, but logically equivilent circuits, together.  This is beneficial because while incoherent errors add up linearly with circuit depth, coherent errors can scale quadratically.  Here we will show how to generate Pauli-twirled circuits, where we focus on twirling two-qubit gates within a circuit.  This technique has been used, for example, in this work by Kim et al.: <a class="reference external" href="https://arxiv.org/abs/2108.09197">arXiv:2108.09197</a>.  We will show how to compute the possible Pauli sets for any two-qubit gate, and show how to create a Qiskit <code class="docutils literal notranslate"><span class="pre">Passmanager</span></code> that impliments the routine, and can be combined with other transpilation techniques.</p>
+<p>Pauli-twirling is a quantum error suppression technique that uses randomization to noise shape coherent error into stochastic errors, by combining the results from many random, but logically equivalent circuits, together.  This is beneficial because while incoherent errors add up linearly with circuit depth, coherent errors can scale quadratically.  Here we will show how to generate Pauli-twirled circuits, where we focus on twirling two-qubit gates within a circuit.  This technique has been used, for example, in this work by Kim et al.: <a class="reference external" href="https://arxiv.org/abs/2108.09197">arXiv:2108.09197</a>.  We will show how to compute the possible Pauli sets for any two-qubit gate, and show how to create a Qiskit <code class="docutils literal notranslate"><span class="pre">Passmanager</span></code> that implements the routine, and can be combined with other transpilation techniques.</p>
 </section>
 <section id="frontmatter">
 <h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this heading">#</a></h2>
@@ -534,7 +543,7 @@
 <section id="computing-pauli-twirling-gate-sets">
 <h2>Computing Pauli twirling gate sets<a class="headerlink" href="#computing-pauli-twirling-gate-sets" title="Permalink to this heading">#</a></h2>
 <p>As the name suggests, we are going to look at using single qubit Pauli operators to reshape the noise in our circuits.  Because the bulk of the error in a circuit resides with the two-qubit gates, here we focus on Pauli twirling two-qubit gates only.</p>
-<p>We are looking for sets of 4 Pauli gates that when prepended and appended to a cicuit containing a two-qubit gate, the unitary is equal to that of the single two-qubit gate alone.  This makes sense of course, as otherwise our circuit would not do what we want it to.  We now need to figure out which combinations of Pauli gates satisfies this requirement.  IBM Quantum systems have 3 different two-qubit entangling gates: CNOT, CZ, and ECR, and the corresponding Pauli combinations are obviously going to depend on which gate we are looking at.  Now for common gates like CNOT, one can find tables of Paulis in the literature.  However, for a gate like ECR, I am not sure such a table exists.  We could compute these by hand, but here we are going to be smarter and let the computer do all the work for us.</p>
+<p>We are looking for sets of 4 Pauli gates that when pre-pended and appended to a circuit containing a two-qubit gate, the unitary is equal to that of the single two-qubit gate alone.  This makes sense of course, as otherwise our circuit would not do what we want it to.  We now need to figure out which combinations of Pauli gates satisfies this requirement.  IBM Quantum systems have 3 different two-qubit entangling gates: CNOT, CZ, and ECR, and the corresponding Pauli combinations are obviously going to depend on which gate we are looking at.  Now for common gates like CNOT, one can find tables of Paulis in the literature.  However, for a gate like ECR, I am not sure such a table exists.  We could compute these by hand, but here we are going to be smarter and let the computer do all the work for us.</p>
 <p>First, let us generate some instances of the Pauli gates, as well as a collection of 2Q gates:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -594,7 +603,7 @@
 </div>
 </div>
 </div>
-<p>With this funciton in hand, we are now in a position to generate the Pauli twirling sets for any two-qubit gate that Qiskit understands.  Here we generate the sets for each of the two-qubit gate instances above.  In preparation for using them later, we store the sets in a dictionary with the gate name as the key.  In practicem you should do this once, and then cache / hard-code the results for fast retrieval.</p>
+<p>With this function in hand, we are now in a position to generate the Pauli twirling sets for any two-qubit gate that Qiskit understands.  Here we generate the sets for each of the two-qubit gate instances above.  In preparation for using them later, we store the sets in a dictionary with the gate name as the key.  In practice you should do this once, and then cache / hard-code the results for fast retrieval.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">twirling_groups</span> <span class="o">=</span> <span class="p">{}</span> 
@@ -677,7 +686,7 @@
 </section>
 <section id="twirling-qiskit-circuits">
 <h2>Twirling Qiskit circuits<a class="headerlink" href="#twirling-qiskit-circuits" title="Permalink to this heading">#</a></h2>
-<p>With our twirling sets in hand, we are now in a position to apply Pauli twirling to a given circuit.  Pauli twirling is a circuit transformation and thus is best utilized as a transpilation pass.  Below is a pass called <code class="docutils literal notranslate"><span class="pre">PauliTwirling</span></code> that performs twirling on a specificed two-qubit gate, and utilizes the dictionary of twirling sets that we generated above.</p>
+<p>With our twirling sets in hand, we are now in a position to apply Pauli twirling to a given circuit.  Pauli twirling is a circuit transformation and thus is best utilized as a transpilation pass.  Below is a pass called <code class="docutils literal notranslate"><span class="pre">PauliTwirling</span></code> that performs twirling on a specific two-qubit gate, and utilizes the dictionary of twirling sets that we generated above.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PauliTwirling</span><span class="p">(</span><span class="n">TransformationPass</span><span class="p">):</span>
@@ -784,9 +793,9 @@
 <img alt="../../_images/c60c17dc93cc8c5e022c80f990827ddb1d3cda8bab1d0d47b6325a9292dcc784.png" src="../../_images/c60c17dc93cc8c5e022c80f990827ddb1d3cda8bab1d0d47b6325a9292dcc784.png" />
 </div>
 </div>
-<p>We can see that our routine is working as expected, and we are able to generate new circuits that have been randomly twirled.  In practice, the goal is to create a sizeable collection of these circuits for execution on a real quantum system.</p>
-<section id="usecases">
-<h3>Usecases<a class="headerlink" href="#usecases" title="Permalink to this heading">#</a></h3>
+<p>We can see that our routine is working as expected, and we are able to generate new circuits that have been randomly twirled.  In practice, the goal is to create a sizable collection of these circuits for execution on a real quantum system.</p>
+<section id="use-cases">
+<h3>Use cases<a class="headerlink" href="#use-cases" title="Permalink to this heading">#</a></h3>
 <p>There are a couple of ways that our new pass can be used.  First, if the input circuit was generated using the same two-qubit gate (and no 3+ qubit gates) as the target processor supports, then we can twirl before passing to the Qiskit transpiler:</p>
 <p>Let’s pick a target backend (here a version 2 backend)</p>
 <div class="cell docutils container">
@@ -809,7 +818,7 @@
 </div>
 </div>
 <p>We are left with a new circuit that is compiled and mapped, ready to be sent to the machine.</p>
-<p>However, more often than not, a circuit is written using whatever gates are most convienent, e.g. 3+ qubit gates, non-basis gates, etc.  When the gates do not match the two-qubit basis gate of the system, we need ot transpile first, and then twirl.  However, when doing so, we are left with a circuit that can be further optimized in terms of the one-qubit gates.  As such, we construct as new <code class="docutils literal notranslate"><span class="pre">Passmanager</span></code> that does the Pauli twirling, and then performs single-qubit gate optimization.  There is also the possibility that this single-qubit gate optimization might result in fortuitous cancellations where we might be able to remove some two-qubit gates.  However, we do not address that here as it would make the <code class="docutils literal notranslate"><span class="pre">PassManager</span></code> a bit more complex, and out of scope for this demo.</p>
+<p>However, more often than not, a circuit is written using whatever gates are most convenient, e.g. 3+ qubit gates, non-basis gates, etc.  When the gates do not match the two-qubit basis gate of the system, we need to transpile first, and then twirl.  However, when doing so, we are left with a circuit that can be further optimized in terms of the one-qubit gates.  As such, we construct as new <code class="docutils literal notranslate"><span class="pre">Passmanager</span></code> that does the Pauli twirling, and then performs single-qubit gate optimization.  There is also the possibility that this single-qubit gate optimization might result in fortuitous cancellations where we might be able to remove some two-qubit gates.  However, we do not address that here as it would make the <code class="docutils literal notranslate"><span class="pre">PassManager</span></code> a bit more complex, and out of scope for this demo.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">post_pm</span> <span class="o">=</span> <span class="n">PassManager</span><span class="p">([</span><span class="n">PauliTwirling</span><span class="p">(</span><span class="s1">&#39;cx&#39;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">54321</span><span class="p">),</span> 
@@ -842,7 +851,7 @@
 </section>
 <section id="where-to-go-from-here">
 <h2>Where to go from here<a class="headerlink" href="#where-to-go-from-here" title="Permalink to this heading">#</a></h2>
-<p>You now have all that you need to try out Pauli twirling.  First, generate a collection of twirled circuits, and execute each on hardware, collecting the results together at the end since one is executing many circuits that perform the same unitary.  When twirling, the number of shots per circuit is usually reduced.  That is to say that, if before you ran one circuit 10000 times, then you can try executing 10 twirled circuits with 1000 shots each, or 100 circuits at 100 shots, etc.  Keep in mind that the IBM Quantum infrastructure is optimized for many shots per circuit, and therefore it will take longer to run more circuits at fewer shots.  But, if you want to try to improve your results,  it might be a tradeoff worth making.</p>
+<p>You now have all that you need to try out Pauli twirling.  First, generate a collection of twirled circuits, and execute each on hardware, collecting the results together at the end since one is executing many circuits that perform the same unitary.  When twirling, the number of shots per circuit is usually reduced.  That is to say that, if before you ran one circuit 10000 times, then you can try executing 10 twirled circuits with 1000 shots each, or 100 circuits at 100 shots, etc.  Keep in mind that the IBM Quantum infrastructure is optimized for many shots per circuit, and therefore it will take longer to run more circuits at fewer shots.  But, if you want to try to improve your results,  it might be a trade-off worth making.</p>
 </section>
 </section>
 
@@ -909,8 +918,8 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#usecases">
-     Usecases
+    <a class="reference internal nav-link" href="#use-cases">
+     Use cases
     </a>
    </li>
   </ul>

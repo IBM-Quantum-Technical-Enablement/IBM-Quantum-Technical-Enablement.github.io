@@ -26,7 +26,8 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css" />
@@ -43,9 +44,14 @@
     <script src="_static/doctools.js"></script>
     <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/thebelab-helper.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/design-tabs.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-16824831-8"></script>
     <script>
                 window.dataLayer = window.dataLayer || [];
@@ -543,7 +549,6 @@
             
             <article class="bd-article" role="main">
               
-
 <div class="section">
   <h1>
      All  Posts 
@@ -552,7 +557,9 @@
 
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="posts/2023/2023-02-02-pauli_twirling.html">Generating Pauli-twirled circuits in Qiskit</a>
+      <a href="posts/2023/2023-02-02-pauli_twirling.html"
+        >Generating Pauli-twirled circuits in Qiskit</a
+      >
     </h2>
 
     <ul class="ablog-archive">
@@ -561,42 +568,47 @@
       </li>
        
 <li id="author">
-  <span><i class="fa-fw fa fa-user"></i></span
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
   >
    
   <a href="explore/author/paul-nation.html">Paul Nation</a>  
 </li>
    
 <li id="category">
-  <span><i class="fa-fw fa fa-folder-open"></i></span
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
   >
    
   <a href="explore/category/software.html">Software</a>  
 </li>
  
 <li id="tags">
-  <span><i class="fa-fw fa fa-tags"></i> </span
+  <span
+    ><i class="fa-fw fa fa-tags"></i> </span
   >
    
-  <a href="explore/tag/error-suppression.html">Error Suppression</a>   
-  <a href="explore/tag/software.html">Software</a>  
+  <a href="explore/tag/software.html">Software</a>   
+  <a href="explore/tag/error-suppression.html">Error Suppression</a>  
 </li>
  
     </ul>
     <div class="ablog-post-excerpt docutils container">
-<p>Pauli-twirling is a quantum error suppression technique that uses randomization to noise shape coherent error into stochastic erors, by combining the results from many random, but logically equivilent circuits, together.  This is beneficial because while incoherent errors add up linearly with circuit depth, coherent errors can scale quadratically.  Here we will show how to generate Pauli-twirled circuits, where we focus on twirling two-qubit gates within a circuit.  This technique has been used, for example, in this work by Kim et al.: <a class="reference external" href="https://arxiv.org/abs/2108.09197">arXiv:2108.09197</a>.  We will show how to compute the possible Pauli sets for any two-qubit gate, and show how to create a Qiskit <code class="docutils literal notranslate"><span class="pre">Passmanager</span></code> that impliments the routine, and can be combined with other transpilation techniques.</p>
+<p>Pauli-twirling is a quantum error suppression technique that uses randomization to noise shape coherent error into stochastic errors, by combining the results from many random, but logically equivalent circuits, together.  This is beneficial because while incoherent errors add up linearly with circuit depth, coherent errors can scale quadratically.  Here we will show how to generate Pauli-twirled circuits, where we focus on twirling two-qubit gates within a circuit.  This technique has been used, for example, in this work by Kim et al.: <a class="reference external" href="https://arxiv.org/abs/2108.09197">arXiv:2108.09197</a>.  We will show how to compute the possible Pauli sets for any two-qubit gate, and show how to create a Qiskit <code class="docutils literal notranslate"><span class="pre">Passmanager</span></code> that implements the routine, and can be combined with other transpilation techniques.</p>
 <p>Here are all of the imports used in this notebook.</p>
 <img alt="_images/7e638917f9ede5dea8567f2dedfb2f5e5b473f8cbeb71c9d0cc408e70c967f1c.png" src="_images/7e638917f9ede5dea8567f2dedfb2f5e5b473f8cbeb71c9d0cc408e70c967f1c.png" />
 </div>
 
     <p class="ablog-post-expand"><a href="posts/2023/2023-02-02-pauli_twirling.html"><em>Read more ...</em></a></p>
-    <hr/>
+    <hr />
   </div>
   
 
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="posts/2023/2023-01-28-directed_cmap.html">How to make your backend a directed backend</a>
+      <a href="posts/2023/2023-01-28-directed_cmap.html"
+        >How to make your backend a directed backend</a
+      >
     </h2>
 
     <ul class="ablog-archive">
@@ -605,21 +617,24 @@
       </li>
        
 <li id="author">
-  <span><i class="fa-fw fa fa-user"></i></span
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
   >
    
   <a href="explore/author/paul-nation.html">Paul Nation</a>  
 </li>
    
 <li id="category">
-  <span><i class="fa-fw fa fa-folder-open"></i></span
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
   >
    
   <a href="explore/category/hardware.html">Hardware</a>  
 </li>
  
 <li id="tags">
-  <span><i
+  <span
+    ><i
       class="fa-fw fa fa-tag"
     ></i
     ></span
@@ -636,13 +651,15 @@
 </div>
 
     <p class="ablog-post-expand"><a href="posts/2023/2023-01-28-directed_cmap.html"><em>Read more ...</em></a></p>
-    <hr/>
+    <hr />
   </div>
   
 
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="posts/2022/2022-11-07-challenge.html">Quantum Practitioners Forum 2022: CHSH Distance Challenge</a>
+      <a href="posts/2022/2022-11-07-challenge.html"
+        >Quantum Practitioners Forum 2022: CHSH Distance Challenge</a
+      >
     </h2>
 
     <ul class="ablog-archive">
@@ -651,21 +668,24 @@
       </li>
        
 <li id="author">
-  <span><i class="fa-fw fa fa-user"></i></span
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
   >
    
   <a href="explore/author/paul-nation.html">Paul Nation</a>  
 </li>
    
 <li id="category">
-  <span><i class="fa-fw fa fa-folder-open"></i></span
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
   >
    
   <a href="explore/category/examples.html">Examples</a>  
 </li>
  
 <li id="tags">
-  <span><i class="fa-fw fa fa-tags"></i> </span
+  <span
+    ><i class="fa-fw fa fa-tags"></i> </span
   >
    
   <a href="explore/tag/hardware.html">hardware</a>   
@@ -680,13 +700,15 @@
 </div>
 
     <p class="ablog-post-expand"><a href="posts/2022/2022-11-07-challenge.html"><em>Read more ...</em></a></p>
-    <hr/>
+    <hr />
   </div>
   
 
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="posts/2022/2022-08-22-readout_mitigation.html">[BETA] Readout error mitigation in Runtime</a>
+      <a href="posts/2022/2022-08-22-readout_mitigation.html"
+        >[BETA] Readout error mitigation in Runtime</a
+      >
     </h2>
 
     <ul class="ablog-archive">
@@ -695,26 +717,29 @@
       </li>
        
 <li id="author">
-  <span><i class="fa-fw fa fa-user"></i></span
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
   >
    
   <a href="explore/author/paul-nation.html">Paul Nation</a>  
 </li>
    
 <li id="category">
-  <span><i class="fa-fw fa fa-folder-open"></i></span
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
   >
    
   <a href="explore/category/runtime.html">Runtime</a>  
 </li>
  
 <li id="tags">
-  <span><i class="fa-fw fa fa-tags"></i> </span
+  <span
+    ><i class="fa-fw fa fa-tags"></i> </span
   >
    
-  <a href="explore/tag/beta.html">beta</a>   
+  <a href="explore/tag/runtime.html">runtime</a>   
   <a href="explore/tag/mitigation.html">mitigation</a>   
-  <a href="explore/tag/runtime.html">runtime</a>  
+  <a href="explore/tag/beta.html">beta</a>  
 </li>
  
     </ul>
@@ -725,13 +750,15 @@
 </div>
 
     <p class="ablog-post-expand"><a href="posts/2022/2022-08-22-readout_mitigation.html"><em>Read more ...</em></a></p>
-    <hr/>
+    <hr />
   </div>
   
 
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="posts/2022/2022-07-26-fairshare.html">Understanding fair-share scheduling</a>
+      <a href="posts/2022/2022-07-26-fairshare.html"
+        >Understanding fair-share scheduling</a
+      >
     </h2>
 
     <ul class="ablog-archive">
@@ -740,25 +767,28 @@
       </li>
        
 <li id="author">
-  <span><i class="fa-fw fa fa-user"></i></span
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
   >
    
   <a href="explore/author/paul-nation.html">Paul Nation</a>  
 </li>
    
 <li id="category">
-  <span><i class="fa-fw fa fa-folder-open"></i></span
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
   >
    
   <a href="explore/category/services.html">Services</a>  
 </li>
  
 <li id="tags">
-  <span><i class="fa-fw fa fa-tags"></i> </span
+  <span
+    ><i class="fa-fw fa fa-tags"></i> </span
   >
    
-  <a href="explore/tag/hardware.html">hardware</a>   
   <a href="explore/tag/services.html">services</a>   
+  <a href="explore/tag/hardware.html">hardware</a>   
   <a href="explore/tag/admin.html">admin</a>  
 </li>
  
@@ -770,13 +800,15 @@
 </div>
 
     <p class="ablog-post-expand"><a href="posts/2022/2022-07-26-fairshare.html"><em>Read more ...</em></a></p>
-    <hr/>
+    <hr />
   </div>
   
 
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="posts/2022/2022-07-14-wormhole.html">Going down the Wormhole</a>
+      <a href="posts/2022/2022-07-14-wormhole.html"
+        >Going down the Wormhole</a
+      >
     </h2>
 
     <ul class="ablog-archive">
@@ -785,21 +817,24 @@
       </li>
        
 <li id="author">
-  <span><i class="fa-fw fa fa-user"></i></span
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
   >
    
   <a href="explore/author/paul-nation.html">Paul Nation</a>  
 </li>
    
 <li id="category">
-  <span><i class="fa-fw fa fa-folder-open"></i></span
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
   >
    
   <a href="explore/category/examples.html">Examples</a>  
 </li>
  
 <li id="tags">
-  <span><i class="fa-fw fa fa-tags"></i> </span
+  <span
+    ><i class="fa-fw fa fa-tags"></i> </span
   >
    
   <a href="explore/tag/hardware.html">hardware</a>   
@@ -814,13 +849,15 @@
 </div>
 
     <p class="ablog-post-expand"><a href="posts/2022/2022-07-14-wormhole.html"><em>Read more ...</em></a></p>
-    <hr/>
+    <hr />
   </div>
   
 
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="posts/2021/2021-12-20-esp_readout.html">Excited State Promotion (ESP) Readout</a>
+      <a href="posts/2021/2021-12-20-esp_readout.html"
+        >Excited State Promotion (ESP) Readout</a
+      >
     </h2>
 
     <ul class="ablog-archive">
@@ -829,14 +866,16 @@
       </li>
        
 <li id="author">
-  <span><i class="fa-fw fa fa-user"></i></span
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
   >
    
   <a href="explore/author/paul-nation.html">Paul Nation</a>  
 </li>
    
 <li id="category">
-  <span><i class="fa-fw fa fa-folder-open"></i></span
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
   >
    
   <a href="explore/category/hardware.html">Hardware</a>  
@@ -850,13 +889,15 @@
 </div>
 
     <p class="ablog-post-expand"><a href="posts/2021/2021-12-20-esp_readout.html"><em>Read more ...</em></a></p>
-    <hr/>
+    <hr />
   </div>
   
 
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="posts/2021/2021-11-28-falcon_r5.html">Comparison of Falcon R5 processors verse R4</a>
+      <a href="posts/2021/2021-11-28-falcon_r5.html"
+        >Comparison of Falcon R5 processors verse R4</a
+      >
     </h2>
 
     <ul class="ablog-archive">
@@ -865,21 +906,24 @@
       </li>
        
 <li id="author">
-  <span><i class="fa-fw fa fa-user"></i></span
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
   >
    
   <a href="explore/author/paul-nation.html">Paul Nation</a>  
 </li>
    
 <li id="category">
-  <span><i class="fa-fw fa fa-folder-open"></i></span
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
   >
    
   <a href="explore/category/hardware.html">Hardware</a>  
 </li>
  
 <li id="tags">
-  <span><i
+  <span
+    ><i
       class="fa-fw fa fa-tag"
     ></i
     ></span
@@ -896,13 +940,15 @@
 </div>
 
     <p class="ablog-post-expand"><a href="posts/2021/2021-11-28-falcon_r5.html"><em>Read more ...</em></a></p>
-    <hr/>
+    <hr />
   </div>
   
 
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="posts/2021/2021-11-07-rep_delay.html">Improving state prep errors on IBM Quantum systems</a>
+      <a href="posts/2021/2021-11-07-rep_delay.html"
+        >Improving state prep errors on IBM Quantum systems</a
+      >
     </h2>
 
     <ul class="ablog-archive">
@@ -911,26 +957,29 @@
       </li>
        
 <li id="author">
-  <span><i class="fa-fw fa fa-user"></i></span
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
   >
    
   <a href="explore/author/paul-nation.html">Paul Nation</a>  
 </li>
    
 <li id="category">
-  <span><i class="fa-fw fa fa-folder-open"></i></span
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
   >
    
   <a href="explore/category/hardware.html">Hardware</a>  
 </li>
  
 <li id="tags">
-  <span><i class="fa-fw fa fa-tags"></i> </span
+  <span
+    ><i class="fa-fw fa fa-tags"></i> </span
   >
    
-  <a href="explore/tag/dynamic.html">Dynamic</a>   
+  <a href="explore/tag/spam.html">SPAM</a>   
   <a href="explore/tag/reset.html">Reset</a>   
-  <a href="explore/tag/spam.html">SPAM</a>  
+  <a href="explore/tag/dynamic.html">Dynamic</a>  
 </li>
  
     </ul>
@@ -941,13 +990,15 @@
 </div>
 
     <p class="ablog-post-expand"><a href="posts/2021/2021-11-07-rep_delay.html"><em>Read more ...</em></a></p>
-    <hr/>
+    <hr />
   </div>
   
 
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="posts/2021/2021-10-31-best_swap_mapper_qiskit.html">Choosing the best Qiskit swap mapper</a>
+      <a href="posts/2021/2021-10-31-best_swap_mapper_qiskit.html"
+        >Choosing the best Qiskit swap mapper</a
+      >
     </h2>
 
     <ul class="ablog-archive">
@@ -956,21 +1007,24 @@
       </li>
        
 <li id="author">
-  <span><i class="fa-fw fa fa-user"></i></span
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
   >
    
   <a href="explore/author/paul-nation.html">Paul Nation</a>  
 </li>
    
 <li id="category">
-  <span><i class="fa-fw fa fa-folder-open"></i></span
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
   >
    
   <a href="explore/category/qiskit.html">Qiskit</a>  
 </li>
  
 <li id="tags">
-  <span><i
+  <span
+    ><i
       class="fa-fw fa fa-tag"
     ></i
     ></span
@@ -987,13 +1041,15 @@
 </div>
 
     <p class="ablog-post-expand"><a href="posts/2021/2021-10-31-best_swap_mapper_qiskit.html"><em>Read more ...</em></a></p>
-    <hr/>
+    <hr />
   </div>
   
 
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="posts/2021/2021-10-27-dynamic_BV.html">Dynamic Bernstein-Vazirani using mid-circuit reset and measurement</a>
+      <a href="posts/2021/2021-10-27-dynamic_BV.html"
+        >Dynamic Bernstein-Vazirani using mid-circuit reset and measurement</a
+      >
     </h2>
 
     <ul class="ablog-archive">
@@ -1002,21 +1058,24 @@
       </li>
        
 <li id="author">
-  <span><i class="fa-fw fa fa-user"></i></span
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
   >
    
   <a href="explore/author/paul-nation.html">Paul Nation</a>  
 </li>
    
 <li id="category">
-  <span><i class="fa-fw fa fa-folder-open"></i></span
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
   >
    
   <a href="explore/category/hardware.html">Hardware</a>  
 </li>
  
 <li id="tags">
-  <span><i
+  <span
+    ><i
       class="fa-fw fa fa-tag"
     ></i
     ></span
@@ -1033,7 +1092,7 @@
 </div>
 
     <p class="ablog-post-expand"><a href="posts/2021/2021-10-27-dynamic_BV.html"><em>Read more ...</em></a></p>
-    <hr/>
+    <hr />
   </div>
    
 </div>

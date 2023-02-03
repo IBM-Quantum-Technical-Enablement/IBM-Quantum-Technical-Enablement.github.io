@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>How to make your backend a directed backend &#8212; Enabing Technologies  documentation</title>
   
@@ -27,7 +27,8 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
@@ -44,9 +45,14 @@
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/thebelab-helper.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/design-tabs.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-16824831-8"></script>
     <script>
                 window.dataLayer = window.dataLayer || [];
@@ -379,21 +385,24 @@
 <ul>
    
 <li id="author">
-  <span><i class="fa-fw fa fa-user"></i></span
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
   >
    
   <a href="../../explore/author/paul-nation.html">Paul Nation</a>  
 </li>
    
 <li id="category">
-  <span><i class="fa-fw fa fa-folder-open"></i></span
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
   >
    
   <a href="../../explore/category/hardware.html">Hardware</a>  
 </li>
  
 <li id="tags">
-  <span><i
+  <span
+    ><i
       class="fa-fw fa fa-tag"
     ></i
     ></span
@@ -535,7 +544,7 @@
 <img alt="../../_images/e5dcfd9044e8af915d4469cdcc3105876785a0d7b60b4c63e0e64b29fa9ad38b.png" src="../../_images/e5dcfd9044e8af915d4469cdcc3105876785a0d7b60b4c63e0e64b29fa9ad38b.png" />
 </div>
 </div>
-<p>If the background reports a symmetric coupling map, then this circuit will execute as is, with any differences in gate directionality handled internally.  Now suppose that the system we are targeting has a natural gate direction between qubits 0 and 1 that is in the opposite direction; The control must be qubit 1 and the target qubit 0.  What does the circuit being executed look like.  We can use the Qiskit transpiler to mimic this using the coupling map <code class="docutils literal notranslate"><span class="pre">coupling_map=</span> <span class="pre">[[1,</span> <span class="pre">0]]</span></code> and setting <code class="docutils literal notranslate"><span class="pre">optimization_level=0</span></code> since no optimization occurs down at the ssytem level:</p>
+<p>If the background reports a symmetric coupling map, then this circuit will execute as is, with any differences in gate directionality handled internally.  Now suppose that the system we are targeting has a natural gate direction between qubits 0 and 1 that is in the opposite direction; The control must be qubit 1 and the target qubit 0.  What does the circuit being executed look like.  We can use the Qiskit transpiler to mimic this using the coupling map <code class="docutils literal notranslate"><span class="pre">coupling_map=</span> <span class="pre">[[1,</span> <span class="pre">0]]</span></code> and setting <code class="docutils literal notranslate"><span class="pre">optimization_level=0</span></code> since no optimization occurs down at the system level:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trans_qc</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">coupling_map</span><span class="o">=</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]],</span> <span class="n">optimization_level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -547,12 +556,12 @@
 <img alt="../../_images/2c11135a5e05261f92c77705704dceafa65c8d3f6009ca4d73571d9c8b8bf407.png" src="../../_images/2c11135a5e05261f92c77705704dceafa65c8d3f6009ca4d73571d9c8b8bf407.png" />
 </div>
 </div>
-<p>One can immediately see from the figure above that the resulting circuit is less than optimized.  Indeed, it is already clear that we are missing the opportunity to collapse the two Hadamards into the identity.  If this circuit were embedded in a larger one, then the additonal Hadamard gates could likely be combined with other single-qubit gates and optimized.  Thus if we expose the natural CNOT gate directions to Qiskit, we can gain some additonal performance improvements. Eventhough single-qubit gate errors are ~100x lower than those of CNOT gates on IBM Quantum hardware, the savings can add up in larger circuits.</p>
+<p>One can immediately see from the figure above that the resulting circuit is less than optimized.  Indeed, it is already clear that we are missing the opportunity to collapse the two Hadamards into the identity.  If this circuit were embedded in a larger one, then the additional Hadamard gates could likely be combined with other single-qubit gates and optimized.  Thus if we expose the natural CNOT gate directions to Qiskit, we can gain some additional performance improvements. Even though single-qubit gate errors are ~100x lower than those of CNOT gates on IBM Quantum hardware, the savings can add up in larger circuits.</p>
 <p>Below we will see how to turn any IBM Quantum backend that uses CNOT gates into a directed version using only the natural gate directions, allowing anyone to take advantage of the resulting performance improvements.</p>
 </section>
 <section id="convering-a-backend-to-a-directed-one">
 <h2>Convering a backend to a directed one<a class="headerlink" href="#convering-a-backend-to-a-directed-one" title="Permalink to this heading">#</a></h2>
-<p>If an IBM Quantum system returns a symmetric coupling map, how in the world are we going to figure out the natural gate directions?  It turns out that it is all in the timing information.  A CNOT gate in the natural direction has a set duration.  A CNOT gate in the opposite direction has a timing that is the sum of the natural direction time PLUS the time it takes to do the single qubit gates needed to reverse the direction.  So if we comparse the CNOT gate time from A -&gt; B and B -&gt; A (control -&gt; target), whichever time is lower is the natural direction.  We can then reduce the coupling map down to just this set of natural gate directions.</p>
+<p>If an IBM Quantum system returns a symmetric coupling map, how in the world are we going to figure out the natural gate directions?  It turns out that it is all in the timing information.  A CNOT gate in the natural direction has a set duration.  A CNOT gate in the opposite direction has a timing that is the sum of the natural direction time PLUS the time it takes to do the single qubit gates needed to reverse the direction.  So if we compare the CNOT gate time from A -&gt; B and B -&gt; A (control -&gt; target), whichever time is lower is the natural direction.  We can then reduce the coupling map down to just this set of natural gate directions.</p>
 <p>At the time of writing, Qiskit and IBM Quantum are transitioning to a new version of the backend class structure called <code class="docutils literal notranslate"><span class="pre">BackendV2</span></code>.  However, <code class="docutils literal notranslate"><span class="pre">BackendV1</span></code> is still very much around, and we will make a function that converts both types:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

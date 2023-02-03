@@ -92,7 +92,7 @@
    "id": "83143ba3",
    "metadata": {},
    "source": [
-    "If the background reports a symmetric coupling map, then this circuit will execute as is, with any differences in gate directionality handled internally.  Now suppose that the system we are targeting has a natural gate direction between qubits 0 and 1 that is in the opposite direction; The control must be qubit 1 and the target qubit 0.  What does the circuit being executed look like.  We can use the Qiskit transpiler to mimic this using the coupling map `coupling_map= [[1, 0]]` and setting `optimization_level=0` since no optimization occurs down at the ssytem level:"
+    "If the background reports a symmetric coupling map, then this circuit will execute as is, with any differences in gate directionality handled internally.  Now suppose that the system we are targeting has a natural gate direction between qubits 0 and 1 that is in the opposite direction; The control must be qubit 1 and the target qubit 0.  What does the circuit being executed look like.  We can use the Qiskit transpiler to mimic this using the coupling map `coupling_map= [[1, 0]]` and setting `optimization_level=0` since no optimization occurs down at the system level:"
    ]
   },
   {
@@ -123,7 +123,7 @@
    "id": "c29fd0af",
    "metadata": {},
    "source": [
-    "One can immediately see from the figure above that the resulting circuit is less than optimized.  Indeed, it is already clear that we are missing the opportunity to collapse the two Hadamards into the identity.  If this circuit were embedded in a larger one, then the additonal Hadamard gates could likely be combined with other single-qubit gates and optimized.  Thus if we expose the natural CNOT gate directions to Qiskit, we can gain some additonal performance improvements. Eventhough single-qubit gate errors are ~100x lower than those of CNOT gates on IBM Quantum hardware, the savings can add up in larger circuits. \n",
+    "One can immediately see from the figure above that the resulting circuit is less than optimized.  Indeed, it is already clear that we are missing the opportunity to collapse the two Hadamards into the identity.  If this circuit were embedded in a larger one, then the additional Hadamard gates could likely be combined with other single-qubit gates and optimized.  Thus if we expose the natural CNOT gate directions to Qiskit, we can gain some additional performance improvements. Even though single-qubit gate errors are ~100x lower than those of CNOT gates on IBM Quantum hardware, the savings can add up in larger circuits. \n",
     "\n",
     "Below we will see how to turn any IBM Quantum backend that uses CNOT gates into a directed version using only the natural gate directions, allowing anyone to take advantage of the resulting performance improvements."
    ]
@@ -135,7 +135,7 @@
    "source": [
     "## Convering a backend to a directed one\n",
     "\n",
-    "If an IBM Quantum system returns a symmetric coupling map, how in the world are we going to figure out the natural gate directions?  It turns out that it is all in the timing information.  A CNOT gate in the natural direction has a set duration.  A CNOT gate in the opposite direction has a timing that is the sum of the natural direction time PLUS the time it takes to do the single qubit gates needed to reverse the direction.  So if we comparse the CNOT gate time from A -> B and B -> A (control -> target), whichever time is lower is the natural direction.  We can then reduce the coupling map down to just this set of natural gate directions."
+    "If an IBM Quantum system returns a symmetric coupling map, how in the world are we going to figure out the natural gate directions?  It turns out that it is all in the timing information.  A CNOT gate in the natural direction has a set duration.  A CNOT gate in the opposite direction has a timing that is the sum of the natural direction time PLUS the time it takes to do the single qubit gates needed to reverse the direction.  So if we compare the CNOT gate time from A -> B and B -> A (control -> target), whichever time is lower is the natural direction.  We can then reduce the coupling map down to just this set of natural gate directions."
    ]
   },
   {
@@ -424,7 +424,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.10.8"
+   "version": "3.10.6"
   }
  },
  "nbformat": 4,
