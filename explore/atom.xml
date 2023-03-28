@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
   <id>quantum-enablement.org</id>
   <title>Quantum Explorations</title>
-  <updated>2023-02-03T16:23:51.942380+00:00</updated>
+  <updated>2023-03-28T09:12:36.932828+00:00</updated>
   <link href="quantum-enablement.org"/>
   <link href="quantum-enablement.org/explore/atom.xml" rel="self"/>
-  <generator uri="https://ablog.readthedocs.org/" version="0.10.25">ABlog</generator>
+  <generator uri="https://ablog.readthedocs.io/" version="0.11.1">ABlog</generator>
   <entry>
     <id>quantum-enablement.org/posts/2021/2021-10-27-dynamic_BV.html</id>
     <title>Dynamic Bernstein-Vazirani using mid-circuit reset and measurement</title>
@@ -57,9 +57,9 @@
 </content>
     <link href="quantum-enablement.org/posts/2021/2021-11-07-rep_delay.html" rel="alternate"/>
     <summary>It is often taken for granted that qubits are initialized to zero when executing quantum circuits on hardware.  However, errors in the reset process mean that this initialization is not perfect leading to state preparation errors.  Here we will look at state prep errors and how to improve them on IBM Quantum systems.Here we will use two lesser known configuration variables available on IBM Quantum systems to do so.  First is rep_delay.  This is the delay time before the next circuit is executed.  Each backend has a different default_rep_delay (although as of the time of writing many are 250~\mu \rm s or lower) and support tuning this parameter from 0 up to 500~\mu \rm s.  Why in the world would I want to vary this parameter?  Well if I set rep_delay=0 then I can get much faster throughput as the default delay is nominally longer than the T_{1} time of the system.  However when doing so you are trusting the implicit reset (called “unconditional reset”) to do its job and reset the qubits to their ground state with high-fidelity.  Failure to do so would lead to state-prep errors that propagate through the circuit.  This is why the delay is usually longer than T_{1}; let the enviornment help your reset fidelity.  Second is init_qubits that tells the hardware to not perform an unconditional reset.  As no reset at all would quickly lead to junk, this setting needs to be done in concert with reset instructions being added to the beginning of your circuits.  Perhaps this is better, or maybe a single reset at the beginning and the uncondtional reset.  Lets find out.</summary>
-    <category term="SPAM" label="SPAM"/>
-    <category term="Reset" label="Reset"/>
     <category term="Dynamic" label="Dynamic"/>
+    <category term="Reset" label="Reset"/>
+    <category term="SPAM" label="SPAM"/>
     <published>2021-11-07T00:00:00-04:00</published>
   </entry>
   <entry>
@@ -112,8 +112,8 @@
 </content>
     <link href="quantum-enablement.org/posts/2022/2022-07-14-wormhole.html" rel="alternate"/>
     <summary>Recently our Partners over at Lawrence Berkeley National Laboratory (LBNL) published an interesting paper on probing quantum gravity in the lab: arXiv:2205.14081.  This paper caught our eye for two reasons. First, it is about teleportation via wormholes, so why not check it out?  Second, it compares our quantum systems verses the trapped-ion systems from Quantinuum.  From a competitive standpoint, these types of papers are fun to look at and see if we can do better.  Trying to do so is the basis for this notebook.  If you want all the details you will need to see the paper, however the basics can be gathered from Figure 1 in the paper:Basically they are creating entangled pairs of qubits at the beginning; a prerequisite of all teleportation procedures.  Doing evolution backward and forward by the same amout of time on the L group, coupling the L and R groups of qubits with a tunable phase g, and then performing the forward evolution again on the R group of qubits, and then measuring the state on the bottom qubit.  As a function of the coupling g the expectation value of the Z operator on the last qubit in both simulation and on the real quantum hardware is seen to be:</summary>
-    <category term="hardware" label="hardware"/>
     <category term="dynamicaldecoupling" label="dynamical decoupling"/>
+    <category term="hardware" label="hardware"/>
     <published>2022-07-14T00:00:00-04:00</published>
   </entry>
   <entry>
@@ -131,9 +131,9 @@
 </content>
     <link href="quantum-enablement.org/posts/2022/2022-07-26-fairshare.html" rel="alternate"/>
     <summary>Here we will introduce the reader to Fair-share Scheduling, the method by which most IBM Quantum systems are accessed.  We will go over the basics of Fair-share and understand its behavior via simulation.Here we import the tools we will need to make a threaded Fair-share scheduling simulation.</summary>
-    <category term="services" label="services"/>
-    <category term="hardware" label="hardware"/>
     <category term="admin" label="admin"/>
+    <category term="hardware" label="hardware"/>
+    <category term="services" label="services"/>
     <published>2022-07-26T00:00:00-04:00</published>
   </entry>
   <entry>
@@ -151,9 +151,9 @@
 </content>
     <link href="quantum-enablement.org/posts/2022/2022-08-22-readout_mitigation.html" rel="alternate"/>
     <summary>One of the primary goals,if not THE primary goal, of the Runtime is abstraction.  Namely, users should not have to know detailed hardware knowledge and platform specific techniques for achieving good results.  Otherwise, it is difficult to make progress moving up the software stack into algorithms and applications.One of the first examples of this is the introduction of automated readout error mitigation into the sampler and estimator Runtime primitives.  On superconducting platforms, readout error is ~2%, and is something that is readily correctable using recent mitigation methods.  The primitives use two different methods for readout mitigation:</summary>
-    <category term="runtime" label="runtime"/>
-    <category term="mitigation" label="mitigation"/>
     <category term="beta" label="beta"/>
+    <category term="mitigation" label="mitigation"/>
+    <category term="runtime" label="runtime"/>
     <published>2022-08-22T00:00:00-04:00</published>
   </entry>
   <entry>
@@ -171,8 +171,8 @@
 </content>
     <link href="quantum-enablement.org/posts/2022/2022-11-07-challenge.html" rel="alternate"/>
     <summary>The goal of this challenge is to entangle a pair of qubits, as far away as possible (to be defined below) from the other and still recover a CHSH violation.  How best to generate long-range entanglement an interesting challenge, and there are multiple possible techniques, some introduced in the Quantum Practitioners Forum, that might help in this process.  Other tools might also help increase the fidelity of the final CHSH signal.Participants are tasked with generating long-range entanglement on real quantum hardware through the generation of Bell states such that measurements on qubits in the Bell pair are as distant as possible while still recovering a signal that shows a CHSH violation.  Here distance is defined to be the shortest path connecting qubits on a graph of the systems coupling_map:</summary>
-    <category term="hardware" label="hardware"/>
     <category term="dynamicaldecoupling" label="dynamical decoupling"/>
+    <category term="hardware" label="hardware"/>
     <published>2022-11-07T00:00:00-05:00</published>
   </entry>
   <entry>
@@ -208,8 +208,8 @@
 </content>
     <link href="quantum-enablement.org/posts/2023/2023-02-02-pauli_twirling.html" rel="alternate"/>
     <summary>Pauli-twirling is a quantum error suppression technique that uses randomization to noise shape coherent error into stochastic errors, by combining the results from many random, but logically equivalent circuits, together.  This is beneficial because while incoherent errors add up linearly with circuit depth, coherent errors can scale quadratically.  Here we will show how to generate Pauli-twirled circuits, where we focus on twirling two-qubit gates within a circuit.  This technique has been used, for example, in this work by Kim et al.: arXiv:2108.09197.  We will show how to compute the possible Pauli sets for any two-qubit gate, and show how to create a Qiskit Passmanager that implements the routine, and can be combined with other transpilation techniques.Here are all of the imports used in this notebook.</summary>
-    <category term="Software" label="Software"/>
     <category term="ErrorSuppression" label="Error Suppression"/>
+    <category term="Software" label="Software"/>
     <published>2023-02-02T00:00:00-05:00</published>
   </entry>
 </feed>
