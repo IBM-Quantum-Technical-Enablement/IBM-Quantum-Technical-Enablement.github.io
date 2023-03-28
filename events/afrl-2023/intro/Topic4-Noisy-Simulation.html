@@ -190,7 +190,7 @@
 
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../../members.html">
-                        Members
+                        Contributors
                       </a>
                     </li>
                 
@@ -335,7 +335,7 @@ document.write(`
 
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../../members.html">
-                        Members
+                        Contributors
                       </a>
                     </li>
                 
@@ -495,8 +495,7 @@ document.write(`
 <ul class="simple">
 <li><p>Result from the real hardware, <code class="docutils literal notranslate"><span class="pre">ibm_hanoi</span></code></p></li>
 </ul>
-<p><img alt="qc_transpiled" src="../../../_images/qc_transpiled.png" /></p>
-<div class="cell docutils container">
+<div><img src="qc_transpiled.png" width="650"/></div><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prov</span> <span class="o">=</span> <span class="n">IBMProvider</span><span class="p">()</span>
 </pre></div>
@@ -531,13 +530,6 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">backend2</span> <span class="o">=</span> <span class="n">prov</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s1">&#39;ibm_hanoi&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">counts1</span><span class="p">)</span>
 <span class="n">plot_distribution</span><span class="p">(</span><span class="n">counts1</span><span class="p">,</span> <span class="n">target_string</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;hamming&#39;</span><span class="p">)</span>
 </pre></div>
@@ -553,6 +545,13 @@ document.write(`
 </section>
 <section id="using-aersimulator-with-noise-model-for-a-backend">
 <h3>Using Aersimulator with noise model for a backend<a class="headerlink" href="#using-aersimulator-with-noise-model-for-a-backend" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">backend2</span> <span class="o">=</span> <span class="n">prov</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s1">&#39;ibm_hanoi&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">noiseSim</span> <span class="o">=</span> <span class="n">AerSimulator</span><span class="p">()</span><span class="o">.</span><span class="n">from_backend</span><span class="p">(</span><span class="n">backend2</span><span class="p">)</span>

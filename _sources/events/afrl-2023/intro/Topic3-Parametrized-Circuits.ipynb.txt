@@ -80,7 +80,7 @@
    "id": "warming-input",
    "metadata": {},
    "source": [
-    "![phasekick](phase_kickback.png)"
+    "![phasekick](imgs/phase_kickback.png)"
    ]
   },
   {

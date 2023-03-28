@@ -274,7 +274,7 @@
    "id": "facial-survival",
    "metadata": {},
    "source": [
-    "![qpe](qpe.png)"
+    "![qpe](imgs/qpe.png)"
    ]
   },
   {

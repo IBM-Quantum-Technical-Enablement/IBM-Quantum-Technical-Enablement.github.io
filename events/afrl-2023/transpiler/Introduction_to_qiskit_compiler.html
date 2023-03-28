@@ -188,7 +188,7 @@
 
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../../members.html">
-                        Members
+                        Contributors
                       </a>
                     </li>
                 
@@ -333,7 +333,7 @@ document.write(`
 
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../../members.html">
-                        Members
+                        Contributors
                       </a>
                     </li>
                 
@@ -603,7 +603,7 @@ Got expected result: 21.15 % of the time
 <section id="qubit-connectivity">
 <h3>Qubit Connectivity<a class="headerlink" href="#qubit-connectivity" title="Permalink to this heading">#</a></h3>
 <p>For superconducting qubits the ability to run operations. On the physical device there is only connectivity between certain qubits:</p>
-<p><img alt="ibmqx2-labeled.png" src="events/afrl-2023/transpiler/attachment:ibmqx2-labeled.png" /></p>
+<p><img alt="ibmqx2-labeled.png" src="../../../_images/ibmqx2-labeled.png" /></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.providers.fake_provider</span> <span class="kn">import</span> <span class="n">FakeYorktownV2</span>
@@ -655,7 +655,7 @@ Got expected result: 21.15 % of the time
 <img alt="../../../_images/7994866532907a86e751bda40b7844ebfdd5556ea39a133b76358ad5cdc68c0b.png" src="../../../_images/7994866532907a86e751bda40b7844ebfdd5556ea39a133b76358ad5cdc68c0b.png" />
 </div>
 </div>
-<p><img alt="variability.png" src="events/afrl-2023/transpiler/attachment:variability.png" /></p>
+<p><img alt="variability.png" src="../../../_images/variability.png" /></p>
 </section>
 <section id="modelling-the-constraints-of-hardware">
 <h2>Modelling the Constraints of Hardware<a class="headerlink" href="#modelling-the-constraints-of-hardware" title="Permalink to this heading">#</a></h2>
@@ -1633,7 +1633,7 @@ Time with optimization level: 3
 <section id="layout">
 <h2>Layout<a class="headerlink" href="#layout" title="Permalink to this heading">#</a></h2>
 <p>This stage is used to map the virtual qubits circuit qubits to the physical qubits on the device.</p>
-<p><img alt="layout.png" src="events/afrl-2023/transpiler/attachment:layout.png" /></p>
+<p><img alt="layout.png" src="../../../_images/layout.png" /></p>
 <p>Built-in to Qiskit <code class="docutils literal notranslate"><span class="pre">transpile()</span></code> there are several passes to do this:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">TrivialLayout</span></code> (<code class="docutils literal notranslate"><span class="pre">&quot;trivial&quot;</span></code>)- Maps qubit 0 to physical qubit 0, 1-&gt;1, 2-&gt;2, etc.</p></li>
@@ -2237,16 +2237,16 @@ stick with the <code class="docutils literal notranslate"><span class="pre">tran
 </div>
 </div>
 <p>This data structure makes it much easier to analyze the data dependency between operations, which is useful for many types of passes. For example, in 2q optimization collecting the bots:</p>
-<p><img alt="block_collection.png" src="events/afrl-2023/transpiler/attachment:block_collection.png" /></p>
+<p><img alt="block_collection.png" src="../../../_images/block_collection.png" /></p>
 </section>
 <section id="passes">
 <h2>Passes<a class="headerlink" href="#passes" title="Permalink to this heading">#</a></h2>
 <p>The transpiler internally is broken up into a passes which are functions that</p>
-<p><img alt="passmanager_2.png" src="events/afrl-2023/transpiler/attachment:passmanager_2.png" /></p>
+<p><img alt="passmanager_2.png" src="../../../_images/passmanager_2.png" /></p>
 </section>
 <section id="pass-managers">
 <h2>Pass Managers<a class="headerlink" href="#pass-managers" title="Permalink to this heading">#</a></h2>
-<p><img alt="passmanager.png" src="events/afrl-2023/transpiler/attachment:passmanager.png" /></p>
+<p><img alt="passmanager.png" src="../../../_images/passmanager.png" /></p>
 </section>
 <section id="contents-of-preset-pass-managers">
 <h2>Contents of Preset Pass Managers<a class="headerlink" href="#contents-of-preset-pass-managers" title="Permalink to this heading">#</a></h2>
