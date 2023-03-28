@@ -1,10 +1,7 @@
 
-
 <!DOCTYPE html>
 
-
-<html lang="en" >
-
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,26 +15,27 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css" />
     <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -46,9 +44,14 @@
     <script src="_static/doctools.js"></script>
     <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/thebelab-helper.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/design-tabs.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-16824831-8"></script>
     <script>
                 window.dataLayer = window.dataLayer || [];
@@ -58,105 +61,112 @@
             </script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'explore';</script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="en"/>
-
+    <link rel="search" title="Search" href="search.html" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en"> 
 <link
   rel="alternate"
   type="application/atom+xml"
   href="explore/atom.xml"
   title=""
 />
-
-
+ 
+<style type="text/css">
+  ul.ablog-archive {
+    list-style: none;
+    overflow: auto;
+    margin-left: 0px;
+  }
+  ul.ablog-archive li {
+    float: left;
+    margin-right: 5px;
+    font-size: 80%;
+  }
+  ul.postlist a {
+    font-style: italic;
+  }
+  ul.postlist-style-disc {
+    list-style-type: disc;
+  }
+  ul.postlist-style-none {
+    list-style-type: none;
+  }
+  ul.postlist-style-circle {
+    list-style-type: circle;
+  }
+</style>
 
   </head>
   
   
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
 
   
   
   <a class="skip-link" href="#main-content">Skip to main content</a>
+
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
   <label class="overlay overlay-primary" for="__primary"></label>
+
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
   <label class="overlay overlay-secondary" for="__secondary"></label>
+
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
     <div class="search-button__search-container">
-<form class="bd-search d-flex align-items-center"
-      action="search.html"
-      method="get">
+      
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search"
-         class="form-control"
-         name="q"
-         id="search-input"
-         placeholder="Search the site..."
-         aria-label="Search the site..."
-         autocomplete="off"
-         autocorrect="off"
-         autocapitalize="off"
-         spellcheck="false"/>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
+</form>
+    </div>
   </div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-<div class="bd-header__inner bd-page-width">
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
   <label class="sidebar-toggle primary-toggle" for="__primary">
-    <span class="fa-solid fa-bars"></span>
+      <span class="fa-solid fa-bars"></span>
   </label>
-  
-  <div class="navbar-header-items__start">
+  <div id="navbar-start">
     
-      <div class="navbar-item">
+    
   
 
+
 <a class="navbar-brand logo" href="index.html">
+
   
   
   
   
-    
-    
-      
-    
-    
-    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="_static/dark_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
   
   
-</a></div>
+  
+
+  
+    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="_static/dark_logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
     
   </div>
-  
+
   
   <div class="col-lg-9 navbar-header-items">
-    
-    <div class="me-auto navbar-header-items__center">
+    <div id="navbar-center" class="mr-auto">
       
-        <div class="navbar-item"><nav class="navbar-nav">
-  <p class="sidebar-header-items__title"
-     role="heading"
-     aria-level="1"
-     aria-label="Site Navigation">
-    Site Navigation
-  </p>
-  <ul class="bd-navbar-elements navbar-nav">
-    
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="how-to/howto.html">
                         How to guides
@@ -191,57 +201,41 @@
                       </a>
                     </li>
                 
-  </ul>
-</nav></div>
+    </ul>
+</nav>
+      </div>
       
     </div>
-    
-    
-    <div class="navbar-header-items__end">
+
+    <div id="navbar-end">
       
-        <div class="navbar-item navbar-persistent--container">
+        <div class="navbar-end-item navbar-persistent--container">
           
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
         </div>
       
       
-        <div class="navbar-item">
-<form class="bd-search d-flex align-items-center"
-      action="search.html"
-      method="get">
+      <div class="navbar-end-item">
+        
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search"
-         class="form-control"
-         name="q"
-         id="search-input"
-         placeholder="Search the site..."
-         aria-label="Search the site..."
-         autocomplete="off"
-         autocorrect="off"
-         autocapitalize="off"
-         spellcheck="false"/>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
+</form>
+      </div>
       
-        <div class="navbar-item">
-<script>
-document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
     <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
     <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
     <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
-  </button>
-`);
-</script></div>
+</button>
+      </div>
       
-        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
-    aria-label="Icon Links">
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
         <li class="nav-item">
           
           
@@ -250,54 +244,53 @@ document.write(`
           
           
           
-          
-          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
             <label class="sr-only">GitHub</label></a>
         </li>
-</ul></div>
+      </ul>
+      </div>
       
     </div>
-    
   </div>
+
+
   
   
     <div class="navbar-persistent--mobile">
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
     </div>
   
 
   
-</div>
-
-    </nav>
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
   
+
+</div>
+  </nav>
+  
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
       <div class="bd-sidebar-primary bd-sidebar">
         
-
   
   <div class="sidebar-header-items sidebar-primary__section">
     
     
       <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
         
-          <div class="navbar-item"><nav class="navbar-nav">
-  <p class="sidebar-header-items__title"
-     role="heading"
-     aria-level="1"
-     aria-label="Site Navigation">
-    Site Navigation
-  </p>
-  <ul class="bd-navbar-elements navbar-nav">
-    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="how-to/howto.html">
                         How to guides
@@ -332,46 +325,36 @@ document.write(`
                       </a>
                     </li>
                 
-  </ul>
-</nav></div>
-        
+    </ul>
+</nav>
+      </div>
+      
       </div>
     
+
     
     
-      <div class="sidebar-header-items__end">
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
         
-          <div class="navbar-item">
-<form class="bd-search d-flex align-items-center"
-      action="search.html"
-      method="get">
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search"
-         class="form-control"
-         name="q"
-         id="search-input"
-         placeholder="Search the site..."
-         aria-label="Search the site..."
-         autocomplete="off"
-         autocorrect="off"
-         autocapitalize="off"
-         spellcheck="false"/>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-        
-          <div class="navbar-item">
-<script>
-document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+</form>
+      </div>
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
     <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
     <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
     <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
-  </button>
-`);
-</script></div>
-        
-          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
-    aria-label="Icon Links">
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
         <li class="nav-item">
           
           
@@ -380,315 +363,235 @@ document.write(`
           
           
           
-          
-          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
             <label class="sr-only">GitHub</label></a>
         </li>
-</ul></div>
-        
+      </ul>
       </div>
+      
+    </div>
     
   </div>
+
   
-    <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item">
-<div class="ablog-sidebar-item ablog__category">
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
 <h3>
   <a href="explore/category.html">Categories</a>
 </h3>
 <ul>
-  
-  
+   
   <li>
     <a href="explore/category/examples.html">Examples (2)</a>
   </li>
-  
-  
-  
+    
   <li>
     <a href="explore/category/hardware.html">Hardware (5)</a>
   </li>
-  
-  
-  
+    
   <li>
     <a href="explore/category/qiskit.html">Qiskit (1)</a>
   </li>
-  
-  
-  
+    
   <li>
     <a href="explore/category/runtime.html">Runtime (1)</a>
   </li>
-  
-  
-  
+    
   <li>
     <a href="explore/category/services.html">Services (1)</a>
   </li>
-  
-  
-  
+    
   <li>
     <a href="explore/category/software.html">Software (1)</a>
   </li>
-  
-  
+   
 </ul>
-</div>
-</div>
-        <div class="sidebar-primary-item">
-<div class="ablog-sidebar-item ablog__tags">
+
+    </div>
+    <div class="sidebar-start-items__item">
 <h3><a href="explore/tag.html">Tags</a></h3>
+<style type="text/css">
+  ul.ablog-cloud {
+    list-style: none;
+    overflow: auto;
+  }
+  ul.ablog-cloud li {
+    float: left;
+    height: 20pt;
+    line-height: 18pt;
+    margin-right: 5px;
+  }
+  ul.ablog-cloud a {
+    text-decoration: none;
+    vertical-align: middle;
+  }
+  li.ablog-cloud-1 {
+    font-size: 80%;
+  }
+  li.ablog-cloud-2 {
+    font-size: 95%;
+  }
+  li.ablog-cloud-3 {
+    font-size: 110%;
+  }
+  li.ablog-cloud-4 {
+    font-size: 125%;
+  }
+  li.ablog-cloud-5 {
+    font-size: 140%;
+  }
+</style>
 <ul class="ablog-cloud">
-  
-  
+   
   <li class="ablog-cloud ablog-cloud-2">
     <a href="explore/tag/dynamic.html">Dynamic</a>
   </li>
-  
-  
-  
+    
   <li class="ablog-cloud ablog-cloud-1">
     <a href="explore/tag/error-suppression.html">Error Suppression</a>
   </li>
-  
-  
-  
+    
   <li class="ablog-cloud ablog-cloud-1">
     <a href="explore/tag/falcon.html">Falcon</a>
   </li>
-  
-  
-  
+    
   <li class="ablog-cloud ablog-cloud-1">
     <a href="explore/tag/reset.html">Reset</a>
   </li>
-  
-  
-  
+    
   <li class="ablog-cloud ablog-cloud-1">
     <a href="explore/tag/spam.html">SPAM</a>
   </li>
-  
-  
-  
+    
   <li class="ablog-cloud ablog-cloud-1">
     <a href="explore/tag/software.html">Software</a>
   </li>
-  
-  
-  
+    
   <li class="ablog-cloud ablog-cloud-1">
     <a href="explore/tag/admin.html">admin</a>
   </li>
-  
-  
-  
+    
   <li class="ablog-cloud ablog-cloud-1">
     <a href="explore/tag/best-practices.html">best practices</a>
   </li>
-  
-  
-  
+    
   <li class="ablog-cloud ablog-cloud-1">
     <a href="explore/tag/beta.html">beta</a>
   </li>
-  
-  
-  
+    
   <li class="ablog-cloud ablog-cloud-2">
     <a href="explore/tag/dynamical-decoupling.html">dynamical decoupling</a>
   </li>
-  
-  
-  
+    
   <li class="ablog-cloud ablog-cloud-5">
     <a href="explore/tag/hardware.html">hardware</a>
   </li>
-  
-  
-  
+    
   <li class="ablog-cloud ablog-cloud-1">
     <a href="explore/tag/mitigation.html">mitigation</a>
   </li>
-  
-  
-  
+    
   <li class="ablog-cloud ablog-cloud-1">
     <a href="explore/tag/runtime.html">runtime</a>
   </li>
-  
-  
-  
+    
   <li class="ablog-cloud ablog-cloud-1">
     <a href="explore/tag/services.html">services</a>
   </li>
-  
-  
+   
 </ul>
-</div>
-</div>
-        <div class="sidebar-primary-item">
-<div class="ablog-sidebar-item ablog__archive">
+
+    </div>
+    <div class="sidebar-start-items__item">
 <h3>
   <a href="explore/archive.html">Archives</a>
 </h3>
 <ul>
-  
-  
+   
   <li>
     <a href="explore/2023.html">2023 (2)</a>
   </li>
-  
-  
-  
+    
   <li>
     <a href="explore/2022.html">2022 (4)</a>
   </li>
-  
-  
-  
+    
   <li>
     <a href="explore/2021.html">2021 (5)</a>
   </li>
-  
-  
+   
 </ul>
-</div>
-</div>
+
     </div>
-  
-  
-  <div class="sidebar-primary-items__end sidebar-primary__section">
   </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
   
   <div id="rtd-footer-container"></div>
 
-
       </div>
-      
       <main id="main-content" class="bd-main">
         
         
-          <div class="bd-content">
-            <div class="bd-article-container">
-              
-              <div class="bd-header-article">
-<div class="header-article-items header-article__inner">
-  
-    <div class="header-article-items__start">
-      
-        <div class="header-article-item">
-
-
-
-<nav aria-label="Breadcrumbs">
-  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
-    
-    <li class="breadcrumb-item breadcrumb-home">
-      <a href="index.html" class="nav-link" aria-label="Home">
-        <i class="fa-solid fa-home"></i>
-      </a>
-    </li>
-    <li class="breadcrumb-item active" aria-current="page">All Posts</li>
-  </ul>
-</nav>
-</div>
-      
-    </div>
-  
-  
-</div>
-</div>
-              
-              
-              
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
                 
-<div id="searchbox"></div>
-                <article class="bd-article" role="main">
-                  
-
-<div class="section ablog__collection">
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+<div class="section">
   <h1>
-    
-      All
-      
-    Posts
-    
+     All  Posts 
   </h1>
-  
-  
+   
+
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="posts/2023/2023-02-02-pauli_twirling.html">Generating Pauli-twirled circuits in Qiskit</a>
+      <a href="posts/2023/2023-02-02-pauli_twirling.html"
+        >Generating Pauli-twirled circuits in Qiskit</a
+      >
     </h2>
+
     <ul class="ablog-archive">
       <li>
-        
-        
-        <i class="fa fa-calendar"></i>
-        
-        02 February 2023
-        
+         <i class="fa fa-calendar"></i> 02 February 2023 
       </li>
-      
-
-<li id="ablog-sidebar-item author ablog__author">
-  <span>
-    
-    <i class="fa-fw fa fa-user"></i>
-    
-    </span>
-  
-  
-  <a href="explore/author/paul-nation.html">Paul Nation</a>
-  
-  
-  
+       
+<li id="author">
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
+  >
+   
+  <a href="explore/author/paul-nation.html">Paul Nation</a>  
 </li>
-
-
-
-
-<li id="ablog-sidebar-item category ablog__category">
-  <span>
-    
-    <i class="fa-fw fa fa-folder-open"></i>
-    
-    </span>
-  
-  
-  <a href="explore/category/software.html">Software</a>
-  
-  
-  
+   
+<li id="category">
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
+  >
+   
+  <a href="explore/category/software.html">Software</a>  
 </li>
-
-
-<li id="ablog-sidebar-item tags ablog__tags">
-  <span>
-    
-    
-    <i class="fa-fw fa fa-tags"></i>
-    
-    
-    </span>
-  
-  
-  <a href="explore/tag/software.html">Software</a>
-  
-  
-  
-  
-  
-  <a href="explore/tag/error-suppression.html">Error Suppression</a>
-  
-  
-  
+ 
+<li id="tags">
+  <span
+    ><i class="fa-fw fa fa-tags"></i> </span
+  >
+   
+  <a href="explore/tag/software.html">Software</a>   
+  <a href="explore/tag/error-suppression.html">Error Suppression</a>  
 </li>
-
-
+ 
     </ul>
     <div class="ablog-post-excerpt docutils container">
 <p>Pauli-twirling is a quantum error suppression technique that uses randomization to noise shape coherent error into stochastic errors, by combining the results from many random, but logically equivalent circuits, together.  This is beneficial because while incoherent errors add up linearly with circuit depth, coherent errors can scale quadratically.  Here we will show how to generate Pauli-twirled circuits, where we focus on twirling two-qubit gates within a circuit.  This technique has been used, for example, in this work by Kim et al.: <a class="reference external" href="https://arxiv.org/abs/2108.09197">arXiv:2108.09197</a>.  We will show how to compute the possible Pauli sets for any two-qubit gate, and show how to create a Qiskit <code class="docutils literal notranslate"><span class="pre">Passmanager</span></code> that implements the routine, and can be combined with other transpilation techniques.</p>
@@ -697,72 +600,49 @@ document.write(`
 </div>
 
     <p class="ablog-post-expand"><a href="posts/2023/2023-02-02-pauli_twirling.html"><em>Read more ...</em></a></p>
-    <hr/>
+    <hr />
   </div>
   
+
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="posts/2023/2023-01-28-directed_cmap.html">How to make your backend a directed backend</a>
+      <a href="posts/2023/2023-01-28-directed_cmap.html"
+        >How to make your backend a directed backend</a
+      >
     </h2>
+
     <ul class="ablog-archive">
       <li>
-        
-        
-        <i class="fa fa-calendar"></i>
-        
-        28 January 2023
-        
+         <i class="fa fa-calendar"></i> 28 January 2023 
       </li>
-      
-
-<li id="ablog-sidebar-item author ablog__author">
-  <span>
-    
-    <i class="fa-fw fa fa-user"></i>
-    
-    </span>
-  
-  
-  <a href="explore/author/paul-nation.html">Paul Nation</a>
-  
-  
-  
+       
+<li id="author">
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
+  >
+   
+  <a href="explore/author/paul-nation.html">Paul Nation</a>  
 </li>
-
-
-
-
-<li id="ablog-sidebar-item category ablog__category">
-  <span>
-    
-    <i class="fa-fw fa fa-folder-open"></i>
-    
-    </span>
-  
-  
-  <a href="explore/category/hardware.html">Hardware</a>
-  
-  
-  
+   
+<li id="category">
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
+  >
+   
+  <a href="explore/category/hardware.html">Hardware</a>  
 </li>
-
-
-<li id="ablog-sidebar-item tags ablog__tags">
-  <span>
-    
-    
-    <i class="fa-fw fa fa-tag"></i>
-    
-    </span>
-  
-  
-  <a href="explore/tag/hardware.html">hardware</a>
-  
-  
-  
+ 
+<li id="tags">
+  <span
+    ><i
+      class="fa-fw fa fa-tag"
+    ></i
+    ></span
+  >
+   
+  <a href="explore/tag/hardware.html">hardware</a>  
 </li>
-
-
+ 
     </ul>
     <div class="ablog-post-excerpt docutils container">
 <p>Here we show the reader how to construct a directed IBM Quantum backend from an undirected one.  This yields some performance benefits as the Qiskit transpiler can better optimize single-qubit gates within the circuit.</p>
@@ -771,79 +651,47 @@ document.write(`
 </div>
 
     <p class="ablog-post-expand"><a href="posts/2023/2023-01-28-directed_cmap.html"><em>Read more ...</em></a></p>
-    <hr/>
+    <hr />
   </div>
   
+
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="posts/2022/2022-11-07-challenge.html">Quantum Practitioners Forum 2022: CHSH Distance Challenge</a>
+      <a href="posts/2022/2022-11-07-challenge.html"
+        >Quantum Practitioners Forum 2022: CHSH Distance Challenge</a
+      >
     </h2>
+
     <ul class="ablog-archive">
       <li>
-        
-        
-        <i class="fa fa-calendar"></i>
-        
-        07 November 2022
-        
+         <i class="fa fa-calendar"></i> 07 November 2022 
       </li>
-      
-
-<li id="ablog-sidebar-item author ablog__author">
-  <span>
-    
-    <i class="fa-fw fa fa-user"></i>
-    
-    </span>
-  
-  
-  <a href="explore/author/paul-nation.html">Paul Nation</a>
-  
-  
-  
+       
+<li id="author">
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
+  >
+   
+  <a href="explore/author/paul-nation.html">Paul Nation</a>  
 </li>
-
-
-
-
-<li id="ablog-sidebar-item category ablog__category">
-  <span>
-    
-    <i class="fa-fw fa fa-folder-open"></i>
-    
-    </span>
-  
-  
-  <a href="explore/category/examples.html">Examples</a>
-  
-  
-  
+   
+<li id="category">
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
+  >
+   
+  <a href="explore/category/examples.html">Examples</a>  
 </li>
-
-
-<li id="ablog-sidebar-item tags ablog__tags">
-  <span>
-    
-    
-    <i class="fa-fw fa fa-tags"></i>
-    
-    
-    </span>
-  
-  
-  <a href="explore/tag/dynamical-decoupling.html">dynamical decoupling</a>
-  
-  
-  
-  
-  
-  <a href="explore/tag/hardware.html">hardware</a>
-  
-  
-  
+ 
+<li id="tags">
+  <span
+    ><i class="fa-fw fa fa-tags"></i> </span
+  >
+   
+  <a href="explore/tag/hardware.html">hardware</a>   
+  <a href="explore/tag/dynamical-decoupling.html">dynamical decoupling</a>  
 </li>
-
-
+ 
     </ul>
     <div class="ablog-post-excerpt docutils container">
 <p>The goal of this challenge is to entangle a pair of qubits, as far away as possible (to be defined below) from the other and still recover a CHSH violation.  How best to generate long-range entanglement an interesting challenge, and there are multiple possible techniques, some introduced in the Quantum Practitioners Forum, that might help in this process.  Other tools might also help increase the fidelity of the final CHSH signal.</p>
@@ -852,85 +700,48 @@ document.write(`
 </div>
 
     <p class="ablog-post-expand"><a href="posts/2022/2022-11-07-challenge.html"><em>Read more ...</em></a></p>
-    <hr/>
+    <hr />
   </div>
   
+
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="posts/2022/2022-08-22-readout_mitigation.html">[BETA] Readout error mitigation in Runtime</a>
+      <a href="posts/2022/2022-08-22-readout_mitigation.html"
+        >[BETA] Readout error mitigation in Runtime</a
+      >
     </h2>
+
     <ul class="ablog-archive">
       <li>
-        
-        
-        <i class="fa fa-calendar"></i>
-        
-        22 August 2022
-        
+         <i class="fa fa-calendar"></i> 22 August 2022 
       </li>
-      
-
-<li id="ablog-sidebar-item author ablog__author">
-  <span>
-    
-    <i class="fa-fw fa fa-user"></i>
-    
-    </span>
-  
-  
-  <a href="explore/author/paul-nation.html">Paul Nation</a>
-  
-  
-  
+       
+<li id="author">
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
+  >
+   
+  <a href="explore/author/paul-nation.html">Paul Nation</a>  
 </li>
-
-
-
-
-<li id="ablog-sidebar-item category ablog__category">
-  <span>
-    
-    <i class="fa-fw fa fa-folder-open"></i>
-    
-    </span>
-  
-  
-  <a href="explore/category/runtime.html">Runtime</a>
-  
-  
-  
+   
+<li id="category">
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
+  >
+   
+  <a href="explore/category/runtime.html">Runtime</a>  
 </li>
-
-
-<li id="ablog-sidebar-item tags ablog__tags">
-  <span>
-    
-    
-    <i class="fa-fw fa fa-tags"></i>
-    
-    
-    </span>
-  
-  
-  <a href="explore/tag/runtime.html">runtime</a>
-  
-  
-  
-  
-  
-  <a href="explore/tag/mitigation.html">mitigation</a>
-  
-  
-  
-  
-  
-  <a href="explore/tag/beta.html">beta</a>
-  
-  
-  
+ 
+<li id="tags">
+  <span
+    ><i class="fa-fw fa fa-tags"></i> </span
+  >
+   
+  <a href="explore/tag/runtime.html">runtime</a>   
+  <a href="explore/tag/mitigation.html">mitigation</a>   
+  <a href="explore/tag/beta.html">beta</a>  
 </li>
-
-
+ 
     </ul>
     <div class="ablog-post-excerpt docutils container">
 <p>One of the primary goals,if not THE primary goal, of the Runtime is abstraction.  Namely, users should not have to know detailed hardware knowledge and platform specific techniques for achieving good results.  Otherwise, it is difficult to make progress moving up the software stack into algorithms and applications.</p>
@@ -939,85 +750,48 @@ document.write(`
 </div>
 
     <p class="ablog-post-expand"><a href="posts/2022/2022-08-22-readout_mitigation.html"><em>Read more ...</em></a></p>
-    <hr/>
+    <hr />
   </div>
   
+
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="posts/2022/2022-07-26-fairshare.html">Understanding fair-share scheduling</a>
+      <a href="posts/2022/2022-07-26-fairshare.html"
+        >Understanding fair-share scheduling</a
+      >
     </h2>
+
     <ul class="ablog-archive">
       <li>
-        
-        
-        <i class="fa fa-calendar"></i>
-        
-        26 July 2022
-        
+         <i class="fa fa-calendar"></i> 26 July 2022 
       </li>
-      
-
-<li id="ablog-sidebar-item author ablog__author">
-  <span>
-    
-    <i class="fa-fw fa fa-user"></i>
-    
-    </span>
-  
-  
-  <a href="explore/author/paul-nation.html">Paul Nation</a>
-  
-  
-  
+       
+<li id="author">
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
+  >
+   
+  <a href="explore/author/paul-nation.html">Paul Nation</a>  
 </li>
-
-
-
-
-<li id="ablog-sidebar-item category ablog__category">
-  <span>
-    
-    <i class="fa-fw fa fa-folder-open"></i>
-    
-    </span>
-  
-  
-  <a href="explore/category/services.html">Services</a>
-  
-  
-  
+   
+<li id="category">
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
+  >
+   
+  <a href="explore/category/services.html">Services</a>  
 </li>
-
-
-<li id="ablog-sidebar-item tags ablog__tags">
-  <span>
-    
-    
-    <i class="fa-fw fa fa-tags"></i>
-    
-    
-    </span>
-  
-  
-  <a href="explore/tag/services.html">services</a>
-  
-  
-  
-  
-  
-  <a href="explore/tag/hardware.html">hardware</a>
-  
-  
-  
-  
-  
-  <a href="explore/tag/admin.html">admin</a>
-  
-  
-  
+ 
+<li id="tags">
+  <span
+    ><i class="fa-fw fa fa-tags"></i> </span
+  >
+   
+  <a href="explore/tag/services.html">services</a>   
+  <a href="explore/tag/hardware.html">hardware</a>   
+  <a href="explore/tag/admin.html">admin</a>  
 </li>
-
-
+ 
     </ul>
     <div class="ablog-post-excerpt docutils container">
 <p>Here we will introduce the reader to Fair-share Scheduling, the method by which most IBM Quantum systems are accessed.  We will go over the basics of Fair-share and understand its behavior via simulation.</p>
@@ -1026,79 +800,47 @@ document.write(`
 </div>
 
     <p class="ablog-post-expand"><a href="posts/2022/2022-07-26-fairshare.html"><em>Read more ...</em></a></p>
-    <hr/>
+    <hr />
   </div>
   
+
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="posts/2022/2022-07-14-wormhole.html">Going down the Wormhole</a>
+      <a href="posts/2022/2022-07-14-wormhole.html"
+        >Going down the Wormhole</a
+      >
     </h2>
+
     <ul class="ablog-archive">
       <li>
-        
-        
-        <i class="fa fa-calendar"></i>
-        
-        14 July 2022
-        
+         <i class="fa fa-calendar"></i> 14 July 2022 
       </li>
-      
-
-<li id="ablog-sidebar-item author ablog__author">
-  <span>
-    
-    <i class="fa-fw fa fa-user"></i>
-    
-    </span>
-  
-  
-  <a href="explore/author/paul-nation.html">Paul Nation</a>
-  
-  
-  
+       
+<li id="author">
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
+  >
+   
+  <a href="explore/author/paul-nation.html">Paul Nation</a>  
 </li>
-
-
-
-
-<li id="ablog-sidebar-item category ablog__category">
-  <span>
-    
-    <i class="fa-fw fa fa-folder-open"></i>
-    
-    </span>
-  
-  
-  <a href="explore/category/examples.html">Examples</a>
-  
-  
-  
+   
+<li id="category">
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
+  >
+   
+  <a href="explore/category/examples.html">Examples</a>  
 </li>
-
-
-<li id="ablog-sidebar-item tags ablog__tags">
-  <span>
-    
-    
-    <i class="fa-fw fa fa-tags"></i>
-    
-    
-    </span>
-  
-  
-  <a href="explore/tag/dynamical-decoupling.html">dynamical decoupling</a>
-  
-  
-  
-  
-  
-  <a href="explore/tag/hardware.html">hardware</a>
-  
-  
-  
+ 
+<li id="tags">
+  <span
+    ><i class="fa-fw fa fa-tags"></i> </span
+  >
+   
+  <a href="explore/tag/hardware.html">hardware</a>   
+  <a href="explore/tag/dynamical-decoupling.html">dynamical decoupling</a>  
 </li>
-
-
+ 
     </ul>
     <div class="ablog-post-excerpt docutils container">
 <p>Recently our Partners over at Lawrence Berkeley National Laboratory (LBNL) published an interesting paper on probing quantum gravity in the lab: <a class="reference external" href="https://arxiv.org/abs/2205.14081">arXiv:2205.14081</a>.  This paper caught our eye for two reasons. First, it is about teleportation via wormholes, so why not check it out?  Second, it compares our quantum systems verses the trapped-ion systems from Quantinuum.  From a competitive standpoint, these types of papers are fun to look at and see if we can do better.  Trying to do so is the basis for this notebook.  If you want all the details you will need to see the paper, however the basics can be gathered from Figure 1 in the paper:</p>
@@ -1107,57 +849,38 @@ document.write(`
 </div>
 
     <p class="ablog-post-expand"><a href="posts/2022/2022-07-14-wormhole.html"><em>Read more ...</em></a></p>
-    <hr/>
+    <hr />
   </div>
   
+
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="posts/2021/2021-12-20-esp_readout.html">Excited State Promotion (ESP) Readout</a>
+      <a href="posts/2021/2021-12-20-esp_readout.html"
+        >Excited State Promotion (ESP) Readout</a
+      >
     </h2>
+
     <ul class="ablog-archive">
       <li>
-        
-        
-        <i class="fa fa-calendar"></i>
-        
-        20 December 2021
-        
+         <i class="fa fa-calendar"></i> 20 December 2021 
       </li>
-      
-
-<li id="ablog-sidebar-item author ablog__author">
-  <span>
-    
-    <i class="fa-fw fa fa-user"></i>
-    
-    </span>
-  
-  
-  <a href="explore/author/paul-nation.html">Paul Nation</a>
-  
-  
-  
+       
+<li id="author">
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
+  >
+   
+  <a href="explore/author/paul-nation.html">Paul Nation</a>  
 </li>
-
-
-
-
-<li id="ablog-sidebar-item category ablog__category">
-  <span>
-    
-    <i class="fa-fw fa fa-folder-open"></i>
-    
-    </span>
-  
-  
-  <a href="explore/category/hardware.html">Hardware</a>
-  
-  
-  
+   
+<li id="category">
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
+  >
+   
+  <a href="explore/category/hardware.html">Hardware</a>  
 </li>
-
-
-
+  
     </ul>
     <div class="ablog-post-excerpt docutils container">
 <p>Excited State Promotion (ESP) readout is method for decreasing measurement errors in quantum computing systems where decay from the excited <span class="math notranslate nohighlight">\(|1\rangle\)</span> state to <span class="math notranslate nohighlight">\(|0\rangle\)</span> is non-negligible over the measurement timescales.  Although it was originally an useful technique on the previous generation Falcon R4 systems, today it is only available on a few Falcon R5 systems where the nearly order of magnitude improvement in measurement times leaves little value in using this functionality.  In testing, it looks to even be a bit worse performing than the standard readout method.  ESP readout is on by default for those systems that support it.  To disable it run:</p>
@@ -1166,72 +889,49 @@ document.write(`
 </div>
 
     <p class="ablog-post-expand"><a href="posts/2021/2021-12-20-esp_readout.html"><em>Read more ...</em></a></p>
-    <hr/>
+    <hr />
   </div>
   
+
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="posts/2021/2021-11-28-falcon_r5.html">Comparison of Falcon R5 processors verse R4</a>
+      <a href="posts/2021/2021-11-28-falcon_r5.html"
+        >Comparison of Falcon R5 processors verse R4</a
+      >
     </h2>
+
     <ul class="ablog-archive">
       <li>
-        
-        
-        <i class="fa fa-calendar"></i>
-        
-        28 November 2021
-        
+         <i class="fa fa-calendar"></i> 28 November 2021 
       </li>
-      
-
-<li id="ablog-sidebar-item author ablog__author">
-  <span>
-    
-    <i class="fa-fw fa fa-user"></i>
-    
-    </span>
-  
-  
-  <a href="explore/author/paul-nation.html">Paul Nation</a>
-  
-  
-  
+       
+<li id="author">
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
+  >
+   
+  <a href="explore/author/paul-nation.html">Paul Nation</a>  
 </li>
-
-
-
-
-<li id="ablog-sidebar-item category ablog__category">
-  <span>
-    
-    <i class="fa-fw fa fa-folder-open"></i>
-    
-    </span>
-  
-  
-  <a href="explore/category/hardware.html">Hardware</a>
-  
-  
-  
+   
+<li id="category">
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
+  >
+   
+  <a href="explore/category/hardware.html">Hardware</a>  
 </li>
-
-
-<li id="ablog-sidebar-item tags ablog__tags">
-  <span>
-    
-    
-    <i class="fa-fw fa fa-tag"></i>
-    
-    </span>
-  
-  
-  <a href="explore/tag/falcon.html">Falcon</a>
-  
-  
-  
+ 
+<li id="tags">
+  <span
+    ><i
+      class="fa-fw fa fa-tag"
+    ></i
+    ></span
+  >
+   
+  <a href="explore/tag/falcon.html">Falcon</a>  
 </li>
-
-
+ 
     </ul>
     <div class="ablog-post-excerpt docutils container">
 <p>Recently IBM Quantum announced the move to revision 5 (R5) of its Falcon processors <a class="reference external" href="https://twitter.com/jaygambetta/status/1460697559773634570">see this tweet from Jay Gambetta</a>.  In particular it was highlighted that there is a 8x reduction in meausrement time on these systems.  Lets see if this, or any other enhancements, are visible from the system calibration data.</p>
@@ -1240,85 +940,48 @@ document.write(`
 </div>
 
     <p class="ablog-post-expand"><a href="posts/2021/2021-11-28-falcon_r5.html"><em>Read more ...</em></a></p>
-    <hr/>
+    <hr />
   </div>
   
+
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="posts/2021/2021-11-07-rep_delay.html">Improving state prep errors on IBM Quantum systems</a>
+      <a href="posts/2021/2021-11-07-rep_delay.html"
+        >Improving state prep errors on IBM Quantum systems</a
+      >
     </h2>
+
     <ul class="ablog-archive">
       <li>
-        
-        
-        <i class="fa fa-calendar"></i>
-        
-        07 November 2021
-        
+         <i class="fa fa-calendar"></i> 07 November 2021 
       </li>
-      
-
-<li id="ablog-sidebar-item author ablog__author">
-  <span>
-    
-    <i class="fa-fw fa fa-user"></i>
-    
-    </span>
-  
-  
-  <a href="explore/author/paul-nation.html">Paul Nation</a>
-  
-  
-  
+       
+<li id="author">
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
+  >
+   
+  <a href="explore/author/paul-nation.html">Paul Nation</a>  
 </li>
-
-
-
-
-<li id="ablog-sidebar-item category ablog__category">
-  <span>
-    
-    <i class="fa-fw fa fa-folder-open"></i>
-    
-    </span>
-  
-  
-  <a href="explore/category/hardware.html">Hardware</a>
-  
-  
-  
+   
+<li id="category">
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
+  >
+   
+  <a href="explore/category/hardware.html">Hardware</a>  
 </li>
-
-
-<li id="ablog-sidebar-item tags ablog__tags">
-  <span>
-    
-    
-    <i class="fa-fw fa fa-tags"></i>
-    
-    
-    </span>
-  
-  
-  <a href="explore/tag/spam.html">SPAM</a>
-  
-  
-  
-  
-  
-  <a href="explore/tag/dynamic.html">Dynamic</a>
-  
-  
-  
-  
-  
-  <a href="explore/tag/reset.html">Reset</a>
-  
-  
-  
+ 
+<li id="tags">
+  <span
+    ><i class="fa-fw fa fa-tags"></i> </span
+  >
+   
+  <a href="explore/tag/spam.html">SPAM</a>   
+  <a href="explore/tag/reset.html">Reset</a>   
+  <a href="explore/tag/dynamic.html">Dynamic</a>  
 </li>
-
-
+ 
     </ul>
     <div class="ablog-post-excerpt docutils container">
 <p>It is often taken for granted that qubits are initialized to zero when executing quantum circuits on hardware.  However, errors in the reset process mean that this initialization is not perfect leading to state preparation errors.  Here we will look at state prep errors and how to improve them on IBM Quantum systems.</p>
@@ -1327,72 +990,49 @@ document.write(`
 </div>
 
     <p class="ablog-post-expand"><a href="posts/2021/2021-11-07-rep_delay.html"><em>Read more ...</em></a></p>
-    <hr/>
+    <hr />
   </div>
   
+
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="posts/2021/2021-10-31-best_swap_mapper_qiskit.html">Choosing the best Qiskit swap mapper</a>
+      <a href="posts/2021/2021-10-31-best_swap_mapper_qiskit.html"
+        >Choosing the best Qiskit swap mapper</a
+      >
     </h2>
+
     <ul class="ablog-archive">
       <li>
-        
-        
-        <i class="fa fa-calendar"></i>
-        
-        31 October 2021
-        
+         <i class="fa fa-calendar"></i> 31 October 2021 
       </li>
-      
-
-<li id="ablog-sidebar-item author ablog__author">
-  <span>
-    
-    <i class="fa-fw fa fa-user"></i>
-    
-    </span>
-  
-  
-  <a href="explore/author/paul-nation.html">Paul Nation</a>
-  
-  
-  
+       
+<li id="author">
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
+  >
+   
+  <a href="explore/author/paul-nation.html">Paul Nation</a>  
 </li>
-
-
-
-
-<li id="ablog-sidebar-item category ablog__category">
-  <span>
-    
-    <i class="fa-fw fa fa-folder-open"></i>
-    
-    </span>
-  
-  
-  <a href="explore/category/qiskit.html">Qiskit</a>
-  
-  
-  
+   
+<li id="category">
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
+  >
+   
+  <a href="explore/category/qiskit.html">Qiskit</a>  
 </li>
-
-
-<li id="ablog-sidebar-item tags ablog__tags">
-  <span>
-    
-    
-    <i class="fa-fw fa fa-tag"></i>
-    
-    </span>
-  
-  
-  <a href="explore/tag/best-practices.html">best practices</a>
-  
-  
-  
+ 
+<li id="tags">
+  <span
+    ><i
+      class="fa-fw fa fa-tag"
+    ></i
+    ></span
+  >
+   
+  <a href="explore/tag/best-practices.html">best practices</a>  
 </li>
-
-
+ 
     </ul>
     <div class="ablog-post-excerpt docutils container">
 <p>One of the most important (perhaps the most important) steps when compiling quantum circuits for architectures with limited connectivity is swap mapping.  If a requested two-qubit gate cannot be implimented directly on hardware, the states of the corresponding qubits must be swapped with those of their neighboors until the states reside on qubits where a two qubit gate is supported.  Swap gates are expensive, equal to three CNOT gates, and therefore moving qubit states around using the fewest number of swap gates is desireable.  Unfortunately, directly computing the minimum number of swap gates is NP-complete, and heuristics need to be developed that come close to the ideal solution while scaling favorably with the number of qubits.</p>
@@ -1401,72 +1041,49 @@ document.write(`
 </div>
 
     <p class="ablog-post-expand"><a href="posts/2021/2021-10-31-best_swap_mapper_qiskit.html"><em>Read more ...</em></a></p>
-    <hr/>
+    <hr />
   </div>
   
+
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
-      <a href="posts/2021/2021-10-27-dynamic_BV.html">Dynamic Bernstein-Vazirani using mid-circuit reset and measurement</a>
+      <a href="posts/2021/2021-10-27-dynamic_BV.html"
+        >Dynamic Bernstein-Vazirani using mid-circuit reset and measurement</a
+      >
     </h2>
+
     <ul class="ablog-archive">
       <li>
-        
-        
-        <i class="fa fa-calendar"></i>
-        
-        27 October 2021
-        
+         <i class="fa fa-calendar"></i> 27 October 2021 
       </li>
-      
-
-<li id="ablog-sidebar-item author ablog__author">
-  <span>
-    
-    <i class="fa-fw fa fa-user"></i>
-    
-    </span>
-  
-  
-  <a href="explore/author/paul-nation.html">Paul Nation</a>
-  
-  
-  
+       
+<li id="author">
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
+  >
+   
+  <a href="explore/author/paul-nation.html">Paul Nation</a>  
 </li>
-
-
-
-
-<li id="ablog-sidebar-item category ablog__category">
-  <span>
-    
-    <i class="fa-fw fa fa-folder-open"></i>
-    
-    </span>
-  
-  
-  <a href="explore/category/hardware.html">Hardware</a>
-  
-  
-  
+   
+<li id="category">
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
+  >
+   
+  <a href="explore/category/hardware.html">Hardware</a>  
 </li>
-
-
-<li id="ablog-sidebar-item tags ablog__tags">
-  <span>
-    
-    
-    <i class="fa-fw fa fa-tag"></i>
-    
-    </span>
-  
-  
-  <a href="explore/tag/dynamic.html">Dynamic</a>
-  
-  
-  
+ 
+<li id="tags">
+  <span
+    ><i
+      class="fa-fw fa fa-tag"
+    ></i
+    ></span
+  >
+   
+  <a href="explore/tag/dynamic.html">Dynamic</a>  
 </li>
-
-
+ 
     </ul>
     <div class="ablog-post-excerpt docutils container">
 <p>The ability to do mid-circuit reset and measurement unlocks a variety of tools for executing quantum circuits.  A brief discussion is given in this <a class="reference external" href="https://www.ibm.com/blogs/research/2021/02/quantum-mid-circuit-measurement/">IBM Research blog post</a>.  On particular possibility is the ability to reuse qubits, and in doing so reduce the hardware requirements of some algorithms.  The Bernstein-Vazirani (BV) algorithm is one such example.  In particular, when using phase-kickback, BV usually requires a high degree of qubit connectivity to impliment.  This has been used by trapped-ion hardware vendors to show that their hardware gives better fidelity on these problems, e.g. see (<a class="reference external" href="https://arxiv.org/abs/2102.00371">https://arxiv.org/abs/2102.00371</a> and <a class="reference external" href="https://www.nature.com/articles/s41467-019-13534-2">https://www.nature.com/articles/s41467-019-13534-2</a>).  However, with reset and measurement, BV requires only two qubits, making connectivity differences mute.  We showed this in a reply Tweet: <a class="reference external" href="https://twitter.com/nonhermitian/status/1362348935440986113">https://twitter.com/nonhermitian/status/1362348935440986113</a>, but did not explain how we got that figure.  So here is how I did it.</p>
@@ -1475,39 +1092,59 @@ document.write(`
 </div>
 
     <p class="ablog-post-expand"><a href="posts/2021/2021-10-27-dynamic_BV.html"><em>Read more ...</em></a></p>
-    <hr/>
+    <hr />
   </div>
+   
+</div>
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
   
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
   
 </div>
 
-                </article>
-              
-              
-              
-                <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
-<div class="prev-next-area">
+<div class="toc-item">
+  
 </div>
-                </footer>
-              
+
             </div>
-            
-            
-              
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
             
           </div>
-          <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner"></div>
-          </footer>
+        </footer>
         
       </main>
     </div>
   </div>
+
   
+    
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
 
 <footer class="bd-footer">
 <div>

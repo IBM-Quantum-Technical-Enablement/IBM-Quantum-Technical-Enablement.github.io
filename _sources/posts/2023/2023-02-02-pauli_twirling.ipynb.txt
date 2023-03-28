@@ -15,7 +15,6 @@
    ]
   },
   {
-   "attachments": {},
    "cell_type": "markdown",
    "id": "85c17835",
    "metadata": {},
