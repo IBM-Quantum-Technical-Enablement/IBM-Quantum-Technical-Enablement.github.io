@@ -1,0 +1,2478 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Introduction to the Qiskit Compiler &#8212; Enabing Technologies  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/thebelab-helper.js"></script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-16824831-8"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-16824831-8');
+            </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'events/afrl-2023/transpiler/Introduction_to_qiskit_compiler';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../../../explore/atom.xml"
+  title="Quantum Explorations"
+/>
+
+
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the site..."
+         aria-label="Search the site..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../../_static/dark_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../how-to/howto.html">
+                        How to guides
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../explore.html">
+                        Explorations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../hardware/hardware.html">
+                        IBM Hardware
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../events.html">
+                        Events
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../members.html">
+                        Members
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the site..."
+         aria-label="Search the site..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../how-to/howto.html">
+                        How to guides
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../explore.html">
+                        Explorations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../hardware/hardware.html">
+                        IBM Hardware
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../events.html">
+                        Events
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../members.html">
+                        Members
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the site..."
+         aria-label="Search the site..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumbs">
+  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Introduction to the Qiskit Compiler</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+<section class="tex2jax_ignore mathjax_ignore" id="introduction-to-the-qiskit-compiler">
+<h1>Introduction to the Qiskit Compiler<a class="headerlink" href="#introduction-to-the-qiskit-compiler" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qiskit</span>
+<span class="n">qiskit</span><span class="o">.</span><span class="n">__version__</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;0.23.3&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="why-we-need-a-compiler">
+<h2>Why we need a compiler<a class="headerlink" href="#why-we-need-a-compiler" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Despite programming current quantum computers at the per bit level this is still an abstraction over the capabilities of the hardware</p></li>
+<li><p>Current quantum computers have numerous limitations</p></li>
+<li><p>The Qiskit compiler’s job is to take the virtual ideal circuit and translate it to a physical circuit that is optimized and capable of running on the actual device</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">transpile</span><span class="p">,</span> <span class="n">QuantumCircuit</span>
+<span class="kn">from</span> <span class="nn">qiskit_ibm_provider</span> <span class="kn">import</span> <span class="n">IBMProvider</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">provider</span> <span class="o">=</span> <span class="n">IBMProvider</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span>
+
+<span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">QFT</span>
+
+<span class="n">backend</span> <span class="o">=</span> <span class="n">provider</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s2">&quot;ibmq_jakarta&quot;</span><span class="p">)</span>
+
+<span class="c1"># Build QFT circuit with expected result 1111101</span>
+<span class="n">nqubits</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="n">number</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">nqubits</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">qubit</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nqubits</span><span class="p">):</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="n">qubit</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">p</span><span class="p">(</span><span class="n">number</span><span class="o">*</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">p</span><span class="p">(</span><span class="n">number</span><span class="o">*</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">p</span><span class="p">(</span><span class="n">number</span><span class="o">*</span><span class="n">pi</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">qc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">QFT</span><span class="p">(</span><span class="n">nqubits</span><span class="p">,</span> <span class="n">do_swaps</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">)))</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+
+<span class="n">qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">fold</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/1c9de980cc003bf06595baf4bdf559a40b22f20e86216a19c8a3b1704caeabe8.png" src="../../../_images/1c9de980cc003bf06595baf4bdf559a40b22f20e86216a19c8a3b1704caeabe8.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tqc_bad</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">optimization_level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">routing_method</span><span class="o">=</span><span class="s2">&quot;basic&quot;</span><span class="p">,</span> <span class="n">initial_layout</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="n">seed_transpiler</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">tqc_good</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">optimization_level</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">seed_transpiler</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tqc_bad</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">fold</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/b30f1079fb0b80573df76b11dc82844e952e458632357df394da84ac0d915a4d.png" src="../../../_images/b30f1079fb0b80573df76b11dc82844e952e458632357df394da84ac0d915a4d.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tqc_good</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">fold</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/4762d5da7a3e7ec23c6065e0a4711ed67c0acf2ce63158529e1ab218836f53f3.png" src="../../../_images/4762d5da7a3e7ec23c6065e0a4711ed67c0acf2ce63158529e1ab218836f53f3.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.visualization</span> <span class="kn">import</span> <span class="n">plot_histogram</span>
+<span class="kn">from</span> <span class="nn">qiskit_aer</span> <span class="kn">import</span> <span class="n">AerSimulator</span>
+
+<span class="n">sim</span> <span class="o">=</span> <span class="n">AerSimulator</span><span class="o">.</span><span class="n">from_backend</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
+<span class="n">sim</span><span class="o">.</span><span class="n">set_options</span><span class="p">(</span><span class="n">seed_simulator</span><span class="o">=</span><span class="mi">42_2023</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bad_job</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tqc_bad</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">10_000</span><span class="p">)</span>
+<span class="n">bad_counts</span> <span class="o">=</span> <span class="n">bad_job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;With bad compiler settings&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Got expected result: </span><span class="si">{</span><span class="mi">100</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">bad_counts</span><span class="p">[</span><span class="s1">&#39;1111101&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">10_000</span><span class="p">)</span><span class="si">}</span><span class="s2"> % of the time&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>With bad compiler settings
+Got expected result: 11.25 % of the time
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">good_job</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tqc_good</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">10_000</span><span class="p">)</span>
+<span class="n">good_counts</span> <span class="o">=</span> <span class="n">good_job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;With good compiler settings&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Got expected result: </span><span class="si">{</span><span class="mi">100</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">good_counts</span><span class="p">[</span><span class="s1">&#39;1111101&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">10_000</span><span class="p">)</span><span class="si">}</span><span class="s2"> % of the time&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>With good compiler settings
+Got expected result: 21.15 % of the time
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="constraints-on-hardware">
+<h2>Constraints on hardware<a class="headerlink" href="#constraints-on-hardware" title="Permalink to this heading">#</a></h2>
+<section id="supported-instructions">
+<h3>Supported Instructions<a class="headerlink" href="#supported-instructions" title="Permalink to this heading">#</a></h3>
+<p>Hardware only supports a subset of gates and other operations by default.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">backend</span><span class="o">.</span><span class="n">operation_names</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;id&#39;, &#39;rz&#39;, &#39;sx&#39;, &#39;x&#39;, &#39;cx&#39;, &#39;reset&#39;, &#39;measure&#39;, &#39;delay&#39;, &#39;if_else&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="qubit-connectivity">
+<h3>Qubit Connectivity<a class="headerlink" href="#qubit-connectivity" title="Permalink to this heading">#</a></h3>
+<p>For superconducting qubits the ability to run operations. On the physical device there is only connectivity between certain qubits:</p>
+<p><img alt="ibmqx2-labeled.png" src="events/afrl-2023/transpiler/attachment:ibmqx2-labeled.png" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.providers.fake_provider</span> <span class="kn">import</span> <span class="n">FakeYorktownV2</span>
+<span class="kn">from</span> <span class="nn">qiskit.visualization</span> <span class="kn">import</span> <span class="n">plot_gate_map</span>
+
+<span class="c1"># Look at a graph view of the same die photo</span>
+
+<span class="n">plot_gate_map</span><span class="p">(</span><span class="n">FakeYorktownV2</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/b8496d00377ab56c6e9f77a784f4b33a26541d2e3ac1543cd5bf6ca6a4abf0db.png" src="../../../_images/b8496d00377ab56c6e9f77a784f4b33a26541d2e3ac1543cd5bf6ca6a4abf0db.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Easy to reason about with 5 qubits, not as easy with:</span>
+
+<span class="n">backend</span> <span class="o">=</span> <span class="n">provider</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s2">&quot;ibm_seattle&quot;</span><span class="p">)</span>
+<span class="n">backend</span><span class="o">.</span><span class="n">coupling_map</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/d651940759b5b0a6943ac70ba146d5f70996db1b8ffb6c1cb6a31d95fe0c01f2.png" src="../../../_images/d651940759b5b0a6943ac70ba146d5f70996db1b8ffb6c1cb6a31d95fe0c01f2.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="noise-errors">
+<h2>Noise/Errors<a class="headerlink" href="#noise-errors" title="Permalink to this heading">#</a></h2>
+<p>Every operation on current quantum computers are sources of noise and error</p>
+<ul class="simple">
+<li><p>Gate errors</p></li>
+<li><p>Readout errors</p></li>
+<li><p>Decoherence</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.visualization</span> <span class="kn">import</span> <span class="n">plot_error_map</span>
+<span class="kn">from</span> <span class="nn">qiskit.providers.fake_provider</span> <span class="kn">import</span> <span class="n">FakeBelemV2</span>
+
+<span class="n">plot_error_map</span><span class="p">(</span><span class="n">FakeBelemV2</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/7994866532907a86e751bda40b7844ebfdd5556ea39a133b76358ad5cdc68c0b.png" src="../../../_images/7994866532907a86e751bda40b7844ebfdd5556ea39a133b76358ad5cdc68c0b.png" />
+</div>
+</div>
+<p><img alt="variability.png" src="events/afrl-2023/transpiler/attachment:variability.png" /></p>
+</section>
+<section id="modelling-the-constraints-of-hardware">
+<h2>Modelling the Constraints of Hardware<a class="headerlink" href="#modelling-the-constraints-of-hardware" title="Permalink to this heading">#</a></h2>
+<p>For compilation the <code class="docutils literal notranslate"><span class="pre">Target</span></code> data structure is used to model the constraints of a backend.
+Each <code class="docutils literal notranslate"><span class="pre">Backend</span></code> object in Qiskit creates a <code class="docutils literal notranslate"><span class="pre">Target</span></code> which is used by <code class="docutils literal notranslate"><span class="pre">transpile()</span></code> to understand the constraints of the target backend during compilation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.transpiler</span> <span class="kn">import</span> <span class="n">Target</span>
+<span class="kn">from</span> <span class="nn">qiskit.providers.fake_provider</span> <span class="kn">import</span> <span class="n">FakePrague</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">backend</span> <span class="o">=</span> <span class="n">FakePrague</span><span class="p">()</span>
+<span class="c1"># Print the contents of the target which shows all the constraints</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">backend</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Target
+Number of qubits: 33
+Instructions:
+	id
+		(0,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0002389040461508991
+		(1,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0003044545523649043
+		(2,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0003202191435487749
+		(3,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00017909819586198696
+		(4,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00014955012784294565
+		(5,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00021300316461249992
+		(6,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00020247519260627907
+		(7,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00012946361450120048
+		(8,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00012864606509348136
+		(9,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0003045229420625869
+		(10,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00012573921953873613
+		(11,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0001358591280252893
+		(12,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00016238103591878858
+		(13,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.001150801051256854
+		(14,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0001394064018077128
+		(15,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00021651650649759534
+		(16,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00013561719766764645
+		(17,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0001474607466623323
+		(18,):
+			Duration: 7.111111111111111e-08 sec.
+			Error Rate: 0.0007890418447050587
+		(19,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0002423181500199202
+		(20,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00023228282753251996
+		(21,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00016145950774828848
+		(22,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00010584542695244481
+		(23,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0009910178596714068
+		(24,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0003887435822993911
+		(25,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00012754084495811998
+		(26,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00016304312716183643
+		(27,):
+			Duration: 5.333333333333333e-08 sec.
+			Error Rate: 0.00041225419504403873
+		(28,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0001610009936360201
+		(29,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00041215216101415095
+		(30,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00013655520638991146
+		(31,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0013966510891300738
+		(32,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 7.359418329931831e-05
+	rz
+		(0,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(1,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(2,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(3,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(4,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(5,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(6,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(7,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(8,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(9,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(10,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(11,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(12,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(13,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(14,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(15,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(16,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(17,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(18,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(19,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(20,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(21,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(22,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(23,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(24,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(25,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(26,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(27,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(28,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(29,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(30,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(31,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+		(32,):
+			Duration: 0.0 sec.
+			Error Rate: 0
+	sx
+		(0,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0002389040461508991
+		(1,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0003044545523649043
+		(2,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0003202191435487749
+		(3,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00017909819586198696
+		(4,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00014955012784294565
+		(5,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00021300316461249992
+		(6,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00020247519260627907
+		(7,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00012946361450120048
+		(8,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00012864606509348136
+		(9,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0003045229420625869
+		(10,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00012573921953873613
+		(11,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0001358591280252893
+		(12,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00016238103591878858
+		(13,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.001150801051256854
+		(14,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0001394064018077128
+		(15,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00021651650649759534
+		(16,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00013561719766764645
+		(17,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0001474607466623323
+		(18,):
+			Duration: 7.111111111111111e-08 sec.
+			Error Rate: 0.0007890418447050587
+		(19,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0002423181500199202
+		(20,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00023228282753251996
+		(21,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00016145950774828848
+		(22,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00010584542695244481
+		(23,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0009910178596714068
+		(24,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0003887435822993911
+		(25,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00012754084495811998
+		(26,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00016304312716183643
+		(27,):
+			Duration: 5.333333333333333e-08 sec.
+			Error Rate: 0.00041225419504403873
+		(28,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0001610009936360201
+		(29,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00041215216101415095
+		(30,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00013655520638991146
+		(31,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0013966510891300738
+		(32,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 7.359418329931831e-05
+	x
+		(0,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0002389040461508991
+		(1,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0003044545523649043
+		(2,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0003202191435487749
+		(3,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00017909819586198696
+		(4,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00014955012784294565
+		(5,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00021300316461249992
+		(6,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00020247519260627907
+		(7,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00012946361450120048
+		(8,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00012864606509348136
+		(9,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0003045229420625869
+		(10,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00012573921953873613
+		(11,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0001358591280252893
+		(12,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00016238103591878858
+		(13,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.001150801051256854
+		(14,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0001394064018077128
+		(15,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00021651650649759534
+		(16,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00013561719766764645
+		(17,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0001474607466623323
+		(18,):
+			Duration: 7.111111111111111e-08 sec.
+			Error Rate: 0.0007890418447050587
+		(19,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0002423181500199202
+		(20,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00023228282753251996
+		(21,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00016145950774828848
+		(22,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00010584542695244481
+		(23,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0009910178596714068
+		(24,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0003887435822993911
+		(25,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00012754084495811998
+		(26,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00016304312716183643
+		(27,):
+			Duration: 5.333333333333333e-08 sec.
+			Error Rate: 0.00041225419504403873
+		(28,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0001610009936360201
+		(29,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00041215216101415095
+		(30,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.00013655520638991146
+		(31,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 0.0013966510891300738
+		(32,):
+			Duration: 2.4888888888888885e-08 sec.
+			Error Rate: 7.359418329931831e-05
+	cz
+		(2, 3):
+			Duration: 1.1022222222222221e-07 sec.
+			Error Rate: 0.007377595365745587
+		(3, 2):
+			Duration: 1.1022222222222221e-07 sec.
+			Error Rate: 0.007377595365745587
+		(4, 7):
+			Duration: 9.955555555555554e-08 sec.
+			Error Rate: 0.0019493985206142372
+		(7, 4):
+			Duration: 9.955555555555554e-08 sec.
+			Error Rate: 0.0019493985206142372
+		(8, 11):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.001990389944009463
+		(11, 8):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.001990389944009463
+		(12, 13):
+			Duration: 7.822222222222221e-08 sec.
+			Error Rate: 0.005661509137696696
+		(13, 12):
+			Duration: 7.822222222222221e-08 sec.
+			Error Rate: 0.005661509137696696
+		(16, 19):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.001788396546195531
+		(19, 16):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.001788396546195531
+		(18, 21):
+			Duration: 9.955555555555554e-08 sec.
+			Error Rate: 0.006537882220436081
+		(21, 18):
+			Duration: 9.955555555555554e-08 sec.
+			Error Rate: 0.006537882220436081
+		(24, 25):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.0029013701066811504
+		(25, 24):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.0029013701066811504
+		(27, 28):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.002191289357337034
+		(28, 27):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.002191289357337034
+		(1, 4):
+			Duration: 7.822222222222221e-08 sec.
+			Error Rate: 0.0027589351623611147
+		(4, 1):
+			Duration: 7.822222222222221e-08 sec.
+			Error Rate: 0.0027589351623611147
+		(3, 30):
+			Duration: 1.5288888888888887e-07 sec.
+			Error Rate: 0.003303566727177104
+		(30, 3):
+			Duration: 1.5288888888888887e-07 sec.
+			Error Rate: 0.003303566727177104
+		(8, 9):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.0037607255504101544
+		(9, 8):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.0037607255504101544
+		(10, 12):
+			Duration: 9.955555555555554e-08 sec.
+			Error Rate: 0.004181862101043016
+		(12, 10):
+			Duration: 9.955555555555554e-08 sec.
+			Error Rate: 0.004181862101043016
+		(14, 16):
+			Duration: 7.822222222222221e-08 sec.
+			Error Rate: 0.0016154387267004466
+		(16, 14):
+			Duration: 7.822222222222221e-08 sec.
+			Error Rate: 0.0016154387267004466
+		(17, 18):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.004969305800827689
+		(18, 17):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.004969305800827689
+		(22, 25):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.0026961593286613794
+		(25, 22):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.0026961593286613794
+		(23, 27):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.010584391579562702
+		(27, 23):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.010584391579562702
+		(1, 2):
+			Duration: 1.1022222222222221e-07 sec.
+			Error Rate: 0.0030625363979205067
+		(2, 1):
+			Duration: 1.1022222222222221e-07 sec.
+			Error Rate: 0.0030625363979205067
+		(5, 8):
+			Duration: 1.2088888888888888e-07 sec.
+			Error Rate: 0.0037749411689782797
+		(8, 5):
+			Duration: 1.2088888888888888e-07 sec.
+			Error Rate: 0.0037749411689782797
+		(7, 10):
+			Duration: 7.822222222222221e-08 sec.
+			Error Rate: 0.003260680394934684
+		(10, 7):
+			Duration: 7.822222222222221e-08 sec.
+			Error Rate: 0.003260680394934684
+		(13, 14):
+			Duration: 9.955555555555554e-08 sec.
+			Error Rate: 0.008114048326933049
+		(14, 13):
+			Duration: 9.955555555555554e-08 sec.
+			Error Rate: 0.008114048326933049
+		(15, 18):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.004184649205769303
+		(18, 15):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.004184649205769303
+		(19, 22):
+			Duration: 8.888888888888888e-08 sec.
+			Error Rate: 0.0014527609689087007
+		(22, 19):
+			Duration: 8.888888888888888e-08 sec.
+			Error Rate: 0.0014527609689087007
+		(23, 24):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.007998821867791994
+		(24, 23):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.007998821867791994
+		(30, 31):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.005063526281032404
+		(31, 30):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.005063526281032404
+		(0, 1):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.0022823511524740214
+		(1, 0):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.0022823511524740214
+		(3, 5):
+			Duration: 7.822222222222221e-08 sec.
+			Error Rate: 0.00224497153976963
+		(5, 3):
+			Duration: 7.822222222222221e-08 sec.
+			Error Rate: 0.00224497153976963
+		(6, 7):
+			Duration: 7.822222222222221e-08 sec.
+			Error Rate: 0.0020315923610455533
+		(7, 6):
+			Duration: 7.822222222222221e-08 sec.
+			Error Rate: 0.0020315923610455533
+		(11, 14):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.0018118959819415081
+		(14, 11):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.0018118959819415081
+		(12, 15):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.0019486051480764321
+		(15, 12):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.0019486051480764321
+		(19, 20):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.003458705600660944
+		(20, 19):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.003458705600660944
+		(21, 23):
+			Duration: 7.822222222222221e-08 sec.
+			Error Rate: 0.008434103161930773
+		(23, 21):
+			Duration: 7.822222222222221e-08 sec.
+			Error Rate: 0.008434103161930773
+		(25, 26):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.0019290771490182435
+		(26, 25):
+			Duration: 6.755555555555556e-08 sec.
+			Error Rate: 0.0019290771490182435
+		(28, 29):
+			Duration: 7.822222222222221e-08 sec.
+			Error Rate: 0.0022957019648003063
+		(29, 28):
+			Duration: 7.822222222222221e-08 sec.
+			Error Rate: 0.0022957019648003063
+		(31, 32):
+			Duration: 1.5288888888888887e-07 sec.
+			Error Rate: 0.005525099070626233
+		(32, 31):
+			Duration: 1.5288888888888887e-07 sec.
+			Error Rate: 0.005525099070626233
+	reset
+		(0,):
+			Duration: 1.319111111111111e-06 sec.
+		(1,):
+			Duration: 1.319111111111111e-06 sec.
+		(2,):
+			Duration: 1.319111111111111e-06 sec.
+		(3,):
+			Duration: 1.319111111111111e-06 sec.
+		(4,):
+			Duration: 1.319111111111111e-06 sec.
+		(5,):
+			Duration: 1.319111111111111e-06 sec.
+		(6,):
+			Duration: 1.3617777777777776e-06 sec.
+		(7,):
+			Duration: 1.3333333333333332e-06 sec.
+		(8,):
+			Duration: 1.319111111111111e-06 sec.
+		(9,):
+			Duration: 1.319111111111111e-06 sec.
+		(10,):
+			Duration: 1.319111111111111e-06 sec.
+		(11,):
+			Duration: 1.319111111111111e-06 sec.
+		(12,):
+			Duration: 1.319111111111111e-06 sec.
+		(13,):
+			Duration: 1.319111111111111e-06 sec.
+		(14,):
+			Duration: 1.319111111111111e-06 sec.
+		(15,):
+			Duration: 1.319111111111111e-06 sec.
+		(16,):
+			Duration: 1.319111111111111e-06 sec.
+		(17,):
+			Duration: 1.319111111111111e-06 sec.
+		(18,):
+			Duration: 1.3795555555555555e-06 sec.
+		(19,):
+			Duration: 1.304888888888889e-06 sec.
+		(20,):
+			Duration: 1.319111111111111e-06 sec.
+		(21,):
+			Duration: 1.319111111111111e-06 sec.
+		(22,):
+			Duration: 1.319111111111111e-06 sec.
+		(23,):
+			Duration: 1.3333333333333332e-06 sec.
+		(24,):
+			Duration: 1.3333333333333332e-06 sec.
+		(25,):
+			Duration: 1.319111111111111e-06 sec.
+		(26,):
+			Duration: 1.319111111111111e-06 sec.
+		(27,):
+			Duration: 1.3617777777777776e-06 sec.
+		(28,):
+			Duration: 1.319111111111111e-06 sec.
+		(29,):
+			Duration: 1.319111111111111e-06 sec.
+		(30,):
+			Duration: 1.319111111111111e-06 sec.
+		(31,):
+			Duration: 1.319111111111111e-06 sec.
+		(32,):
+			Duration: 1.319111111111111e-06 sec.
+	measure
+		(0,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.013399999999999967
+		(1,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.016700000000000048
+		(2,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.015700000000000047
+		(3,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.02839999999999998
+		(4,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.009000000000000008
+		(5,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.010199999999999987
+		(6,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.009000000000000008
+		(7,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.010199999999999987
+		(8,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.01090000000000002
+		(9,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.014399999999999968
+		(10,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.010099999999999998
+		(11,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.01100000000000001
+		(12,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.009299999999999975
+		(13,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.016699999999999937
+		(14,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.009700000000000042
+		(15,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.015000000000000013
+		(16,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.011600000000000055
+		(17,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.008199999999999985
+		(18,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.10289999999999999
+		(19,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.010599999999999943
+		(20,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.010399999999999965
+		(21,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.009500000000000064
+		(22,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.010000000000000009
+		(23,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.026599999999999957
+		(24,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.01649999999999996
+		(25,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.010199999999999987
+		(26,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.010299999999999976
+		(27,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.01330000000000009
+		(28,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.01639999999999997
+		(29,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.035800000000000054
+		(30,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.007800000000000029
+		(31,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.06309999999999993
+		(32,):
+			Duration: 1.1662222222222221e-06 sec.
+			Error Rate: 0.007300000000000084
+	delay
+		(0,)
+		(1,)
+		(2,)
+		(3,)
+		(4,)
+		(5,)
+		(6,)
+		(7,)
+		(8,)
+		(9,)
+		(10,)
+		(11,)
+		(12,)
+		(13,)
+		(14,)
+		(15,)
+		(16,)
+		(17,)
+		(18,)
+		(19,)
+		(20,)
+		(21,)
+		(22,)
+		(23,)
+		(24,)
+		(25,)
+		(26,)
+		(27,)
+		(28,)
+		(29,)
+		(30,)
+		(31,)
+		(32,)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualize the qubit connectivity</span>
+<span class="n">backend</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">build_coupling_map</span><span class="p">()</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/9d20b6403ee225d7d98c32bf3161278240421bb137ec5e0613ff51c90a297288.png" src="../../../_images/9d20b6403ee225d7d98c32bf3161278240421bb137ec5e0613ff51c90a297288.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Print the names of the supported instruction</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">backend</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">operation_names</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;id&#39;, &#39;rz&#39;, &#39;sx&#39;, &#39;x&#39;, &#39;cz&#39;, &#39;reset&#39;, &#39;measure&#39;, &#39;delay&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check if an operation is supported</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;CZ on (0,1) supported: &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">backend</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">instruction_supported</span><span class="p">(</span><span class="s1">&#39;cz&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">qargs</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;CX on (0,1) supported: &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">backend</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">instruction_supported</span><span class="p">(</span><span class="s1">&#39;cx&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">qargs</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CZ on (0,1) supported: True
+CX on (0,1) supported: False
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get instruction properties</span>
+<span class="n">backend</span><span class="o">.</span><span class="n">target</span><span class="p">[</span><span class="s1">&#39;cz&#39;</span><span class="p">][(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>InstructionProperties(duration=6.755555555555556e-08, error=0.0022823511524740214, calibration=None)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="working-with-the-transpile">
+<h2>Working with the <code class="docutils literal notranslate"><span class="pre">transpile()</span></code><a class="headerlink" href="#working-with-the-transpile" title="Permalink to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">transpile()</span></code> function is the primary entry point for compiling quantum circuits for hardware.</p>
+<p>It’s basic usage is you give it circuit(s) and a target backend. It will return the compiled <code class="docutils literal notranslate"><span class="pre">QuantumCircuit</span></code>(s) for that target backend. For example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circuit</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/82cce0540c9c05b1f2f74324a24eaa27af7482e4b4163c37e80b26d03c3cfbfb.png" src="../../../_images/82cce0540c9c05b1f2f74324a24eaa27af7482e4b4163c37e80b26d03c3cfbfb.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transpile</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">fold</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/b4dbc3afd368377f7a15861ae16a20f879599a2382432f860bbc207bef6879b7.png" src="../../../_images/b4dbc3afd368377f7a15861ae16a20f879599a2382432f860bbc207bef6879b7.png" />
+</div>
+</div>
+</section>
+<section id="optimization-level">
+<h2>Optimization level<a class="headerlink" href="#optimization-level" title="Permalink to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">optimization_level</span></code> argument is used to specify the degree of computational effort you want to use to try and optimize the circuit. Ranges from 0 (no optimization) to 3 (most effort). Increasing the number increases the effort the transpiler will spend trying to optimize the input.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set optimization_level</span>
+<span class="n">transpile</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">optimization_level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">fold</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/578001cf51ec20b548aa66910be04713e9a80c7c4eb996632e07f6b2162daa59.png" src="../../../_images/578001cf51ec20b548aa66910be04713e9a80c7c4eb996632e07f6b2162daa59.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Runtime increases with each optimization level:</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Time with optimization level: </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="o">%</span><span class="k">timeit</span> -n2 transpile(circuit, backend, optimization_level=i)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time with optimization level: 0
+16 ms ± 728 µs per loop (mean ± std. dev. of 7 runs, 2 loops each)
+Time with optimization level: 1
+18.4 ms ± 1.63 ms per loop (mean ± std. dev. of 7 runs, 2 loops each)
+Time with optimization level: 2
+28.1 ms ± 1.53 ms per loop (mean ± std. dev. of 7 runs, 2 loops each)
+Time with optimization level: 3
+41.2 ms ± 1.16 ms per loop (mean ± std. dev. of 7 runs, 2 loops each)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="stages-of-a-typical-transpile-pipeline">
+<h2>Stages of a typical transpile pipeline<a class="headerlink" href="#stages-of-a-typical-transpile-pipeline" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Init</strong> - Initial passes, typically consists of any logical optimization and any transforms necessary to run later stages</p></li>
+<li><p><strong>Layout</strong> - Runs the layout pass to map virtual circuit qubits to the physical qubits on the hardware</p></li>
+<li><p><strong>Routing</strong> - Inserts <code class="docutils literal notranslate"><span class="pre">SWAP</span></code> gates into the circuit where necessary to make up for a lack of connectivity</p></li>
+<li><p><strong>Translation</strong> - Translate all circuit operations into the target’s native operations</p></li>
+<li><p><strong>Optimization</strong> - Run any optimization and simplification on the circuit, typically run in a loop to continually optimize the circuit until it reaches a fixed size</p></li>
+<li><p><strong>Scheduling</strong> - Optional scheduling stage that times the circuit and inserts delay operations or dynamical decoupling sequences to account for all slack time in the circuit</p></li>
+</ul>
+</section>
+<section id="layout">
+<h2>Layout<a class="headerlink" href="#layout" title="Permalink to this heading">#</a></h2>
+<p>This stage is used to map the virtual qubits circuit qubits to the physical qubits on the device.</p>
+<p><img alt="layout.png" src="events/afrl-2023/transpiler/attachment:layout.png" /></p>
+<p>Built-in to Qiskit <code class="docutils literal notranslate"><span class="pre">transpile()</span></code> there are several passes to do this:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TrivialLayout</span></code> (<code class="docutils literal notranslate"><span class="pre">&quot;trivial&quot;</span></code>)- Maps qubit 0 to physical qubit 0, 1-&gt;1, 2-&gt;2, etc.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DenseLayout</span></code> (<code class="docutils literal notranslate"><span class="pre">&quot;dense&quot;</span></code>) - Finds the subgraph with densest connectivity in the connectivity graph and select a permutation of that as the layout.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VF2Layout</span></code> - Searches for a perfect layout as a subgraph isomorphism problem and if a solution exists will pick the layout with the lowest error rate (as reported by the backend).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VF2PostLayout</span></code> - Selects a new layout after routing stage based on error rates on target to try and maximize fidelity based on calibration data.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SabreLayout</span></code> (<code class="docutils literal notranslate"><span class="pre">&quot;sabre&quot;</span></code>) - A heuristic method that use a routing method to find a layout with minimal swaps required.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NoiseAdaptiveLayout</span></code> (<code class="docutils literal notranslate"><span class="pre">&quot;noise_adaptive&quot;</span></code>) - Uses the calibration data to find the lowest noise qubits to run the circuit on.</p></li>
+</ul>
+<p>(several others are also included but they’ve largely been superseded by these passes)</p>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">layout_method</span></code> argument on <code class="docutils literal notranslate"><span class="pre">transpile()</span></code> to change the layout used. Using argument will disable <code class="docutils literal notranslate"><span class="pre">VF2Layout</span></code> and <code class="docutils literal notranslate"><span class="pre">VF2PostLayout</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.providers.fake_provider</span> <span class="kn">import</span> <span class="n">FakeBelemV2</span>
+<span class="n">backend</span> <span class="o">=</span> <span class="n">FakeBelemV2</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circuit</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/82cce0540c9c05b1f2f74324a24eaa27af7482e4b4163c37e80b26d03c3cfbfb.png" src="../../../_images/82cce0540c9c05b1f2f74324a24eaa27af7482e4b4163c37e80b26d03c3cfbfb.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transpile</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/f51658f82c36d9092ad2f39cf78e20abe6df6b48f4a5b50ea65a123cbeabdbe6.png" src="../../../_images/f51658f82c36d9092ad2f39cf78e20abe6df6b48f4a5b50ea65a123cbeabdbe6.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transpile</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">layout_method</span><span class="o">=</span><span class="s1">&#39;sabre&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/c2ea6f02bdcffcb54ddc9f017c6031b94aa1f00645ee57939d94478d149f6ac1.png" src="../../../_images/c2ea6f02bdcffcb54ddc9f017c6031b94aa1f00645ee57939d94478d149f6ac1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transpile</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">layout_method</span><span class="o">=</span><span class="s1">&#39;trivial&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/a8cba1846a476084179427e23fb142bd21fb7aa016388e5a2e7f1a9ae41b7f89.png" src="../../../_images/a8cba1846a476084179427e23fb142bd21fb7aa016388e5a2e7f1a9ae41b7f89.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transpile</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">layout_method</span><span class="o">=</span><span class="s1">&#39;dense&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/bb08feb2afdbde2a6656e031c3b0e647c012301ac3036db995d57234b4d38953.png" src="../../../_images/bb08feb2afdbde2a6656e031c3b0e647c012301ac3036db995d57234b4d38953.png" />
+</div>
+</div>
+</section>
+<section id="manual-layout">
+<h2>Manual Layout<a class="headerlink" href="#manual-layout" title="Permalink to this heading">#</a></h2>
+<p>You can also specify the layout manually by using the <code class="docutils literal notranslate"><span class="pre">initial_layout</span></code> argument. This supersedes the <code class="docutils literal notranslate"><span class="pre">layout_method</span></code> if both are set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transpile</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">initial_layout</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/f56cd2c0798277ae180a07ab561fba4776b8825e4c013b1549a03ad42bd18ee6.png" src="../../../_images/f56cd2c0798277ae180a07ab561fba4776b8825e4c013b1549a03ad42bd18ee6.png" />
+</div>
+</div>
+</section>
+<section id="routing">
+<h2>Routing<a class="headerlink" href="#routing" title="Permalink to this heading">#</a></h2>
+<p>The routing stage is used to make up for insufficient connectivity on the target by inserting SWAP gates to move state</p>
+<p>Included in Qiskit are several different passes to do this</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">basic</span></code> - Iterates over DAG when it encounters a finds shortest path between nodes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stochastic</span></code> - Randomized algorithm that tries random trials of swaps at each layer and selects the swap to insert based on a heuristic score</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sabre</span></code> - Algorithm that applies a heuristic score (basic algorithm is described in: https://arxiv.org/pdf/1809.02573.pdf but Qiskit’s implementation has built on top of this)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lookahead</span></code> - Uses a beam search over possible SWAP combinations (described in: https://medium.com/qiskit/improving-a-quantum-compiler-48410d7a7084)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">none</span></code> - Error if routing is required</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">routing_method</span></code> argument is used to select which method to use.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.providers.fake_provider</span> <span class="kn">import</span> <span class="n">FakeNairobiV2</span>
+<span class="n">backend</span> <span class="o">=</span> <span class="n">FakeNairobiV2</span><span class="p">()</span>
+<span class="n">circuit</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/3b2f4e70087fd3b4a3655e11f8474e1ffa1828e6426eb5c7fbbb83c4f2406670.png" src="../../../_images/3b2f4e70087fd3b4a3655e11f8474e1ffa1828e6426eb5c7fbbb83c4f2406670.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Basic swap routing method</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">layout_method</span><span class="o">=</span><span class="s1">&#39;trivial&#39;</span><span class="p">,</span> <span class="n">routing_method</span><span class="o">=</span><span class="s1">&#39;basic&#39;</span><span class="p">,</span> <span class="n">basis_gates</span><span class="o">=</span><span class="n">backend</span><span class="o">.</span><span class="n">operation_names</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;swap&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Depth: </span><span class="si">{</span><span class="n">res</span><span class="o">.</span><span class="n">depth</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of swaps: </span><span class="si">{</span><span class="n">res</span><span class="o">.</span><span class="n">count_ops</span><span class="p">()[</span><span class="s1">&#39;swap&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">res</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">fold</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Depth: 28
+Number of swaps: 24
+</pre></div>
+</div>
+<img alt="../../../_images/ff99fa11b837a3eed9ffb79a8dcbf3e3a764ea3aa8343825aa28668948331d95.png" src="../../../_images/ff99fa11b837a3eed9ffb79a8dcbf3e3a764ea3aa8343825aa28668948331d95.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Stochastic Swap routing method</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">layout_method</span><span class="o">=</span><span class="s1">&#39;trivial&#39;</span><span class="p">,</span> <span class="n">routing_method</span><span class="o">=</span><span class="s1">&#39;stochastic&#39;</span><span class="p">,</span> <span class="n">basis_gates</span><span class="o">=</span><span class="n">backend</span><span class="o">.</span><span class="n">operation_names</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;swap&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Depth: </span><span class="si">{</span><span class="n">res</span><span class="o">.</span><span class="n">depth</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of swaps: </span><span class="si">{</span><span class="n">res</span><span class="o">.</span><span class="n">count_ops</span><span class="p">()[</span><span class="s1">&#39;swap&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">res</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">fold</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Depth: 25
+Number of swaps: 20
+</pre></div>
+</div>
+<img alt="../../../_images/1026309f035c798be8ea9df83078f29180672e62a4ce9d5f37597a962b0cfa35.png" src="../../../_images/1026309f035c798be8ea9df83078f29180672e62a4ce9d5f37597a962b0cfa35.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sabre swap routing method</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">layout_method</span><span class="o">=</span><span class="s1">&#39;trivial&#39;</span><span class="p">,</span> <span class="n">routing_method</span><span class="o">=</span><span class="s1">&#39;sabre&#39;</span><span class="p">,</span> <span class="n">basis_gates</span><span class="o">=</span><span class="n">backend</span><span class="o">.</span><span class="n">operation_names</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;swap&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Depth: </span><span class="si">{</span><span class="n">res</span><span class="o">.</span><span class="n">depth</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of swaps: </span><span class="si">{</span><span class="n">res</span><span class="o">.</span><span class="n">count_ops</span><span class="p">()[</span><span class="s1">&#39;swap&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">res</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">fold</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Depth: 27
+Number of swaps: 18
+</pre></div>
+</div>
+<img alt="../../../_images/ec84f8b8247c7a9036fb25be06d596affc2eb2897a6d4514e48960847d6c967d.png" src="../../../_images/ec84f8b8247c7a9036fb25be06d596affc2eb2897a6d4514e48960847d6c967d.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Lookahead swap routing method</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">layout_method</span><span class="o">=</span><span class="s1">&#39;trivial&#39;</span><span class="p">,</span> <span class="n">routing_method</span><span class="o">=</span><span class="s1">&#39;lookahead&#39;</span><span class="p">,</span> <span class="n">basis_gates</span><span class="o">=</span><span class="n">backend</span><span class="o">.</span><span class="n">operation_names</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;swap&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Depth: </span><span class="si">{</span><span class="n">res</span><span class="o">.</span><span class="n">depth</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of swaps: </span><span class="si">{</span><span class="n">res</span><span class="o">.</span><span class="n">count_ops</span><span class="p">()[</span><span class="s1">&#39;swap&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">res</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">fold</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Depth: 22
+Number of swaps: 16
+</pre></div>
+</div>
+<img alt="../../../_images/09eee624dc90d5907dd01e2167d222dab3491dcc24da31dea77bdcd4230b3e66.png" src="../../../_images/09eee624dc90d5907dd01e2167d222dab3491dcc24da31dea77bdcd4230b3e66.png" />
+</div>
+</div>
+</section>
+<section id="basis-translation">
+<h2>Basis Translation<a class="headerlink" href="#basis-translation" title="Permalink to this heading">#</a></h2>
+<p>The translation stage is used to convert all the circuit operations from the input circuit into instructions supported on the target. There are 3 methods available to do this.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">translator</span></code> - Uses a library of circuit equivalences to translate gates in circuit to target basis</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">synthesis</span></code> - Performs gate translation using unitary synthesis. Only works for some backend; if the target basis is supported by the synthesis routine. Typically far less efficient in runtime but potentially more efficient output in some cases</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unroller</span></code> - Legacy tree decent using built in definitions. Do not use if basis is anything other that <code class="docutils literal notranslate"><span class="pre">u3</span></code>, <code class="docutils literal notranslate"><span class="pre">u2</span></code>, <code class="docutils literal notranslate"><span class="pre">u1</span></code>, <code class="docutils literal notranslate"><span class="pre">cx</span></code> (IBM hardware’s legacy basis set) only exists for backwards compatibility</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">translation_method</span></code> is used to select the translation method. But in general it is best to
+stick with the <code class="docutils literal notranslate"><span class="pre">translator</span> <span class="pre">method</span></code> for best results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circuit</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/82cce0540c9c05b1f2f74324a24eaa27af7482e4b4163c37e80b26d03c3cfbfb.png" src="../../../_images/82cce0540c9c05b1f2f74324a24eaa27af7482e4b4163c37e80b26d03c3cfbfb.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transpile</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">translation_method</span><span class="o">=</span><span class="s1">&#39;translator&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/9bf5b23366f2f3001b0c42335e61f2266f3759aa5478d2ca0397f4b30c7429fd.png" src="../../../_images/9bf5b23366f2f3001b0c42335e61f2266f3759aa5478d2ca0397f4b30c7429fd.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transpile</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">translation_method</span><span class="o">=</span><span class="s1">&#39;synthesis&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">fold</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/124bd1532947c24d6195f2da7aa3506208ff6d4f8dfea83527d41a95661abab2.png" src="../../../_images/124bd1532947c24d6195f2da7aa3506208ff6d4f8dfea83527d41a95661abab2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.exceptions</span> <span class="kn">import</span> <span class="n">QiskitError</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">transpile</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">translation_method</span><span class="o">=</span><span class="s1">&#39;unroller&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">QiskitError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;This will not work with a modern backend&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>This will not work with a modern backend
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="adding-rules-for-custom-gates-to-equivalence-library">
+<h2>Adding rules for custom gates to equivalence library<a class="headerlink" href="#adding-rules-for-custom-gates-to-equivalence-library" title="Permalink to this heading">#</a></h2>
+<p>If you’re using custom gates not in Qiskit’s standard library you will also need to add equivalence rules to the library so that the basis translator will be able to use it.</p>
+<p>Typically an end user doesn’t need to do this (as the backend should already do this in normal cases), unless they’re defining custom gates with associated pulse schedules and want the transpiler to be able to use them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.circuit</span> <span class="kn">import</span> <span class="n">equivalence_library</span>
+<span class="n">equivalence_library</span><span class="o">.</span><span class="n">SessionEquivalenceLibrary</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/ac95be30e6f68335015d609026bd88b80f1738dbecc6371f03465532b9035087.png" src="../../../_images/ac95be30e6f68335015d609026bd88b80f1738dbecc6371f03465532b9035087.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">HGate</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">ZGate</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">RZGate</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">U2Gate</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit</span> <span class="kn">import</span> <span class="n">Gate</span>
+
+<span class="k">class</span> <span class="nc">SYGate</span><span class="p">(</span><span class="n">Gate</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Square root of Y gate&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;sy&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[],</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_define</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">q</span><span class="o">.</span><span class="n">ry</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">definition</span> <span class="o">=</span> <span class="n">qc</span>
+
+<span class="c1"># H =&gt; Z SY</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">qiskit</span><span class="o">.</span><span class="n">QuantumRegister</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;q&quot;</span><span class="p">)</span>
+<span class="n">def_sy_h</span> <span class="o">=</span> <span class="n">qiskit</span><span class="o">.</span><span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+<span class="n">def_sy_h</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ZGate</span><span class="p">(),</span> <span class="p">[</span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[])</span>
+<span class="n">def_sy_h</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SYGate</span><span class="p">(),</span> <span class="p">[</span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[])</span>
+<span class="n">equivalence_library</span><span class="o">.</span><span class="n">SessionEquivalenceLibrary</span><span class="o">.</span><span class="n">add_equivalence</span><span class="p">(</span>
+    <span class="n">HGate</span><span class="p">(),</span> <span class="n">def_sy_h</span><span class="p">)</span>
+
+<span class="c1"># u2 =&gt; Z SY Z</span>
+<span class="n">phi</span> <span class="o">=</span> <span class="n">qiskit</span><span class="o">.</span><span class="n">circuit</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="s1">&#39;phi&#39;</span><span class="p">)</span>
+<span class="n">lam</span> <span class="o">=</span> <span class="n">qiskit</span><span class="o">.</span><span class="n">circuit</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="s1">&#39;lambda&#39;</span><span class="p">)</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">qiskit</span><span class="o">.</span><span class="n">QuantumRegister</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;q&quot;</span><span class="p">)</span>
+<span class="n">def_sy_u2</span> <span class="o">=</span> <span class="n">qiskit</span><span class="o">.</span><span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+<span class="n">def_sy_u2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RZGate</span><span class="p">(</span><span class="n">lam</span><span class="p">),</span> <span class="p">[</span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[])</span>
+<span class="n">def_sy_u2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SYGate</span><span class="p">(),</span> <span class="p">[</span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[])</span>
+<span class="n">def_sy_u2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RZGate</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="p">[</span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[])</span>
+<span class="n">equivalence_library</span><span class="o">.</span><span class="n">SessionEquivalenceLibrary</span><span class="o">.</span><span class="n">add_equivalence</span><span class="p">(</span>
+    <span class="n">U2Gate</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">lam</span><span class="p">),</span> <span class="n">def_sy_u2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target</span> <span class="o">=</span> <span class="n">FakeBelemV2</span><span class="p">()</span><span class="o">.</span><span class="n">target</span>
+<span class="n">target</span><span class="o">.</span><span class="n">add_instruction</span><span class="p">(</span><span class="n">SYGate</span><span class="p">(),</span> <span class="p">{(</span><span class="n">i</span><span class="p">,):</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">)})</span>
+
+<span class="n">transpile</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/a7b81250a6f8490807ede989a34c639df817b57bf565fc4b2e4b78f572af2a43.png" src="../../../_images/a7b81250a6f8490807ede989a34c639df817b57bf565fc4b2e4b78f572af2a43.png" />
+</div>
+</div>
+</section>
+<section id="optimization">
+<h2>Optimization<a class="headerlink" href="#optimization" title="Permalink to this heading">#</a></h2>
+<p>The optimization stage is configurable with the <code class="docutils literal notranslate"><span class="pre">optimization_method</span></code> argument, but by default there is only one method available and its behavior is adjusted by the <code class="docutils literal notranslate"><span class="pre">optimization_level</span></code> argument used.</p>
+<p>There are many different methods for circuit optimization. There are 3 primary ones we’ll discuss here:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Optimize1qGatesDecomposition</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ComutativeCancelation</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Collect2qBlocks</span></code>, <code class="docutils literal notranslate"><span class="pre">ConsolidateBlocks</span></code>, and <code class="docutils literal notranslate"><span class="pre">UnitarySynthesis</span></code></p></li>
+</ul>
+<section id="qubit-gate-optimization">
+<h3>1 Qubit Gate Optimization<a class="headerlink" href="#qubit-gate-optimization" title="Permalink to this heading">#</a></h3>
+<p>This optimization finds isolated runs of single qubit gates</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span>
+<span class="kn">from</span> <span class="nn">qiskit.transpiler.passes</span> <span class="kn">import</span> <span class="n">Optimize1qGatesDecomposition</span>
+
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">Optimize1qGatesDecomposition</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">backend</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+<span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">ry</span><span class="p">((</span><span class="n">i</span> <span class="o">*</span> <span class="n">pi</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">rx</span><span class="p">((</span><span class="n">i</span> <span class="o">*</span> <span class="n">pi</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">rz</span><span class="p">((</span><span class="n">i</span> <span class="o">*</span> <span class="n">pi</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">y</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">z</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/078e4cc3bd2c40fd5be748eaec4b352e61bcfcbd34c5dcd5ed9469793abbf179.png" src="../../../_images/078e4cc3bd2c40fd5be748eaec4b352e61bcfcbd34c5dcd5ed9469793abbf179.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">optimizer</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/35ad93668b683386ef37371a99ba4bb787a7e09ba7dd920b6541a8677e5021c2.png" src="../../../_images/35ad93668b683386ef37371a99ba4bb787a7e09ba7dd920b6541a8677e5021c2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pprint</span>
+<span class="kn">from</span> <span class="nn">qiskit.converters</span> <span class="kn">import</span> <span class="n">circuit_to_dag</span>
+
+<span class="n">dag</span> <span class="o">=</span> <span class="n">circuit_to_dag</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span>
+<span class="n">runs</span> <span class="o">=</span> <span class="n">dag</span><span class="o">.</span><span class="n">collect_1q_runs</span><span class="p">()</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">runs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[DAGOpNode(op=Instruction(name=&#39;h&#39;, num_qubits=1, num_clbits=0, params=[]), qargs=(Qubit(QuantumRegister(1, &#39;q&#39;), 0),), cargs=()),
+  DAGOpNode(op=Instruction(name=&#39;ry&#39;, num_qubits=1, num_clbits=0, params=[0.0]), qargs=(Qubit(QuantumRegister(1, &#39;q&#39;), 0),), cargs=()),
+  DAGOpNode(op=Instruction(name=&#39;ry&#39;, num_qubits=1, num_clbits=0, params=[1.5707963267948966]), qargs=(Qubit(QuantumRegister(1, &#39;q&#39;), 0),), cargs=()),
+  DAGOpNode(op=Instruction(name=&#39;ry&#39;, num_qubits=1, num_clbits=0, params=[3.141592653589793]), qargs=(Qubit(QuantumRegister(1, &#39;q&#39;), 0),), cargs=()),
+  DAGOpNode(op=Instruction(name=&#39;ry&#39;, num_qubits=1, num_clbits=0, params=[4.71238898038469]), qargs=(Qubit(QuantumRegister(1, &#39;q&#39;), 0),), cargs=()),
+  DAGOpNode(op=Instruction(name=&#39;ry&#39;, num_qubits=1, num_clbits=0, params=[6.283185307179586]), qargs=(Qubit(QuantumRegister(1, &#39;q&#39;), 0),), cargs=()),
+  DAGOpNode(op=Instruction(name=&#39;rx&#39;, num_qubits=1, num_clbits=0, params=[0.0]), qargs=(Qubit(QuantumRegister(1, &#39;q&#39;), 0),), cargs=()),
+  DAGOpNode(op=Instruction(name=&#39;rx&#39;, num_qubits=1, num_clbits=0, params=[1.5707963267948966]), qargs=(Qubit(QuantumRegister(1, &#39;q&#39;), 0),), cargs=()),
+  DAGOpNode(op=Instruction(name=&#39;rx&#39;, num_qubits=1, num_clbits=0, params=[3.141592653589793]), qargs=(Qubit(QuantumRegister(1, &#39;q&#39;), 0),), cargs=()),
+  DAGOpNode(op=Instruction(name=&#39;rx&#39;, num_qubits=1, num_clbits=0, params=[4.71238898038469]), qargs=(Qubit(QuantumRegister(1, &#39;q&#39;), 0),), cargs=()),
+  DAGOpNode(op=Instruction(name=&#39;rx&#39;, num_qubits=1, num_clbits=0, params=[6.283185307179586]), qargs=(Qubit(QuantumRegister(1, &#39;q&#39;), 0),), cargs=()),
+  DAGOpNode(op=Instruction(name=&#39;rz&#39;, num_qubits=1, num_clbits=0, params=[0.0]), qargs=(Qubit(QuantumRegister(1, &#39;q&#39;), 0),), cargs=()),
+  DAGOpNode(op=Instruction(name=&#39;rz&#39;, num_qubits=1, num_clbits=0, params=[1.5707963267948966]), qargs=(Qubit(QuantumRegister(1, &#39;q&#39;), 0),), cargs=()),
+  DAGOpNode(op=Instruction(name=&#39;rz&#39;, num_qubits=1, num_clbits=0, params=[3.141592653589793]), qargs=(Qubit(QuantumRegister(1, &#39;q&#39;), 0),), cargs=()),
+  DAGOpNode(op=Instruction(name=&#39;rz&#39;, num_qubits=1, num_clbits=0, params=[4.71238898038469]), qargs=(Qubit(QuantumRegister(1, &#39;q&#39;), 0),), cargs=()),
+  DAGOpNode(op=Instruction(name=&#39;rz&#39;, num_qubits=1, num_clbits=0, params=[6.283185307179586]), qargs=(Qubit(QuantumRegister(1, &#39;q&#39;), 0),), cargs=()),
+  DAGOpNode(op=Instruction(name=&#39;y&#39;, num_qubits=1, num_clbits=0, params=[]), qargs=(Qubit(QuantumRegister(1, &#39;q&#39;), 0),), cargs=()),
+  DAGOpNode(op=Instruction(name=&#39;z&#39;, num_qubits=1, num_clbits=0, params=[]), qargs=(Qubit(QuantumRegister(1, &#39;q&#39;), 0),), cargs=())]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.quantum_info</span> <span class="kn">import</span> <span class="n">Operator</span>
+<span class="n">op</span> <span class="o">=</span> <span class="n">Operator</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">op</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Operator([[ 4.19662513e-16+0.70710678j,  1.35448999e-16-0.70710678j],
+          [ 1.35448999e-16+0.70710678j, -4.19662513e-16+0.70710678j]],
+         input_dims=(2,), output_dims=(2,))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.quantum_info.synthesis</span> <span class="kn">import</span> <span class="n">OneQubitEulerDecomposer</span>
+<span class="n">synthesis</span> <span class="o">=</span> <span class="n">OneQubitEulerDecomposer</span><span class="p">(</span><span class="n">basis</span><span class="o">=</span><span class="s1">&#39;ZSX&#39;</span><span class="p">)</span>
+<span class="n">simplified</span> <span class="o">=</span> <span class="n">synthesis</span><span class="p">(</span><span class="n">op</span><span class="p">)</span>
+<span class="n">simplified</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/805b7a798edab62cc6b45221e0b1f4a2332edc4f58cda6bd69dad24105119363.png" src="../../../_images/805b7a798edab62cc6b45221e0b1f4a2332edc4f58cda6bd69dad24105119363.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="commutative-cancellation">
+<h2>Commutative Cancellation<a class="headerlink" href="#commutative-cancellation" title="Permalink to this heading">#</a></h2>
+<p>Cancel redudant operations through commutation</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circuit</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/50ddd8a2d06b41493598d5aa3ecff476767096db65df2ca3b0569bf1b4ea83de.png" src="../../../_images/50ddd8a2d06b41493598d5aa3ecff476767096db65df2ca3b0569bf1b4ea83de.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.transpiler.passes</span> <span class="kn">import</span> <span class="n">CommutativeCancellation</span>
+<span class="kn">from</span> <span class="nn">qiskit.transpiler</span> <span class="kn">import</span> <span class="n">PassManager</span>
+
+<span class="n">pm</span> <span class="o">=</span> <span class="n">PassManager</span><span class="p">(</span><span class="n">CommutativeCancellation</span><span class="p">())</span>
+<span class="n">pm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">circuit</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/508077c5335e96a50b33861f3898941393efe919a5834fe7c7b46f0e9d4fbab9.png" src="../../../_images/508077c5335e96a50b33861f3898941393efe919a5834fe7c7b46f0e9d4fbab9.png" />
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="qubit-block-optimization">
+<h1>2 qubit block optimization<a class="headerlink" href="#qubit-block-optimization" title="Permalink to this heading">#</a></h1>
+<p>This optimization finds blocks of operations on 2 qubits and resynthesizes them to use less gates.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circuit</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cz</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">ry</span><span class="p">(</span><span class="mf">3.14159</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cy</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">z</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cy</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/b0700922c313f9760c6cdb22f04290bd3984ae16b6dc32f34af0a279029af02e.png" src="../../../_images/b0700922c313f9760c6cdb22f04290bd3984ae16b6dc32f34af0a279029af02e.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.transpiler.passes</span> <span class="kn">import</span> <span class="n">Collect2qBlocks</span><span class="p">,</span> <span class="n">ConsolidateBlocks</span>
+<span class="n">pm</span> <span class="o">=</span> <span class="n">PassManager</span><span class="p">([</span><span class="n">Collect2qBlocks</span><span class="p">(),</span> <span class="n">ConsolidateBlocks</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">backend</span><span class="o">.</span><span class="n">target</span><span class="p">)])</span>
+<span class="n">blocks</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">circuit</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">blocks</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">operation</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">blocks</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 6.63397448e-07-5.00000000e-01j -6.63397448e-07+5.00000000e-01j
+   5.00000000e-01+6.63397448e-07j -5.00000000e-01-6.63397448e-07j]
+ [ 5.00000000e-01+6.63397448e-07j  5.00000000e-01+6.63397448e-07j
+   6.63397448e-07-5.00000000e-01j  6.63397448e-07-5.00000000e-01j]
+ [ 6.63397448e-07+5.00000000e-01j -6.63397448e-07-5.00000000e-01j
+   5.00000000e-01-6.63397448e-07j -5.00000000e-01+6.63397448e-07j]
+ [-5.00000000e-01+6.63397448e-07j -5.00000000e-01+6.63397448e-07j
+  -6.63397448e-07-5.00000000e-01j -6.63397448e-07-5.00000000e-01j]]
+</pre></div>
+</div>
+<img alt="../../../_images/0d868e13dff3f54cf6ec00977a93a40646cd819bf0cb4dbd68ae378606606754.png" src="../../../_images/0d868e13dff3f54cf6ec00977a93a40646cd819bf0cb4dbd68ae378606606754.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.transpiler.passes</span> <span class="kn">import</span> <span class="n">UnitarySynthesis</span>
+<span class="n">UnitarySynthesis</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">backend</span><span class="o">.</span><span class="n">target</span><span class="p">)(</span><span class="n">blocks</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/7beb6efa1a5cd1679e959aeed093a3e77c728d2a5ba3317d82e79342fedcb8b0.png" src="../../../_images/7beb6efa1a5cd1679e959aeed093a3e77c728d2a5ba3317d82e79342fedcb8b0.png" />
+</div>
+</div>
+<section id="scheduling">
+<h2>Scheduling<a class="headerlink" href="#scheduling" title="Permalink to this heading">#</a></h2>
+<p>The scheduling stage is used to schedule the circuit so that all slack time in the execution of the circuit is accounted for. Included by default with Qiskit are two methods:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;alap&quot;</span></code> - As late as possible scheduling</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;asap&quot;</span></code> - As soon as possible scheduling</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">scheduling_method</span></code> argument is used to specify which scheduling method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transpile</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">scheduling_method</span><span class="o">=</span><span class="s1">&#39;alap&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/c343716679bf0466d63cc25894574571bf4bb8c9783796e9705b17bb5a25c6e3.png" src="../../../_images/c343716679bf0466d63cc25894574571bf4bb8c9783796e9705b17bb5a25c6e3.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transpile</span><span class="p">(</span><span class="n">circuit</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">scheduling_method</span><span class="o">=</span><span class="s1">&#39;asap&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/6123b66f24091ef748aee1a97468d5198bfd5644e501927dfdd3f66411268b27.png" src="../../../_images/6123b66f24091ef748aee1a97468d5198bfd5644e501927dfdd3f66411268b27.png" />
+</div>
+</div>
+</section>
+<section id="how-transpile-works-internally">
+<h2>How <code class="docutils literal notranslate"><span class="pre">transpile()</span></code> works internally<a class="headerlink" href="#how-transpile-works-internally" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="dag-circuit">
+<h2>DAG Circuit<a class="headerlink" href="#dag-circuit" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Intermediate representation inside Qiskit’s compiler.</p></li>
+<li><p>Similar to a data flow graph in classical compilers.</p></li>
+<li><p>Nodes represent input (bits at circuit start), output (bits at circuit end), and operations</p></li>
+<li><p>Edges indicate data flow between nodes</p></li>
+<li><p>Models flow of data on qubits and classical bits via operations</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">circuit</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">circuit</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+<span class="n">circuit</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/d9f78d9fa7f68c96a8566610f2db1375a7cfa68c462b03e3de8bce6080ebc671.png" src="../../../_images/d9f78d9fa7f68c96a8566610f2db1375a7cfa68c462b03e3de8bce6080ebc671.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dag</span> <span class="o">=</span> <span class="n">circuit_to_dag</span><span class="p">(</span><span class="n">circuit</span><span class="p">)</span>
+<span class="n">dag</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/bdf6c156c706adf2581246f63b9cfd95d0c6857ee1224c0bfe2840abdf8127e6.png" src="../../../_images/bdf6c156c706adf2581246f63b9cfd95d0c6857ee1224c0bfe2840abdf8127e6.png" />
+</div>
+</div>
+<p>This data structure makes it much easier to analyze the data dependency between operations, which is useful for many types of passes. For example, in 2q optimization collecting the bots:</p>
+<p><img alt="block_collection.png" src="events/afrl-2023/transpiler/attachment:block_collection.png" /></p>
+</section>
+<section id="passes">
+<h2>Passes<a class="headerlink" href="#passes" title="Permalink to this heading">#</a></h2>
+<p>The transpiler internally is broken up into a passes which are functions that</p>
+<p><img alt="passmanager_2.png" src="events/afrl-2023/transpiler/attachment:passmanager_2.png" /></p>
+</section>
+<section id="pass-managers">
+<h2>Pass Managers<a class="headerlink" href="#pass-managers" title="Permalink to this heading">#</a></h2>
+<p><img alt="passmanager.png" src="events/afrl-2023/transpiler/attachment:passmanager.png" /></p>
+</section>
+<section id="contents-of-preset-pass-managers">
+<h2>Contents of Preset Pass Managers<a class="headerlink" href="#contents-of-preset-pass-managers" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.transpiler.preset_passmanagers</span> <span class="kn">import</span> <span class="n">generate_preset_pass_manager</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="optimization-level-0">
+<h3>Optimization Level 0<a class="headerlink" href="#optimization-level-0" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>No optimization, designed to do minimal effort to just map input circuit to hardware constraints.</p></li>
+<li><p>Typically only used for characterization experiments</p></li>
+<li><p>Runs <code class="docutils literal notranslate"><span class="pre">TrivialLayout</span></code> (which maps virtual circuit qubit 0 -&gt; physical qubit 0, 1-&gt;1, 2-&gt;2, etc).</p></li>
+<li><p>Runs <code class="docutils literal notranslate"><span class="pre">StochasticSwap</span></code> routing pass</p></li>
+<li><p>Runs the <code class="docutils literal notranslate"><span class="pre">BasisTranslator</span></code> to convert to the native instructions</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">level_0</span> <span class="o">=</span> <span class="n">generate_preset_pass_manager</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+<span class="n">level_0</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/4cac9c13f05d330428663d8bba3e2465fbee866c0b92dbce68c926d9da7e054a.png" src="../../../_images/4cac9c13f05d330428663d8bba3e2465fbee866c0b92dbce68c926d9da7e054a.png" />
+</div>
+</div>
+</section>
+<section id="optimization-level-1">
+<h3>Optimization Level 1<a class="headerlink" href="#optimization-level-1" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Runs <code class="docutils literal notranslate"><span class="pre">TrivialLayout</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">VF2Layout</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">SabreLayout</span></code> trying each pass in succession and if a perfect layout is found the later passes are skipped</p></li>
+<li><p>Runs <code class="docutils literal notranslate"><span class="pre">SabreSwap</span></code> for routing</p></li>
+<li><p>Runs <code class="docutils literal notranslate"><span class="pre">VF2PostLayout</span></code> after routing</p></li>
+<li><p>Runs the <code class="docutils literal notranslate"><span class="pre">BasisTranslator</span></code> to convert to the native instructions</p></li>
+<li><p>For the optimization loop it runs 1q gate optimization and CX cancellation (finds runs of CX gates and cancels them out to mod 2)</p></li>
+<li><p>Optimization loop runs until it reaches fixed point in depth and size between 2 iterations</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">level_1</span> <span class="o">=</span> <span class="n">generate_preset_pass_manager</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+<span class="n">level_1</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/8708dfe905e00c5c9926ef27142598ff3d355446f1c814bade79333126c13be6.png" src="../../../_images/8708dfe905e00c5c9926ef27142598ff3d355446f1c814bade79333126c13be6.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="optimization-level-2">
+<h2>Optimization Level 2<a class="headerlink" href="#optimization-level-2" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">VF2Layout</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">SabreLayout</span></code> if VF2Layout can’t find a solution <code class="docutils literal notranslate"><span class="pre">SabreLayout</span></code> is used</p></li>
+<li><p>Number of random trials for VF2 and Sabre are increased over Level 1</p></li>
+<li><p>Runs <code class="docutils literal notranslate"><span class="pre">SabreSwap</span></code> for routing</p></li>
+<li><p>Runs <code class="docutils literal notranslate"><span class="pre">VF2PostLayout</span></code> after routing</p></li>
+<li><p>Runs the <code class="docutils literal notranslate"><span class="pre">BasisTranslator</span></code> to convert to the native instructions</p></li>
+<li><p>For the optimization loop it runs 1q gate optimization and commutative cancellation (which replaces CX cancellation)</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">level_2</span> <span class="o">=</span> <span class="n">generate_preset_pass_manager</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+<span class="n">level_2</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/0ba445916acc399090d6e3327683f762770fe5c5c2d9ba4a45c48d6f806c73a9.png" src="../../../_images/0ba445916acc399090d6e3327683f762770fe5c5c2d9ba4a45c48d6f806c73a9.png" />
+</div>
+</div>
+</section>
+<section id="optimization-level-3">
+<h2>Optimization Level 3<a class="headerlink" href="#optimization-level-3" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">VF2Layout</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">SabreLayout</span></code> if VF2Layout can’t find a solution <code class="docutils literal notranslate"><span class="pre">SabreLayout</span></code> is used</p></li>
+<li><p>Runs <code class="docutils literal notranslate"><span class="pre">SabreSwap</span></code> for routing</p></li>
+<li><p>Runs <code class="docutils literal notranslate"><span class="pre">VF2PostLayout</span></code> after routing</p></li>
+<li><p>Number of random trials for VF2 and Sabre are increased over Level 2</p></li>
+<li><p>Runs the <code class="docutils literal notranslate"><span class="pre">BasisTranslator</span></code> to convert to the native instructions</p></li>
+<li><p>Logical optimization runs in <code class="docutils literal notranslate"><span class="pre">init</span></code> to remove superfluous operations at front and end of circuit</p></li>
+<li><p>For the optimization loop it runs 1q gate optimization, 2q block optimization and commutative cancellation</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">level_3</span> <span class="o">=</span> <span class="n">generate_preset_pass_manager</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+<span class="n">level_3</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/1738c0a06a3b7461ee789400c6fdaa0642b57dea2dc3633bf634bc7dfadfb52f.png" src="../../../_images/1738c0a06a3b7461ee789400c6fdaa0642b57dea2dc3633bf634bc7dfadfb52f.png" />
+</div>
+</div>
+</section>
+<section id="conclusions">
+<h2>Conclusions<a class="headerlink" href="#conclusions" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Quantum circuit compilation is necessary for running</p></li>
+<li><p>Qiskit’s <code class="docutils literal notranslate"><span class="pre">transpile()</span></code> function is primary entry point for compiling circuits</p></li>
+<li><p>It maps and optimizes input circuits to run on hardware</p></li>
+<li><p>There are numerous options built-in to customize the behavior</p></li>
+</ul>
+<section id="part-2-tomorrow">
+<h3>Part 2 Tomorrow<a class="headerlink" href="#part-2-tomorrow" title="Permalink to this heading">#</a></h3>
+<p>We’ll look at how we can create custom compilation workflows for different applications.</p>
+</section>
+</section>
+</section>
+
+<div class="section ablog__blog_comments">
+  
+  
+</div>
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Introduction to the Qiskit Compiler</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-we-need-a-compiler">Why we need a compiler</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constraints-on-hardware">Constraints on hardware</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-instructions">Supported Instructions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qubit-connectivity">Qubit Connectivity</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#noise-errors">Noise/Errors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling-the-constraints-of-hardware">Modelling the Constraints of Hardware</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-the-transpile">Working with the <code class="docutils literal notranslate"><span class="pre">transpile()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-level">Optimization level</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stages-of-a-typical-transpile-pipeline">Stages of a typical transpile pipeline</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#layout">Layout</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#manual-layout">Manual Layout</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#routing">Routing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basis-translation">Basis Translation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-rules-for-custom-gates-to-equivalence-library">Adding rules for custom gates to equivalence library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization">Optimization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qubit-gate-optimization">1 Qubit Gate Optimization</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#commutative-cancellation">Commutative Cancellation</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#qubit-block-optimization">2 qubit block optimization</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scheduling">Scheduling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-transpile-works-internally">How <code class="docutils literal notranslate"><span class="pre">transpile()</span></code> works internally</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dag-circuit">DAG Circuit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#passes">Passes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pass-managers">Pass Managers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contents-of-preset-pass-managers">Contents of Preset Pass Managers</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-level-0">Optimization Level 0</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-level-1">Optimization Level 1</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-level-2">Optimization Level 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-level-3">Optimization Level 3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions">Conclusions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-tomorrow">Part 2 Tomorrow</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div class="tocsection sourcelink">
+    <a href="../../../_sources/events/afrl-2023/transpiler/Introduction_to_qiskit_compiler.ipynb.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner"></div>
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+<footer class="bd-footer">
+<div>
+<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
+        Content on
+        <a property="dct:title" rel="cc:attributionURL" href="http://quantum-enablement.org">this website</a> 
+        by <span property="cc:attributionName">IBM</span> is licensed under 
+        <a href="http://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">
+                Attribution-NonCommercial 4.0 International<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1">
+                <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1">
+                <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1">
+        </a>
+</p> 
+</div>
+</footer>
+
+  </body>
+</html>

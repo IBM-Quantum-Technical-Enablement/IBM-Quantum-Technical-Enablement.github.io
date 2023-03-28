@@ -648,8 +648,8 @@ document.write(`
 <h2>Sessions<a class="headerlink" href="#sessions" title="Permalink to this heading">#</a></h2>
 <p>When creating our sampler object we passed the target backend <code class="docutils literal notranslate"><span class="pre">Sampler(session=backend)</span></code> in as a “session”.  The concept of a <code class="docutils literal notranslate"><span class="pre">Session</span></code> is new, and it is a part of the IBM Quantum Runtime execution engine.</p>
 <p>In short, a <code class="docutils literal notranslate"><span class="pre">Session</span></code> is a “container” that holds a collection of jobs from primitives.  In general, there are two ways this works.  First, one can have a collection of one or more jbos that are independent.  Second, one can have two or more jobs that are interconnected, with later jobs conditioned on the results from those previously executed.  This latter case is typical for iterative algorithms such as variational methods.</p>
-<p><img alt="independent" src="../../../_images/independent1.png" /></p>
-<p><img alt="related" src="../../../_images/related1.png" /></p>
+<p><img alt="independent" src="../../../_images/independent2.png" /></p>
+<p><img alt="related" src="../../../_images/related2.png" /></p>
 <p>There are a couple of ways that Sessions can be utilized.  First, and most ideal, as a session is connected to the backend on which it is run, we can directly create a session instance from such a backend object:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -858,7 +858,7 @@ document.write(`
 <h2>Hands on example: CHSH via Runtime<a class="headerlink" href="#hands-on-example-chsh-via-runtime" title="Permalink to this heading">#</a></h2>
 <section id="id1">
 <h3>Background<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
-<img alt="../../../_images/people1.png" src="../../../_images/people1.png" />
+<img alt="../../../_images/people2.png" src="../../../_images/people2.png" />
 <p>Alain Aspect, John Clauser and Anton Zeilinger </figcaption></p>
 <p>This years Nobel Prize for Physics was awarded to Alain Aspect, John Clauser and Anton Zeilinger, for their pioneering work in quantum information science, and in particular their experiments with entangled photons demonstrating violation of Bell’s inequalities.  An experimental method by which one can test Bell’s inequality was put forth by <a class="reference external" href="https://doi.org/10.1103/PhysRevLett.23.880">Clauser, Horne, Shimony, and Holt (CHSH) in 1969</a>.  A few years later polarization correlations in photon pairs from Calcium atoms was observed: <a class="reference external" href="https://doi.org/10.1103/PhysRevLett.28.938">Stuart J. Freedman and John F. Clauser
 Phys. Rev. Lett. 28, 938 (1972)</a>, although this experiment suffered from a number of loopholes.  These loopholes were removed in subsequent works by <a class="reference external" href="https://doi.org/10.1103/PhysRevLett.49.91">Aspect et al</a> and <a class="reference external" href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.81.5039">Zeilinger et al</a>.</p>

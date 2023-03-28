@@ -1,0 +1,61 @@
+---
+orphan: true
+---
+
+# Qiskit and IBM Quantum Hardware
+
+(afrl23)=
+
+## Overview
+
+Getting started with Qiskit and IBM Quantum hardware
+
+## Details
+
+**Date**: March 28-29th, 2023
+
+**Location**:  AFRL (remote)
+
+## Workshop materials
+
+```{toctree}
+:caption: Day 1
+:maxdepth: 1
+:hidden:
+afrl-2023/intro/Topic1-Basic-quantum-circuit-and-simulation
+afrl-2023/intro/Topic2-Executing-IBM-Quantum-Systems
+afrl-2023/intro/Topic3-Parametrized-Circuits
+afrl-2023/intro/Topic4-Noisy-Simulation
+afrl-2023/transpiler/Introduction_to_qiskit_compiler
+afrl-2023/transpiler/Working_with_custom_transpile
+afrl-2023/adv/dynamic-circuits-1
+afrl-2023/adv/dynamic-circuits-2
+afrl-2023/adv/dynamic-circuits-3
+afrl-2023/adv/Runtime-1
+afrl-2023/adv/Runtime-2
+afrl-2023/adv/Runtime-3
+afrl-2023/adv/Runtime-4
+
+```
+
+```{button-link} https://github.com/IBM-Quantum-Technical-Enablement/afrl-2023/archive/refs/heads/main.zip
+:color: primary
+:shadow:
+Download all workshop content
+```
+
+| Files | 
+| :--- |
+| [Introduction to circuits and simulation](afrl-2023/intro/Topic1-Basic-quantum-circuit-and-simulation)  |
+| [Executing on IBM Quantum systems](afrl-2023/intro/Topic2-Executing-IBM-Quantum-Systems)  |
+| [Parameterized circuits](afrl-2023/intro/Topic3-Parametrized-Circuits)  |
+| [Noisy simulations](afrl-2023/intro/Topic4-Noisy-Simulation)  |
+| [Introduction to Qiskit transpiler](afrl-2023/transpiler/Introduction_to_qiskit_compiler)  |
+| [Working with custom transpilation](afrl-2023/transpiler/Working_with_custom_transpile)   |
+| [Dynamic circuits I](afrl-2023/adv/dynamic-circuits-1)   |
+| [Dynamic circuits II](afrl-2023/adv/dynamic-circuits-2)   |
+| [Dynamic circuits III](afrl-2023/adv/dynamic-circuits-3)   |
+| [Qiskit Runtime I](afrl-2023/adv/Runtime-1)   |
+| [Qiskit Runtime II](afrl-2023/adv/Runtime-2)   |
+| [Qiskit Runtime III](afrl-2023/adv/Runtime-3)   |
+| [Qiskit Runtime IV](afrl-2023/adv/Runtime-4)   |

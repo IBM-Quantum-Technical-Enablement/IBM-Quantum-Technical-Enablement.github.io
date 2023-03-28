@@ -446,7 +446,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-<p><img alt="beta" src="../../../_images/beta-version4.jpg" /></p>
+<p><img alt="beta" src="../../../_images/beta-version8.jpg" /></p>
 <section class="tex2jax_ignore mathjax_ignore" id="dynamic-circuits-ii">
 <h1>Dynamic circuits - II<a class="headerlink" href="#dynamic-circuits-ii" title="Permalink to this heading">#</a></h1>
 <div class="alert alert-warning">
@@ -459,7 +459,7 @@ document.write(`
 <section id="qiskit-ibm-provider">
 <h3>qiskit-ibm-provider<a class="headerlink" href="#qiskit-ibm-provider" title="Permalink to this heading">#</a></h3>
 <p>Up until now we have used <code class="docutils literal notranslate"><span class="pre">IBMQ.load_account()</span></code> and other functionality of the <code class="docutils literal notranslate"><span class="pre">qiskit-ibmq-provider</span></code> package that comes installed when doing <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">qiskit</span></code>.  This has been the manner in which IBM Quantum systems have been accessed for the last 3.5 years.  Given the present-day status of quantum technology 3.5 years is an eternity, and some design decisions from long-ago have now come to haunt us.  As such, to better implement things like dynamic circuits, better support for more complex hardware configurations, etc, the internal quantum circuit compilation pipeline had to be reworked.</p>
-<p><img alt="updates" src="../../../_images/updates1.png" /></p>
+<p><img alt="updates" src="../../../_images/updates2.png" /></p>
 <p>Because of the number of changes required in the underlying software and hardware, as well as a bit of marketing, IBM Quantum decided that a new package was needed to accomplish what needs to be done.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">qiskit-ibm-provider</span></code> is one of two ways to access IBM hardware going forward (the other is the Runtime, which we will discuss shortly).  We could have used this package earlier, but currently there are some limitations:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>1. The Aer simulator currently cannot build a noisy from a backend from the new provider (V2 backends)

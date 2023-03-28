@@ -1,5 +1,15 @@
 # Events
 
+## 2023
+
+:::{card} Qiskit and IBM Quantum Hardware
+:link: afrl23
+:link-type: ref
+
+**Date**: March 28-29th, 2023 \
+**Location**: AFRL (remote)
+:::
+
 ## 2022
 
 :::{card} Qiskit and IBM Quantum Hardware

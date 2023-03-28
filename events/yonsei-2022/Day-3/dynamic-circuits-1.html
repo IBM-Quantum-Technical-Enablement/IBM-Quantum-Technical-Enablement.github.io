@@ -593,7 +593,7 @@ document.write(`
 <section id="what-are-dynamic-circuits">
 <h2>What are dynamic circuits?<a class="headerlink" href="#what-are-dynamic-circuits" title="Permalink to this heading">#</a></h2>
 <p>Up until now we have focused on circuits with a set pattern of instructions: gates, measurements, etc.  This <em>static</em> configuration is much like lining up dominoes and watching them fall; it is a deterministic execution model.</p>
-<p><img alt="dominoes" src="../../../_images/dom1.png" /></p>
+<p><img alt="dominoes" src="../../../_images/dom2.png" /></p>
 <p>However, the vast majority of classical computing programs have flow-control / branching, e.g. if, else, for, while, where the portion of code executed later in the routine is conditioned on what happened before.  For example, computing an approximation of <span class="math notranslate nohighlight">\(\pi\)</span> in Python looks like:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize denominator</span>
 <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span>
@@ -664,7 +664,7 @@ document.write(`
 <section id="bv-as-a-dynamic-circuit">
 <h2>BV as a dynamic circuit<a class="headerlink" href="#bv-as-a-dynamic-circuit" title="Permalink to this heading">#</a></h2>
 <p>It turns out that our friend the BV circuit is an example of a circuit that benefits from qubit recycling.  To see how this works, let us look at the basic building block of the BV circuit</p>
-<p><img alt="breakdown" src="../../../_images/bv_breakdown1.png" /></p>
+<p><img alt="breakdown" src="../../../_images/bv_breakdown2.png" /></p>
 <p>We see that, due to the target qubit kicking-back the phase of en eigenvalue equation, the computation of each bit in a BV circuit involves two-qubits.  If we could reuse qubits, then the computation of any number of bits would require at most two-qubits. With measure+reset pairs (dynamic circuits) at our disposal, we can thus greatly improve the output fidelity of our BV circuits on hardware.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

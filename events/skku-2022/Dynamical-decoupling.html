@@ -492,7 +492,7 @@ Illya Shapoval, Vincent Paul Su, Wibe de Jong, Miro Urbanek, Brian Swingle <br /
 <a class="reference external" href="https://arxiv.org/abs/2205.14081">arXiv:2205.14081</a></p>
 </div></blockquote>
 <p>The basic idea behind this work can be seen from Fig.(1) of their paper:</p>
-<p><img alt="wormhole" src="../../_images/wormhole.png" /></p>
+<p><img alt="wormhole" src="../../_images/wormhole1.png" /></p>
 <p>We want to see how the teleportation protocall behaves as we vary the coupling strength <span class="math notranslate nohighlight">\(g\)</span> by evaluating the expectation value <span class="math notranslate nohighlight">\(\langle Z\rangle\)</span> of the state at the end.  To this end, we create a quantum circuit parameterized by a single variable <span class="math notranslate nohighlight">\(g\)</span>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -601,7 +601,7 @@ Illya Shapoval, Vincent Paul Su, Wibe de Jong, Miro Urbanek, Brian Swingle <br /
 <section id="simulations">
 <h2>Simulations<a class="headerlink" href="#simulations" title="Permalink to this heading">#</a></h2>
 <p>To understand the range of values over which to vary <span class="math notranslate nohighlight">\(g\)</span> let us look at the results from the paper given by Fig.~(5):</p>
-<p><img alt="result" src="../../_images/results.png" /></p>
+<p><img alt="result" src="../../_images/results1.png" /></p>
 <p>We see that rescaled variable <span class="math notranslate nohighlight">\(g/2\pi\)</span> is varied over the range <span class="math notranslate nohighlight">\([0, 0.5]\)</span>, with the largest signal at <span class="math notranslate nohighlight">\(g/2\pi = 0.25\)</span>.  Lets try to first repoduce the ideal result and then do a noisy (not scheduled) simulation for a target system.</p>
 <p>To make life easy, lets choose just a few points:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">g_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>

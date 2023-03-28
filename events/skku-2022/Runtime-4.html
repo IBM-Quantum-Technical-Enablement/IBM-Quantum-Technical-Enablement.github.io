@@ -446,7 +446,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-<p><img alt="beta" src="../../_images/beta-version.jpg" /></p>
+<p><img alt="beta" src="../../_images/beta-version4.jpg" /></p>
 <section class="tex2jax_ignore mathjax_ignore" id="qiskit-runtime-iv">
 <h1>Qiskit Runtime - IV<a class="headerlink" href="#qiskit-runtime-iv" title="Permalink to this heading">#</a></h1>
 <div class="alert alert-warning">
@@ -539,7 +539,7 @@ document.write(`
 </div>
 </div>
 <p>In addition to this, the circuit is scheduled (timing information added), and a specific DD sequence is added:</p>
-<p><img alt="runtime-dd" src="../../_images/runtime-dd.png" /></p>
+<p><img alt="runtime-dd" src="../../_images/runtime-dd1.png" /></p>
 <p>Lets try to vary the <code class="docutils literal notranslate"><span class="pre">optimization_level</span></code> and see what it does to our output fidelity.  Here we will use the <code class="docutils literal notranslate"><span class="pre">Estimator</span></code> and the controlled-Hadamard ladder circuit.  Here let us look at the difference when turning off all optimizations verses the Runtime default of level 3:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -777,8 +777,8 @@ document.write(`
 <h3>Level 2<a class="headerlink" href="#level-2" title="Permalink to this heading">#</a></h3>
 <p>Resilience levels 2 &amp; 3 are designed for the <code class="docutils literal notranslate"><span class="pre">Estimator</span></code> only as the mitigation methods used at these levels are targetting expectation values.  At <code class="docutils literal notranslate"><span class="pre">resilience_level=2</span></code> the <code class="docutils literal notranslate"><span class="pre">Estimator</span></code> performs zero-noise extrapolation (ZNE) in an effort to extract a (possibly biased) estimate of the requested expectation values at zero noise.  ZNE works by running “stretched” circuits where the goal of the stretching is to increase the gate noise in the circuit and compute expectation values at these various noise levels.  Then, one can in-principle extrapolate back to the zero-noise limit and get a mitigated value.</p>
 <p>There are two ways to stretch circuits, each with its pros and cons:</p>
-<p><img alt="analog-zne" src="../../_images/analog_zne.png" /></p>
-<p><img alt="digital-zne" src="../../_images/digital_zne.png" /></p>
+<p><img alt="analog-zne" src="../../_images/analog_zne1.png" /></p>
+<p><img alt="digital-zne" src="../../_images/digital_zne1.png" /></p>
 <p>Each method has its pros and cons:</p>
 <ul class="simple">
 <li><p>Analog stretching</p>
@@ -874,8 +874,8 @@ document.write(`
    Activating resilience level 3 should only be done with caution, and the knowledge that it can easily result in a time-out of your estimator job that has a 4 hour max. limit, or that it may not work as intended.
 </div>
 <p>Level 3 turns on probabilistic error cancellation (PEC), which is by far the most powerful (and expensive!) mitigation protocal.  In short, it is capable of, on average, mitigating expectation values for both gate and measurement noise.  This of course comes at a cost which is exponential in both the number of qubits and number of entangling gate layers in a circuit. The base of this exponential is determined by device quality, and therefore this overhead is exponentially reduced as device metrics such as two-qubit gate error rates improve.</p>
-<p><img alt="pec1" src="../../_images/pec1.png" /></p>
-<p><img alt="pec2" src="../../_images/pec2.png" /></p>
+<p><img alt="pec1" src="../../_images/pec11.png" /></p>
+<p><img alt="pec2" src="../../_images/pec21.png" /></p>
 <p>To date, there is no IBM Quantum processor that can perform PEC on anything more than trivial circuits without timing out.  Runtimes of even the most basic of circuits have execution times of an hour or more.  Therefore, here we demonstrate this method using a simple 4Q GHZ state, where the algorithm has to learn only two unique layers.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
