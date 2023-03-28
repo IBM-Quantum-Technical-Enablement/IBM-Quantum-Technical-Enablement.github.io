@@ -1,13 +1,10 @@
 
-
 <!DOCTYPE html>
 
-
-<html lang="en" >
-
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Improving state prep errors on IBM Quantum systems &#8212; Enabing Technologies  documentation</title>
   
@@ -19,26 +16,27 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
 
   
-  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -47,9 +45,14 @@
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/thebelab-helper.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/design-tabs.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-16824831-8"></script>
     <script>
                 window.dataLayer = window.dataLayer || [];
@@ -61,105 +64,112 @@
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'posts/2021/2021-11-07-rep_delay';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="en"/>
-
+    <link rel="search" title="Search" href="../../search.html" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en"> 
 <link
   rel="alternate"
   type="application/atom+xml"
   href="../../explore/atom.xml"
   title="Quantum Explorations"
 />
-
-
+ 
+<style type="text/css">
+  ul.ablog-archive {
+    list-style: none;
+    overflow: auto;
+    margin-left: 0px;
+  }
+  ul.ablog-archive li {
+    float: left;
+    margin-right: 5px;
+    font-size: 80%;
+  }
+  ul.postlist a {
+    font-style: italic;
+  }
+  ul.postlist-style-disc {
+    list-style-type: disc;
+  }
+  ul.postlist-style-none {
+    list-style-type: none;
+  }
+  ul.postlist-style-circle {
+    list-style-type: circle;
+  }
+</style>
 
   </head>
   
   
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
 
   
   
   <a class="skip-link" href="#main-content">Skip to main content</a>
+
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
   <label class="overlay overlay-primary" for="__primary"></label>
+
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
   <label class="overlay overlay-secondary" for="__secondary"></label>
+
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
     <div class="search-button__search-container">
-<form class="bd-search d-flex align-items-center"
-      action="../../search.html"
-      method="get">
+      
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
   <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search"
-         class="form-control"
-         name="q"
-         id="search-input"
-         placeholder="Search the site..."
-         aria-label="Search the site..."
-         autocomplete="off"
-         autocorrect="off"
-         autocapitalize="off"
-         spellcheck="false"/>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
+</form>
+    </div>
   </div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-<div class="bd-header__inner bd-page-width">
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
   <label class="sidebar-toggle primary-toggle" for="__primary">
-    <span class="fa-solid fa-bars"></span>
+      <span class="fa-solid fa-bars"></span>
   </label>
-  
-  <div class="navbar-header-items__start">
+  <div id="navbar-start">
     
-      <div class="navbar-item">
+    
   
 
+
 <a class="navbar-brand logo" href="../../index.html">
+
   
   
   
   
-    
-    
-      
-    
-    
-    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="../../_static/dark_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
   
   
-</a></div>
+  
+
+  
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../_static/dark_logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
     
   </div>
-  
+
   
   <div class="col-lg-9 navbar-header-items">
-    
-    <div class="me-auto navbar-header-items__center">
+    <div id="navbar-center" class="mr-auto">
       
-        <div class="navbar-item"><nav class="navbar-nav">
-  <p class="sidebar-header-items__title"
-     role="heading"
-     aria-level="1"
-     aria-label="Site Navigation">
-    Site Navigation
-  </p>
-  <ul class="bd-navbar-elements navbar-nav">
-    
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../how-to/howto.html">
                         How to guides
@@ -194,57 +204,41 @@
                       </a>
                     </li>
                 
-  </ul>
-</nav></div>
+    </ul>
+</nav>
+      </div>
       
     </div>
-    
-    
-    <div class="navbar-header-items__end">
+
+    <div id="navbar-end">
       
-        <div class="navbar-item navbar-persistent--container">
+        <div class="navbar-end-item navbar-persistent--container">
           
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
         </div>
       
       
-        <div class="navbar-item">
-<form class="bd-search d-flex align-items-center"
-      action="../../search.html"
-      method="get">
+      <div class="navbar-end-item">
+        
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
   <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search"
-         class="form-control"
-         name="q"
-         id="search-input"
-         placeholder="Search the site..."
-         aria-label="Search the site..."
-         autocomplete="off"
-         autocorrect="off"
-         autocapitalize="off"
-         spellcheck="false"/>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
+</form>
+      </div>
       
-        <div class="navbar-item">
-<script>
-document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
     <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
     <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
     <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
-  </button>
-`);
-</script></div>
+</button>
+      </div>
       
-        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
-    aria-label="Icon Links">
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
         <li class="nav-item">
           
           
@@ -253,58 +247,53 @@ document.write(`
           
           
           
-          
-          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
             <label class="sr-only">GitHub</label></a>
         </li>
-</ul></div>
+      </ul>
+      </div>
       
     </div>
-    
   </div>
+
+
   
   
     <div class="navbar-persistent--mobile">
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
     </div>
   
 
   
-    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
       <span class="fa-solid fa-outdent"></span>
-    </label>
+  </label>
   
-</div>
 
-    </nav>
+</div>
+  </nav>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
       <div class="bd-sidebar-primary bd-sidebar">
         
-
   
   <div class="sidebar-header-items sidebar-primary__section">
     
     
       <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
         
-          <div class="navbar-item"><nav class="navbar-nav">
-  <p class="sidebar-header-items__title"
-     role="heading"
-     aria-level="1"
-     aria-label="Site Navigation">
-    Site Navigation
-  </p>
-  <ul class="bd-navbar-elements navbar-nav">
-    
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../how-to/howto.html">
                         How to guides
@@ -339,46 +328,36 @@ document.write(`
                       </a>
                     </li>
                 
-  </ul>
-</nav></div>
-        
+    </ul>
+</nav>
+      </div>
+      
       </div>
     
+
     
     
-      <div class="sidebar-header-items__end">
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
         
-          <div class="navbar-item">
-<form class="bd-search d-flex align-items-center"
-      action="../../search.html"
-      method="get">
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
   <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search"
-         class="form-control"
-         name="q"
-         id="search-input"
-         placeholder="Search the site..."
-         aria-label="Search the site..."
-         autocomplete="off"
-         autocorrect="off"
-         autocapitalize="off"
-         spellcheck="false"/>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the site..." aria-label="Search the site..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-        
-          <div class="navbar-item">
-<script>
-document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+</form>
+      </div>
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
     <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
     <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
     <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
-  </button>
-`);
-</script></div>
-        
-          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
-    aria-label="Icon Links">
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
         <li class="nav-item">
           
           
@@ -387,225 +366,150 @@ document.write(`
           
           
           
-          
-          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
             <label class="sr-only">GitHub</label></a>
         </li>
-</ul></div>
-        
+      </ul>
       </div>
+      
+    </div>
     
   </div>
+
   
-    <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item">
-<div class="ablog-sidebar-item ablog__postcard">
-
-
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">  
 <h2>
-  
-  
-  <i class="fa fa-calendar"></i>
-  
-  07 November 2021
-  
+   <i class="fa fa-calendar"></i>
+  07 November 2021 
 </h2>
+
 <ul>
-  
-
-<li id="ablog-sidebar-item author ablog__author">
-  <span>
-    
-    <i class="fa-fw fa fa-user"></i>
-    
-    </span>
-  
-  
-  <a href="../../explore/author/paul-nation.html">Paul Nation</a>
-  
-  
-  
+   
+<li id="author">
+  <span
+    ><i class="fa-fw fa fa-user"></i></span
+  >
+   
+  <a href="../../explore/author/paul-nation.html">Paul Nation</a>  
 </li>
-
-
-
-
-<li id="ablog-sidebar-item category ablog__category">
-  <span>
-    
-    <i class="fa-fw fa fa-folder-open"></i>
-    
-    </span>
-  
-  
-  <a href="../../explore/category/hardware.html">Hardware</a>
-  
-  
-  
+   
+<li id="category">
+  <span
+    ><i class="fa-fw fa fa-folder-open"></i></span
+  >
+   
+  <a href="../../explore/category/hardware.html">Hardware</a>  
 </li>
-
-
-<li id="ablog-sidebar-item tags ablog__tags">
-  <span>
-    
-    
-    <i class="fa-fw fa fa-tags"></i>
-    
-    
-    </span>
-  
-  
-  <a href="../../explore/tag/dynamic.html">Dynamic</a>
-  
-  
-  
-  
-  
-  <a href="../../explore/tag/spam.html">SPAM</a>
-  
-  
-  
-  
-  
-  <a href="../../explore/tag/reset.html">Reset</a>
-  
-  
-  
+ 
+<li id="tags">
+  <span
+    ><i class="fa-fw fa fa-tags"></i> </span
+  >
+   
+  <a href="../../explore/tag/spam.html">SPAM</a>   
+  <a href="../../explore/tag/reset.html">Reset</a>   
+  <a href="../../explore/tag/dynamic.html">Dynamic</a>  
 </li>
-
-
+ 
 </ul>
-</div>
-</div>
-        <div class="sidebar-primary-item"><div class="dropdown-buttons">
+
+    </div>
+    <div class="sidebar-start-items__item"><div class="dropdown-buttons">
     <!-- ipynb file if we had a myst markdown file -->
     
     <!-- Download raw file -->
     <a class="dropdown-buttons" href="../../_sources/posts/2021/2021-11-07-rep_delay.ipynb.txt"><button type="button"
             class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
             data-placement="left">.ipynb</button></a>
-</div></div>
-        <div class="sidebar-primary-item">
-<div class="ablog-sidebar-item ablog__recentposts">
+</div>
+    </div>
+    <div class="sidebar-start-items__item">
 <h3>
   <a href="../../explore.html">Recent Posts</a>
 </h3>
 <ul>
-  
-  
+   
   <li>
-    <a href="../2023/2023-02-02-pauli_twirling.html">
-      02 February - Generating Pauli-twirled circuits in Qiskit
-    </a>
+    <a href="../2023/2023-02-02-pauli_twirling.html"
+      >02 February - Generating Pauli-twirled circuits in Qiskit</a
+    >
   </li>
   
   <li>
-    <a href="../2023/2023-01-28-directed_cmap.html">
-      28 January - How to make your backend a directed backend
-    </a>
+    <a href="../2023/2023-01-28-directed_cmap.html"
+      >28 January - How to make your backend a directed backend</a
+    >
   </li>
   
   <li>
-    <a href="../2022/2022-11-07-challenge.html">
-      07 November - Quantum Practitioners Forum 2022: CHSH Distance Challenge
-    </a>
+    <a href="../2022/2022-11-07-challenge.html"
+      >07 November - Quantum Practitioners Forum 2022: CHSH Distance Challenge</a
+    >
   </li>
   
   <li>
-    <a href="../2022/2022-08-22-readout_mitigation.html">
-      22 August - [BETA] Readout error mitigation in Runtime
-    </a>
+    <a href="../2022/2022-08-22-readout_mitigation.html"
+      >22 August - [BETA] Readout error mitigation in Runtime</a
+    >
   </li>
   
   <li>
-    <a href="../2022/2022-07-26-fairshare.html">
-      26 July - Understanding fair-share scheduling
-    </a>
+    <a href="../2022/2022-07-26-fairshare.html"
+      >26 July - Understanding fair-share scheduling</a
+    >
   </li>
   
 </ul>
-</div>
-</div>
-        <div class="sidebar-primary-item">
-<div class="ablog-sidebar-item ablog__archive">
+
+    </div>
+    <div class="sidebar-start-items__item">
 <h3>
   <a href="../../explore/archive.html">Archives</a>
 </h3>
 <ul>
-  
-  
+   
   <li>
     <a href="../../explore/2023.html">2023 (2)</a>
   </li>
-  
-  
-  
+    
   <li>
     <a href="../../explore/2022.html">2022 (4)</a>
   </li>
-  
-  
-  
+    
   <li>
     <a href="../../explore/2021.html">2021 (5)</a>
   </li>
-  
-  
+   
 </ul>
-</div>
-</div>
+
     </div>
-  
-  
-  <div class="sidebar-primary-items__end sidebar-primary__section">
   </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
   
   <div id="rtd-footer-container"></div>
 
-
       </div>
-      
       <main id="main-content" class="bd-main">
         
         
-          <div class="bd-content">
-            <div class="bd-article-container">
-              
-              <div class="bd-header-article">
-<div class="header-article-items header-article__inner">
-  
-    <div class="header-article-items__start">
-      
-        <div class="header-article-item">
-
-
-
-<nav aria-label="Breadcrumbs">
-  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
-    
-    <li class="breadcrumb-item breadcrumb-home">
-      <a href="../../index.html" class="nav-link" aria-label="Home">
-        <i class="fa-solid fa-home"></i>
-      </a>
-    </li>
-    <li class="breadcrumb-item active" aria-current="page">Improving state prep errors on IBM Quantum systems</li>
-  </ul>
-</nav>
-</div>
-      
-    </div>
-  
-  
-</div>
-</div>
-              
-              
-              
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
                 
-<div id="searchbox"></div>
-                <article class="bd-article" role="main">
-                  
-<section class="tex2jax_ignore mathjax_ignore" id="improving-state-prep-errors-on-ibm-quantum-systems">
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+               <section class="tex2jax_ignore mathjax_ignore" id="improving-state-prep-errors-on-ibm-quantum-systems">
 <h1>Improving state prep errors on IBM Quantum systems<a class="headerlink" href="#improving-state-prep-errors-on-ibm-quantum-systems" title="Permalink to this heading">#</a></h1>
 <p>It is often taken for granted that qubits are initialized to zero when executing quantum circuits on hardware.  However, errors in the reset process mean that this initialization is not perfect leading to state preparation errors.  Here we will look at state prep errors and how to improve them on IBM Quantum systems.</p>
 <p>Here we will use two lesser known configuration variables available on IBM Quantum systems to do so.  First is <code class="docutils literal notranslate"><span class="pre">rep_delay</span></code>.  This is the delay time before the next circuit is executed.  Each backend has a different <code class="docutils literal notranslate"><span class="pre">default_rep_delay</span></code> (although as of the time of writing many are <span class="math notranslate nohighlight">\(250~\mu \rm s\)</span> or lower) and support tuning this parameter from <span class="math notranslate nohighlight">\(0\)</span> up to <span class="math notranslate nohighlight">\(500~\mu \rm s\)</span>.  Why in the world would I want to vary this parameter?  Well if I set <code class="docutils literal notranslate"><span class="pre">rep_delay=0</span></code> then I can get much faster throughput as the default delay is nominally longer than the <span class="math notranslate nohighlight">\(T_{1}\)</span> time of the system.  However when doing so you are trusting the implicit reset (called “unconditional reset”) to do its job and reset the qubits to their ground state with high-fidelity.  Failure to do so would lead to state-prep errors that propagate through the circuit.  This is why the delay is usually longer than <span class="math notranslate nohighlight">\(T_{1}\)</span>; let the enviornment help your reset fidelity.  Second is <code class="docutils literal notranslate"><span class="pre">init_qubits</span></code> that tells the hardware to not perform an unconditional reset.  As no reset at all would quickly lead to junk, this setting needs to be done in concert with <code class="docutils literal notranslate"><span class="pre">reset</span></code> instructions being added to the beginning of your circuits.  Perhaps this is better, or maybe a single reset at the beginning and the uncondtional reset.  Lets find out.</p>
@@ -650,7 +554,7 @@ p = H_{\rm frac} \equiv \frac{\bar{H}}{N_{Q}}
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">target_basis_circ</span><span class="p">(</span><span class="n">bitstring</span><span class="p">,</span> <span class="n">with_reset</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Prep and measure target computational basis state.</span>
+    <span class="sd">&quot;&quot;&quot;Prep and measure target computational basis state.</span>
 <span class="sd">    </span>
 <span class="sd">    Parameters:</span>
 <span class="sd">        bitstring (str): The target basis state</span>
@@ -679,7 +583,7 @@ p = H_{\rm frac} \equiv \frac{\bar{H}}{N_{Q}}
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hamming_distance</span><span class="p">(</span><span class="n">str1</span><span class="p">,</span> <span class="n">str2</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Hamming distance between two bit strings.</span>
+    <span class="sd">&quot;&quot;&quot;Hamming distance between two bit strings.</span>
 <span class="sd">    </span>
 <span class="sd">    Parameters:</span>
 <span class="sd">        str1 (str): Bit string 1.</span>
@@ -696,7 +600,7 @@ p = H_{\rm frac} \equiv \frac{\bar{H}}{N_{Q}}
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hamming_fraction</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">target_state</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Hamming fraction of counts data from target state.</span>
+    <span class="sd">&quot;&quot;&quot;Hamming fraction of counts data from target state.</span>
 <span class="sd">    </span>
 <span class="sd">    Parameters:</span>
 <span class="sd">        counts (Counts): Counts data.</span>
@@ -1276,116 +1180,199 @@ rep delay range : [0.0, 500.0] us
 </section>
 </section>
 
-<div class="section ablog__blog_comments">
-  
-  
-
-
-<div class="section ablog__prev-next">
-  <span class="ablog__prev">
+<div class="section">
     
-    
+
+<div class="section">
+  <span style="float: left">
+     
     <a href="2021-10-31-best_swap_mapper_qiskit.html">
-      
-      <i class="fa fa-arrow-circle-left"></i>
-      
-      <span>Choosing the best Qiskit swap mapper</span>
+      <i class="fa fa-arrow-circle-left"></i> Choosing the best Qiskit swap mapper
     </a>
     
   </span>
-  <span class="ablog__spacer">&nbsp;</span>
-  <span class="ablog__next">
-    
-    
+  <span>&nbsp;</span>
+  <span style="float: right">
+     
     <a href="2021-11-28-falcon_r5.html">
-      <span>Comparison of Falcon R5 processors verse R4</span>
-      
-      <i class="fa fa-arrow-circle-right" ></i>
-      
+      Comparison of Falcon R5 processors verse R4 <i
+        class="fa fa-arrow-circle-right"
+      ></i
+      >
     </a>
     
   </span>
 </div>
-
-  
   
 </div>
 
-                </article>
-              
-              
-              
-                <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
-<div class="prev-next-area">
-</div>
-                </footer>
-              
-            </div>
+            </article>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#average-spam-error-rate-per-qubit">Average SPAM error rate per qubit</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#frontmatter">Frontmatter</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#define-needed-functions">Define needed functions</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#experiments">Experiments</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#effect-of-rep-delay-on-state-prep-error">Effect of <code class="docutils literal notranslate"><span class="pre">rep_delay</span></code> on state prep error</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-manila-system">5Q Manila system</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#spam-error-rate-with-no-resets">SPAM error rate with no resets</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#spam-error-rate-with-reset-and-no-implicit-reset">SPAM error rate with reset and NO implicit reset</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#spam-error-rate-using-3x-resets">SPAM error rate using 3x resets</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-jakarta-system">7Q Jakarta system</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#spam-error-rate">SPAM error rate</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">SPAM error rate using 3x resets</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-for-other-systems">Data for other systems</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#montreal">Montreal</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hanoi">Hanoi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perth">Perth</a></li>
-</ul>
-</li>
-</ul>
-  </nav></div>
-
-  <div class="sidebar-secondary-item">
-  <div class="tocsection sourcelink">
-    <a href="../../_sources/posts/2021/2021-11-07-rep_delay.ipynb.txt">
-      <i class="fa-solid fa-file-lines"></i> Show Source
-    </a>
-  </div>
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
 </div>
-
-</div></div>
-              
+            </footer>
             
           </div>
-          <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner"></div>
-          </footer>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#average-spam-error-rate-per-qubit">
+   Average SPAM error rate per qubit
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#frontmatter">
+   Frontmatter
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#define-needed-functions">
+     Define needed functions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#experiments">
+   Experiments
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#effect-of-rep-delay-on-state-prep-error">
+     Effect of
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       rep_delay
+      </span>
+     </code>
+     on state prep error
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#q-manila-system">
+     5Q Manila system
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#spam-error-rate-with-no-resets">
+       SPAM error rate with no resets
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#spam-error-rate-with-reset-and-no-implicit-reset">
+       SPAM error rate with reset and NO implicit reset
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#spam-error-rate-using-3x-resets">
+       SPAM error rate using 3x resets
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#q-jakarta-system">
+     7Q Jakarta system
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#spam-error-rate">
+       SPAM error rate
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       SPAM error rate using 3x resets
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-for-other-systems">
+   Data for other systems
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#montreal">
+     Montreal
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hanoi">
+     Hanoi
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#perth">
+     Perth
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../../_sources/posts/2021/2021-11-07-rep_delay.ipynb.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
         
       </main>
     </div>
   </div>
+
   
+    
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
 
 <footer class="bd-footer">
 <div>
