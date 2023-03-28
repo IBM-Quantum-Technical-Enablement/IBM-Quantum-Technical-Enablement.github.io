@@ -1,0 +1,1030 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Topic 2. Executing IBM Quantum Systems &#8212; Enabing Technologies  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/thebelab-helper.js"></script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-16824831-8"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-16824831-8');
+            </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'events/afrl-2023/intro/Topic2-Executing-IBM-Quantum-Systems';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../../../explore/atom.xml"
+  title="Quantum Explorations"
+/>
+
+
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the site..."
+         aria-label="Search the site..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../../_static/dark_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../how-to/howto.html">
+                        How to guides
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../explore.html">
+                        Explorations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../hardware/hardware.html">
+                        IBM Hardware
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../events.html">
+                        Events
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../members.html">
+                        Members
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the site..."
+         aria-label="Search the site..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../how-to/howto.html">
+                        How to guides
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../explore.html">
+                        Explorations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../hardware/hardware.html">
+                        IBM Hardware
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../events.html">
+                        Events
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../members.html">
+                        Members
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the site..."
+         aria-label="Search the site..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumbs">
+  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Topic 2. Executing IBM Quantum Systems</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+<section class="tex2jax_ignore mathjax_ignore" id="topic-2-executing-ibm-quantum-systems">
+<h1>Topic 2. Executing IBM Quantum Systems<a class="headerlink" href="#topic-2-executing-ibm-quantum-systems" title="Permalink to this heading">#</a></h1>
+<p><strong>Instructor</strong> : Hwajung Kang, Ph.D., Education Delivery Program Manager, IBM Quantum</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">qiskit.visualization</span> <span class="kn">import</span> <span class="n">plot_distribution</span><span class="p">,</span> <span class="n">plot_error_map</span>
+<span class="kn">from</span> <span class="nn">qiskit.quantum_info</span> <span class="kn">import</span> <span class="n">hellinger_fidelity</span>
+
+<span class="kn">from</span> <span class="nn">qiskit_aer</span> <span class="kn">import</span> <span class="n">AerSimulator</span>
+<span class="kn">from</span> <span class="nn">qiskit_ibm_provider</span> <span class="kn">import</span> <span class="n">IBMProvider</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="s1">&#39;111&#39;</span>
+<span class="n">nq</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
+
+<span class="n">bv</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">nq</span><span class="p">,</span> <span class="n">nq</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">bv</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="n">nq</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">bv</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">nq</span><span class="p">))</span>
+<span class="n">bv</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)),</span> <span class="n">nq</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">bv</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">nq</span><span class="p">))</span>
+<span class="n">bv</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">nq</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">nq</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="n">bv</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/2c051ff6ba8a6efc087c4bd5c6f084e51bf746f097aab0b89fda5e5ba9ddfcab.png" src="../../../_images/2c051ff6ba8a6efc087c4bd5c6f084e51bf746f097aab0b89fda5e5ba9ddfcab.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sim</span> <span class="o">=</span> <span class="n">AerSimulator</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">counts_sim</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">bv</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+<span class="n">counts_sim</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;111&#39;: 1024}
+</pre></div>
+</div>
+</div>
+</div>
+<section id="quantum-circuit-execution-on-ibm-quantum-system">
+<h2>Quantum circuit execution on IBM Quantum system<a class="headerlink" href="#quantum-circuit-execution-on-ibm-quantum-system" title="Permalink to this heading">#</a></h2>
+<div class="alert alert-block alert-info">
+<p><strong>STEPS</strong></p>
+<ol class="arabic simple">
+<li><p>Choose an IBM Quantum system</p></li>
+<li><p>Transpile the circuit to be executable</p></li>
+<li><p>Run the transpiled circuit on the chosen system</p></li>
+</ol>
+</div><section id="step1-choose-a-hardware-and-access-its-information">
+<h3>Step1 Choose a hardware and access its information<a class="headerlink" href="#step1-choose-a-hardware-and-access-its-information" title="Permalink to this heading">#</a></h3>
+<p><a class="reference external" href="https://quantum-computing.ibm.com">IBM Qauntum</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prov</span> <span class="o">=</span> <span class="n">IBMProvider</span><span class="p">()</span>
+<span class="n">prov</span><span class="o">.</span><span class="n">backends</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;IBMBackend(&#39;ibmq_kolkata&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_montreal&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_qasm_simulator&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_toronto&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_mumbai&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_lima&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_belem&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_quito&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_guadalupe&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_jakarta&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_manila&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_hanoi&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_lagos&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_nairobi&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_cairo&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_auckland&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_perth&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_washington&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_oslo&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_geneva&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_sherbrooke&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_bogota&#39;)&gt;,
+ &lt;IBMBackend(&#39;simulator_statevector&#39;)&gt;,
+ &lt;IBMBackend(&#39;simulator_mps&#39;)&gt;,
+ &lt;IBMBackend(&#39;simulator_extended_stabilizer&#39;)&gt;,
+ &lt;IBMBackend(&#39;simulator_stabilizer&#39;)&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">backend</span> <span class="o">=</span> <span class="n">prov</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s1">&#39;ibm_hanoi&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#backend.configuration().to_dict()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conf</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">configuration</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;backend:</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">backend</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;num_qubit:</span><span class="si">{}</span><span class="s1">, QV:</span><span class="si">{}</span><span class="s1">, CLOP:</span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">,</span> <span class="n">conf</span><span class="o">.</span><span class="n">quantum_volume</span><span class="p">,</span> <span class="n">conf</span><span class="o">.</span><span class="n">clops</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;max_num_circuits:</span><span class="si">{}</span><span class="s1">,&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">max_experiments</span><span class="p">),</span> 
+      <span class="s1">&#39;max_shots:</span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">max_shots</span><span class="p">))</span> <span class="c1">#default num_shots = 4000</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;basis gates:</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">basis_gates</span><span class="p">),</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;coupling map:</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">coupling_map</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>backend:ibm_hanoi
+num_qubit:27, QV:64, CLOP:2341
+
+max_num_circuits:300, max_shots:100000
+
+basis gates:[&#39;id&#39;, &#39;rz&#39;, &#39;sx&#39;, &#39;x&#39;, &#39;cx&#39;, &#39;reset&#39;] 
+
+coupling map:[[0, 1], [1, 0], [1, 2], [1, 4], [2, 1], [2, 3], [3, 2], [3, 5], [4, 1], [4, 7], [5, 3], [5, 8], [6, 7], [7, 4], [7, 6], [7, 10], [8, 5], [8, 9], [8, 11], [9, 8], [10, 7], [10, 12], [11, 8], [11, 14], [12, 10], [12, 13], [12, 15], [13, 12], [13, 14], [14, 11], [14, 13], [14, 16], [15, 12], [15, 18], [16, 14], [16, 19], [17, 18], [18, 15], [18, 17], [18, 21], [19, 16], [19, 20], [19, 22], [20, 19], [21, 18], [21, 23], [22, 19], [22, 25], [23, 21], [23, 24], [24, 23], [24, 25], [25, 22], [25, 24], [25, 26], [26, 25]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_error_map</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/d36adca127cf8271b04a3f10b11464721850f4210f91f058868509e2a312590f.png" src="../../../_images/d36adca127cf8271b04a3f10b11464721850f4210f91f058868509e2a312590f.png" />
+</div>
+</div>
+</section>
+<section id="step-2-transpile-a-circuit-circuits-to-run">
+<h3>Step 2 Transpile a circuit (circuits) to run<a class="headerlink" href="#step-2-transpile-a-circuit-circuits-to-run" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bv_trans</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">bv</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">bv_trans</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">bv_trans</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">idle_wires</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">bv</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/c6c1ec15237cf24cdbf0741f072e5e6510153b7a5cb6227d6f1d895f2e801041.png" src="../../../_images/c6c1ec15237cf24cdbf0741f072e5e6510153b7a5cb6227d6f1d895f2e801041.png" />
+<img alt="../../../_images/a766e1f7f9a284981583ad0bbd053393739293d9c369ad516a5ef662387bca9b.png" src="../../../_images/a766e1f7f9a284981583ad0bbd053393739293d9c369ad516a5ef662387bca9b.png" />
+<img alt="../../../_images/2c051ff6ba8a6efc087c4bd5c6f084e51bf746f097aab0b89fda5e5ba9ddfcab.png" src="../../../_images/2c051ff6ba8a6efc087c4bd5c6f084e51bf746f097aab0b89fda5e5ba9ddfcab.png" />
+</div>
+</div>
+</section>
+<section id="step-3-execute-a-circuit-circuits-on-a-chosen-system">
+<h3>Step 3. Execute a circuit (circuits) on a chosen system.<a class="headerlink" href="#step-3-execute-a-circuit-circuits-on-a-chosen-system" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># job0 = backend.run(bv_trans, shots=conf.max_shots) #default num_shots = 4000</span>
+<span class="c1"># print(job0.job_id())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job0</span> <span class="o">=</span> <span class="n">prov</span><span class="o">.</span><span class="n">retrieve_job</span><span class="p">(</span><span class="s1">&#39;cge8491qf3dvb4ojjetg&#39;</span><span class="p">)</span>
+<span class="n">counts_bv</span> <span class="o">=</span> <span class="n">job0</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+<span class="n">plot_distribution</span><span class="p">(</span><span class="n">counts_bv</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/96c9c2d40e7b8f8cae9f0e6a1b156b8a5923bca9c400f5631830b366e98851c7.png" src="../../../_images/96c9c2d40e7b8f8cae9f0e6a1b156b8a5923bca9c400f5631830b366e98851c7.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_distribution</span><span class="p">(</span><span class="n">counts_bv</span><span class="p">,</span> <span class="n">target_string</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;hamming&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/040d696f0e31ee0abc7b90acf4feb44ac99aecf70b33c33be46f4fa9596f9c9f.png" src="../../../_images/040d696f0e31ee0abc7b90acf4feb44ac99aecf70b33c33be46f4fa9596f9c9f.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="impact-of-noise">
+<h2>Impact of Noise<a class="headerlink" href="#impact-of-noise" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">myfunc</span><span class="p">(</span><span class="n">my_str</span><span class="p">):</span>
+    <span class="n">num_str</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">my_str</span><span class="p">)</span>
+    <span class="n">ind</span> <span class="o">=</span> <span class="n">num_str</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">my_str</span><span class="p">))</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">num_str</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span><span class="s1">&#39;oracle&#39;</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="n">ind</span><span class="p">,</span> <span class="n">num_str</span><span class="p">)</span>
+    <span class="n">U</span> <span class="o">=</span> <span class="n">qc</span><span class="o">.</span><span class="n">to_gate</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">U</span>
+
+<span class="k">def</span> <span class="nf">BV</span><span class="p">(</span><span class="n">U</span><span class="p">):</span>
+    <span class="n">num_str</span> <span class="o">=</span> <span class="n">U</span><span class="o">.</span><span class="n">num_qubits</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">num_str</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_str</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="n">num_str</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_str</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">barrier</span><span class="p">()</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_str</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">barrier</span><span class="p">()</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_str</span><span class="p">))</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_str</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_str</span><span class="p">))</span>
+    
+    <span class="k">return</span> <span class="n">qc</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc_all</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="n">U</span> <span class="o">=</span> <span class="n">myfunc</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="o">*</span><span class="n">k</span><span class="p">)</span>
+    <span class="n">qc_all</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BV</span><span class="p">(</span><span class="n">U</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">qc_all</span><span class="p">))</span>
+    
+<span class="n">qc_all_trans</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc_all</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># job = backend.run(qc_all_trans, shots=conf.max_shots)</span>
+<span class="c1"># print(job.job_id())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">job</span> <span class="o">=</span> <span class="n">prov</span><span class="o">.</span><span class="n">retrieve_job</span><span class="p">(</span><span class="s1">&#39;cge84l9qf3dvb4ojjn60&#39;</span><span class="p">)</span>
+<span class="n">counts_all</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">27</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">plot_distribution</span><span class="p">(</span><span class="n">counts_all</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">target_string</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="o">+</span><span class="n">k</span><span class="p">),</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;hamming&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/dd39de3f655176142aec56e587279a9e98ed21e643ddb98efe2336e214ce418c.png" src="../../../_images/dd39de3f655176142aec56e587279a9e98ed21e643ddb98efe2336e214ce418c.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hellinger_fidelity</span>
+<span class="n">counts_ideal</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;1&#39;</span><span class="o">*</span><span class="n">k</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">)]</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">counts_all</span><span class="p">)))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="n">hellinger_fidelity</span><span class="p">(</span><span class="n">counts_ideal</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">counts_all</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">counts_all</span><span class="p">))]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;fidelity&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/cbaa9d385b8bdc279fdd906335d04bda824343a427b47ebe0b7f2f91db449dfe.png" src="../../../_images/cbaa9d385b8bdc279fdd906335d04bda824343a427b47ebe0b7f2f91db449dfe.png" />
+</div>
+</div>
+</section>
+<section id="noise-characteristics">
+<h2>Noise Characteristics<a class="headerlink" href="#noise-characteristics" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prop</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">properties</span><span class="p">()</span>
+<span class="n">T1_all</span><span class="p">,</span> <span class="n">err_cx_all</span><span class="p">,</span> <span class="n">err_readout_all</span><span class="p">,</span> <span class="n">err_sing_all</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">):</span>
+    <span class="n">T1_all</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">t1</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">*</span><span class="mf">1e6</span><span class="p">)</span>
+    <span class="n">err_readout_all</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">readout_error</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+
+<span class="n">sing_gates</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;rz&#39;</span><span class="p">,</span> <span class="s1">&#39;sx&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">]</span> 
+<span class="n">err_sing_avg</span> <span class="o">=</span> <span class="p">[]</span> 
+<span class="k">for</span> <span class="n">gate</span> <span class="ow">in</span> <span class="n">sing_gates</span><span class="p">:</span>
+    <span class="n">err_gate</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">):</span>
+        <span class="n">err_gate</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">gate_error</span><span class="p">(</span><span class="n">gate</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span>
+    <span class="n">err_sing_all</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">err_gate</span><span class="p">)</span>
+    <span class="n">err_sing_avg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">err_gate</span><span class="p">),</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">conf</span><span class="o">.</span><span class="n">coupling_map</span><span class="p">:</span>
+    <span class="n">err_cx_all</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">gate_error</span><span class="p">(</span><span class="s1">&#39;cx&#39;</span><span class="p">,</span> <span class="n">edge</span><span class="p">))</span>
+    
+<span class="c1">##################</span>
+
+<span class="c1">#T1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;T1&#39;</span><span class="p">)</span> <span class="c1">#unit micro sec</span>
+<span class="nb">print</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;q</span><span class="si">{}</span><span class="s1"> : </span><span class="si">{}</span><span class="s1">,</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">T1_all</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">)])</span>
+
+<span class="c1"># readout err</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;readout&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;q</span><span class="si">{}</span><span class="s1"> : </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">err_readout_all</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="mi">4</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">)])</span>
+
+<span class="c1"># cx gate err</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;cnot err&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> : </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">coupling_map</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">err_cx_all</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="mi">4</span><span class="p">))</span> 
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">coupling_map</span><span class="p">))])</span>
+
+
+<span class="c1"># # single qubit gate err</span>
+<span class="c1"># #id</span>
+<span class="c1"># print(&#39;id&#39;)</span>
+<span class="c1"># print(*[&#39;q{} : {},\n&#39;.format(k, np.round(err_sing_all[0][k], 4)) for k in range(conf.num_qubits)])</span>
+<span class="c1"># #rz</span>
+<span class="c1"># print(&#39;rz&#39;)</span>
+<span class="c1"># print(*[&#39;q{} : {},\n&#39;.format(k, np.round(err_sing_all[1][k], 4)) for k in range(conf.num_qubits)])</span>
+<span class="c1"># #sx</span>
+<span class="c1"># print(&#39;sx&#39;)</span>
+<span class="c1"># print(*[&#39;q{} : {},\n&#39;.format(k, np.round(err_sing_all[2][k], 4)) for k in range(conf.num_qubits)])</span>
+<span class="c1"># #x</span>
+<span class="c1"># print(&#39;x&#39;)</span>
+<span class="c1"># print(*[&#39;q{} : {},\n&#39;.format(k, np.round(err_sing_all[3][k], 4)) for k in range(conf.num_qubits)])</span>
+
+
+<span class="c1"># mean err rate for each operation</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;backend:</span><span class="si">{}</span><span class="s1">, num_qubit:</span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">backend</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">conf</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;median error for single qubit gates&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">sing_gates</span><span class="p">,</span> <span class="n">err_sing_avg</span><span class="p">)),</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;median cx error&#39;</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;cx : </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">err_cx_all</span><span class="p">),</span> <span class="mi">4</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;median readout error&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;readout : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">err_readout_all</span><span class="p">),</span> <span class="mi">4</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>T1
+q0 : 233.37,
+ q1 : 119.87,
+ q2 : 197.56,
+ q3 : 48.8,
+ q4 : 212.08,
+ q5 : 108.76,
+ q6 : 88.32,
+ q7 : 148.21,
+ q8 : 221.99,
+ q9 : 231.1,
+ q10 : 58.19,
+ q11 : 105.39,
+ q12 : 263.29,
+ q13 : 204.48,
+ q14 : 180.46,
+ q15 : 159.27,
+ q16 : 221.13,
+ q17 : 135.19,
+ q18 : 175.8,
+ q19 : 149.04,
+ q20 : 103.19,
+ q21 : 178.47,
+ q22 : 180.83,
+ q23 : 170.15,
+ q24 : 179.29,
+ q25 : 131.39,
+ q26 : 77.28,
+
+readout
+q0 : 0.0062
+ q1 : 0.0328
+ q2 : 0.0093
+ q3 : 0.0163
+ q4 : 0.0091
+ q5 : 0.0219
+ q6 : 0.0181
+ q7 : 0.0083
+ q8 : 0.0117
+ q9 : 0.0432
+ q10 : 0.0232
+ q11 : 0.1
+ q12 : 0.0177
+ q13 : 0.0278
+ q14 : 0.0069
+ q15 : 0.0334
+ q16 : 0.0091
+ q17 : 0.0166
+ q18 : 0.0107
+ q19 : 0.0051
+ q20 : 0.0078
+ q21 : 0.0092
+ q22 : 0.0134
+ q23 : 0.01
+ q24 : 0.0091
+ q25 : 0.0079
+ q26 : 0.0064
+
+cnot err
+[0, 1] : 0.007
+ [1, 0] : 0.007
+ [1, 2] : 0.0046
+ [1, 4] : 0.0086
+ [2, 1] : 0.0046
+ [2, 3] : 0.0097
+ [3, 2] : 0.0097
+ [3, 5] : 0.0065
+ [4, 1] : 0.0086
+ [4, 7] : 0.01
+ [5, 3] : 0.0065
+ [5, 8] : 1
+ [6, 7] : 0.0032
+ [7, 4] : 0.01
+ [7, 6] : 0.0032
+ [7, 10] : 0.0037
+ [8, 5] : 1
+ [8, 9] : 0.0081
+ [8, 11] : 0.0034
+ [9, 8] : 0.0081
+ [10, 7] : 0.0037
+ [10, 12] : 0.0063
+ [11, 8] : 0.0034
+ [11, 14] : 0.0064
+ [12, 10] : 0.0063
+ [12, 13] : 0.0063
+ [12, 15] : 0.0083
+ [13, 12] : 0.0063
+ [13, 14] : 0.0048
+ [14, 11] : 0.0064
+ [14, 13] : 0.0048
+ [14, 16] : 0.0173
+ [15, 12] : 0.0083
+ [15, 18] : 0.022
+ [16, 14] : 0.0173
+ [16, 19] : 0.0038
+ [17, 18] : 0.0055
+ [18, 15] : 0.022
+ [18, 17] : 0.0055
+ [18, 21] : 1
+ [19, 16] : 0.0038
+ [19, 20] : 1
+ [19, 22] : 0.0085
+ [20, 19] : 1
+ [21, 18] : 1
+ [21, 23] : 0.007
+ [22, 19] : 0.0085
+ [22, 25] : 0.0067
+ [23, 21] : 0.007
+ [23, 24] : 0.0065
+ [24, 23] : 0.0065
+ [24, 25] : 0.0272
+ [25, 22] : 0.0067
+ [25, 24] : 0.0272
+ [25, 26] : 0.0055
+ [26, 25] : 0.0055
+
+backend:ibm_hanoi, num_qubit:27
+
+median error for single qubit gates
+{&#39;id&#39;: 0.00018, &#39;rz&#39;: 0.0, &#39;sx&#39;: 0.00018, &#39;x&#39;: 0.00018} 
+
+median cx error
+cx : 0.0069
+
+median readout error
+readout : 0.0107
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+<div class="section ablog__blog_comments">
+  
+  
+</div>
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-circuit-execution-on-ibm-quantum-system">Quantum circuit execution on IBM Quantum system</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step1-choose-a-hardware-and-access-its-information">Step1 Choose a hardware and access its information</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-transpile-a-circuit-circuits-to-run">Step 2 Transpile a circuit (circuits) to run</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-execute-a-circuit-circuits-on-a-chosen-system">Step 3. Execute a circuit (circuits) on a chosen system.</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#impact-of-noise">Impact of Noise</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#noise-characteristics">Noise Characteristics</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div class="tocsection sourcelink">
+    <a href="../../../_sources/events/afrl-2023/intro/Topic2-Executing-IBM-Quantum-Systems.ipynb.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner"></div>
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+<footer class="bd-footer">
+<div>
+<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
+        Content on
+        <a property="dct:title" rel="cc:attributionURL" href="http://quantum-enablement.org">this website</a> 
+        by <span property="cc:attributionName">IBM</span> is licensed under 
+        <a href="http://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">
+                Attribution-NonCommercial 4.0 International<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1">
+                <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1">
+                <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1">
+        </a>
+</p> 
+</div>
+</footer>
+
+  </body>
+</html>

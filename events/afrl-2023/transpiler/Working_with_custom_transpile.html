@@ -1,0 +1,1249 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Customizing the Qiskit compiler &#8212; Enabing Technologies  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/thebelab-helper.js"></script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-16824831-8"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-16824831-8');
+            </script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'events/afrl-2023/transpiler/Working_with_custom_transpile';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../../../explore/atom.xml"
+  title="Quantum Explorations"
+/>
+
+
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the site..."
+         aria-label="Search the site..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../../_static/dark_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../how-to/howto.html">
+                        How to guides
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../explore.html">
+                        Explorations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../hardware/hardware.html">
+                        IBM Hardware
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../events.html">
+                        Events
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../members.html">
+                        Members
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the site..."
+         aria-label="Search the site..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../how-to/howto.html">
+                        How to guides
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../explore.html">
+                        Explorations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../hardware/hardware.html">
+                        IBM Hardware
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../events.html">
+                        Events
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../members.html">
+                        Members
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the site..."
+         aria-label="Search the site..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumbs">
+  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Customizing the Qiskit compiler</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+<section class="tex2jax_ignore mathjax_ignore" id="customizing-the-qiskit-compiler">
+<h1>Customizing the Qiskit compiler<a class="headerlink" href="#customizing-the-qiskit-compiler" title="Permalink to this heading">#</a></h1>
+<p>In yesterday’s workshop we covered how the built-in options to Qiskit’s <code class="docutils literal notranslate"><span class="pre">transpile()</span></code> function and how using it can impact the output and performance of running quantum circuits. Today we’re going to be look at how we can augment the compilation outside of what is built-in to <code class="docutils literal notranslate"><span class="pre">transpile()</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qiskit</span>
+<span class="n">qiskit</span><span class="o">.</span><span class="n">__version__</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;0.23.3&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="transpiler-composition">
+<h2>Transpiler Composition<a class="headerlink" href="#transpiler-composition" title="Permalink to this heading">#</a></h2>
+<section id="building-custom-pipelines-with-stagedpassmanager">
+<h3>Building custom pipelines with: <code class="docutils literal notranslate"><span class="pre">StagedPassManager</span></code><a class="headerlink" href="#building-custom-pipelines-with-stagedpassmanager" title="Permalink to this heading">#</a></h3>
+<p>Building on top of the <code class="docutils literal notranslate"><span class="pre">PassManager</span></code> class is the <code class="docutils literal notranslate"><span class="pre">StagedPassManager</span></code> which adds a concept of stages to group position of the passes which are run (the data structure which manages the pipeline of passes to analyze and transform a circuit).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.transpiler.passes</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">qiskit.transpiler</span> <span class="kn">import</span> <span class="n">PassManager</span><span class="p">,</span> <span class="n">StagedPassManager</span>
+
+<span class="n">basis_gates</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;rx&quot;</span><span class="p">,</span> <span class="s2">&quot;ry&quot;</span><span class="p">,</span> <span class="s2">&quot;rxx&quot;</span><span class="p">]</span>
+<span class="n">init</span> <span class="o">=</span> <span class="n">PassManager</span><span class="p">([</span><span class="n">UnitarySynthesis</span><span class="p">(</span><span class="n">basis_gates</span><span class="p">,</span> <span class="n">min_qubits</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span> <span class="n">Unroll3qOrMore</span><span class="p">()])</span>
+<span class="n">translate</span> <span class="o">=</span> <span class="n">PassManager</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">Collect2qBlocks</span><span class="p">(),</span>
+        <span class="n">ConsolidateBlocks</span><span class="p">(</span><span class="n">basis_gates</span><span class="o">=</span><span class="n">basis_gates</span><span class="p">),</span>
+        <span class="n">UnitarySynthesis</span><span class="p">(</span><span class="n">basis_gates</span><span class="p">),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">staged_pm</span> <span class="o">=</span> <span class="n">StagedPassManager</span><span class="p">(</span>
+    <span class="n">stages</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;init&quot;</span><span class="p">,</span> <span class="s2">&quot;translation&quot;</span><span class="p">],</span> <span class="n">init</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">translation</span><span class="o">=</span><span class="n">translate</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">staged_pm</span><span class="o">.</span><span class="n">stages</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;init&#39;, &#39;translation&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">staged_pm</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/641aa457e24ae9288c2b36ab49fa5c40fc6de55848fc9df98d5f7e94c104c659.png" src="../../../_images/641aa457e24ae9288c2b36ab49fa5c40fc6de55848fc9df98d5f7e94c104c659.png" />
+</div>
+</div>
+<p>Stages have an implicitly created <code class="docutils literal notranslate"><span class="pre">pre_</span></code> and <code class="docutils literal notranslate"><span class="pre">post_</span></code> stage that run before and after each defined stage. This provides extra flexability if passes need to be run between stages</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.transpiler.preset_passmanagers</span> <span class="kn">import</span> <span class="n">common</span>
+<span class="kn">from</span> <span class="nn">qiskit.transpiler</span> <span class="kn">import</span> <span class="n">CouplingMap</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">CouplingMap</span><span class="o">.</span><span class="n">from_grid</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">staged_pm</span><span class="o">.</span><span class="n">pre_layout</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">generate_unroll_3q</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;cx&#39;</span><span class="p">])</span>
+<span class="n">staged_pm</span><span class="o">.</span><span class="n">post_layout</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">generate_pre_op_passmanager</span><span class="p">(</span><span class="n">coupling_map</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+<span class="n">staged_pm</span><span class="o">.</span><span class="n">pre_translation</span> <span class="o">=</span> <span class="n">PassManager</span><span class="p">(</span><span class="n">Depth</span><span class="p">())</span>
+<span class="n">staged_pm</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/fe04e3e290025f45457109243a703a73ba2edf8b8ced227689c1b4278d87eb85.png" src="../../../_images/fe04e3e290025f45457109243a703a73ba2edf8b8ced227689c1b4278d87eb85.png" />
+</div>
+</div>
+<p>While stages provide composibility and a high level structure/flow to the pass manager, they do restrict how we can interact with them. Instead of being able to modify and add passes to the <code class="docutils literal notranslate"><span class="pre">StagedPassManager</span></code> directly this now has to happen at the individual stage. So for example if you wanted to add a pass to the end of the execution you would have to do this at the end of the last stage.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">staged_pm</span><span class="o">.</span><span class="n">translation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Size</span><span class="p">())</span>
+<span class="n">staged_pm</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/ad4f907b2f98f8dcb165a588d76b6407b915e2a2b65ab76a11be6a385134a80e.png" src="../../../_images/ad4f907b2f98f8dcb165a588d76b6407b915e2a2b65ab76a11be6a385134a80e.png" />
+</div>
+</div>
+<p>By default the stages created in a <code class="docutils literal notranslate"><span class="pre">StagedPassManager</span></code> mirror the stages in the preset pass managers used internally by <code class="docutils literal notranslate"><span class="pre">transpile()</span></code>. This makes it easier to build completely custom workflows similar to how <code class="docutils literal notranslate"><span class="pre">transpile()</span></code> works.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">staged_pm</span> <span class="o">=</span> <span class="n">StagedPassManager</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">staged_pm</span><span class="o">.</span><span class="n">stages</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;init&#39;, &#39;layout&#39;, &#39;routing&#39;, &#39;translation&#39;, &#39;optimization&#39;, &#39;scheduling&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.providers.fake_provider</span> <span class="kn">import</span> <span class="n">FakeNairobiV2</span>
+
+<span class="n">backend</span> <span class="o">=</span> <span class="n">FakeNairobiV2</span><span class="p">()</span>
+<span class="c1"># Pass manager equivalent to transpile(qc, backend, routing_method=&#39;none&#39;) without optimization</span>
+<span class="n">staged_pm</span><span class="o">.</span><span class="n">init</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">generate_unroll_3q</span><span class="p">(</span><span class="n">backend</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+<span class="n">staged_pm</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">PassManager</span><span class="p">([</span><span class="n">VF2Layout</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">backend</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">3_29_2023</span><span class="p">)])</span>
+<span class="n">staged_pm</span><span class="o">.</span><span class="n">layout</span> <span class="o">+=</span> <span class="n">common</span><span class="o">.</span><span class="n">generate_embed_passmanager</span><span class="p">(</span><span class="n">backend</span><span class="o">.</span><span class="n">coupling_map</span><span class="p">)</span>
+<span class="n">staged_pm</span><span class="o">.</span><span class="n">routing</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">generate_routing_passmanager</span><span class="p">(</span><span class="n">Error</span><span class="p">(),</span> <span class="n">backend</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+<span class="n">staged_pm</span><span class="o">.</span><span class="n">translation</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">generate_translation_passmanager</span><span class="p">(</span><span class="n">backend</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+<span class="n">staged_pm</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/6539844677dc7b5c64a06393f1af4d621e7b4ae7a3a9ff4b28b2d52710c828ab.png" src="../../../_images/6539844677dc7b5c64a06393f1af4d621e7b4ae7a3a9ff4b28b2d52710c828ab.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">QuantumCircuit</span>
+<span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">cz</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">cz</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">tdg</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">y</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/b02fc50d75f1996ff25f28d922bde092e4a44278522e71800f0feb19ded874a2.png" src="../../../_images/b02fc50d75f1996ff25f28d922bde092e4a44278522e71800f0feb19ded874a2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">staged_pm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/c3e7407aa042f43a3776264b6c75325058348e6befa4ece638f2f8edc3d20809.png" src="../../../_images/c3e7407aa042f43a3776264b6c75325058348e6befa4ece638f2f8edc3d20809.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">transpile</span>
+<span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">seed_transpiler</span><span class="o">=</span><span class="mi">3_29_2023</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/2345aa7cdcd1cf1e679ec85695daa08834db3944f1c5ff04228eed83fa90fad7.png" src="../../../_images/2345aa7cdcd1cf1e679ec85695daa08834db3944f1c5ff04228eed83fa90fad7.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.transpiler.exceptions</span> <span class="kn">import</span> <span class="n">TranspilerError</span>
+
+<span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">cz</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">cz</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">cz</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">cz</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">tdg</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">y</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">staged_pm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">TranspilerError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fails as VF2Layout doesn&#39;t find a perfect layout&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fails as VF2Layout doesn&#39;t find a perfect layout
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">seed_transpiler</span><span class="o">=</span><span class="mi">3_29_2023</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/7e0cfa8d7c68491ed49c4b234a591a7db3d3ad26b1fa6fe38cb8f7e76a3b61b0.png" src="../../../_images/7e0cfa8d7c68491ed49c4b234a591a7db3d3ad26b1fa6fe38cb8f7e76a3b61b0.png" />
+</div>
+</div>
+</section>
+<section id="working-with-preset-pass-managers">
+<h3>Working with Preset Pass Managers<a class="headerlink" href="#working-with-preset-pass-managers" title="Permalink to this heading">#</a></h3>
+<p>While being able to label your own stages provides nice flexibility and composability options to interacting with <code class="docutils literal notranslate"><span class="pre">PassManager</span></code>s the real power of this interface comes with working with the preset pass managers, or those that get used internally by the <code class="docutils literal notranslate"><span class="pre">transpile()</span></code> function.</p>
+<p>It’s now much easier to create preset pass managers, there is a new generator function <code class="docutils literal notranslate"><span class="pre">generate_preset_pass_managers()</span></code> which has the same signature as <code class="docutils literal notranslate"><span class="pre">transpile()</span></code>. To ease in working with and modifying the preset pass manager the preset pass managers are now all <code class="docutils literal notranslate"><span class="pre">StagedPassManager</span></code>s.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.transpiler.preset_passmanagers</span> <span class="kn">import</span> <span class="n">generate_preset_pass_manager</span>
+<span class="kn">from</span> <span class="nn">qiskit.providers.fake_provider</span> <span class="kn">import</span> <span class="n">FakeBelemV2</span>
+<span class="n">backend</span> <span class="o">=</span> <span class="n">FakeBelemV2</span><span class="p">()</span>
+<span class="n">pm</span> <span class="o">=</span> <span class="n">generate_preset_pass_manager</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">seed_transpiler</span><span class="o">=</span><span class="mi">3_29_2023</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">pm</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;qiskit.transpiler.passmanager.StagedPassManager&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">stages</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;init&#39;, &#39;layout&#39;, &#39;routing&#39;, &#39;translation&#39;, &#39;optimization&#39;, &#39;scheduling&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>These stages are the same as the default stages if you instantiate a <code class="docutils literal notranslate"><span class="pre">StagedPassManager</span></code> without any stages defined explicitly</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/e46fc8564c21a8b5d42eab5f620d90c421d9d4d308f76bace481ba660fe3a6bc.png" src="../../../_images/e46fc8564c21a8b5d42eab5f620d90c421d9d4d308f76bace481ba660fe3a6bc.png" />
+</div>
+</div>
+<p>Having these stages defined make it trivial to replace or modify a section of the preset pass managers to use a normal/default workflow with some tweaks. For example, lets add some logical optimization (CNOT and inverse cancellation) prior to running layout and then also run dynamical decoupling for scheduling:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">XGate</span><span class="p">,</span> <span class="n">HGate</span><span class="p">,</span> <span class="n">RXGate</span><span class="p">,</span> <span class="n">PhaseGate</span><span class="p">,</span> <span class="n">TGate</span><span class="p">,</span> <span class="n">TdgGate</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">backend_durations</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">durations</span><span class="p">()</span>
+
+<span class="n">dd_sequence</span> <span class="o">=</span> <span class="p">[</span><span class="n">XGate</span><span class="p">(),</span> <span class="n">XGate</span><span class="p">()]</span>
+
+<span class="n">scheduling_pm</span> <span class="o">=</span> <span class="n">PassManager</span><span class="p">([</span>
+    <span class="n">ALAPScheduleAnalysis</span><span class="p">(</span><span class="n">backend_durations</span><span class="p">),</span>
+    <span class="n">PadDynamicalDecoupling</span><span class="p">(</span><span class="n">backend_durations</span><span class="p">,</span> <span class="n">dd_sequence</span><span class="p">),</span>
+<span class="p">])</span>
+
+<span class="n">inverse_gate_list</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">HGate</span><span class="p">(),</span>
+    <span class="p">(</span><span class="n">RXGate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">),</span> <span class="n">RXGate</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)),</span>
+    <span class="p">(</span><span class="n">PhaseGate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">),</span> <span class="n">PhaseGate</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)),</span>
+    <span class="p">(</span><span class="n">TGate</span><span class="p">(),</span> <span class="n">TdgGate</span><span class="p">()),</span>
+<span class="p">]</span>
+
+<span class="n">logical_opt</span> <span class="o">=</span> <span class="n">PassManager</span><span class="p">([</span>
+    <span class="n">CXCancellation</span><span class="p">(),</span>
+    <span class="n">InverseCancellation</span><span class="p">([</span><span class="n">HGate</span><span class="p">(),</span> <span class="p">(</span><span class="n">RXGate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">),</span> <span class="n">RXGate</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">))])</span>
+<span class="p">])</span>
+
+<span class="c1"># Run DD for scheduling stage</span>
+<span class="n">pm</span><span class="o">.</span><span class="n">scheduling</span> <span class="o">=</span> <span class="n">scheduling_pm</span>
+<span class="c1"># Run  logical optimization prior to layout stage</span>
+<span class="n">pm</span><span class="o">.</span><span class="n">pre_layout</span> <span class="o">=</span> <span class="n">logical_opt</span>
+<span class="n">pm</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/7924fb11bf89467a1a5a5e06f3121cd652af4e13342ef5973af1a09d3757eec4.png" src="../../../_images/7924fb11bf89467a1a5a5e06f3121cd652af4e13342ef5973af1a09d3757eec4.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/ff5f85f5ebbd8a525cc10b7ddb082b61e5543bb95340e61a4c69404ce0712afa.png" src="../../../_images/ff5f85f5ebbd8a525cc10b7ddb082b61e5543bb95340e61a4c69404ce0712afa.png" />
+</div>
+</div>
+<p>We can also replace stages completely which might be necessary if you’re running passes not included out of the box, For example, <code class="docutils literal notranslate"><span class="pre">BIPMapping</span></code> is a routing pass that depends on the proprietary CPLEX solver (and is not included by default in any pipeline). But we can integrate it easily by replacing the <code class="docutils literal notranslate"><span class="pre">routing</span></code> stage with it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">routing</span> <span class="o">=</span> <span class="n">PassManager</span><span class="p">([</span><span class="n">BIPMapping</span><span class="p">(</span><span class="n">backend</span><span class="o">.</span><span class="n">coupling_map</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.circuit.random</span> <span class="kn">import</span> <span class="n">random_circuit</span>
+<span class="n">qc</span> <span class="o">=</span> <span class="n">random_circuit</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">3_29_2023</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/303ab0310d1f0bff9412e3e11fc8fa22d140b4326db6e336bb18a5221c1b8ace.png" src="../../../_images/303ab0310d1f0bff9412e3e11fc8fa22d140b4326db6e336bb18a5221c1b8ace.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">fold</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/c33ebaf817f913d078f063daa2436a9c8d9563860e8a13eeca54581688bcee4e.png" src="../../../_images/c33ebaf817f913d078f063daa2436a9c8d9563860e8a13eeca54581688bcee4e.png" />
+</div>
+</div>
+<p>We can see this in progress too, by printing the stage and output of each pass run using a callback:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.converters</span> <span class="kn">import</span> <span class="n">dag_to_circuit</span>
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">intermediate_circuit</span> <span class="o">=</span> <span class="n">dag_to_circuit</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;dag&#39;</span><span class="p">])</span>
+    <span class="n">intermediate_circuit</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Circuit state after running </span><span class="si">{</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;pass_&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">:&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">intermediate_circuit</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">intermediate_circuit</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">))</span>
+
+<span class="n">pm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.utils.contains_instruction.ContainsInstruction object at 0x7f8be4917010&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/303ab0310d1f0bff9412e3e11fc8fa22d140b4326db6e336bb18a5221c1b8ace.png" src="../../../_images/303ab0310d1f0bff9412e3e11fc8fa22d140b4326db6e336bb18a5221c1b8ace.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.synthesis.unitary_synthesis.UnitarySynthesis object at 0x7f8be4914df0&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/303ab0310d1f0bff9412e3e11fc8fa22d140b4326db6e336bb18a5221c1b8ace.png" src="../../../_images/303ab0310d1f0bff9412e3e11fc8fa22d140b4326db6e336bb18a5221c1b8ace.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.synthesis.high_level_synthesis.HighLevelSynthesis object at 0x7f8be4915c30&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/303ab0310d1f0bff9412e3e11fc8fa22d140b4326db6e336bb18a5221c1b8ace.png" src="../../../_images/303ab0310d1f0bff9412e3e11fc8fa22d140b4326db6e336bb18a5221c1b8ace.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.basis.unroll_3q_or_more.Unroll3qOrMore object at 0x7f8be4917a00&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/303ab0310d1f0bff9412e3e11fc8fa22d140b4326db6e336bb18a5221c1b8ace.png" src="../../../_images/303ab0310d1f0bff9412e3e11fc8fa22d140b4326db6e336bb18a5221c1b8ace.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.optimization.cx_cancellation.CXCancellation object at 0x7f8be47c94b0&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/303ab0310d1f0bff9412e3e11fc8fa22d140b4326db6e336bb18a5221c1b8ace.png" src="../../../_images/303ab0310d1f0bff9412e3e11fc8fa22d140b4326db6e336bb18a5221c1b8ace.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.optimization.inverse_cancellation.InverseCancellation object at 0x7f8be47cac20&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/303ab0310d1f0bff9412e3e11fc8fa22d140b4326db6e336bb18a5221c1b8ace.png" src="../../../_images/303ab0310d1f0bff9412e3e11fc8fa22d140b4326db6e336bb18a5221c1b8ace.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.layout.set_layout.SetLayout object at 0x7f8be495e080&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/303ab0310d1f0bff9412e3e11fc8fa22d140b4326db6e336bb18a5221c1b8ace.png" src="../../../_images/303ab0310d1f0bff9412e3e11fc8fa22d140b4326db6e336bb18a5221c1b8ace.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.layout.trivial_layout.TrivialLayout object at 0x7f8be495e890&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/303ab0310d1f0bff9412e3e11fc8fa22d140b4326db6e336bb18a5221c1b8ace.png" src="../../../_images/303ab0310d1f0bff9412e3e11fc8fa22d140b4326db6e336bb18a5221c1b8ace.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.utils.check_map.CheckMap object at 0x7f8be495f970&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/303ab0310d1f0bff9412e3e11fc8fa22d140b4326db6e336bb18a5221c1b8ace.png" src="../../../_images/303ab0310d1f0bff9412e3e11fc8fa22d140b4326db6e336bb18a5221c1b8ace.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.layout.full_ancilla_allocation.FullAncillaAllocation object at 0x7f8be4915000&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/303ab0310d1f0bff9412e3e11fc8fa22d140b4326db6e336bb18a5221c1b8ace.png" src="../../../_images/303ab0310d1f0bff9412e3e11fc8fa22d140b4326db6e336bb18a5221c1b8ace.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.layout.enlarge_with_ancilla.EnlargeWithAncilla object at 0x7f8be4915180&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/c386be5b58c88c1bf7cab44386a8dc78d5ed6d38da734753f9c6ee3a3078c460.png" src="../../../_images/c386be5b58c88c1bf7cab44386a8dc78d5ed6d38da734753f9c6ee3a3078c460.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.layout.apply_layout.ApplyLayout object at 0x7f8be4914a00&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/9650b21ba62ed6438023d44a0417c6e13bae0ef7506bc5a679a47ed498a862a1.png" src="../../../_images/9650b21ba62ed6438023d44a0417c6e13bae0ef7506bc5a679a47ed498a862a1.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.routing.bip_mapping.BIPMapping object at 0x7f8be44422c0&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/70b840ae74e08a8705f243b86bd8cda9f3a85443d9680bd0b7ad59713198bacb.png" src="../../../_images/70b840ae74e08a8705f243b86bd8cda9f3a85443d9680bd0b7ad59713198bacb.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.synthesis.unitary_synthesis.UnitarySynthesis object at 0x7f8be4915150&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/70b840ae74e08a8705f243b86bd8cda9f3a85443d9680bd0b7ad59713198bacb.png" src="../../../_images/70b840ae74e08a8705f243b86bd8cda9f3a85443d9680bd0b7ad59713198bacb.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.synthesis.high_level_synthesis.HighLevelSynthesis object at 0x7f8be4914250&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/70b840ae74e08a8705f243b86bd8cda9f3a85443d9680bd0b7ad59713198bacb.png" src="../../../_images/70b840ae74e08a8705f243b86bd8cda9f3a85443d9680bd0b7ad59713198bacb.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.basis.unroll_custom_definitions.UnrollCustomDefinitions object at 0x7f8be4917e50&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/70b840ae74e08a8705f243b86bd8cda9f3a85443d9680bd0b7ad59713198bacb.png" src="../../../_images/70b840ae74e08a8705f243b86bd8cda9f3a85443d9680bd0b7ad59713198bacb.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.basis.basis_translator.BasisTranslator object at 0x7f8be4914040&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/874832aecb9275562aded3b2d6acbb9fe9f5a62fb07f2d8e35f216faf83c6960.png" src="../../../_images/874832aecb9275562aded3b2d6acbb9fe9f5a62fb07f2d8e35f216faf83c6960.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.optimization.remove_reset_in_zero_state.RemoveResetInZeroState object at 0x7f8be4914970&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/874832aecb9275562aded3b2d6acbb9fe9f5a62fb07f2d8e35f216faf83c6960.png" src="../../../_images/874832aecb9275562aded3b2d6acbb9fe9f5a62fb07f2d8e35f216faf83c6960.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.analysis.depth.Depth object at 0x7f8be4917280&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/874832aecb9275562aded3b2d6acbb9fe9f5a62fb07f2d8e35f216faf83c6960.png" src="../../../_images/874832aecb9275562aded3b2d6acbb9fe9f5a62fb07f2d8e35f216faf83c6960.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.utils.fixed_point.FixedPoint object at 0x7f8be49147c0&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/874832aecb9275562aded3b2d6acbb9fe9f5a62fb07f2d8e35f216faf83c6960.png" src="../../../_images/874832aecb9275562aded3b2d6acbb9fe9f5a62fb07f2d8e35f216faf83c6960.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.analysis.size.Size object at 0x7f8be4915a50&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/874832aecb9275562aded3b2d6acbb9fe9f5a62fb07f2d8e35f216faf83c6960.png" src="../../../_images/874832aecb9275562aded3b2d6acbb9fe9f5a62fb07f2d8e35f216faf83c6960.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.utils.fixed_point.FixedPoint object at 0x7f8be4916170&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/874832aecb9275562aded3b2d6acbb9fe9f5a62fb07f2d8e35f216faf83c6960.png" src="../../../_images/874832aecb9275562aded3b2d6acbb9fe9f5a62fb07f2d8e35f216faf83c6960.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.optimization.optimize_1q_decomposition.Optimize1qGatesDecomposition object at 0x7f8be4916230&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" src="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.optimization.cx_cancellation.CXCancellation object at 0x7f8be49161d0&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" src="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.utils.gates_basis.GatesInBasis object at 0x7f8be4914910&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" src="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.analysis.depth.Depth object at 0x7f8be4917280&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" src="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.utils.fixed_point.FixedPoint object at 0x7f8be49147c0&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" src="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.analysis.size.Size object at 0x7f8be4915a50&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" src="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.utils.fixed_point.FixedPoint object at 0x7f8be4916170&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" src="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.optimization.optimize_1q_decomposition.Optimize1qGatesDecomposition object at 0x7f8be4916230&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" src="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.optimization.cx_cancellation.CXCancellation object at 0x7f8be49161d0&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" src="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.utils.gates_basis.GatesInBasis object at 0x7f8be4914910&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" src="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.analysis.depth.Depth object at 0x7f8be4917280&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" src="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.utils.fixed_point.FixedPoint object at 0x7f8be49147c0&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" src="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.analysis.size.Size object at 0x7f8be4915a50&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" src="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.utils.fixed_point.FixedPoint object at 0x7f8be4916170&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" src="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.scheduling.time_unit_conversion.TimeUnitConversion object at 0x7f8be47ca320&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" src="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.scheduling.scheduling.alap.ALAPScheduleAnalysis object at 0x7f8be47c9a20&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" src="../../../_images/c3c34fe52aaf8e0cffeb572b6f4da4b764de24ccdb9845cae97e47a5cb295d2e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Circuit state after running &lt;qiskit.transpiler.passes.scheduling.padding.dynamical_decoupling.PadDynamicalDecoupling object at 0x7f8be47c9660&gt;:
+</pre></div>
+</div>
+<img alt="../../../_images/aac1e8c6b00a4dcdbfdb23d626d1a14b74a2b0bd2f47cf094017ba7c25bb8230.png" src="../../../_images/aac1e8c6b00a4dcdbfdb23d626d1a14b74a2b0bd2f47cf094017ba7c25bb8230.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;qiskit.circuit.quantumcircuit.QuantumCircuit at 0x7f8b6de1e920&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="transpiler-plugins">
+<h1>Transpiler plugins<a class="headerlink" href="#transpiler-plugins" title="Permalink to this heading">#</a></h1>
+<p>Besides having options to manually construct compilation pipelines to build Qiskit provides several plugin interfaces than enable external packages to provide extra methods that add extra options. There are currently three interfaces for doing this:</p>
+<ol class="arabic simple">
+<li><p>Stage plugins</p></li>
+<li><p>Unitary Synthesis plugins</p></li>
+<li><p>High level synthesis plugins</p></li>
+</ol>
+<section id="stage-plugins">
+<h2>Stage plugins<a class="headerlink" href="#stage-plugins" title="Permalink to this heading">#</a></h2>
+<p>Building off the <code class="docutils literal notranslate"><span class="pre">StagedPassManager</span></code> is the introduction of external plugins for <code class="docutils literal notranslate"><span class="pre">transpile()</span></code> (and by extension <code class="docutils literal notranslate"><span class="pre">generate_preset_pass_manager()</span></code>). Since the stages are defined points in the execution of a compilation pipeline an external package can now provide alternative implenentations that can be used for these stages. The <code class="docutils literal notranslate"><span class="pre">*_method</span></code> keyword arguments on <code class="docutils literal notranslate"><span class="pre">transpile()</span></code> are used to specify which plugin to use.</p>
+<p>You can see the details on writing a plugin in the documentation here:</p>
+<p>https://qiskit.org/documentation/apidoc/transpiler_plugins.html</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># pip install git+https://github.com/qiskit-community/dsm-swap</span>
+<span class="kn">from</span> <span class="nn">qiskit.transpiler.preset_passmanagers</span> <span class="kn">import</span> <span class="n">plugin</span>
+<span class="n">plugin</span><span class="o">.</span><span class="n">list_stage_plugins</span><span class="p">(</span><span class="s2">&quot;routing&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;basic&#39;, &#39;lookahead&#39;, &#39;none&#39;, &#39;sabre&#39;, &#39;stochastic&#39;, &#39;dsm&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># pip install git+https://github.com/mtreinish/vf2_partial_layout</span>
+<span class="n">plugin</span><span class="o">.</span><span class="n">list_stage_plugins</span><span class="p">(</span><span class="s2">&quot;layout&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;vf2_partial&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">transpile</span>
+
+<span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">cz</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">cz</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">cz</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">cz</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">tdg</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">y</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/c82236602dda6b807882b0f470f5249a97cb9cc248ebda579844a32790e1037e.png" src="../../../_images/c82236602dda6b807882b0f470f5249a97cb9cc248ebda579844a32790e1037e.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use external plugin for layout and routing:</span>
+<span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">layout_method</span><span class="o">=</span><span class="s1">&#39;vf2_partial&#39;</span><span class="p">,</span> <span class="n">routing_method</span><span class="o">=</span><span class="s2">&quot;dsm&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/computertreker/Presentations/quantum_compiler_workshop/release/lib/python3.10/site-packages/dsm_swap/swapmatic.py:144: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at ../aten/src/ATen/SparseCsrTensorImpl.cpp:54.)
+  return reduce(torch.sparse.mm, m) if compose else list(m)
+</pre></div>
+</div>
+<img alt="../../../_images/3f1fcb5c3a410e13e72427e469e05f30d8676dffc32a71686d114d916d023025.png" src="../../../_images/3f1fcb5c3a410e13e72427e469e05f30d8676dffc32a71686d114d916d023025.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm_with_plugins</span> <span class="o">=</span> <span class="n">generate_preset_pass_manager</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">layout_method</span><span class="o">=</span><span class="s1">&#39;vf2_partial&#39;</span><span class="p">,</span> <span class="n">routing_method</span><span class="o">=</span><span class="s2">&quot;dsm&quot;</span><span class="p">)</span>
+<span class="n">pm_with_plugins</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/05a333629facf44230a53fa5b1522d2baf6157d14f0636e2b9dcfc301e191e3d.png" src="../../../_images/05a333629facf44230a53fa5b1522d2baf6157d14f0636e2b9dcfc301e191e3d.png" />
+</div>
+</div>
+<section id="backend-default-plugins">
+<h3>Backend Default Plugins<a class="headerlink" href="#backend-default-plugins" title="Permalink to this heading">#</a></h3>
+<p>One special case of where plugins are potentially used already is with backends. If a backend has custom compilation requirements that adressable with the current Qiskit transpiler backends can specify alternate <strong>default</strong> compilation methods when they’re targeted.</p>
+<p>For example the <code class="docutils literal notranslate"><span class="pre">qiskit-ibm-provider</span></code> package includes several custom stage plugins. Then
+the backends from <code class="docutils literal notranslate"><span class="pre">qiskit-ibm-provider</span></code> use this feature to set an alternative default for the <code class="docutils literal notranslate"><span class="pre">translation</span></code> stage which adds an extra pass before the typical <code class="docutils literal notranslate"><span class="pre">translator</span></code> default stage.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plugin_fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">&quot;alap&quot;</span>
+
+<span class="c1"># Set default value of scheduling_method to &quot;alap&quot;</span>
+<span class="n">backend</span><span class="o">.</span><span class="n">get_scheduling_stage_plugin</span> <span class="o">=</span> <span class="n">plugin_fn</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+<span class="n">res</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/d85f4ed6fec491e5f7084bafde2fbc0fceb28ec838a39b03af1090df979fde62.png" src="../../../_images/d85f4ed6fec491e5f7084bafde2fbc0fceb28ec838a39b03af1090df979fde62.png" />
+</div>
+</div>
+</section>
+<section id="unitary-synthesis-plugins">
+<h3>Unitary Synthesis Plugins<a class="headerlink" href="#unitary-synthesis-plugins" title="Permalink to this heading">#</a></h3>
+<p>When a circuit contains a <code class="docutils literal notranslate"><span class="pre">UnitaryGate</span></code> (a gate modeled solely by its unitary matrix) the unitary synthesis plugin interface allows external packages to provide alternative methods for synthesizing that unitary.</p>
+<p>https://qiskit.org/documentation/apidoc/transpiler_synthesis_plugins.html#unitary-synthesis-plugins</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.quantum_info</span> <span class="kn">import</span> <span class="n">random_unitary</span>
+
+<span class="n">matrix</span> <span class="o">=</span> <span class="n">random_unitary</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">unitary</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/0d868e13dff3f54cf6ec00977a93a40646cd819bf0cb4dbd68ae378606606754.png" src="../../../_images/0d868e13dff3f54cf6ec00977a93a40646cd819bf0cb4dbd68ae378606606754.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.transpiler.passes.synthesis.plugin</span> <span class="kn">import</span> <span class="n">unitary_synthesis_plugin_names</span>
+
+<span class="n">unitary_synthesis_plugin_names</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;aqc&#39;, &#39;default&#39;, &#39;sk&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aqc_config</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;networkx_layout&quot;</span><span class="p">:</span> <span class="s2">&quot;cart&quot;</span><span class="p">,</span> <span class="s2">&quot;connectivity_type&quot;</span><span class="p">:</span> <span class="s2">&quot;star&quot;</span><span class="p">}</span>
+<span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">unitary_synthesis_method</span><span class="o">=</span><span class="s1">&#39;aqc&#39;</span><span class="p">,</span> <span class="n">unitary_synthesis_plugin_config</span><span class="o">=</span><span class="n">aqc_config</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/5537f24459d4213ffe5967a06cd5f641eb1b99feeebb143993e3d8d328a2693a.png" src="../../../_images/5537f24459d4213ffe5967a06cd5f641eb1b99feeebb143993e3d8d328a2693a.png" />
+</div>
+</div>
+</section>
+<section id="high-level-synthesis-plugins">
+<h3>High Level Synthesis Plugins<a class="headerlink" href="#high-level-synthesis-plugins" title="Permalink to this heading">#</a></h3>
+<p>This new interface lets external packages provide synthesis methods for arbitrary higher level circuit objects. These higher level objects are typically mathematical representations of operations like Cliffords, linear functions, etc.</p>
+<p>https://qiskit.org/documentation/apidoc/transpiler_synthesis_plugins.html#high-level-synthesis-plugins</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">LinearFunction</span>
+
+<span class="n">qc1</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">qc1</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">qc1</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">qc1</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">lf1</span> <span class="o">=</span> <span class="n">LinearFunction</span><span class="p">(</span><span class="n">qc1</span><span class="p">)</span>
+<span class="n">qc2</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">qc2</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">qc2</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">qc2</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">lf2</span> <span class="o">=</span> <span class="n">LinearFunction</span><span class="p">(</span><span class="n">qc2</span><span class="p">)</span>
+
+<span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lf1</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lf2</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/659022cd3dabc1f1ca90b1b8d39d9eafec48ea096ccab42df2c7734501930e8b.png" src="../../../_images/659022cd3dabc1f1ca90b1b8d39d9eafec48ea096ccab42df2c7734501930e8b.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># pip install kutin-synthesis-plugin-for-qiskit</span>
+<span class="kn">from</span> <span class="nn">qiskit.transpiler.passes.synthesis.high_level_synthesis</span> <span class="kn">import</span> <span class="n">HLSConfig</span>
+
+<span class="n">hls_config</span> <span class="o">=</span> <span class="n">HLSConfig</span><span class="p">(</span><span class="n">linear_function</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;kutin&quot;</span><span class="p">,</span> <span class="p">{})])</span>
+<span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">hls_config</span><span class="o">=</span><span class="n">hls_config</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s2">&quot;mpl&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Running KutinSynthesisPlugin
+Running KutinSynthesisPlugin
+</pre></div>
+</div>
+<img alt="../../../_images/2e1ab3cbaaaf53158d0567617d41fb95dc70937b7f23417ceb5f2cb82bc0c337.png" src="../../../_images/2e1ab3cbaaaf53158d0567617d41fb95dc70937b7f23417ceb5f2cb82bc0c337.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+
+<div class="section ablog__blog_comments">
+  
+  
+</div>
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Customizing the Qiskit compiler</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transpiler-composition">Transpiler Composition</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#building-custom-pipelines-with-stagedpassmanager">Building custom pipelines with: <code class="docutils literal notranslate"><span class="pre">StagedPassManager</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-preset-pass-managers">Working with Preset Pass Managers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#transpiler-plugins">Transpiler plugins</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stage-plugins">Stage plugins</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#backend-default-plugins">Backend Default Plugins</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unitary-synthesis-plugins">Unitary Synthesis Plugins</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#high-level-synthesis-plugins">High Level Synthesis Plugins</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div class="tocsection sourcelink">
+    <a href="../../../_sources/events/afrl-2023/transpiler/Working_with_custom_transpile.ipynb.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner"></div>
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+<footer class="bd-footer">
+<div>
+<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
+        Content on
+        <a property="dct:title" rel="cc:attributionURL" href="http://quantum-enablement.org">this website</a> 
+        by <span property="cc:attributionName">IBM</span> is licensed under 
+        <a href="http://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">
+                Attribution-NonCommercial 4.0 International<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1">
+                <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1">
+                <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1">
+        </a>
+</p> 
+</div>
+</footer>
+
+  </body>
+</html>
