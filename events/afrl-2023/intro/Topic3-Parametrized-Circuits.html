@@ -485,7 +485,8 @@ document.write(`
 <h2>Basics<a class="headerlink" href="#basics" title="Permalink to this heading">#</a></h2>
 <section id="phase-kickback">
 <h3>Phase kickback<a class="headerlink" href="#phase-kickback" title="Permalink to this heading">#</a></h3>
-<div><img src="phase_kickback.png" width="600"/></div><div class="cell docutils container">
+<p><img alt="phasekick" src="../../../_images/phase_kickback.png" /></p>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 </pre></div>
@@ -744,9 +745,7 @@ q: ┤ U(1,2,ε) ├
 </div>
 </div>
 <div class="alert alert-block alert-success">
-</section>
-<section id="example">
-<h3>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h3>
+<p><b>Example</b><br></p>
 <p>Build a five qubit quantum circuit where a <code class="docutils literal notranslate"><span class="pre">rx</span></code> gate with an unique parametrized angle is applied to each qubit. Then apply <code class="docutils literal notranslate"><span class="pre">cp</span></code> gates with different parametrized angles between the <span class="math notranslate nohighlight">\(k\)</span>th and <span class="math notranslate nohighlight">\(k\)</span>th+1 qubits.
 Assign numerical values that you want only to <code class="docutils literal notranslate"><span class="pre">cp</span></code> gates.</p>
 </div><div class="cell docutils container">
@@ -961,10 +960,8 @@ Assign numerical values that you want only to <code class="docutils literal notr
 </div>
 </div>
 <div class="alert alert-block alert-success">
-</section>
-<section id="id1">
-<h3>Example<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
-<p>Encode the following data, <code class="docutils literal notranslate"><span class="pre">data_ex</span></code>, using the <code class="docutils literal notranslate"><span class="pre">ZZFeatureMap</span></code> with 2 repetition.</p>
+<p><b>Example</b><br>
+Encode the following data, <code class="docutils literal notranslate"><span class="pre">data_ex</span></code>, using the <code class="docutils literal notranslate"><span class="pre">ZZFeatureMap</span></code> with 2 repetition.</p>
 </div><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_ex</span> <span class="o">=</span> <span class="mi">7</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
@@ -1121,10 +1118,9 @@ Assign numerical values that you want only to <code class="docutils literal notr
 </div>
 <p>Check <a class="reference external" href="https://qiskit.org/documentation/stubs/qiskit.circuit.library.TwoLocal.html#qiskit.circuit.library.TwoLocal">TwoLocal</a> for entanglement strategies.</p>
 <div class="alert alert-block alert-success">
-<section id="id2">
-<h3>Example<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
-<p>Build a circuit to generate a hardware efficient ansatz for a 5 qubit system through <code class="docutils literal notranslate"><span class="pre">EfficientSU2</span></code> with 3 repetitions, using <code class="docutils literal notranslate"><span class="pre">h</span></code> and <code class="docutils literal notranslate"><span class="pre">rz</span></code> gates for <code class="docutils literal notranslate"><span class="pre">su2_gates</span></code>, implementing the <code class="docutils literal notranslate"><span class="pre">entangler_map</span></code> <span class="math notranslate nohighlight">\(= [[2, 1], ~ [1, 0], ~ [2, 3], ~[3, 4]]\)</span>.</p>
-<div class="cell docutils container">
+<p><b>Example</b><br>
+Build a circuit to generate a hardware efficient ansatz for a 5 qubit system through <code class="docutils literal notranslate"><span class="pre">EfficientSU2</span></code> with 3 repetitions, using <code class="docutils literal notranslate"><span class="pre">h</span></code> and <code class="docutils literal notranslate"><span class="pre">rz</span></code> gates for <code class="docutils literal notranslate"><span class="pre">su2_gates</span></code>, implementing the <code class="docutils literal notranslate"><span class="pre">entangler_map</span></code> <span class="math notranslate nohighlight">\(= [[2, 1], ~ [1, 0], ~ [2, 3], ~[3, 4]]\)</span>.</p>
+</div><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">entangler_map</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]]</span>
 <span class="n">qc</span> <span class="o">=</span> <span class="n">EfficientSU2</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;rz&#39;</span><span class="p">],</span> <span class="n">entanglement</span><span class="o">=</span><span class="n">entangler_map</span><span class="p">)</span>
@@ -1140,7 +1136,6 @@ Assign numerical values that you want only to <code class="docutils literal notr
 <ul class="simple">
 <li><p><a class="reference external" href="https://learn.qiskit.org/course/machine-learning/parameterized-quantum-circuits#parameterized-1-0">Parametrized quantum circuits</a></p></li>
 </ul>
-</section>
 </section>
 </section>
 
@@ -1179,19 +1174,14 @@ Assign numerical values that you want only to <code class="docutils literal notr
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter">parameter</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-vector">parameter vector</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-binding">partial binding</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usecase-1-data-encoding-quantum-feature-map-for-qsvm">Usecase 1. Data Encoding - Quantum feature map for QSVM</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dim-data">1-dim data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#n-dim-data">N-dim data</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Example</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usecase-2-ansatz-preparation-vqa">Usecase 2. Ansatz preparation- VQA</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Example</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usecase-2-ansatz-preparation-vqa">Usecase 2. Ansatz preparation- VQA</a></li>
 </ul>
   </nav></div>
 
