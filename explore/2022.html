@@ -18,12 +18,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -33,11 +33,11 @@
     <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -408,6 +408,12 @@ document.write(`
   
   
   <li>
+    <a href="../posts/2023/2023-05-12-properties_from_api.html">
+      12 May - Accessing device properties without an IBM Quantum account
+    </a>
+  </li>
+  
+  <li>
     <a href="../posts/2023/2023-02-02-pauli_twirling.html">
       02 February - Generating Pauli-twirled circuits in Qiskit
     </a>
@@ -431,12 +437,6 @@ document.write(`
     </a>
   </li>
   
-  <li>
-    <a href="../posts/2022/2022-07-26-fairshare.html">
-      26 July - Understanding fair-share scheduling
-    </a>
-  </li>
-  
 </ul>
 </div>
 </div>
@@ -449,7 +449,7 @@ document.write(`
   
   
   <li>
-    <a href="2023.html">2023 (2)</a>
+    <a href="2023.html">2023 (3)</a>
   </li>
   
   
@@ -601,11 +601,9 @@ document.write(`
 
 
     </ul>
-    <div class="ablog-post-excerpt docutils container">
-<p>The goal of this challenge is to entangle a pair of qubits, as far away as possible (to be defined below) from the other and still recover a CHSH violation.  How best to generate long-range entanglement an interesting challenge, and there are multiple possible techniques, some introduced in the Quantum Practitioners Forum, that might help in this process.  Other tools might also help increase the fidelity of the final CHSH signal.</p>
+    <p class="ablog-post-excerpt"><p>The goal of this challenge is to entangle a pair of qubits, as far away as possible (to be defined below) from the other and still recover a CHSH violation.  How best to generate long-range entanglement an interesting challenge, and there are multiple possible techniques, some introduced in the Quantum Practitioners Forum, that might help in this process.  Other tools might also help increase the fidelity of the final CHSH signal.</p>
 <p>Participants are tasked with generating long-range entanglement on real quantum hardware through the generation of Bell states such that measurements on qubits in the Bell pair are as distant as possible while still recovering a signal that shows a CHSH violation.  Here distance is defined to be the shortest path connecting qubits on a graph of the systems <code class="docutils literal notranslate"><span class="pre">coupling_map</span></code>:</p>
-<img alt="../_images/distance.png" src="../_images/distance.png" />
-</div>
+<img alt="../_images/distance.png" src="../_images/distance.png" /></p>
 
     <p class="ablog-post-expand"><a href="../posts/2022/2022-11-07-challenge.html"><em>Read more ...</em></a></p>
     <hr/>
@@ -688,11 +686,9 @@ document.write(`
 
 
     </ul>
-    <div class="ablog-post-excerpt docutils container">
-<p>One of the primary goals,if not THE primary goal, of the Runtime is abstraction.  Namely, users should not have to know detailed hardware knowledge and platform specific techniques for achieving good results.  Otherwise, it is difficult to make progress moving up the software stack into algorithms and applications.</p>
+    <p class="ablog-post-excerpt"><p>One of the primary goals,if not THE primary goal, of the Runtime is abstraction.  Namely, users should not have to know detailed hardware knowledge and platform specific techniques for achieving good results.  Otherwise, it is difficult to make progress moving up the software stack into algorithms and applications.</p>
 <p>One of the first examples of this is the introduction of automated readout error mitigation into the <code class="docutils literal notranslate"><span class="pre">sampler</span></code> and <code class="docutils literal notranslate"><span class="pre">estimator</span></code> Runtime primitives.  On superconducting platforms, readout error is ~2%, and is something that is readily correctable using recent mitigation methods.  The primitives use two different methods for readout mitigation:</p>
-<img alt="../_images/e7c28a43ebd4b536b59fe33f87be56a9267a174cfe2273e1e38cde95ec62e667.png" src="../_images/e7c28a43ebd4b536b59fe33f87be56a9267a174cfe2273e1e38cde95ec62e667.png" />
-</div>
+<img alt="../_images/e7c28a43ebd4b536b59fe33f87be56a9267a174cfe2273e1e38cde95ec62e667.png" src="../_images/e7c28a43ebd4b536b59fe33f87be56a9267a174cfe2273e1e38cde95ec62e667.png" /></p>
 
     <p class="ablog-post-expand"><a href="../posts/2022/2022-08-22-readout_mitigation.html"><em>Read more ...</em></a></p>
     <hr/>
@@ -755,6 +751,12 @@ document.write(`
     </span>
   
   
+  <a href="tag/hardware.html">hardware</a>
+  
+  
+  
+  
+  
   <a href="tag/admin.html">admin</a>
   
   
@@ -765,21 +767,13 @@ document.write(`
   
   
   
-  
-  
-  <a href="tag/hardware.html">hardware</a>
-  
-  
-  
 </li>
 
 
     </ul>
-    <div class="ablog-post-excerpt docutils container">
-<p>Here we will introduce the reader to Fair-share Scheduling, the method by which most IBM Quantum systems are accessed.  We will go over the basics of Fair-share and understand its behavior via simulation.</p>
+    <p class="ablog-post-excerpt"><p>Here we will introduce the reader to Fair-share Scheduling, the method by which most IBM Quantum systems are accessed.  We will go over the basics of Fair-share and understand its behavior via simulation.</p>
 <p>Here we import the tools we will need to make a threaded Fair-share scheduling simulation.</p>
-<img alt="../_images/assumptions.png" src="../_images/assumptions.png" />
-</div>
+<img alt="../_images/assumptions.png" src="../_images/assumptions.png" /></p>
 
     <p class="ablog-post-expand"><a href="../posts/2022/2022-07-26-fairshare.html"><em>Read more ...</em></a></p>
     <hr/>
@@ -856,11 +850,9 @@ document.write(`
 
 
     </ul>
-    <div class="ablog-post-excerpt docutils container">
-<p>Recently our Partners over at Lawrence Berkeley National Laboratory (LBNL) published an interesting paper on probing quantum gravity in the lab: <a class="reference external" href="https://arxiv.org/abs/2205.14081">arXiv:2205.14081</a>.  This paper caught our eye for two reasons. First, it is about teleportation via wormholes, so why not check it out?  Second, it compares our quantum systems verses the trapped-ion systems from Quantinuum.  From a competitive standpoint, these types of papers are fun to look at and see if we can do better.  Trying to do so is the basis for this notebook.  If you want all the details you will need to see the paper, however the basics can be gathered from Figure 1 in the paper:</p>
+    <p class="ablog-post-excerpt"><p>Recently our Partners over at Lawrence Berkeley National Laboratory (LBNL) published an interesting paper on probing quantum gravity in the lab: <a class="reference external" href="https://arxiv.org/abs/2205.14081">arXiv:2205.14081</a>.  This paper caught our eye for two reasons. First, it is about teleportation via wormholes, so why not check it out?  Second, it compares our quantum systems verses the trapped-ion systems from Quantinuum.  From a competitive standpoint, these types of papers are fun to look at and see if we can do better.  Trying to do so is the basis for this notebook.  If you want all the details you will need to see the paper, however the basics can be gathered from Figure 1 in the paper:</p>
 <p>Basically they are creating entangled pairs of qubits at the beginning; a prerequisite of all teleportation procedures.  Doing evolution backward and forward by the same amout of time on the <code class="docutils literal notranslate"><span class="pre">L</span></code> group, coupling the L and R groups of qubits with a tunable phase <code class="docutils literal notranslate"><span class="pre">g</span></code>, and then performing the forward evolution again on the <code class="docutils literal notranslate"><span class="pre">R</span></code> group of qubits, and then measuring the state on the bottom qubit.  As a function of the coupling <code class="docutils literal notranslate"><span class="pre">g</span></code> the expectation value of the <code class="docutils literal notranslate"><span class="pre">Z</span></code> operator on the last qubit in both simulation and on the real quantum hardware is seen to be:</p>
-<img alt="../_images/circuit.png" src="../_images/circuit.png" />
-</div>
+<img alt="../_images/circuit.png" src="../_images/circuit.png" /></p>
 
     <p class="ablog-post-expand"><a href="../posts/2022/2022-07-14-wormhole.html"><em>Read more ...</em></a></p>
     <hr/>
@@ -874,9 +866,15 @@ document.write(`
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -886,7 +884,7 @@ document.write(`
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner"></div>
+            
           </footer>
         
       </main>
@@ -894,8 +892,8 @@ document.write(`
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
 <footer class="bd-footer">
 <div>

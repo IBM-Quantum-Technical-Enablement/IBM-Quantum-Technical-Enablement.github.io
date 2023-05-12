@@ -18,12 +18,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -33,11 +33,11 @@
     <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/thebelab.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -408,6 +408,12 @@ document.write(`
   
   
   <li>
+    <a href="../../posts/2023/2023-05-12-properties_from_api.html">
+      12 May - Accessing device properties without an IBM Quantum account
+    </a>
+  </li>
+  
+  <li>
     <a href="../../posts/2023/2023-02-02-pauli_twirling.html">
       02 February - Generating Pauli-twirled circuits in Qiskit
     </a>
@@ -431,12 +437,6 @@ document.write(`
     </a>
   </li>
   
-  <li>
-    <a href="../../posts/2022/2022-07-26-fairshare.html">
-      26 July - Understanding fair-share scheduling
-    </a>
-  </li>
-  
 </ul>
 </div>
 </div>
@@ -449,7 +449,7 @@ document.write(`
   
   
   <li>
-    <a href="../2023.html">2023 (2)</a>
+    <a href="../2023.html">2023 (3)</a>
   </li>
   
   
@@ -532,6 +532,78 @@ document.write(`
   
   <div class="section ablog-post">
     <h2 class="ablog-post-title">
+      <a href="../../posts/2023/2023-05-12-properties_from_api.html">Accessing device properties without an IBM Quantum account</a>
+    </h2>
+    <ul class="ablog-archive">
+      <li>
+        
+        
+        <i class="fa fa-calendar"></i>
+        
+        12 May 2023
+        
+      </li>
+      
+
+<li id="ablog-sidebar-item author ablog__author">
+  <span>
+    
+    <i class="fa-fw fa fa-user"></i>
+    
+    </span>
+  
+  
+  <a href="../author/paul-nation.html">Paul Nation</a>
+  
+  
+  
+</li>
+
+
+
+
+<li id="ablog-sidebar-item category ablog__category">
+  <span>
+    
+    <i class="fa-fw fa fa-folder-open"></i>
+    
+    </span>
+  
+  
+  <a href="#">Hardware</a>
+  
+  
+  
+</li>
+
+
+<li id="ablog-sidebar-item tags ablog__tags">
+  <span>
+    
+    
+    <i class="fa-fw fa fa-tag"></i>
+    
+    </span>
+  
+  
+  <a href="../tag/hardware.html">Hardware</a>
+  
+  
+  
+</li>
+
+
+    </ul>
+    <p class="ablog-post-excerpt"><p>The properties of an IBM Quantum device (called a ‘backend’ in Qiskit) are important parameters used to gauge the qulity of a machine, provide additonal information for the circuit compilation process, and additional information needed for scheduling circuits and pulse-level control.  Most often this information is retrived directly from a backend object in Qiskit after loading your IBM Quantum account.  However, the properties of all the deployed devices on the <a class="reference external" href="https://quantum-computing.ibm.com/services/resources">IBM Quantum website</a> are accessible with no account at all!  This is actually quite unique, as most quantum hardware vendors provide device-level details only to paying clients, or at most give a static snapshot at some instance of time.  Qiskit itself includes static snapshots of IBM Quantum devices that can be used for transpilation and noisy simulations.  However, because devices properties can vary over time, these “fake backends” are rarely a good model for a live system.</p>
+<p>Here we show you how to query the IBM Quantum API directly for current system properties, and show how to utilize this information in a couple of different ways.</p>
+<img alt="../../_images/b0c961f35017bb2afad18169b9fda8b913e88ffbd0abd648acb153b842a43156.png" src="../../_images/b0c961f35017bb2afad18169b9fda8b913e88ffbd0abd648acb153b842a43156.png" /></p>
+
+    <p class="ablog-post-expand"><a href="../../posts/2023/2023-05-12-properties_from_api.html"><em>Read more ...</em></a></p>
+    <hr/>
+  </div>
+  
+  <div class="section ablog-post">
+    <h2 class="ablog-post-title">
       <a href="../../posts/2023/2023-01-28-directed_cmap.html">How to make your backend a directed backend</a>
     </h2>
     <ul class="ablog-archive">
@@ -594,11 +666,9 @@ document.write(`
 
 
     </ul>
-    <div class="ablog-post-excerpt docutils container">
-<p>Here we show the reader how to construct a directed IBM Quantum backend from an undirected one.  This yields some performance benefits as the Qiskit transpiler can better optimize single-qubit gates within the circuit.</p>
+    <p class="ablog-post-excerpt"><p>Here we show the reader how to construct a directed IBM Quantum backend from an undirected one.  This yields some performance benefits as the Qiskit transpiler can better optimize single-qubit gates within the circuit.</p>
 <p>Recently IBM Quantum announced its new <a class="reference external" href="https://research.ibm.com/blog/eagle-quantum-error-mitigation">Sherbrooke device</a> that allows users to directly work with cross-resonance gates, and exposes only the natural direction that the gates operate in.  CNOT gates, which are comprised of cross-resonance gates on IBM Quantum systems, also have a natural direction, but current devices that use CNOT gates as their two-qubit basis gate do not directly express this directionality.  Indeed, the coupling map (topology) for these systems is symmetric / bi-directional; if you query the system you will see that it indicates that a backend can do a CNOT gate between qubits A &amp; B (control and target), as well as B &amp; A.  If a CX gate that is used in a circuit is not in the natural direction, the system will transparently flip it around in software and execute the circuit.  This comes with a cost however.  To see this, lets make a Bell state in the usual fashion (ignoring measurements for brevity):</p>
-<img alt="../../_images/e5dcfd9044e8af915d4469cdcc3105876785a0d7b60b4c63e0e64b29fa9ad38b.png" src="../../_images/e5dcfd9044e8af915d4469cdcc3105876785a0d7b60b4c63e0e64b29fa9ad38b.png" />
-</div>
+<img alt="../../_images/e5dcfd9044e8af915d4469cdcc3105876785a0d7b60b4c63e0e64b29fa9ad38b.png" src="../../_images/e5dcfd9044e8af915d4469cdcc3105876785a0d7b60b4c63e0e64b29fa9ad38b.png" /></p>
 
     <p class="ablog-post-expand"><a href="../../posts/2023/2023-01-28-directed_cmap.html"><em>Read more ...</em></a></p>
     <hr/>
@@ -653,11 +723,9 @@ document.write(`
 
 
     </ul>
-    <div class="ablog-post-excerpt docutils container">
-<p>Excited State Promotion (ESP) readout is method for decreasing measurement errors in quantum computing systems where decay from the excited <span class="math notranslate nohighlight">\(|1\rangle\)</span> state to <span class="math notranslate nohighlight">\(|0\rangle\)</span> is non-negligible over the measurement timescales.  Although it was originally an useful technique on the previous generation Falcon R4 systems, today it is only available on a few Falcon R5 systems where the nearly order of magnitude improvement in measurement times leaves little value in using this functionality.  In testing, it looks to even be a bit worse performing than the standard readout method.  ESP readout is on by default for those systems that support it.  To disable it run:</p>
+    <p class="ablog-post-excerpt"><p>Excited State Promotion (ESP) readout is method for decreasing measurement errors in quantum computing systems where decay from the excited <span class="math notranslate nohighlight">\(|1\rangle\)</span> state to <span class="math notranslate nohighlight">\(|0\rangle\)</span> is non-negligible over the measurement timescales.  Although it was originally an useful technique on the previous generation Falcon R4 systems, today it is only available on a few Falcon R5 systems where the nearly order of magnitude improvement in measurement times leaves little value in using this functionality.  In testing, it looks to even be a bit worse performing than the standard readout method.  ESP readout is on by default for those systems that support it.  To disable it run:</p>
 <p>On many quantum computing platforms one of the two computational basis states, the <span class="math notranslate nohighlight">\(|1\rangle\)</span> state by convention, is an excited state of the system with respect to the ground state <span class="math notranslate nohighlight">\(|0\rangle\)</span>.  The difference in energy between these two states defines the frequency of the qubit through the relation <span class="math notranslate nohighlight">\(E=hf\)</span>.  Because the <span class="math notranslate nohighlight">\(|1\rangle\)</span> state is an excited state, there is a non-zero probability that the state will decay to <span class="math notranslate nohighlight">\(|0\rangle\)</span> via interaction with the environment.  The characteristic timescale for this is the <span class="math notranslate nohighlight">\(T_{1}\)</span> time of the qubit.  When performing gate operations, or non-reversible instructions like measurements on qubits, if the time it takes to perform these operations is a non-negligible fraction of <span class="math notranslate nohighlight">\(T_{1}\)</span>, then there is a possibility that this decay has occurred.</p>
-<img alt="../../_images/e21b50a21416c826eebab83880c5e7f0fc4abe32a6ee96f221a2bb73721cc003.png" src="../../_images/e21b50a21416c826eebab83880c5e7f0fc4abe32a6ee96f221a2bb73721cc003.png" />
-</div>
+<img alt="../../_images/e21b50a21416c826eebab83880c5e7f0fc4abe32a6ee96f221a2bb73721cc003.png" src="../../_images/e21b50a21416c826eebab83880c5e7f0fc4abe32a6ee96f221a2bb73721cc003.png" /></p>
 
     <p class="ablog-post-expand"><a href="../../posts/2021/2021-12-20-esp_readout.html"><em>Read more ...</em></a></p>
     <hr/>
@@ -727,11 +795,9 @@ document.write(`
 
 
     </ul>
-    <div class="ablog-post-excerpt docutils container">
-<p>Recently IBM Quantum announced the move to revision 5 (R5) of its Falcon processors <a class="reference external" href="https://twitter.com/jaygambetta/status/1460697559773634570">see this tweet from Jay Gambetta</a>.  In particular it was highlighted that there is a 8x reduction in meausrement time on these systems.  Lets see if this, or any other enhancements, are visible from the system calibration data.</p>
+    <p class="ablog-post-excerpt"><p>Recently IBM Quantum announced the move to revision 5 (R5) of its Falcon processors <a class="reference external" href="https://twitter.com/jaygambetta/status/1460697559773634570">see this tweet from Jay Gambetta</a>.  In particular it was highlighted that there is a 8x reduction in meausrement time on these systems.  Lets see if this, or any other enhancements, are visible from the system calibration data.</p>
 <p>The highlight of the recently released Falcon R5 “core” systems is their much improved measurement times (7x) and error rates (2x).  On these systems a measurement is roughly twice as long as a CNOT gate, compared to 13x on the old R4 systems, and allows for implimenting high-fidelity dynamic circuits with resets, mid-circuit measurements, and eventually classically-conditioned gates.  For other tasks, the modest improvements in the CNOT gate errors and <span class="math notranslate nohighlight">\(T_{1}\)</span> times are also welcomed.</p>
-<img alt="../../_images/db6dfb274bd8e4c30c266cf1efcdf79c65fce170b2f07adc6224b21785ef8766.png" src="../../_images/db6dfb274bd8e4c30c266cf1efcdf79c65fce170b2f07adc6224b21785ef8766.png" />
-</div>
+<img alt="../../_images/db6dfb274bd8e4c30c266cf1efcdf79c65fce170b2f07adc6224b21785ef8766.png" src="../../_images/db6dfb274bd8e4c30c266cf1efcdf79c65fce170b2f07adc6224b21785ef8766.png" /></p>
 
     <p class="ablog-post-expand"><a href="../../posts/2021/2021-11-28-falcon_r5.html"><em>Read more ...</em></a></p>
     <hr/>
@@ -794,6 +860,12 @@ document.write(`
     </span>
   
   
+  <a href="../tag/dynamic.html">Dynamic</a>
+  
+  
+  
+  
+  
   <a href="../tag/spam.html">SPAM</a>
   
   
@@ -804,21 +876,13 @@ document.write(`
   
   
   
-  
-  
-  <a href="../tag/dynamic.html">Dynamic</a>
-  
-  
-  
 </li>
 
 
     </ul>
-    <div class="ablog-post-excerpt docutils container">
-<p>It is often taken for granted that qubits are initialized to zero when executing quantum circuits on hardware.  However, errors in the reset process mean that this initialization is not perfect leading to state preparation errors.  Here we will look at state prep errors and how to improve them on IBM Quantum systems.</p>
+    <p class="ablog-post-excerpt"><p>It is often taken for granted that qubits are initialized to zero when executing quantum circuits on hardware.  However, errors in the reset process mean that this initialization is not perfect leading to state preparation errors.  Here we will look at state prep errors and how to improve them on IBM Quantum systems.</p>
 <p>Here we will use two lesser known configuration variables available on IBM Quantum systems to do so.  First is <code class="docutils literal notranslate"><span class="pre">rep_delay</span></code>.  This is the delay time before the next circuit is executed.  Each backend has a different <code class="docutils literal notranslate"><span class="pre">default_rep_delay</span></code> (although as of the time of writing many are <span class="math notranslate nohighlight">\(250~\mu \rm s\)</span> or lower) and support tuning this parameter from <span class="math notranslate nohighlight">\(0\)</span> up to <span class="math notranslate nohighlight">\(500~\mu \rm s\)</span>.  Why in the world would I want to vary this parameter?  Well if I set <code class="docutils literal notranslate"><span class="pre">rep_delay=0</span></code> then I can get much faster throughput as the default delay is nominally longer than the <span class="math notranslate nohighlight">\(T_{1}\)</span> time of the system.  However when doing so you are trusting the implicit reset (called “unconditional reset”) to do its job and reset the qubits to their ground state with high-fidelity.  Failure to do so would lead to state-prep errors that propagate through the circuit.  This is why the delay is usually longer than <span class="math notranslate nohighlight">\(T_{1}\)</span>; let the enviornment help your reset fidelity.  Second is <code class="docutils literal notranslate"><span class="pre">init_qubits</span></code> that tells the hardware to not perform an unconditional reset.  As no reset at all would quickly lead to junk, this setting needs to be done in concert with <code class="docutils literal notranslate"><span class="pre">reset</span></code> instructions being added to the beginning of your circuits.  Perhaps this is better, or maybe a single reset at the beginning and the uncondtional reset.  Lets find out.</p>
-<img alt="../../_images/9bd1e7b458a6bd9b2721b691d5946ebd4f465feac96980527863caeea3cd2c7e.png" src="../../_images/9bd1e7b458a6bd9b2721b691d5946ebd4f465feac96980527863caeea3cd2c7e.png" />
-</div>
+<img alt="../../_images/9bd1e7b458a6bd9b2721b691d5946ebd4f465feac96980527863caeea3cd2c7e.png" src="../../_images/9bd1e7b458a6bd9b2721b691d5946ebd4f465feac96980527863caeea3cd2c7e.png" /></p>
 
     <p class="ablog-post-expand"><a href="../../posts/2021/2021-11-07-rep_delay.html"><em>Read more ...</em></a></p>
     <hr/>
@@ -888,11 +952,9 @@ document.write(`
 
 
     </ul>
-    <div class="ablog-post-excerpt docutils container">
-<p>The ability to do mid-circuit reset and measurement unlocks a variety of tools for executing quantum circuits.  A brief discussion is given in this <a class="reference external" href="https://www.ibm.com/blogs/research/2021/02/quantum-mid-circuit-measurement/">IBM Research blog post</a>.  On particular possibility is the ability to reuse qubits, and in doing so reduce the hardware requirements of some algorithms.  The Bernstein-Vazirani (BV) algorithm is one such example.  In particular, when using phase-kickback, BV usually requires a high degree of qubit connectivity to impliment.  This has been used by trapped-ion hardware vendors to show that their hardware gives better fidelity on these problems, e.g. see (<a class="reference external" href="https://arxiv.org/abs/2102.00371">https://arxiv.org/abs/2102.00371</a> and <a class="reference external" href="https://www.nature.com/articles/s41467-019-13534-2">https://www.nature.com/articles/s41467-019-13534-2</a>).  However, with reset and measurement, BV requires only two qubits, making connectivity differences mute.  We showed this in a reply Tweet: <a class="reference external" href="https://twitter.com/nonhermitian/status/1362348935440986113">https://twitter.com/nonhermitian/status/1362348935440986113</a>, but did not explain how we got that figure.  So here is how I did it.</p>
+    <p class="ablog-post-excerpt"><p>The ability to do mid-circuit reset and measurement unlocks a variety of tools for executing quantum circuits.  A brief discussion is given in this <a class="reference external" href="https://www.ibm.com/blogs/research/2021/02/quantum-mid-circuit-measurement/">IBM Research blog post</a>.  On particular possibility is the ability to reuse qubits, and in doing so reduce the hardware requirements of some algorithms.  The Bernstein-Vazirani (BV) algorithm is one such example.  In particular, when using phase-kickback, BV usually requires a high degree of qubit connectivity to impliment.  This has been used by trapped-ion hardware vendors to show that their hardware gives better fidelity on these problems, e.g. see (<a class="reference external" href="https://arxiv.org/abs/2102.00371">https://arxiv.org/abs/2102.00371</a> and <a class="reference external" href="https://www.nature.com/articles/s41467-019-13534-2">https://www.nature.com/articles/s41467-019-13534-2</a>).  However, with reset and measurement, BV requires only two qubits, making connectivity differences mute.  We showed this in a reply Tweet: <a class="reference external" href="https://twitter.com/nonhermitian/status/1362348935440986113">https://twitter.com/nonhermitian/status/1362348935440986113</a>, but did not explain how we got that figure.  So here is how I did it.</p>
 <p>Here we select the backend and extract its two-qubit gate coupling map.  This is not the same backend used in the original figure as, at the time or writing, that one is offline.  It is however the same processor family and revision.</p>
-<img alt="../../_images/0890cf65bd38c4da213670396ac07ffaf54fe7d77b107d16ab1d78c90c6c9469.png" src="../../_images/0890cf65bd38c4da213670396ac07ffaf54fe7d77b107d16ab1d78c90c6c9469.png" />
-</div>
+<img alt="../../_images/0890cf65bd38c4da213670396ac07ffaf54fe7d77b107d16ab1d78c90c6c9469.png" src="../../_images/0890cf65bd38c4da213670396ac07ffaf54fe7d77b107d16ab1d78c90c6c9469.png" /></p>
 
     <p class="ablog-post-expand"><a href="../../posts/2021/2021-10-27-dynamic_BV.html"><em>Read more ...</em></a></p>
     <hr/>
@@ -906,9 +968,15 @@ document.write(`
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -918,7 +986,7 @@ document.write(`
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner"></div>
+            
           </footer>
         
       </main>
@@ -926,8 +994,8 @@ document.write(`
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
 <footer class="bd-footer">
 <div>
