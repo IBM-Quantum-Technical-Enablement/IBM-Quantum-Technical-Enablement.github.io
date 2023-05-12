@@ -597,8 +597,8 @@ document.write(`
 <p>The properties of an IBM Quantum device (called a ‘backend’ in Qiskit) are important parameters used to gauge the qulity of a machine, provide additonal information for the circuit compilation process, and additional information needed for scheduling circuits and pulse-level control.  Most often this information is retrived directly from a backend object in Qiskit after loading your IBM Quantum account.  However, the properties of all the deployed devices on the <a class="reference external" href="https://quantum-computing.ibm.com/services/resources">IBM Quantum website</a> are accessible with no account at all!  This is actually quite unique, as most quantum hardware vendors provide device-level details only to paying clients, or at most give a static snapshot at some instance of time.  Qiskit itself includes static snapshots of IBM Quantum devices that can be used for transpilation and noisy simulations.  However, because devices properties can vary over time, these “fake backends” are rarely a good model for a live system.</p>
 <p>Here we show you how to query the IBM Quantum API directly for current system properties, and show how to utilize this information in a couple of different ways.</p>
 </section>
-<section id="fontmatter">
-<h2>Fontmatter<a class="headerlink" href="#fontmatter" title="Permalink to this heading">#</a></h2>
+<section id="frontmatter">
+<h2>Frontmatter<a class="headerlink" href="#frontmatter" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Package for querying the IBM Quantum API</span>
@@ -887,7 +887,7 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fontmatter">Fontmatter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#frontmatter">Frontmatter</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#querying-the-ibm-quantum-api">Querying the IBM Quantum API</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#making-a-fake-backend-from-backendproperties">Making a ‘fake’ backend from BackendProperties</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-our-fake-backend">Using our fake_backend</a><ul class="nav section-nav flex-column">
