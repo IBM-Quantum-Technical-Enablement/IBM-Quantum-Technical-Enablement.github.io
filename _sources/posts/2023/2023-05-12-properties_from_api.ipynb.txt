@@ -1,6 +1,7 @@
 {
  "cells": [
   {
+   "attachments": {},
    "cell_type": "markdown",
    "id": "2bf5e897",
    "metadata": {},
@@ -15,23 +16,25 @@
    ]
   },
   {
+   "attachments": {},
    "cell_type": "markdown",
    "id": "db1abf95",
    "metadata": {},
    "source": [
     "## Background\n",
     "\n",
-    "The properties of an IBM Quantum device (called a 'backend' in Qiskit) are important parameters used to gauge the qulity of a machine, provide additonal information for the circuit compilation process, and additional information needed for scheduling circuits and pulse-level control.  Most often this information is retrived directly from a backend object in Qiskit after loading your IBM Quantum account.  However, the properties of all the deployed devices on the [IBM Quantum website](https://quantum-computing.ibm.com/services/resources) are accessible with no account at all!  This is actually quite unique, as most quantum hardware vendors provide device-level details only to paying clients, or at most give a static snapshot at some instance of time.  Qiskit itself includes static snapshots of IBM Quantum devices that can be used for transpilation and noisy simulations.  However, because devices properties can vary over time, these \"fake backends\" are rarely a good model for a live system.\n",
+    "The properties of an IBM Quantum device (called a 'backend' in Qiskit) are important parameters used to gauge the quality of a machine, provide additonal information for the circuit compilation process, and additional information needed for scheduling circuits and pulse-level control.  Most often this information is retrived directly from a backend object in Qiskit after loading your IBM Quantum account.  However, the properties of all the deployed devices on the [IBM Quantum website](https://quantum-computing.ibm.com/services/resources) are accessible with no account at all!  This is actually quite unique, as most quantum hardware vendors provide device-level details only to paying clients, or at most give a static snapshot at some instance of time.  Qiskit itself includes static snapshots of IBM Quantum devices that can be used for transpilation and noisy simulations.  However, because device properties can vary over time, these \"fake backends\" are rarely a good model for a live system.\n",
     "\n",
-    "Here we show you how to query the IBM Quantum API directly for current system properties, and show how to utilize this information in a couple of different ways."
+    "Here we show you how to query the IBM Quantum API directly for current system properties, and detail how to utilize this information in a couple of different ways."
    ]
   },
   {
+   "attachments": {},
    "cell_type": "markdown",
    "id": "1bbb9658",
    "metadata": {},
    "source": [
-    "## Fontmatter"
+    "## Frontmatter"
    ]
   },
   {
@@ -63,6 +66,7 @@
    ]
   },
   {
+   "attachments": {},
    "cell_type": "markdown",
    "id": "cf7fc9a1",
    "metadata": {},
@@ -86,6 +90,7 @@
    ]
   },
   {
+   "attachments": {},
    "cell_type": "markdown",
    "id": "5625b5a3",
    "metadata": {},
@@ -104,6 +109,7 @@
    ]
   },
   {
+   "attachments": {},
    "cell_type": "markdown",
    "id": "fe75660c",
    "metadata": {},
@@ -112,6 +118,7 @@
    ]
   },
   {
+   "attachments": {},
    "cell_type": "markdown",
    "id": "6617a062",
    "metadata": {},
@@ -120,7 +127,7 @@
     "\n",
     "To make our lives even easier, it is beneficial to create a `FakeBackend` instance that we can directly use in the Qiskit `transpile` function and can be used for generating a noise model from the device and performing noisy simulations.\n",
     "\n",
-    "So, it turns out that while you can query the properties of a IBM Quantum system without logging in, you cannot grab the configuration of the system.  The `configuration` represents static attributes of the backend, e.g. things like the backend name, Quantum Volume (if any), `rep_delay` time, etc.  The properties, contains things like gate and measurement errors, qubit frequencies, etc.; attributies of the quantum system and its components that can vary over different calibration cycles.\n",
+    "So, it turns out that while you can query the properties of a IBM Quantum system without logging in, you cannot grab the configuration of the system.  The `configuration` represents static attributes of the backend, e.g. things like the backend name, Quantum Volume (if any), `rep_delay` time, etc.  The properties, contains things like gate and measurement errors, qubit frequencies, etc.; attributies of the quantum system and its components that can vary over different calibration cycles.  Luckily, we can generate all the data we need, with a bit of work, using only the properties. \n",
     "\n",
     "The function below generates a `FakeBackend` object from the properties data obtained from the API call.  Here we use `FakeBackend` rather than the newer `FakeBackendV2` as the former is more inline with the backend objects returned from the Qiskit IBM provider."
    ]
@@ -191,6 +198,7 @@
    ]
   },
   {
+   "attachments": {},
    "cell_type": "markdown",
    "id": "2cc8eebd",
    "metadata": {},
@@ -209,6 +217,7 @@
    ]
   },
   {
+   "attachments": {},
    "cell_type": "markdown",
    "id": "c82b8d07",
    "metadata": {},
@@ -217,6 +226,7 @@
    ]
   },
   {
+   "attachments": {},
    "cell_type": "markdown",
    "id": "f83c0d6a",
    "metadata": {},
@@ -266,13 +276,14 @@
    ]
   },
   {
+   "attachments": {},
    "cell_type": "markdown",
    "id": "08eb2362",
    "metadata": {},
    "source": [
     "### Transpiling and noisy simulation\n",
     "\n",
-    "Here we will take a simple GHZ circuit, purposely designed to introduce swap gates, and transpile the circuit in a noise-aware manner that triggers [Mapomatic](https://doi.org/10.1103/PRXQuantum.4.010327).  We cannot however use the `ibm_seattle` device here.  This is because this system has `faulty_qubits`; qubits that are completely unoperational at the time.  This is a new concept, and one that is incomplatible with the noise model geneating functions within Qiskit Aer.  As such, we will use the `ibm_sherbrooke` device:"
+    "Here we will take a simple GHZ circuit, purposely designed to introduce swap gates, and transpile the circuit in a noise-aware manner that triggers [Mapomatic](https://doi.org/10.1103/PRXQuantum.4.010327).  We cannot however use the `ibm_seattle` device here.  This is because this system has `faulty_qubits`; qubits that are completely unoperational at the time.  This is a new concept, and one that is incomplatible with the current noise model generating functions within Qiskit Aer.  As such, we will use the `ibm_sherbrooke` device:"
    ]
   },
   {
@@ -290,6 +301,7 @@
    ]
   },
   {
+   "attachments": {},
    "cell_type": "markdown",
    "id": "38682f4b",
    "metadata": {},
@@ -314,6 +326,7 @@
    ]
   },
   {
+   "attachments": {},
    "cell_type": "markdown",
    "id": "a2445f4e",
    "metadata": {},
@@ -350,6 +363,7 @@
    ]
   },
   {
+   "attachments": {},
    "cell_type": "markdown",
    "id": "c4ed48a6",
    "metadata": {},
@@ -401,6 +415,7 @@
    ]
   },
   {
+   "attachments": {},
    "cell_type": "markdown",
    "id": "efdf3a95",
    "metadata": {},
@@ -433,7 +448,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.11.0"
+   "version": "3.11.3"
   }
  },
  "nbformat": 4,
