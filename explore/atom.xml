@@ -2,10 +2,26 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
   <id>quantum-enablement.org</id>
   <title>Quantum Explorations</title>
-  <updated>2023-05-13T09:30:55.795940+00:00</updated>
+  <updated>2023-05-24T18:29:43.554480+00:00</updated>
   <link href="quantum-enablement.org"/>
   <link href="quantum-enablement.org/explore/atom.xml" rel="self"/>
   <generator uri="https://ablog.readthedocs.io/" version="0.11.4">ABlog</generator>
+  <entry>
+    <id>quantum-enablement.org/posts/2023/2023-05-24-Calibration_methods.html</id>
+    <title>Understanding IBM Quantum hardware calibration schemes</title>
+    <updated>2023-05-24T00:00:00-04:00</updated>
+    <author>
+      <name>Paul Nation</name>
+    </author>
+    <content type="html">&lt;p class="ablog-post-excerpt"&gt;&lt;p&gt;A high-quality quantum computer is more than just the sum of its constituent building blocks.  How one manipulates the qubits and other components using classical control electronics plays an important role in determining fidelity of circuit operations performed on hardware.&lt;/p&gt;
+&lt;p&gt;With the introduction of its 127-qubit Eagle R3 processors, IBM Quantum has changed its gate and measurement calibration methods to focus on stability rather than fast gate operations.  This new “uniform” calibration technique is designed with an eye toward workflows using Probabalistic Error Cancellation (PEC) [&lt;a class="reference external" href="https://arxiv.org/abs/2201.09866"&gt;van den Berg et al., 2021&lt;/a&gt;, &lt;a class="reference external" href="https://arxiv.org/abs/1612.02058"&gt;Temme et. al., 2017&lt;/a&gt;].  We will see that, compared to calibrations aimed at fast gate times, uniform calibrations reduce idle times within circuits by keeping entangling gate durations constant across almost the whole device.&lt;/p&gt;
+&lt;img alt="_images/89577781c7effe3cde8980625b79ba30f2e094be58a3f0ad25f1fa1384a0d508.png" src="_images/89577781c7effe3cde8980625b79ba30f2e094be58a3f0ad25f1fa1384a0d508.png" /&gt;&lt;/p&gt;
+</content>
+    <link href="quantum-enablement.org/posts/2023/2023-05-24-Calibration_methods.html" rel="alternate"/>
+    <summary>A high-quality quantum computer is more than just the sum of its constituent building blocks.  How one manipulates the qubits and other components using classical control electronics plays an important role in determining fidelity of circuit operations performed on hardware.With the introduction of its 127-qubit Eagle R3 processors, IBM Quantum has changed its gate and measurement calibration methods to focus on stability rather than fast gate operations.  This new “uniform” calibration technique is designed with an eye toward workflows using Probabalistic Error Cancellation (PEC) [van den Berg et al., 2021, Temme et. al., 2017].  We will see that, compared to calibrations aimed at fast gate times, uniform calibrations reduce idle times within circuits by keeping entangling gate durations constant across almost the whole device.</summary>
+    <category term="Hardware" label="Hardware"/>
+    <published>2023-05-24T00:00:00-04:00</published>
+  </entry>
   <entry>
     <id>quantum-enablement.org/posts/2023/2023-05-12-properties_from_api.html</id>
     <title>Accessing device properties without an IBM Quantum account</title>
