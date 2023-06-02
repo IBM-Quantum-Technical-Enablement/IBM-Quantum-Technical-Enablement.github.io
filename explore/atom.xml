@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
   <id>quantum-enablement.org</id>
   <title>Quantum Explorations</title>
-  <updated>2023-05-24T18:29:43.554480+00:00</updated>
+  <updated>2023-06-02T12:58:39.671138+00:00</updated>
   <link href="quantum-enablement.org"/>
   <link href="quantum-enablement.org/explore/atom.xml" rel="self"/>
   <generator uri="https://ablog.readthedocs.io/" version="0.11.4">ABlog</generator>
@@ -47,7 +47,7 @@
     </author>
     <content type="html">&lt;p class="ablog-post-excerpt"&gt;&lt;p&gt;Pauli-twirling is a quantum error suppression technique that uses randomization to noise shape coherent error into stochastic errors, by combining the results from many random, but logically equivalent circuits, together.  This is beneficial because while incoherent errors add up linearly with circuit depth, coherent errors can scale quadratically.  Here we will show how to generate Pauli-twirled circuits, where we focus on twirling two-qubit gates within a circuit.  This technique has been used, for example, in this work by Kim et al.: &lt;a class="reference external" href="https://arxiv.org/abs/2108.09197"&gt;arXiv:2108.09197&lt;/a&gt;.  We will show how to compute the possible Pauli sets for any two-qubit gate, and show how to create a Qiskit &lt;code class="docutils literal notranslate"&gt;&lt;span class="pre"&gt;Passmanager&lt;/span&gt;&lt;/code&gt; that implements the routine, and can be combined with other transpilation techniques.&lt;/p&gt;
 &lt;p&gt;Here are all of the imports used in this notebook.&lt;/p&gt;
-&lt;img alt="_images/7e638917f9ede5dea8567f2dedfb2f5e5b473f8cbeb71c9d0cc408e70c967f1c.png" src="_images/7e638917f9ede5dea8567f2dedfb2f5e5b473f8cbeb71c9d0cc408e70c967f1c.png" /&gt;&lt;/p&gt;
+&lt;img alt="_images/075c5bb1404314afc93cd1eaca921c1327bbb126da9da9549edbc549584a899b.png" src="_images/075c5bb1404314afc93cd1eaca921c1327bbb126da9da9549edbc549584a899b.png" /&gt;&lt;/p&gt;
 </content>
     <link href="quantum-enablement.org/posts/2023/2023-02-02-pauli_twirling.html" rel="alternate"/>
     <summary>Pauli-twirling is a quantum error suppression technique that uses randomization to noise shape coherent error into stochastic errors, by combining the results from many random, but logically equivalent circuits, together.  This is beneficial because while incoherent errors add up linearly with circuit depth, coherent errors can scale quadratically.  Here we will show how to generate Pauli-twirled circuits, where we focus on twirling two-qubit gates within a circuit.  This technique has been used, for example, in this work by Kim et al.: arXiv:2108.09197.  We will show how to compute the possible Pauli sets for any two-qubit gate, and show how to create a Qiskit Passmanager that implements the routine, and can be combined with other transpilation techniques.Here are all of the imports used in this notebook.</summary>

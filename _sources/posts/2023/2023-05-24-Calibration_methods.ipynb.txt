@@ -327,7 +327,7 @@
    "id": "98825eed",
    "metadata": {},
    "source": [
-    "Now it is much clearer!  The idle times are clearly visible by the lack of gates at various times in the circuit.  The size of these gaps is primarily due to the differences in entangling gate times, where performing the next layer of gates in a circuit cannot run until the longest gate in the previous layer is done executing.  So having a really fast gate does not buy one much if the other gates in the circuit are markedly slower.  Moreover, having idle periods within a circuit can lead to unwanted dephasing, and nominally requires the insertion of dynamical-decoupling (DD) pulse sequences if the idle time is approaching a microsecond or so.\n",
+    "Now it is much clearer!  The idle times are clearly visible by the lack of gates at various times in the circuit.  The size of these gaps is primarily due to the differences in entangling gate times, where performing the next layer of gates in a circuit cannot run until the longest gate in the previous layer is done executing.  So having a really fast gate does not buy one much if the other gates in the circuit are markedly slower.  Moreover, having idle periods within a circuit can lead to unwanted dephasing, and nominally requires the insertion of dynamical-decoupling (DD) pulse sequences if the idle time is approaching a couple of microseconds or so.\n",
     "\n",
     "Finally, let us compute the total duration of our circuit.  This can be done using the circuits `duration` attribute and the `dt` time of the device found in the configuration:"
    ]
