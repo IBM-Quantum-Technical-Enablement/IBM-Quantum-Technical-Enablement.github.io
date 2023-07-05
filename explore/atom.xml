@@ -2,10 +2,26 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
   <id>quantum-enablement.org</id>
   <title>Quantum Explorations</title>
-  <updated>2023-06-02T12:58:39.671138+00:00</updated>
+  <updated>2023-07-05T11:06:38.573694+00:00</updated>
   <link href="quantum-enablement.org"/>
   <link href="quantum-enablement.org/explore/atom.xml" rel="self"/>
   <generator uri="https://ablog.readthedocs.io/" version="0.11.4">ABlog</generator>
+  <entry>
+    <id>quantum-enablement.org/posts/2023/2023-07-05-Finding_Waldo_with_Grover_Search.html</id>
+    <title>Finding Waldo using Grover Search</title>
+    <updated>2023-07-05T00:00:00-04:00</updated>
+    <author>
+      <name>Paul Nation</name>
+    </author>
+    <content type="html">&lt;p class="ablog-post-excerpt"&gt;&lt;p&gt;The files for this tutorial may be found here: &lt;a class="github reference external" href="https://github.com/IBM-Quantum-Technical-Enablement/waldo-grovers"&gt;IBM-Quantum-Technical-Enablement/waldo-grovers&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Grover’s algorithm is an unstructured search algorithm that aims to find the input to a black-box function/oracle that returns a desired output value with high-probability.  Here we will show how to formulate such a search problem using Qiskit and it’s circuit library to find Waldo within the following image:&lt;/p&gt;
+&lt;img alt="_images/d2d59c95ac8ee29c9525f8293ff777ec8b893ccb5da0f2e12658399935bc84e4.png" src="_images/d2d59c95ac8ee29c9525f8293ff777ec8b893ccb5da0f2e12658399935bc84e4.png" /&gt;&lt;/p&gt;
+</content>
+    <link href="quantum-enablement.org/posts/2023/2023-07-05-Finding_Waldo_with_Grover_Search.html" rel="alternate"/>
+    <summary>The files for this tutorial may be found here: https://github.com/IBM-Quantum-Technical-Enablement/waldo-groversGrover’s algorithm is an unstructured search algorithm that aims to find the input to a black-box function/oracle that returns a desired output value with high-probability.  Here we will show how to formulate such a search problem using Qiskit and it’s circuit library to find Waldo within the following image:</summary>
+    <category term="Algorithms" label="Algorithms"/>
+    <published>2023-07-05T00:00:00-04:00</published>
+  </entry>
   <entry>
     <id>quantum-enablement.org/posts/2023/2023-05-24-Calibration_methods.html</id>
     <title>Understanding IBM Quantum hardware calibration schemes</title>
