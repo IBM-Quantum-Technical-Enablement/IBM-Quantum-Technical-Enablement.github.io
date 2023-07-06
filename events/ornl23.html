@@ -449,11 +449,126 @@ document.write(`
 <section id="overview">
 <span id="afrl23"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
 <p>Getting started with Quantum Error Suppression and Mitigation, IBM Qiskit Runtime, and Dynamic Circuits</p>
+<p> In this workshop, we will focus on several quantum error suppression and mitigation methods, namely
+ zero noise extrapolation (ZNE), Pauli twirling (PT), dynamical decoupling (DD), and measurement error mitigation (MEM).
+  With a step-by-step process, we will show how to transform and execute a circuit using Qiskit, and post-process results to apply
+  the suppression and mitigation methods.
+</p>
+
+<p>
+In the later half of the workshop, we will demonstrate IBM Qiskit Runtime and discuss how end-users can leverage runtime
+ "session" and built-in error suppression and mitigation methods to run their applications on real quantum hardware from IBM.
+</p>
+
+<p>
+Finally, we will end with a demonstration of "dynamic circuits" and show how it can unlock new capabiloties.
+</p>
+
 </section>
 <section id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this heading">#</a></h2>
 <p><strong>Date</strong>: July 17th, 2023</p>
 <p><strong>Location</strong>:  ORNL</p>
+<p><strong>Tentaive Agenda</strong>:</p>
+
+<style type="text/css">
+  .tg  {border-collapse:collapse;border-spacing:0;}
+  .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+    overflow:hidden;padding:10px 5px;word-break:normal;}
+  .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+    font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+  .tg .tg-0a7q{border-color:#000000;text-align:left;vertical-align:middle}
+  .tg .tg-8o2n{border-color:#000000;text-align:right;vertical-align:middle}
+  </style>
+  <table class="tg" style="undefined;table-layout: fixed; width: 876px">
+  <colgroup>
+  <col style="width: 92px">
+  <col style="width: 125px">
+  <col style="width: 269px">
+  <col style="width: 390px">
+  </colgroup>
+  <thead>
+    <tr>
+      <th class="tg-0a7q">Time</th>
+      <th class="tg-0a7q">Duration</th>
+      <th class="tg-0a7q">Topic</th>
+      <th class="tg-0a7q">Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="tg-0a7q">12:00 PM</td>
+      <td class="tg-8o2n">10 mins</td>
+      <td class="tg-0a7q">Opening remarks</td>
+      <td class="tg-0a7q"></td>
+    </tr>
+    <tr>
+      <td class="tg-0a7q">12:10 PM</td>
+      <td class="tg-8o2n">1 hr 30 mins</td>
+      <td class="tg-0a7q">Error Suppression and Mitigation - Part I</td>
+      <td class="tg-0a7q">
+        Full implementation of Zero Noise Extrapolation (ZNE), Pauli Twirling (PT), and Dynamical Decoupling (DD).
+        <br>
+        <br>- How to transform a quantum circuit using Qiskit's built-in and custom pass managers 
+        for each of the suppression and mitigation method.
+        <br>- How to execute the transformed circuits using simulator and real backend.
+        <br>- How to post-process results to get a mitigated final result.
+      </td>
+    </tr>
+    <tr>
+      <td class="tg-0a7q">1:40 PM</td>
+      <td class="tg-8o2n">20 mins</td>
+      <td class="tg-0a7q">Break</td>
+      <td class="tg-0a7q"></td>
+    </tr>
+    <tr>
+      <td class="tg-0a7q">2:00 PM</td>
+      <td class="tg-8o2n">30 mins</td>
+      <td class="tg-0a7q">Error Suppression and Mitigation - Part II</td>
+      <td class="tg-0a7q">Full implementation of measurement error mitigation using the mthree package.
+        <br>
+        <br> - How to configure the M3Mitigator for mitigation.
+        <br> - How to run measurement calibration.
+        <br> - How to apply measurement mitigation on raw counts from a circuit execution.
+        <br>
+        <br>
+        Full demonstration of error suppression and mitigation on an example circuit combining all 4 methods.
+      </td>
+    </tr>
+    <tr>
+      <td class="tg-0a7q">2:30 PM</td>
+      <td class="tg-8o2n">1 hr</td>
+      <td class="tg-0a7q">IBM Qisktit Runtime Primitives</td>
+      <td class="tg-0a7q">Overview of IBM Qiskit Runtime and its Estimator and Sampler primitives.
+        <br>
+        <br> - How to use Runtime's built-in features to enable error suppression and mitigation automatically?
+      </td>
+    </tr>
+    <tr>
+      <td class="tg-0a7q">3:30 PM</td>
+      <td class="tg-8o2n">15 mins</td>
+      <td class="tg-0a7q">Break</td>
+      <td class="tg-0a7q"></td>
+    </tr>
+    <tr>
+      <td class="tg-0a7q">3:45 PM</td>
+      <td class="tg-8o2n">1 hr 15 mins</td>
+      <td class="tg-0a7q">Dynamic Circuits</td>
+      <td class="tg-0a7q">An intro to dynamic circuits using IBM quantum hardware's mid-circuit measurement and
+        reset operation.
+        <br>
+        <br> How dynamic circuits can imporve performance with an example of Bernstein-Vazarani (BV) circuit.
+      </td>
+    </tr>
+    <tr>
+      <td class="tg-0a7q">5:00 PM</td>
+      <td class="tg-0a7q"></td>
+      <td class="tg-0a7q">Adjourn</td>
+      <td class="tg-0a7q"></td>
+    </tr>
+  </tbody>
+  </table>
+
 </section>
 <section id="workshop-materials">
 <h2>Workshop materials (TBA)<a class="headerlink" href="#workshop-materials" title="Permalink to this heading">#</a></h2>
