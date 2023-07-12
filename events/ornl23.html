@@ -7,9 +7,9 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Quantum Error Suppression and Mitigation, IBM Qiskit Runtime, and Dynamic Circuits</title>
+    <title>Quantum Error Suppression and Mitigation, IBM Qiskit Runtime, and Dynamic Circuits &#8212; Enabing Technologies  documentation</title>
   
   
   
@@ -444,135 +444,195 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-<section class="tex2jax_ignore mathjax_ignore" id="qiskit-and-ibm-quantum-hardware">
-<h1>Quantum Error Suppression and Mitigation, IBM Qiskit Runtime, and Dynamic Circuits<a class="headerlink" href="#qiskit-and-ibm-quantum-hardware" title="Permalink to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="quantum-error-suppression-and-mitigation-ibm-qiskit-runtime-and-dynamic-circuits">
+<h1>Quantum Error Suppression and Mitigation, IBM Qiskit Runtime, and Dynamic Circuits<a class="headerlink" href="#quantum-error-suppression-and-mitigation-ibm-qiskit-runtime-and-dynamic-circuits" title="Permalink to this heading">#</a></h1>
 <section id="overview">
 <span id="ornl23"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
 <p>Getting started with Quantum Error Suppression and Mitigation, IBM Qiskit Runtime, and Dynamic Circuits</p>
-<p> In this workshop, we will focus on several quantum error suppression and mitigation methods, namely
- zero noise extrapolation (ZNE), Pauli twirling (PT), dynamical decoupling (DD), and measurement error mitigation (MEM).
-  With a step-by-step process, we will show how to transform and execute a circuit using Qiskit, and post-process results to apply
-  the suppression and mitigation methods.
-</p>
-
-<p>
-In the later half of the workshop, we will demonstrate IBM Qiskit Runtime and discuss how end-users can leverage runtime
- "session" and built-in error suppression and mitigation methods to run their applications on real quantum hardware from IBM.
-</p>
-
-<p>
-Finally, we will end with a demonstration of "dynamic circuits" and show how it can unlock new capabilities.
-</p>
-
+<p>In this workshop, we will focus on several quantum error suppression and mitigation methods, namely zero noise extrapolation (ZNE), Pauli twirling (PT), dynamical decoupling (DD), and measurement error mitigation (MEM). With a step-by-step process, we will show how to transform and execute a circuit using Qiskit, and post-process results to apply the suppression and mitigation methods.</p>
+<p>In the later half of the workshop, we will demonstrate IBM Qiskit Runtime and discuss how end-users can leverage runtime “session” and built-in error suppression and mitigation methods to run their applications on real quantum hardware from IBM.</p>
+<p>Finally, we will end with a demonstration of “dynamic circuits” and show how it can unlock new capabilities.</p>
 </section>
 <section id="details">
 <h2>Details<a class="headerlink" href="#details" title="Permalink to this heading">#</a></h2>
 <p><strong>Date</strong>: July 17th, 2023</p>
 <p><strong>Location</strong>:  ORNL</p>
-<p><strong>Tentaive Agenda</strong>:</p>
-
-<style type="text/css">
-  .tg  {border-collapse:collapse;border-spacing:0;}
-  .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-    overflow:hidden;padding:10px 5px;word-break:normal;}
-  .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-    font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-  .tg .tg-0a7q{border-color:#000000;text-align:left;vertical-align:middle}
-  .tg .tg-8o2n{border-color:#000000;text-align:right;vertical-align:middle}
-  </style>
-  <table class="tg" style="undefined;table-layout: fixed; width: 876px">
-  <colgroup>
-  <col style="width: 92px">
-  <col style="width: 125px">
-  <col style="width: 269px">
-  <col style="width: 390px">
-  </colgroup>
-  <thead>
-    <tr>
-      <th class="tg-0a7q">Time</th>
-      <th class="tg-0a7q">Duration</th>
-      <th class="tg-0a7q">Topic</th>
-      <th class="tg-0a7q">Details</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="tg-0a7q">12:00 PM</td>
-      <td class="tg-8o2n">10 mins</td>
-      <td class="tg-0a7q">Opening remarks</td>
-      <td class="tg-0a7q"></td>
-    </tr>
-    <tr>
-      <td class="tg-0a7q">12:10 PM</td>
-      <td class="tg-8o2n">1 hr 30 mins</td>
-      <td class="tg-0a7q">Error Suppression and Mitigation - Part I</td>
-      <td class="tg-0a7q">
-        Full implementation of Zero Noise Extrapolation (ZNE), Pauli Twirling (PT), and Dynamical Decoupling (DD).
-        <br>
-        <br>- How to transform a quantum circuit using Qiskit's built-in and custom pass managers 
-        for each of the suppression and mitigation method.
-        <br>- How to execute the transformed circuits using simulator and real backend.
-        <br>- How to post-process results to get a mitigated final result.
-      </td>
-    </tr>
-    <tr>
-      <td class="tg-0a7q">1:40 PM</td>
-      <td class="tg-8o2n">20 mins</td>
-      <td class="tg-0a7q">Break</td>
-      <td class="tg-0a7q"></td>
-    </tr>
-    <tr>
-      <td class="tg-0a7q">2:00 PM</td>
-      <td class="tg-8o2n">30 mins</td>
-      <td class="tg-0a7q">Error Suppression and Mitigation - Part II</td>
-      <td class="tg-0a7q">Full implementation of measurement error mitigation using the mthree package.
-        <br>
-        <br> - How to configure the M3Mitigator for mitigation.
-        <br> - How to run measurement calibration.
-        <br> - How to apply measurement mitigation on raw counts from a circuit execution.
-        <br>
-        <br>
-        Full demonstration of error suppression and mitigation on an example circuit combining all 4 methods.
-      </td>
-    </tr>
-    <tr>
-      <td class="tg-0a7q">2:30 PM</td>
-      <td class="tg-8o2n">1 hr</td>
-      <td class="tg-0a7q">IBM Qiskit Runtime Primitives</td>
-      <td class="tg-0a7q">Overview of IBM Qiskit Runtime and its Estimator and Sampler primitives.
-        <br>
-        <br> - How to use Runtime's built-in features to enable error suppression and mitigation automatically?
-      </td>
-    </tr>
-    <tr>
-      <td class="tg-0a7q">3:30 PM</td>
-      <td class="tg-8o2n">15 mins</td>
-      <td class="tg-0a7q">Break</td>
-      <td class="tg-0a7q"></td>
-    </tr>
-    <tr>
-      <td class="tg-0a7q">3:45 PM</td>
-      <td class="tg-8o2n">1 hr 15 mins</td>
-      <td class="tg-0a7q">Dynamic Circuits</td>
-      <td class="tg-0a7q">An intro to dynamic circuits using IBM quantum hardware's mid-circuit measurement and
-        reset operation.
-        <br>
-        <br> How dynamic circuits can imporve performance with an example of Bernstein-Vazarani (BV) circuit.
-      </td>
-    </tr>
-    <tr>
-      <td class="tg-0a7q">5:00 PM</td>
-      <td class="tg-0a7q"></td>
-      <td class="tg-0a7q">Adjourn</td>
-      <td class="tg-0a7q"></td>
-    </tr>
-  </tbody>
-  </table>
-
+<p><strong>Tentative Agenda</strong>:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Time</p></th>
+<th class="head"><p>Duration</p></th>
+<th class="head"><p>Topic</p></th>
+<th class="head"><p>Details</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>12:00 PM</p></td>
+<td><p>10 mins</p></td>
+<td><p>Opening remarks</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>12:10 PM</p></td>
+<td><p>1 hr 30 mins</p></td>
+<td><p>Error Suppression and Mitigation - Part I</p></td>
+<td><p>Full implementation of Zero Noise Extrapolation (ZNE), Pauli Twirling (PT), and Dynamical Decoupling (DD).<br><br>- How to transform a quantum circuit using Qiskit’s built-in and custom pass managers for each of the suppression and mitigation method.<br>- How to execute the transformed circuits using simulator and real backend.<br>- How to post-process results to get a mitigated final result.</p></td>
+</tr>
+<tr class="row-even"><td><p>1:40 PM</p></td>
+<td><p>20 mins</p></td>
+<td><p>Break</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>2:00 PM</p></td>
+<td><p>30 mins</p></td>
+<td><p>Error Suppression and Mitigation - Part II</p></td>
+<td><p>Full implementation of measurement error mitigation using the mthree package.<br><br>- How to configure the M3Mitigator for mitigation.<br>- How to run measurement calibration.<br>- How to apply measurement mitigation on raw counts from a circuit execution.<br><br>Full demonstration of error suppression and mitigation on an example circuit combining all 4 methods.</p></td>
+</tr>
+<tr class="row-even"><td><p>2:30 PM</p></td>
+<td><p>1 hr</p></td>
+<td><p>IBM Qiskit Runtime Primitives</p></td>
+<td><p>Overview of IBM Qiskit Runtime and its Estimator and Sampler primitives.<br><br>- How to use Runtime’s built-in features to enable error suppression and mitigation automatically?</p></td>
+</tr>
+<tr class="row-odd"><td><p>3:30 PM</p></td>
+<td><p>15 mins</p></td>
+<td><p>Break</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>3:45 PM</p></td>
+<td><p>1 hr 15 mins</p></td>
+<td><p>Dynamic Circuits</p></td>
+<td><p>An intro to dynamic circuits using IBM quantum hardware’s mid-circuit measurement and reset operation.<br><br>How dynamic circuits can imporve performance with an example of Bernstein-Vazarani (BV) circuit.</p></td>
+</tr>
+<tr class="row-odd"><td><p>5:00 PM</p></td>
+<td><p></p></td>
+<td><p>Adjourn</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="workshop-materials">
-<h2>Workshop materials (TBA)<a class="headerlink" href="#workshop-materials" title="Permalink to this heading">#</a></h2>
+<h2>Workshop materials<a class="headerlink" href="#workshop-materials" title="Permalink to this heading">#</a></h2>
+<div class="toctree-wrapper compound">
+</div>
+<p><a class="sd-sphinx-override sd-btn sd-text-wrap sd-btn-primary sd-shadow-sm reference external" href="https://github.com/IBM-Quantum-Technical-Enablement/ornl-2023/archive/refs/heads/main.zip"><span>Download all workshop content</span></a></p>
+<p><strong>Dependencies</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Package Name</p></th>
+<th class="head"><p>Version</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>qiskit</p></td>
+<td><p>0.43.1</p></td>
+</tr>
+<tr class="row-odd"><td><p>qiskit-aer</p></td>
+<td><p>0.12.0</p></td>
+</tr>
+<tr class="row-even"><td><p>qiskit-ibm-provider</p></td>
+<td><p>0.6.1</p></td>
+</tr>
+<tr class="row-odd"><td><p>qiskit-ibm-runtime</p></td>
+<td><p>0.11.1</p></td>
+</tr>
+<tr class="row-even"><td><p>qiskit-ibmq-provider</p></td>
+<td><p>0.20.2</p></td>
+</tr>
+<tr class="row-odd"><td><p>qiskit-terra</p></td>
+<td><p>0.24.1</p></td>
+</tr>
+<tr class="row-even"><td><p>numpy</p></td>
+<td><p>1.23.5</p></td>
+</tr>
+</tbody>
+</table>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Files</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><a class="reference internal" href="ornl-2023/basics/basics.html"><span class="doc std std-doc">Basics: Transpilation and Execution</span></a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><a class="reference internal" href="ornl-2023/error-suppression-and-mitigation/zne/zero_noise_extrapolation.html"><span class="doc std std-doc">Quantum Error Suppression and Mitigation I (ZNE)</span></a></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><a class="reference internal" href="ornl-2023/error-suppression-and-mitigation/pt/pauli_twirling.html"><span class="doc std std-doc">Quantum Error Suppression and Mitigation II (PT)</span></a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><a class="reference internal" href="ornl-2023/error-suppression-and-mitigation/dd/dynamical_decoupling.html"><span class="doc std std-doc">Quantum Error Suppression and Mitigation III (DD)</span></a></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><a class="reference internal" href="ornl-2023/error-suppression-and-mitigation/m3/measurement_mitigation.html"><span class="doc std std-doc">Quantum Error Suppression and Mitigation IV (M3)</span></a></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><a class="reference internal" href="ornl-2023/error-suppression-and-mitigation/all/combining_all.html"><span class="doc std std-doc">Quantum Error Suppression and Mitigation V (ALL)</span></a></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><span class="xref myst">TBA (runtime and dynamic circuits)</span></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
 
+<div class="section ablog__blog_comments">
+  
+  
+</div>
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#details">Details</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workshop-materials">Workshop materials</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div class="tocsection sourcelink">
+    <a href="../_sources/events/ornl23.md.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
 <footer class="bd-footer">
 <div>

@@ -1,0 +1,77 @@
+---
+orphan: true
+---
+
+# Quantum Error Suppression and Mitigation, IBM Qiskit Runtime, and Dynamic Circuits
+
+(ornl23)=
+
+## Overview
+
+Getting started with Quantum Error Suppression and Mitigation, IBM Qiskit Runtime, and Dynamic Circuits
+
+In this workshop, we will focus on several quantum error suppression and mitigation methods, namely zero noise extrapolation (ZNE), Pauli twirling (PT), dynamical decoupling (DD), and measurement error mitigation (MEM). With a step-by-step process, we will show how to transform and execute a circuit using Qiskit, and post-process results to apply the suppression and mitigation methods.
+
+In the later half of the workshop, we will demonstrate IBM Qiskit Runtime and discuss how end-users can leverage runtime "session" and built-in error suppression and mitigation methods to run their applications on real quantum hardware from IBM.
+
+Finally, we will end with a demonstration of "dynamic circuits" and show how it can unlock new capabilities.
+
+## Details
+
+**Date**: July 17th, 2023
+
+**Location**:  ORNL
+
+**Tentative Agenda**:
+| Time     | Duration     | Topic                                      | Details                                                                                                                                                                                                                                                                                                                                                                                                     |
+|----------|--------------|--------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 12:00 PM |      10 mins | Opening remarks                            |                                                                                                                                                                                                                                                                                                                                                                                                             |
+| 12:10 PM | 1 hr 30 mins | Error Suppression and Mitigation - Part I  | Full implementation of Zero Noise Extrapolation (ZNE), Pauli Twirling (PT), and Dynamical Decoupling (DD).<br><br>- How to transform a quantum circuit using Qiskit's built-in and custom pass managers for each of the suppression and mitigation method.<br>- How to execute the transformed circuits using simulator and real backend.<br>- How to post-process results to get a mitigated final result. |
+| 1:40 PM  |      20 mins | Break                                      |                                                                                                                                                                                                                                                                                                                                                                                                             |
+| 2:00 PM  |      30 mins | Error Suppression and Mitigation - Part II | Full implementation of measurement error mitigation using the mthree package.<br><br>- How to configure the M3Mitigator for mitigation.<br>- How to run measurement calibration.<br>- How to apply measurement mitigation on raw counts from a circuit execution.<br><br>Full demonstration of error suppression and mitigation on an example circuit combining all 4 methods.                              |
+| 2:30 PM  |         1 hr | IBM Qiskit Runtime Primitives              | Overview of IBM Qiskit Runtime and its Estimator and Sampler primitives.<br><br>- How to use Runtime's built-in features to enable error suppression and mitigation automatically?                                                                                                                                                                                                                          |
+| 3:30 PM  |      15 mins | Break                                      |                                                                                                                                                                                                                                                                                                                                                                                                             |
+| 3:45 PM  | 1 hr 15 mins | Dynamic Circuits                           | An intro to dynamic circuits using IBM quantum hardware's mid-circuit measurement and reset operation.<br><br>How dynamic circuits can imporve performance with an example of Bernstein-Vazarani (BV) circuit.                                                                                                                                                                                              |
+| 5:00 PM  |              | Adjourn                                    |                                                                                                                                                                                                                                                                                                                                                                                                             |
+
+## Workshop materials
+
+```{toctree}
+:caption: July 17
+:maxdepth: 1
+:hidden:
+ornl-2023/basics/basics
+ornl-2023/error-suppression-and-mitigation/zne/zero_noise_extrapolation
+ornl-2023/error-suppression-and-mitigation/pt/pauli_twirling
+ornl-2023/error-suppression-and-mitigation/dd/dynamical_decoupling
+ornl-2023/error-suppression-and-mitigation/m3/measurement_mitigation
+ornl-2023/error-suppression-and-mitigation/all/combining_all
+
+```
+
+```{button-link} https://github.com/IBM-Quantum-Technical-Enablement/ornl-2023/archive/refs/heads/main.zip
+:color: primary
+:shadow:
+Download all workshop content
+```
+
+**Dependencies**
+| Package Name         | Version |
+|----------------------|---------|
+| qiskit               |  0.43.1 |
+| qiskit-aer           |  0.12.0 |
+| qiskit-ibm-provider  |   0.6.1 |
+| qiskit-ibm-runtime   |  0.11.1 |
+| qiskit-ibmq-provider |  0.20.2 |
+| qiskit-terra         |  0.24.1 |
+| numpy                |  1.23.5 |
+
+| Files | 
+| :--- |
+| [Basics: Transpilation and Execution](ornl-2023/basics/basics)  |
+| [Quantum Error Suppression and Mitigation I (ZNE)](ornl-2023/error-suppression-and-mitigation/zne/zero_noise_extrapolation)  |
+| [Quantum Error Suppression and Mitigation II (PT)](ornl-2023/error-suppression-and-mitigation/pt/pauli_twirling)  |
+| [Quantum Error Suppression and Mitigation III (DD)](ornl-2023/error-suppression-and-mitigation/dd/dynamical_decoupling)  |
+| [Quantum Error Suppression and Mitigation IV (M3)](ornl-2023/error-suppression-and-mitigation/m3/measurement_mitigation)  |
+| [Quantum Error Suppression and Mitigation V (ALL)](ornl-2023/error-suppression-and-mitigation/all/combining_all)   |
+| [TBA (runtime and dynamic circuits)](ornl-2023/)   |

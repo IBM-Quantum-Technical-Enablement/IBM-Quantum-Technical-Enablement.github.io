@@ -2,6 +2,14 @@
 
 ## 2023
 
+:::{card} Quantum Error Suppression and Mitigation, IBM Qiskit Runtime, and Dynamic Circuits
+:link: ornl23
+:link-type: ref
+
+**Date**: July 17th, 2023 \
+**Location**: ORNL
+:::
+
 :::{card} Qiskit and IBM Quantum Hardware
 :link: afrl23
 :link-type: ref
