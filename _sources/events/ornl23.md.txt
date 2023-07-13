@@ -46,7 +46,7 @@ ornl-2023/error-suppression-and-mitigation/pt/pauli_twirling
 ornl-2023/error-suppression-and-mitigation/dd/dynamical_decoupling
 ornl-2023/error-suppression-and-mitigation/m3/measurement_mitigation
 ornl-2023/error-suppression-and-mitigation/all/combining_all
-
+ornl-2023/dynamic-circuits/dynamic_circuits
 ```
 
 ```{button-link} https://github.com/IBM-Quantum-Technical-Enablement/ornl-2023/archive/refs/heads/main.zip
@@ -74,4 +74,5 @@ Download all workshop content
 | [Quantum Error Suppression and Mitigation III (DD)](ornl-2023/error-suppression-and-mitigation/dd/dynamical_decoupling)  |
 | [Quantum Error Suppression and Mitigation IV (M3)](ornl-2023/error-suppression-and-mitigation/m3/measurement_mitigation)  |
 | [Quantum Error Suppression and Mitigation V (ALL)](ornl-2023/error-suppression-and-mitigation/all/combining_all)   |
-| [TBA (runtime and dynamic circuits)](ornl-2023/)   |
+| [Dynamic Circuits](ornl-2023/dynamic-circuits/dynamic_circuits)   |
+| [TBA (runtime)](ornl-2023/)   |
