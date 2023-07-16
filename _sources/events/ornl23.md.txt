@@ -46,6 +46,9 @@ ornl-2023/error-suppression-and-mitigation/pt/pauli_twirling
 ornl-2023/error-suppression-and-mitigation/dd/dynamical_decoupling
 ornl-2023/error-suppression-and-mitigation/m3/measurement_mitigation
 ornl-2023/error-suppression-and-mitigation/all/combining_all
+ornl-2023/qiskit-runtime/qiskit_runtime_sampler
+ornl-2023/qiskit-runtime/qiskit_runtime_estimator_I
+ornl-2023/qiskit-runtime/qiskit_runtime_estimator_II
 ornl-2023/dynamic-circuits/dynamic_circuits
 ```
 
@@ -56,17 +59,18 @@ Download all workshop content
 ```
 
 **Dependencies**
-| Package Name         | Version |
-|----------------------|---------|
-| qiskit               |  0.43.1 |
-| qiskit-aer           |  0.12.0 |
-| qiskit-ibm-provider  |   0.6.1 |
-| qiskit-ibm-runtime   |  0.11.1 |
-| qiskit-ibmq-provider |  0.20.2 |
-| qiskit-terra         |  0.24.1 |
-| numpy                |  1.23.5 |
+| Package Name         | x86_x64 version | Arm version (Apple silicon) |
+|----------------------|---------|---------|
+| qiskit               |  0.43.1 |  0.43.1 |
+| qiskit-aer           |  0.12.0 |  0.12.0 |
+| qiskit-ibm-provider  |   0.6.1 |   0.6.1 |
+| qiskit-ibm-runtime   |  0.11.2 |  0.11.2 |
+| qiskit-terra         |  0.24.1 |  0.24.1 |
+| mthree               |  2.5.1  |  2.5.1  |
+| **numpy** (important)    |  1.23.5 |   1.21.0 |
 
-| Files | 
+**Files**
+| |
 | :--- |
 | [Basics: Transpilation and Execution](ornl-2023/basics/basics)  |
 | [Quantum Error Suppression and Mitigation I (ZNE)](ornl-2023/error-suppression-and-mitigation/zne/zero_noise_extrapolation)  |
@@ -74,5 +78,7 @@ Download all workshop content
 | [Quantum Error Suppression and Mitigation III (DD)](ornl-2023/error-suppression-and-mitigation/dd/dynamical_decoupling)  |
 | [Quantum Error Suppression and Mitigation IV (M3)](ornl-2023/error-suppression-and-mitigation/m3/measurement_mitigation)  |
 | [Quantum Error Suppression and Mitigation V (ALL)](ornl-2023/error-suppression-and-mitigation/all/combining_all)   |
+| [Qiskit Runtime (Sampler)](ornl-2023/qiskit-runtime/qiskit_runtime_sampler)   |
+| [Qiskit Runtime (Estimator I)](ornl-2023/qiskit-runtime/qiskit_runtime_estimator_I)   |
+| [Qiskit Runtime (Estimator II)](ornl-2023/qiskit-runtime/qiskit_runtime_estimator_II)   |
 | [Dynamic Circuits](ornl-2023/dynamic-circuits/dynamic_circuits)   |
-| [TBA (runtime)](ornl-2023/)   |

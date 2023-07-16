@@ -582,7 +582,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;qiskit.circuit.instructionset.InstructionSet at 0x18ac120d5d0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;qiskit.circuit.instructionset.InstructionSet at 0x237c1b803d0&gt;
 </pre></div>
 </div>
 </div>
@@ -678,9 +678,8 @@ document.write(`
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="circuit-transformations">
 <h1>Circuit Transformations<a class="headerlink" href="#circuit-transformations" title="Permalink to this heading">#</a></h1>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="st-step-transpilation">
-<h1>1st step: Transpilation<a class="headerlink" href="#st-step-transpilation" title="Permalink to this heading">#</a></h1>
+<section id="st-step-transpilation">
+<h2>1st step: Transpilation<a class="headerlink" href="#st-step-transpilation" title="Permalink to this heading">#</a></h2>
 <p>We always start the circuit transformation with transpilation. Otherwise, the subsequent steps may miss out many gates that are introduced by gate decomposition and routing to make a circuit device compatible. For example, the input circuit may contain 3q+ gates. If it is fed to a ZNE circuit transformer that finds and folds only 2q gates, then gate folding process will miss out gates. Also, routing stage in transpilation may add many 2q gates. If ZNE transformation is done pre-transpilation, it will miss out on many extra 2q gates from routing.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -698,8 +697,8 @@ document.write(`
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="nd-step-apply-zne-transformation">
-<h1>2nd step: Apply ZNE transformation<a class="headerlink" href="#nd-step-apply-zne-transformation" title="Permalink to this heading">#</a></h1>
+<section id="nd-step-apply-zne-transformation">
+<h2>2nd step: Apply ZNE transformation<a class="headerlink" href="#nd-step-apply-zne-transformation" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">zne_circs</span> <span class="o">=</span> <span class="p">[]</span>
@@ -742,8 +741,8 @@ document.write(`
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="rd-step-apply-pt-transformation">
-<h1>3rd step: Apply PT transformation<a class="headerlink" href="#rd-step-apply-pt-transformation" title="Permalink to this heading">#</a></h1>
+<section id="rd-step-apply-pt-transformation">
+<h2>3rd step: Apply PT transformation<a class="headerlink" href="#rd-step-apply-pt-transformation" title="Permalink to this heading">#</a></h2>
 <p>PT transformation should be applied after ZNE transformation as ZNE transformation adds new 2q gates in the circuit due to gate folding for noise amplification purpose. If PT is done pre-ZNE, then it will miss out on twirling new 2q gates introduced by the ZNE stage.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -771,8 +770,8 @@ document.write(`
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="th-step-apply-dd-transformation">
-<h1>4th step: Apply DD transformation<a class="headerlink" href="#th-step-apply-dd-transformation" title="Permalink to this heading">#</a></h1>
+<section id="th-step-apply-dd-transformation">
+<h2>4th step: Apply DD transformation<a class="headerlink" href="#th-step-apply-dd-transformation" title="Permalink to this heading">#</a></h2>
 <p>DD transformation must be applied after PT. After the PT stage is done adding new gates, the circuit will have the most accurate timing information of idle times between gates such that the DD pass can work upon it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -791,8 +790,8 @@ document.write(`
 </div>
 </div>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="th-step-configure-m3-measurement-mitigator">
-<h1>5th step: Configure M3 measurement mitigator<a class="headerlink" href="#th-step-configure-m3-measurement-mitigator" title="Permalink to this heading">#</a></h1>
+<section id="th-step-configure-m3-measurement-mitigator">
+<h2>5th step: Configure M3 measurement mitigator<a class="headerlink" href="#th-step-configure-m3-measurement-mitigator" title="Permalink to this heading">#</a></h2>
 <p>M3mitigator can be configured after the transpilation stage. It only needs the final virtual-to-physical qubit mappings. After transpilation stage, these mappings are set, and the subsequent stages do not alter that mapping (at least with local 2q gate folding variant of ZNE). However, in this example, we configure the M3mitigator after all circuit transformations are done, and it is the most safest route as after all stages of circuit transformations are done, the final qubit mappings can not change.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -802,6 +801,7 @@ document.write(`
 </div>
 </div>
 </div>
+</section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="executing-circuits">
 <h1>Executing Circuits<a class="headerlink" href="#executing-circuits" title="Permalink to this heading">#</a></h1>
@@ -959,8 +959,28 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../../_images/bbdc7b0b3b8de9aa85835408d55baf516c5e6ac11be9202441c92e8ea7edde34.png" src="../../../../_images/bbdc7b0b3b8de9aa85835408d55baf516c5e6ac11be9202441c92e8ea7edde34.png" />
+<img alt="../../../../_images/099dafdbe4dadaa5bb01bda78b20a8ec5aa50a89668d25a30816936509c69efe.png" src="../../../../_images/099dafdbe4dadaa5bb01bda78b20a8ec5aa50a89668d25a30816936509c69efe.png" />
 </div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;numpy version </span><span class="si">{</span><span class="n">numpy</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">qiskit_ibm_runtime</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;qiskit runtime version </span><span class="si">{</span><span class="n">qiskit_ibm_runtime</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">get_version_info</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">qiskit.tools.jupyter</span>
+<span class="o">%</span><span class="k">qiskit_version_table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>numpy version 1.23.5
+qiskit runtime version 0.11.2
+</pre></div>
+</div>
+<div class="output text_html"><h3>Version Information</h3><table><tr><th>Qiskit Software</th><th>Version</th></tr><tr><td><code>qiskit-terra</code></td><td>0.24.1</td></tr><tr><td><code>qiskit-aer</code></td><td>0.12.0</td></tr><tr><td><code>qiskit-ibmq-provider</code></td><td>0.20.2</td></tr><tr><td><code>qiskit</code></td><td>0.43.1</td></tr><tr><th>System information</th></tr><tr><td>Python version</td><td>3.10.11</td></tr><tr><td>Python compiler</td><td>MSC v.1934 64 bit (AMD64)</td></tr><tr><td>Python build</td><td>main, May 10 2023 18:51:25</td></tr><tr><td>OS</td><td>Windows</td></tr><tr><td>CPUs</td><td>8</td></tr><tr><td>Memory (Gb)</td><td>63.71001434326172</td></tr><tr><td colspan='2'>Sat Jul 15 20:33:34 2023 Eastern Daylight Time</td></tr></table></div></div>
 </div>
 </section>
 </section>
@@ -1001,12 +1021,14 @@ document.write(`
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Imports</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#test-circuit">Test Circuit</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-backend-and-noisy-simulator">Setting up Backend and Noisy Simulator</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#circuit-transformations">Circuit Transformations</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#st-step-transpilation">1st step: Transpilation</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#nd-step-apply-zne-transformation">2nd step: Apply ZNE transformation</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#rd-step-apply-pt-transformation">3rd step: Apply PT transformation</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#th-step-apply-dd-transformation">4th step: Apply DD transformation</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#th-step-configure-m3-measurement-mitigator">5th step: Configure M3 measurement mitigator</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#circuit-transformations">Circuit Transformations</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#st-step-transpilation">1st step: Transpilation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nd-step-apply-zne-transformation">2nd step: Apply ZNE transformation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rd-step-apply-pt-transformation">3rd step: Apply PT transformation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#th-step-apply-dd-transformation">4th step: Apply DD transformation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#th-step-configure-m3-measurement-mitigator">5th step: Configure M3 measurement mitigator</a></li>
+</ul>
+</li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#executing-circuits">Executing Circuits</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-measurement-calibration">Run measurement calibration</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-main-circuits">Run main circuits</a></li>

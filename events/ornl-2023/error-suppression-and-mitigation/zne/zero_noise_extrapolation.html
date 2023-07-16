@@ -447,9 +447,31 @@ document.write(`
 <section class="tex2jax_ignore mathjax_ignore" id="background">
 <h1>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h1>
 <p>In Zero Noise Extrapolation (<code class="docutils literal notranslate"><span class="pre">ZNE</span></code>), expectation value of an algorithm (quantum circuit) is computed at multiple noise levels. Next, the expectation values are fitted using a choice of fitting function such as linear, quadratic, and exponential to extrapolate the expectation value in the zero noise limit.</p>
-<p>To amplify the noise in the quantum circuit, usually two methods are followed: (1) pulse stretching and (2) digital ZNE. In the pulse stretching variant, to a first order, the durations of gate pulses in a circuit are extended by a constant factor while the amplitude is appropriately lowered such that pulse still achieves the same logical function. However, due to extended gate duration, the circuit will now undergo more noise.</p>
+<p>To amplify the noise in the quantum circuit, usually two methods are followed: (1) pulse stretching and (2) digital ZNE (Giurgica-Tiron et al., https://arxiv.org/abs/2005.10921). In the pulse stretching variant, to a first order, the durations of gate pulses in a circuit are extended by a constant factor while the amplitude is appropriately lowered such that pulse still achieves the same logical function. However, due to extended gate duration, the circuit will now undergo more noise.</p>
 <p>In the digital ZNE, gates in a circuit are repeated such that the logical function of the cirucit remains intact. For example, the inverse of CNOT gate is a CNOT. Thus, if a CNOT is repeated three times, it will still behave as a CNOT. However, due to elevated gate counts, now the circuit will experience more noise. Repeating a gate while keeping its logical function intact is often referred to as <strong>“gate folding”</strong> in ZNE literature.</p>
 <p>In this notebook, we will follow the digital variant of ZNE and demonstrate how to transform a quantum circuit to increase its gate count to amplify the noise while keeping the logical function same.</p>
+<p><img alt="analog_vs_digital.png" src="../../../../_images/analog_vs_digital.png" /></p>
+<p><img alt="global_vs_local.png" src="../../../../_images/global_vs_local.png" /></p>
+<p>Each method has its pros and cons:</p>
+<ul class="simple">
+<li><p>Analog stretching</p>
+<ul>
+<li><p>Formally correct method</p></li>
+<li><p>Can stretch to arbitrary scaling factors</p></li>
+<li><p>Requires calibration of gates for all sretch factors</p></li>
+<li><p>Harder to implement without direct hardware access</p></li>
+</ul>
+</li>
+<li><p>Digital stretching</p>
+<ul>
+<li><p>Much easier to implement</p></li>
+<li><p>Not directly the same as analog stretch</p></li>
+<li><p>No additional calibrations required</p></li>
+<li><p>Stuck with stretch factors of 1,3,5,… (to some extent)</p></li>
+<li><p>Can easily hit T1 limit on deeper circuits</p></li>
+</ul>
+</li>
+</ul>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="imports">
 <h1>Imports<a class="headerlink" href="#imports" title="Permalink to this heading">#</a></h1>
@@ -522,7 +544,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../../_images/8a7431eb80ffa3c9b9db543b612cdda9e20f97289b976c1dde39807d1814089a.png" src="../../../../_images/8a7431eb80ffa3c9b9db543b612cdda9e20f97289b976c1dde39807d1814089a.png" />
+<img alt="../../../../_images/877570c84e801cde808291c7859e3f5ee2b25941d2e644b14a09230eac319acf.png" src="../../../../_images/877570c84e801cde808291c7859e3f5ee2b25941d2e644b14a09230eac319acf.png" />
 </div>
 </div>
 </section>
@@ -580,7 +602,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../../_images/65e93ccacbd70e25870b800d02998d84574705c6567c37b684245bf124268ef6.png" src="../../../../_images/65e93ccacbd70e25870b800d02998d84574705c6567c37b684245bf124268ef6.png" />
+<img alt="../../../../_images/3f9e3ee7c71813f1e157eba0328ac415d2ba0ba0a3f4a96d94f28e328e2214df.png" src="../../../../_images/3f9e3ee7c71813f1e157eba0328ac415d2ba0ba0a3f4a96d94f28e328e2214df.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -591,7 +613,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../../_images/f6c6ea1860937efbb3dcf5ca26dee093cee4b91e693aebb816b82f1bd539385f.png" src="../../../../_images/f6c6ea1860937efbb3dcf5ca26dee093cee4b91e693aebb816b82f1bd539385f.png" />
+<img alt="../../../../_images/eb33725a1522b093e9e9cbf81a2da69b9c45823e0915ede5fd03e58181b923fa.png" src="../../../../_images/eb33725a1522b093e9e9cbf81a2da69b9c45823e0915ede5fd03e58181b923fa.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -604,7 +626,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../../_images/ecddaf1281d274ca38130c774f2750f553556d88ba444243fb659207a863f802.png" src="../../../../_images/ecddaf1281d274ca38130c774f2750f553556d88ba444243fb659207a863f802.png" />
+<img alt="../../../../_images/9997663aa66d203a773d7fbfaec29d6144c6a9afbb6b6b8ec153566329a13ff4.png" src="../../../../_images/9997663aa66d203a773d7fbfaec29d6144c6a9afbb6b6b8ec153566329a13ff4.png" />
 </div>
 </div>
 </section>
@@ -673,12 +695,32 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ideal expectation value: -0.0096
-noisy expectation value: 0.0562
-mitigated expecation value (zne): 0.03979999999999997 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ideal expectation value: 0.0036
+noisy expectation value: 0.058
+mitigated expecation value (zne): 0.049333333333333326 
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;numpy version </span><span class="si">{</span><span class="n">numpy</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">qiskit_ibm_runtime</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;qiskit runtime version </span><span class="si">{</span><span class="n">qiskit_ibm_runtime</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">get_version_info</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">qiskit.tools.jupyter</span>
+<span class="o">%</span><span class="k">qiskit_version_table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>numpy version 1.23.5
+qiskit runtime version 0.11.2
+</pre></div>
+</div>
+<div class="output text_html"><h3>Version Information</h3><table><tr><th>Qiskit Software</th><th>Version</th></tr><tr><td><code>qiskit-terra</code></td><td>0.24.1</td></tr><tr><td><code>qiskit-aer</code></td><td>0.12.0</td></tr><tr><td><code>qiskit-ibmq-provider</code></td><td>0.20.2</td></tr><tr><td><code>qiskit</code></td><td>0.43.1</td></tr><tr><th>System information</th></tr><tr><td>Python version</td><td>3.10.11</td></tr><tr><td>Python compiler</td><td>MSC v.1934 64 bit (AMD64)</td></tr><tr><td>Python build</td><td>main, May 10 2023 18:51:25</td></tr><tr><td>OS</td><td>Windows</td></tr><tr><td>CPUs</td><td>8</td></tr><tr><td>Memory (Gb)</td><td>63.71001434326172</td></tr><tr><td colspan='2'>Sat Jul 15 19:51:48 2023 Eastern Daylight Time</td></tr></table></div></div>
 </div>
 </section>
 

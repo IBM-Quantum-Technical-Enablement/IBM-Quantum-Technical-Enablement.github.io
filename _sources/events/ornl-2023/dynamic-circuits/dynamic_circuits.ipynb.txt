@@ -2,7 +2,7 @@
  "cells": [
   {
    "cell_type": "markdown",
-   "id": "a418acf3",
+   "id": "9de5361b",
    "metadata": {},
    "source": [
     "# Imports"
@@ -11,7 +11,7 @@
   {
    "cell_type": "code",
    "execution_count": 83,
-   "id": "9041ccec",
+   "id": "39c35d86",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -30,7 +30,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "8ccdc02d",
+   "id": "ac9f5cac",
    "metadata": {},
    "source": [
     "# Setup"
@@ -39,7 +39,7 @@
   {
    "cell_type": "code",
    "execution_count": 2,
-   "id": "b6e9bc5c",
+   "id": "ccb8f74a",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -52,7 +52,7 @@
   {
    "cell_type": "code",
    "execution_count": 3,
-   "id": "ab218315",
+   "id": "43f56fa8",
    "metadata": {},
    "outputs": [
     {
@@ -92,7 +92,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "ea8f32e9",
+   "id": "a28a97a4",
    "metadata": {},
    "source": [
     "Now, obviously we can run this circuit (after transpiling) on IBM Quantum hardware. However, this circuit has a couple of issues that limit the output fidelity. (1) The circuits requires $N+1$\n",
@@ -103,7 +103,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "25e322ef",
+   "id": "1e080c91",
    "metadata": {},
    "source": [
     "# Typical Execution"
@@ -111,7 +111,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "e3bd2f18",
+   "id": "88ec7029",
    "metadata": {},
    "source": [
     "Now we will generate BV circuits for all-ones bit-string (worst case scenario) of length from $2$ to $12$"
@@ -120,7 +120,7 @@
   {
    "cell_type": "code",
    "execution_count": 4,
-   "id": "b66eaa9f",
+   "id": "63f512f9",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -131,7 +131,7 @@
   {
    "cell_type": "code",
    "execution_count": 5,
-   "id": "4796c09d",
+   "id": "98a95ad5",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -141,7 +141,7 @@
   {
    "cell_type": "code",
    "execution_count": 6,
-   "id": "c86caf49",
+   "id": "bb4ca216",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -151,7 +151,7 @@
   {
    "cell_type": "code",
    "execution_count": 7,
-   "id": "fc45fe61",
+   "id": "566e2b5d",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -161,7 +161,7 @@
   {
    "cell_type": "code",
    "execution_count": 8,
-   "id": "2f3933b0",
+   "id": "365ebc6b",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -171,7 +171,7 @@
   {
    "cell_type": "code",
    "execution_count": 9,
-   "id": "36cc9d4f",
+   "id": "a4c9cfd8",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -181,7 +181,7 @@
   {
    "cell_type": "code",
    "execution_count": 11,
-   "id": "d42f884e",
+   "id": "049555f0",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -191,7 +191,7 @@
   {
    "cell_type": "code",
    "execution_count": 84,
-   "id": "3306c9be",
+   "id": "2a19f483",
    "metadata": {},
    "outputs": [
     {
@@ -221,7 +221,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "814d6b48",
+   "id": "7dace70f",
    "metadata": {},
    "source": [
     "# Dynamic Circuits"
@@ -229,7 +229,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "7c1bcb69",
+   "id": "110a9561",
    "metadata": {},
    "source": [
     "Up until now we have focused on circuits with a set pattern of instructions: gates, measurements, etc. It is a deterministic execution model."
@@ -237,7 +237,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "58cb409d",
+   "id": "2a4fade7",
    "metadata": {},
    "source": [
     "As in classical computation, the richness of expression that is offered by flow-control in quantum circuits allows us to perform computations that are more efficient, or would otherwise be impossible.\n",
@@ -248,7 +248,7 @@
   {
    "cell_type": "code",
    "execution_count": 13,
-   "id": "b6387bdd",
+   "id": "90eb0a6d",
    "metadata": {},
    "outputs": [
     {
@@ -276,7 +276,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "8944df1a",
+   "id": "dbbe2e73",
    "metadata": {},
    "source": [
     "Although it looks like any other operation, on IBM Quantum systems the reset operation is actually dynamic, consisting of a measurement operation followed by an x-gate conditioned on the (classical) value of the measurement.\n",
@@ -288,7 +288,7 @@
   {
    "cell_type": "code",
    "execution_count": 14,
-   "id": "43622911",
+   "id": "a4739333",
    "metadata": {},
    "outputs": [
     {
@@ -321,7 +321,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "7156c43e",
+   "id": "c7230882",
    "metadata": {},
    "source": [
     "This can also be written in the older `c_if` (classical-if) way by doing:"
@@ -330,7 +330,7 @@
   {
    "cell_type": "code",
    "execution_count": 15,
-   "id": "ecbf33dc",
+   "id": "bc985cc7",
    "metadata": {},
    "outputs": [
     {
@@ -359,7 +359,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "3d9235fb",
+   "id": "23939142",
    "metadata": {},
    "source": [
     "So we see that `reset` is nothing more than fixing the state of the qubit via measurement, and then flipping the bit if it is found to be in the $|1\\rangle$ state. Reset by itself has limited use outside of qubit initialization at the beginning of a circuit. However, the combination of `measurement`+`reset` is a critical component of many dynamic circuits as it allows for qubit measurement and recycling."
@@ -367,7 +367,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "2a2d18d6",
+   "id": "5301ef99",
    "metadata": {},
    "source": [
     "# BV as a dynamic circuit"
@@ -375,7 +375,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "15665dbd",
+   "id": "f04d8839",
    "metadata": {},
    "source": [
     "The BV circuit is an example of a circuit that benefits from qubit recycling. To see how this works, let us look at the basic building block of the BV circuit"
@@ -384,7 +384,7 @@
   {
    "cell_type": "code",
    "execution_count": 16,
-   "id": "eae0e8d7",
+   "id": "c2149606",
    "metadata": {},
    "outputs": [
     {
@@ -423,7 +423,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "7cbba753",
+   "id": "5db34cb5",
    "metadata": {},
    "source": [
     "If we could reuse qubits, then the computation of any number of bits would require at most two-qubits. With `measure`+`reset` pairs (dynamic circuits) at our disposal, we can thus greatly improve the output fidelity of our BV circuits on hardware."
@@ -432,7 +432,7 @@
   {
    "cell_type": "code",
    "execution_count": 17,
-   "id": "6a9a4846",
+   "id": "20f5cd57",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -481,7 +481,7 @@
   {
    "cell_type": "code",
    "execution_count": 18,
-   "id": "3e7152a2",
+   "id": "056d651c",
    "metadata": {},
    "outputs": [
     {
@@ -509,7 +509,7 @@
   {
    "cell_type": "code",
    "execution_count": 19,
-   "id": "787ed75f",
+   "id": "1b70cee8",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -519,7 +519,7 @@
   {
    "cell_type": "code",
    "execution_count": 20,
-   "id": "bdee88e9",
+   "id": "46c43e8d",
    "metadata": {},
    "outputs": [
     {
@@ -539,7 +539,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "e638aa3b",
+   "id": "690d16d3",
    "metadata": {},
    "source": [
     "Now, let us see how our dynamic BV circuits work on hardware:"
@@ -548,7 +548,7 @@
   {
    "cell_type": "code",
    "execution_count": 21,
-   "id": "2df15e71",
+   "id": "c61ac255",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -558,7 +558,7 @@
   {
    "cell_type": "code",
    "execution_count": 22,
-   "id": "a83fe886",
+   "id": "26528a10",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -568,7 +568,7 @@
   {
    "cell_type": "code",
    "execution_count": 23,
-   "id": "b64efa7b",
+   "id": "3fc58cb1",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -578,7 +578,7 @@
   {
    "cell_type": "code",
    "execution_count": 25,
-   "id": "81972cb5",
+   "id": "d4209ad8",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -588,7 +588,7 @@
   {
    "cell_type": "code",
    "execution_count": 30,
-   "id": "909de828",
+   "id": "c77fcb07",
    "metadata": {},
    "outputs": [
     {
@@ -619,7 +619,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "bb072fe2",
+   "id": "d803c3d7",
    "metadata": {},
    "source": [
     "# Dynamic BV: further optimization"
@@ -627,7 +627,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "aaa9fe17",
+   "id": "1e08acfb",
    "metadata": {},
    "source": [
     "In the dynamic version of BV circuits, there are `measure` operations followed by a `reset` operation. As mentioned, earlier, the `reset` operation in IBM systems is a `measure` followed by a conditional `X` gate. The full circuit looks like something like this"
@@ -636,7 +636,7 @@
   {
    "cell_type": "code",
    "execution_count": 43,
-   "id": "e387d662",
+   "id": "c9421a22",
    "metadata": {},
    "outputs": [
     {
@@ -666,7 +666,7 @@
   {
    "cell_type": "code",
    "execution_count": 31,
-   "id": "590db64a",
+   "id": "7fabd5b9",
    "metadata": {},
    "outputs": [
     {
@@ -696,7 +696,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "277a09e7",
+   "id": "5c06c325",
    "metadata": {},
    "source": [
     "Now, we have already seen that measurements are the most error prone operations on IBM Quantum systems, and take quite a bit of time (~2 CX gates worth of time). On this device, the average measurement error rate is"
@@ -705,7 +705,7 @@
   {
    "cell_type": "code",
    "execution_count": 85,
-   "id": "01ecfcd6",
+   "id": "e4dd0c9c",
    "metadata": {},
    "outputs": [
     {
@@ -725,7 +725,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "8dcef1e9",
+   "id": "f6b3a5e0",
    "metadata": {},
    "source": [
     "So every `measure`+`reset` pair is quite costly in terms of both error and duration. If we could reduce the number of measurements, then the performance would greatly improve. It turns out that we can. The back-to-back measurments in the above case are done immediately, and therefore, a qubit state does not have the scope to evolve between the measurements. In other words, qubit state remains same between those immediate back-to-back measurements.\n",
@@ -738,7 +738,7 @@
   {
    "cell_type": "code",
    "execution_count": 39,
-   "id": "6b634ae7",
+   "id": "96b01dd3",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -749,7 +749,7 @@
   {
    "cell_type": "code",
    "execution_count": 40,
-   "id": "5849f23e",
+   "id": "9c066012",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -759,7 +759,7 @@
   {
    "cell_type": "code",
    "execution_count": 44,
-   "id": "ce329806",
+   "id": "27c97ec2",
    "metadata": {},
    "outputs": [
     {
@@ -786,7 +786,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "f1d5d7e4",
+   "id": "b950a569",
    "metadata": {},
    "source": [
     "We are now in a position to further optimize our dynamic BV circuits by collapsing `measure`+`reset` pairs down to just a single measurement and conditional `X`-gate. However, our barrier placement up until now prevents us from optimizing this via Qiskit. As such, we need to define a new set of circuits (instead of having the `measure` and `reset` operations on the opposite side of a barrier, the new circuits will have them after the barrier):"
@@ -795,7 +795,7 @@
   {
    "cell_type": "code",
    "execution_count": 45,
-   "id": "ab998adf",
+   "id": "efc0211d",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -844,7 +844,7 @@
   {
    "cell_type": "code",
    "execution_count": 74,
-   "id": "8a85b3ac",
+   "id": "931a3958",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -854,7 +854,7 @@
   {
    "cell_type": "code",
    "execution_count": 75,
-   "id": "f36692f7",
+   "id": "020a27e9",
    "metadata": {},
    "outputs": [
     {
@@ -881,7 +881,7 @@
   {
    "cell_type": "code",
    "execution_count": 76,
-   "id": "af92d5af",
+   "id": "9db8f646",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -891,7 +891,7 @@
   {
    "cell_type": "code",
    "execution_count": 77,
-   "id": "20de2575",
+   "id": "ea05d198",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -901,7 +901,7 @@
   {
    "cell_type": "code",
    "execution_count": 78,
-   "id": "7e4da9bb",
+   "id": "3cd7a3cb",
    "metadata": {},
    "outputs": [
     {
@@ -928,7 +928,7 @@
   {
    "cell_type": "code",
    "execution_count": 79,
-   "id": "41789446",
+   "id": "6b3d1e8c",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -939,7 +939,7 @@
   {
    "cell_type": "code",
    "execution_count": 80,
-   "id": "2d9b7ddd",
+   "id": "1eede4ef",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -949,8 +949,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 81,
-   "id": "20b35f18",
+   "execution_count": 86,
+   "id": "5ea6b6a1",
    "metadata": {},
    "outputs": [
     {
@@ -982,8 +982,46 @@
   },
   {
    "cell_type": "code",
+   "execution_count": 41,
+   "id": "4fd490e4",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "numpy version 1.23.5\n",
+      "qiskit runtime version 0.11.2\n"
+     ]
+    },
+    {
+     "data": {
+      "text/html": [
+       "<h3>Version Information</h3><table><tr><th>Qiskit Software</th><th>Version</th></tr><tr><td><code>qiskit-terra</code></td><td>0.24.1</td></tr><tr><td><code>qiskit-aer</code></td><td>0.12.0</td></tr><tr><td><code>qiskit-ibmq-provider</code></td><td>0.20.2</td></tr><tr><td><code>qiskit</code></td><td>0.43.1</td></tr><tr><th>System information</th></tr><tr><td>Python version</td><td>3.10.11</td></tr><tr><td>Python compiler</td><td>MSC v.1934 64 bit (AMD64)</td></tr><tr><td>Python build</td><td>main, May 10 2023 18:51:25</td></tr><tr><td>OS</td><td>Windows</td></tr><tr><td>CPUs</td><td>8</td></tr><tr><td>Memory (Gb)</td><td>63.71001434326172</td></tr><tr><td colspan='2'>Sat Jul 15 20:08:31 2023 Eastern Daylight Time</td></tr></table>"
+      ],
+      "text/plain": [
+       "<IPython.core.display.HTML object>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "import numpy\n",
+    "print(f\"numpy version {numpy.__version__}\")\n",
+    "\n",
+    "import qiskit_ibm_runtime\n",
+    "print(f\"qiskit runtime version {qiskit_ibm_runtime.version.get_version_info()}\")\n",
+    "\n",
+    "import qiskit.tools.jupyter\n",
+    "%qiskit_version_table"
+   ]
+  },
+  {
+   "cell_type": "code",
    "execution_count": null,
-   "id": "554d4844",
+   "id": "c6f26ec0",
    "metadata": {},
    "outputs": [],
    "source": []
