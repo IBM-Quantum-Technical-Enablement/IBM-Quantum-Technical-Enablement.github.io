@@ -7,7 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Qiskit Runtime - II &#8212; Enabing Technologies  documentation</title>
   
@@ -648,7 +648,7 @@ document.write(`
 <h2>Sessions<a class="headerlink" href="#sessions" title="Permalink to this heading">#</a></h2>
 <p>When creating our sampler object we passed the target backend <code class="docutils literal notranslate"><span class="pre">Sampler(session=backend)</span></code> in as a “session”.  The concept of a <code class="docutils literal notranslate"><span class="pre">Session</span></code> is new, and it is a part of the IBM Quantum Runtime execution engine.</p>
 <p>In short, a <code class="docutils literal notranslate"><span class="pre">Session</span></code> is a “container” that holds a collection of jobs from primitives.  In general, there are two ways this works.  First, one can have a collection of one or more jbos that are independent.  Second, one can have two or more jobs that are interconnected, with later jobs conditioned on the results from those previously executed.  This latter case is typical for iterative algorithms such as variational methods.</p>
-<p><img alt="independent" src="../../_images/independent1.png" /></p>
+<p><img alt="independent" src="../../_images/independent2.png" /></p>
 <p><img alt="related" src="../../_images/related1.png" /></p>
 <p>There are a couple of ways that Sessions can be utilized.  First, and most ideal, as a session is connected to the backend on which it is run, we can directly create a session instance from such a backend object:</p>
 <div class="cell docutils container">

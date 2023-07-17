@@ -1,0 +1,38 @@
+---
+orphan: true
+---
+
+# Utilizing Qiskit Runtime and IBM Quantum Hardware
+
+(msit23)=
+
+## Overview
+
+Utilizing Qiskit Runtime and IBM Quantum Hardware
+
+## Details
+
+**Date**: July 17-28th, 2023
+
+**Location**:  Yorktown, NY
+
+## Workshop materials
+
+```{toctree}
+:caption: Files
+:maxdepth: 1
+:hidden:
+msit-2023/circuit-construction-simulation
+
+```
+
+```{button-link} https://github.com/IBM-Quantum-Technical-Enablement/msit-2023/archive/refs/heads/main.zip
+:color: primary
+:shadow:
+Download all workshop content
+```
+
+| Files | 
+| :--- |
+| [Introductory slides](msit-2023/QC_lecture.pdf)    | 
+| [Introduction to circuits and simulation](msit-2023/circuit-construction-simulation)  |

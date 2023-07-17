@@ -2,6 +2,14 @@
 
 ## 2023
 
+:::{card} Qiskit Runtime and IBM Quantum Hardware
+:link: msit23
+:link-type: ref
+
+**Date**: July 17th, 2023 \
+**Location**: Yorktown NY
+:::
+
 :::{card} Quantum Error Suppression and Mitigation, IBM Qiskit Runtime, and Dynamic Circuits
 :link: ornl23
 :link-type: ref
