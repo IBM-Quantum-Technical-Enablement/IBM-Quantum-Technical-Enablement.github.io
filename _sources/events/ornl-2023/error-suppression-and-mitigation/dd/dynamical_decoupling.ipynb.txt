@@ -325,6 +325,20 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "id": "a7e54b44",
+   "metadata": {},
+   "source": [
+    "<div class=\"alert alert-warning\">\n",
+    "   <div>\n",
+    "       <big><b>Real Hardware Run</b></big>\n",
+    "   </div>\n",
+    "   <br>\n",
+    "    For the sake of time, you may skip running on real backend during the workshop.\n",
+    "</div>"
+   ]
+  },
+  {
    "cell_type": "code",
    "execution_count": 12,
    "id": "ec38e964",
@@ -398,6 +412,15 @@
    "metadata": {},
    "source": [
     "To begin, we need a few things. First, we need to ask the backend for durations of all of its supported instructions. Second, we need to understand the constraints on timing enforced by the target hardware"
+   ]
+  },
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "id": "28b37260",
+   "metadata": {},
+   "source": [
+    "![cpmg_sequence-2.svg](imgs/cpmg_sequence.svg)"
    ]
   },
   {

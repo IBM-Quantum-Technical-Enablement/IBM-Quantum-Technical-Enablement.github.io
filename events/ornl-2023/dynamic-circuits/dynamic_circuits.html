@@ -545,7 +545,13 @@ qubits to encode a length <span class="math notranslate nohighlight">\(N\)</span
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="alert alert-warning">
+   <div>
+       <big><b>Real Hardware Run</b></big>
+   </div>
+   <br>
+    For the sake of time, you may skip running on real backend during the workshop.
+</div><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">real_counts</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">trans_bv_circs</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
 </pre></div>

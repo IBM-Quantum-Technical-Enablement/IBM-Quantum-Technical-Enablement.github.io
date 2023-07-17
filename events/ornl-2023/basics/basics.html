@@ -479,7 +479,10 @@ document.write(`
 <p>Qiskit comes with a built-in compiler (the <em>transpiler</em>) which does the above and provides many configuration options. We will discuss the bare minimum options here.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import the transpile function that performs the transpilation</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># utility function for fidelity calculation</span>
+<span class="kn">from</span> <span class="nn">qiskit.quantum_info</span> <span class="kn">import</span> <span class="n">hellinger_fidelity</span>
+
+<span class="c1"># import the transpile function that performs the transpilation</span>
 <span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="n">transpile</span>
 <span class="c1"># import function to create random quantum circuit</span>
 <span class="kn">from</span> <span class="nn">qiskit.circuit.random</span> <span class="kn">import</span> <span class="n">random_circuit</span>
@@ -536,12 +539,26 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># fetching backend</span>
 <span class="c1"># loading the previously saved account</span>
-<span class="n">provider</span> <span class="o">=</span> <span class="n">IBMProvider</span><span class="p">()</span>
+<span class="n">provider</span> <span class="o">=</span> <span class="n">IBMProvider</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">&quot;system-request/7-14-23-access/main&quot;</span><span class="p">)</span>
 <span class="n">backend</span> <span class="o">=</span> <span class="n">provider</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s2">&quot;ibm_peekskill&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">backend</span><span class="o">.</span><span class="n">operation_names</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;measure&#39;, &#39;cx&#39;, &#39;if_else&#39;, &#39;id&#39;, &#39;reset&#39;, &#39;x&#39;, &#39;delay&#39;, &#39;sx&#39;, &#39;rz&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Peekskill coupling map</strong></p>
+<p><img alt="ibm_peekskill_calibrations_readout_error_cx_map_2023-07-16T22_00_36Z.svg" src="../../../_images/ibm_peekskill_calibrations_readout_error_cx_map_2023-07-16T22_00_36Z.svg" /></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># bare minimum transpile call</span>
@@ -558,10 +575,16 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/3628c97128da57817b4d62510cf6db5e1d34bf2d392ebc5046b81943dbf9472b.png" src="../../../_images/3628c97128da57817b4d62510cf6db5e1d34bf2d392ebc5046b81943dbf9472b.png" />
+<img alt="../../../_images/8fdd35d9d1dd053d192bf0eedc7b478824f5206a937a115eb48c67319c9996c4.png" src="../../../_images/8fdd35d9d1dd053d192bf0eedc7b478824f5206a937a115eb48c67319c9996c4.png" />
 </div>
 </div>
-<div class="cell docutils container">
+<div class="alert alert-warning">
+   <div>
+       <big><b>Note</b></big>
+   </div>
+   <br>
+    Note the order of measurement operations which changed due to 1 added SWAP (sequence of 3 alternating CNOTs). SWAP was needed to meet the device's limited connectivity.
+</div><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transpiled_qc</span><span class="o">.</span><span class="n">count_ops</span><span class="p">()</span>
 </pre></div>
@@ -571,8 +594,8 @@ document.write(`
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OrderedDict([(&#39;rz&#39;, 23),
              (&#39;cx&#39;, 11),
              (&#39;sx&#39;, 9),
+             (&#39;x&#39;, 5),
              (&#39;measure&#39;, 5),
-             (&#39;x&#39;, 4),
              (&#39;barrier&#39;, 1)])
 </pre></div>
 </div>
@@ -628,14 +651,14 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;10010&#39;: 692,
- &#39;11011&#39;: 1825,
- &#39;00011&#39;: 666,
- &#39;10011&#39;: 685,
- &#39;00010&#39;: 632,
- &#39;01011&#39;: 1866,
- &#39;01010&#39;: 1867,
- &#39;11010&#39;: 1767}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;11011&#39;: 1738,
+ &#39;00011&#39;: 708,
+ &#39;10010&#39;: 677,
+ &#39;10011&#39;: 656,
+ &#39;00010&#39;: 652,
+ &#39;01011&#39;: 1880,
+ &#39;11010&#39;: 1772,
+ &#39;01010&#39;: 1917}
 </pre></div>
 </div>
 </div>
@@ -660,38 +683,50 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;11010&#39;: 1758,
- &#39;00011&#39;: 658,
- &#39;10010&#39;: 648,
- &#39;11011&#39;: 1766,
- &#39;10011&#39;: 645,
- &#39;00010&#39;: 673,
- &#39;01011&#39;: 1687,
- &#39;01010&#39;: 1719,
- &#39;10000&#39;: 39,
- &#39;01000&#39;: 31,
- &#39;01111&#39;: 38,
- &#39;00001&#39;: 26,
- &#39;00110&#39;: 13,
- &#39;11000&#39;: 20,
- &#39;01001&#39;: 23,
- &#39;01110&#39;: 36,
- &#39;10001&#39;: 31,
- &#39;11111&#39;: 28,
- &#39;10110&#39;: 8,
- &#39;00100&#39;: 5,
- &#39;11110&#39;: 36,
- &#39;10111&#39;: 13,
- &#39;11001&#39;: 30,
- &#39;00000&#39;: 31,
- &#39;00101&#39;: 2,
- &#39;00111&#39;: 17,
- &#39;11100&#39;: 3,
- &#39;10100&#39;: 2,
- &#39;01101&#39;: 5,
- &#39;01100&#39;: 5,
- &#39;11101&#39;: 2,
- &#39;10101&#39;: 2}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;01010&#39;: 1720,
+ &#39;10001&#39;: 11,
+ &#39;11010&#39;: 1705,
+ &#39;10010&#39;: 625,
+ &#39;11011&#39;: 1814,
+ &#39;00010&#39;: 623,
+ &#39;01011&#39;: 1663,
+ &#39;10011&#39;: 628,
+ &#39;00011&#39;: 651,
+ &#39;01101&#39;: 11,
+ &#39;10000&#39;: 11,
+ &#39;11111&#39;: 66,
+ &#39;00111&#39;: 31,
+ &#39;00110&#39;: 31,
+ &#39;01000&#39;: 24,
+ &#39;01111&#39;: 65,
+ &#39;01110&#39;: 63,
+ &#39;11000&#39;: 27,
+ &#39;01001&#39;: 25,
+ &#39;11001&#39;: 19,
+ &#39;11110&#39;: 74,
+ &#39;10111&#39;: 37,
+ &#39;00100&#39;: 6,
+ &#39;11100&#39;: 6,
+ &#39;00000&#39;: 8,
+ &#39;10100&#39;: 4,
+ &#39;00001&#39;: 10,
+ &#39;10110&#39;: 22,
+ &#39;11101&#39;: 6,
+ &#39;01100&#39;: 8,
+ &#39;00101&#39;: 3,
+ &#39;10101&#39;: 3}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hellinger_fidelity</span><span class="p">(</span><span class="n">ideal_counts</span><span class="p">,</span> <span class="n">noisy_counts</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9421304149792338
 </pre></div>
 </div>
 </div>
@@ -699,7 +734,13 @@ document.write(`
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="running-on-a-real-backend">
 <h1>Running on a real Backend<a class="headerlink" href="#running-on-a-real-backend" title="Permalink to this heading">#</a></h1>
-<div class="cell docutils container">
+<div class="alert alert-warning">
+   <div>
+       <big><b>Real Hardware Run</b></big>
+   </div>
+   <br>
+    For the sake of time, you may skip running on real backend during the workshop.
+</div><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Note backend.run() always require `transpiled` circuit</span>
 <span class="n">real_counts</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">transpiled_qc</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="o">.</span><span class="n">get_counts</span><span class="p">()</span>
@@ -708,38 +749,50 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;00000&#39;: 50,
- &#39;00001&#39;: 44,
- &#39;10000&#39;: 44,
- &#39;10001&#39;: 70,
- &#39;10010&#39;: 626,
- &#39;10011&#39;: 607,
- &#39;10100&#39;: 3,
- &#39;10101&#39;: 4,
- &#39;10110&#39;: 15,
- &#39;10111&#39;: 16,
- &#39;11000&#39;: 21,
- &#39;11001&#39;: 33,
- &#39;11010&#39;: 1747,
- &#39;11011&#39;: 1767,
- &#39;11100&#39;: 15,
- &#39;11101&#39;: 8,
- &#39;11110&#39;: 32,
- &#39;11111&#39;: 39,
- &#39;00010&#39;: 643,
- &#39;00011&#39;: 682,
- &#39;00100&#39;: 2,
- &#39;00101&#39;: 4,
- &#39;00110&#39;: 8,
- &#39;00111&#39;: 18,
- &#39;01000&#39;: 23,
- &#39;01001&#39;: 25,
- &#39;01010&#39;: 1649,
- &#39;01011&#39;: 1706,
- &#39;01100&#39;: 14,
- &#39;01101&#39;: 4,
- &#39;01110&#39;: 35,
- &#39;01111&#39;: 46}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;00000&#39;: 18,
+ &#39;00001&#39;: 14,
+ &#39;10000&#39;: 11,
+ &#39;10001&#39;: 10,
+ &#39;10010&#39;: 860,
+ &#39;10011&#39;: 768,
+ &#39;10100&#39;: 5,
+ &#39;10101&#39;: 10,
+ &#39;10110&#39;: 66,
+ &#39;10111&#39;: 44,
+ &#39;11000&#39;: 28,
+ &#39;11001&#39;: 37,
+ &#39;11010&#39;: 1936,
+ &#39;11011&#39;: 1860,
+ &#39;11100&#39;: 9,
+ &#39;11101&#39;: 10,
+ &#39;11110&#39;: 77,
+ &#39;11111&#39;: 84,
+ &#39;00010&#39;: 628,
+ &#39;00011&#39;: 568,
+ &#39;00100&#39;: 5,
+ &#39;00101&#39;: 6,
+ &#39;00110&#39;: 48,
+ &#39;00111&#39;: 58,
+ &#39;01000&#39;: 17,
+ &#39;01001&#39;: 16,
+ &#39;01010&#39;: 1372,
+ &#39;01011&#39;: 1289,
+ &#39;01100&#39;: 10,
+ &#39;01101&#39;: 11,
+ &#39;01110&#39;: 51,
+ &#39;01111&#39;: 74}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hellinger_fidelity</span><span class="p">(</span><span class="n">ideal_counts</span><span class="p">,</span> <span class="n">real_counts</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9168985730546235
 </pre></div>
 </div>
 </div>
@@ -776,38 +829,50 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;01001&#39;: 50,
- &#39;01010&#39;: 1643,
- &#39;11010&#39;: 1567,
- &#39;11001&#39;: 64,
- &#39;10011&#39;: 682,
- &#39;01011&#39;: 1612,
- &#39;10010&#39;: 689,
- &#39;11011&#39;: 1534,
- &#39;00010&#39;: 696,
- &#39;00011&#39;: 668,
- &#39;11111&#39;: 92,
- &#39;11110&#39;: 106,
- &#39;01110&#39;: 92,
- &#39;10001&#39;: 20,
- &#39;00000&#39;: 20,
- &#39;10110&#39;: 52,
- &#39;01111&#39;: 94,
- &#39;10111&#39;: 34,
- &#39;00110&#39;: 47,
- &#39;00001&#39;: 20,
- &#39;11000&#39;: 51,
- &#39;00111&#39;: 50,
- &#39;01000&#39;: 50,
- &#39;10000&#39;: 20,
- &#39;01101&#39;: 7,
- &#39;11101&#39;: 10,
- &#39;11100&#39;: 8,
- &#39;10101&#39;: 3,
- &#39;10100&#39;: 6,
- &#39;00101&#39;: 6,
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;11011&#39;: 1553,
+ &#39;00011&#39;: 653,
+ &#39;10010&#39;: 672,
+ &#39;00010&#39;: 681,
+ &#39;01010&#39;: 1621,
+ &#39;11000&#39;: 87,
+ &#39;10111&#39;: 30,
+ &#39;11010&#39;: 1664,
+ &#39;01011&#39;: 1571,
+ &#39;10011&#39;: 692,
+ &#39;11001&#39;: 93,
+ &#39;01001&#39;: 88,
+ &#39;10110&#39;: 23,
+ &#39;00000&#39;: 44,
+ &#39;11111&#39;: 50,
+ &#39;01111&#39;: 46,
+ &#39;01000&#39;: 99,
+ &#39;00111&#39;: 15,
+ &#39;01100&#39;: 14,
+ &#39;11110&#39;: 58,
+ &#39;00001&#39;: 48,
+ &#39;10001&#39;: 34,
+ &#39;10000&#39;: 43,
+ &#39;01110&#39;: 51,
+ &#39;01101&#39;: 16,
+ &#39;11101&#39;: 9,
+ &#39;11100&#39;: 16,
+ &#39;00110&#39;: 17,
+ &#39;00101&#39;: 3,
+ &#39;10101&#39;: 5,
  &#39;00100&#39;: 3,
- &#39;01100&#39;: 4}
+ &#39;10100&#39;: 1}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hellinger_fidelity</span><span class="p">(</span><span class="n">ideal_counts</span><span class="p">,</span> <span class="n">fake_backend_counts</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9093449017467656
 </pre></div>
 </div>
 </div>
@@ -830,7 +895,7 @@ document.write(`
 qiskit runtime version 0.11.2
 </pre></div>
 </div>
-<div class="output text_html"><h3>Version Information</h3><table><tr><th>Qiskit Software</th><th>Version</th></tr><tr><td><code>qiskit-terra</code></td><td>0.24.1</td></tr><tr><td><code>qiskit-aer</code></td><td>0.12.0</td></tr><tr><td><code>qiskit-ibmq-provider</code></td><td>0.20.2</td></tr><tr><td><code>qiskit</code></td><td>0.43.1</td></tr><tr><th>System information</th></tr><tr><td>Python version</td><td>3.10.11</td></tr><tr><td>Python compiler</td><td>MSC v.1934 64 bit (AMD64)</td></tr><tr><td>Python build</td><td>main, May 10 2023 18:51:25</td></tr><tr><td>OS</td><td>Windows</td></tr><tr><td>CPUs</td><td>8</td></tr><tr><td>Memory (Gb)</td><td>63.71001434326172</td></tr><tr><td colspan='2'>Sat Jul 15 19:45:50 2023 Eastern Daylight Time</td></tr></table></div></div>
+<div class="output text_html"><h3>Version Information</h3><table><tr><th>Qiskit Software</th><th>Version</th></tr><tr><td><code>qiskit-terra</code></td><td>0.24.1</td></tr><tr><td><code>qiskit-aer</code></td><td>0.12.0</td></tr><tr><td><code>qiskit-ibmq-provider</code></td><td>0.20.2</td></tr><tr><td><code>qiskit</code></td><td>0.43.1</td></tr><tr><th>System information</th></tr><tr><td>Python version</td><td>3.10.11</td></tr><tr><td>Python compiler</td><td>MSC v.1934 64 bit (AMD64)</td></tr><tr><td>Python build</td><td>main, May 10 2023 18:51:25</td></tr><tr><td>OS</td><td>Windows</td></tr><tr><td>CPUs</td><td>8</td></tr><tr><td>Memory (Gb)</td><td>63.71001434326172</td></tr><tr><td colspan='2'>Sun Jul 16 19:44:53 2023 Eastern Daylight Time</td></tr></table></div></div>
 </div>
 </section>
 

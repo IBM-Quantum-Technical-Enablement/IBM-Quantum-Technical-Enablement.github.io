@@ -372,7 +372,6 @@
    ]
   },
   {
-   "attachments": {},
    "cell_type": "markdown",
    "id": "395f7374",
    "metadata": {},

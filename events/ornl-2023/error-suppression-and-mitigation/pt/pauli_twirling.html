@@ -449,6 +449,8 @@ document.write(`
 <section class="tex2jax_ignore mathjax_ignore" id="background">
 <h1>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h1>
 <p>Pauli-twirling is a quantum error suppression technique that uses randomization to noise shape coherent error into stochastic errors, by combining the results from many random, but logically equivalent circuits, together. This is beneficial because while incoherent errors add up linearly with circuit depth, coherent errors can scale quadratically. Here we will show how to generate Pauli-twirled circuits, where we focus on twirling two-qubit gates within a circuit. This technique has been used, for example, in this work by Kim et al.: arXiv:2108.09197. We will show how to compute the possible Pauli sets for any two-qubit gate, and show how to create a Qiskit <code class="docutils literal notranslate"><span class="pre">Passmanager</span></code> that implements the routine, and can be combined with other transpilation techniques.</p>
+<p><img alt="benefit_of_twirling.png" src="../../../../_images/benefit_of_twirling.png" /><br />
+Credits: Zlatko Minev, IBM Quantum (https://www.zlatko-minev.com/blog/twirling)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -515,6 +517,7 @@ document.write(`
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="pt-circuit-transformation">
 <h1>PT Circuit transformation<a class="headerlink" href="#pt-circuit-transformation" title="Permalink to this heading">#</a></h1>
+<p><img alt="twirling_2q_gates.svg" src="../../../../_images/twirling_2q_gates.svg" /></p>
 <section id="computing-pauli-twirling-gate-sets">
 <h2>Computing Pauli twirling gate sets<a class="headerlink" href="#computing-pauli-twirling-gate-sets" title="Permalink to this heading">#</a></h2>
 <p>As the name suggests, we are going to look at using single qubit Pauli operators to reshape the noise in our circuits. Because the bulk of the error in a circuit resides with the two-qubit gates, here we focus on Pauli twirling two-qubit gates only.</p>

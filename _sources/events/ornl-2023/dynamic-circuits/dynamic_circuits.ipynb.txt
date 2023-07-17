@@ -169,6 +169,20 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "id": "9812e91d",
+   "metadata": {},
+   "source": [
+    "<div class=\"alert alert-warning\">\n",
+    "   <div>\n",
+    "       <big><b>Real Hardware Run</b></big>\n",
+    "   </div>\n",
+    "   <br>\n",
+    "    For the sake of time, you may skip running on real backend during the workshop.\n",
+    "</div>"
+   ]
+  },
+  {
    "cell_type": "code",
    "execution_count": 9,
    "id": "a4c9cfd8",

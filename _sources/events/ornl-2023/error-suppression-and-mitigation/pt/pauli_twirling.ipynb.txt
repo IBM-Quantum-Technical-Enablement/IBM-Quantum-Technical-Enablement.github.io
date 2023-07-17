@@ -17,6 +17,16 @@
    ]
   },
   {
+   "attachments": {},
+   "cell_type": "markdown",
+   "id": "3caa77d2",
+   "metadata": {},
+   "source": [
+    "![benefit_of_twirling.png](imgs/benefit_of_twirling.png)  \n",
+    "Credits: Zlatko Minev, IBM Quantum (https://www.zlatko-minev.com/blog/twirling)"
+   ]
+  },
+  {
    "cell_type": "code",
    "execution_count": 1,
    "id": "c2a9b66b",
@@ -102,6 +112,15 @@
    "metadata": {},
    "source": [
     "# PT Circuit transformation"
+   ]
+  },
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "id": "99df7fba",
+   "metadata": {},
+   "source": [
+    "![twirling_2q_gates.svg](imgs/twirling_2q_gates.svg)"
    ]
   },
   {

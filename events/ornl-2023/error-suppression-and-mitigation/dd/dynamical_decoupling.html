@@ -662,7 +662,13 @@ by evaluating the expectation value <span class="math notranslate nohighlight">\
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="real-hardware-execution">
 <h1>Real hardware execution<a class="headerlink" href="#real-hardware-execution" title="Permalink to this heading">#</a></h1>
-<div class="cell docutils container">
+<div class="alert alert-warning">
+   <div>
+       <big><b>Real Hardware Run</b></big>
+   </div>
+   <br>
+    For the sake of time, you may skip running on real backend during the workshop.
+</div><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trans_circs</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">ideal_circs</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">optimization_level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
@@ -700,6 +706,7 @@ by evaluating the expectation value <span class="math notranslate nohighlight">\
 <section id="adding-dynamical-decoupling-sequence">
 <h2>Adding Dynamical Decoupling Sequence<a class="headerlink" href="#adding-dynamical-decoupling-sequence" title="Permalink to this heading">#</a></h2>
 <p>To begin, we need a few things. First, we need to ask the backend for durations of all of its supported instructions. Second, we need to understand the constraints on timing enforced by the target hardware</p>
+<p><img alt="cpmg_sequence-2.svg" src="../../../../_images/cpmg_sequence.svg" /></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">durations</span> <span class="o">=</span> <span class="n">InstructionDurations</span><span class="o">.</span><span class="n">from_backend</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
