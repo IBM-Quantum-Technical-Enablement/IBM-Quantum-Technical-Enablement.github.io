@@ -23,6 +23,7 @@ Utilizing Qiskit Runtime and IBM Quantum Hardware
 :maxdepth: 1
 :hidden:
 msit-2023/circuit-construction-simulation
+msit-2023/Runtime
 
 ```
 
@@ -36,3 +37,4 @@ Download all workshop content
 | :--- |
 | [Introductory slides](msit-2023/QC_lecture.pdf)    | 
 | [Introduction to circuits and simulation](msit-2023/circuit-construction-simulation)  |
+| [Runtime](msit-2023/Runtime)  |
