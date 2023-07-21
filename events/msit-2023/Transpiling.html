@@ -1,0 +1,1617 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Circuit compilation for hardware &#8212; Enabing Technologies  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/thebelab-helper.js"></script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-16824831-8"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-16824831-8');
+            </script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'events/msit-2023/Transpiling';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../../explore/atom.xml"
+  title="Quantum Explorations"
+/>
+
+
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the site..."
+         aria-label="Search the site..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/dark_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../how-to/howto.html">
+                        How to guides
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../explore.html">
+                        Explorations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../hardware/hardware.html">
+                        IBM Hardware
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../events.html">
+                        Events
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../members.html">
+                        Contributors
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the site..."
+         aria-label="Search the site..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../how-to/howto.html">
+                        How to guides
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../explore.html">
+                        Explorations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../hardware/hardware.html">
+                        IBM Hardware
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../events.html">
+                        Events
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../members.html">
+                        Contributors
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the site..."
+         aria-label="Search the site..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumbs">
+  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Circuit compilation for hardware</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+<section class="tex2jax_ignore mathjax_ignore" id="circuit-compilation-for-hardware">
+<h1>Circuit compilation for hardware<a class="headerlink" href="#circuit-compilation-for-hardware" title="Permalink to this heading">#</a></h1>
+<p>In our use of the Qiskit runtime, we have completely abstracted away all the details of running on IBM Quantum hardware.  However, while at some point users of quantum hardware will be able to ignore the intricacies of the platform they are running on, currently, understanding what goes on within the Runtime is still necessary for achieving optimal results.</p>
+<p>In this notebook, we will look at compiling quantum circuits defined on virtual qubits to the physical qubits on a real quantum device.</p>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h2>
+<p>Here we load the modules needed for the rest of the notebook, as well as our locally stored IBM Quantum account.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Base Qiskit imports</span>
+<span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="c1"># Circuits from circuit library</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit.library</span> <span class="kn">import</span> <span class="n">QFT</span><span class="p">,</span> <span class="n">EfficientSU2</span>
+
+<span class="c1"># IBM Provider and Runtime</span>
+<span class="kn">from</span> <span class="nn">qiskit_ibm_provider</span> <span class="kn">import</span> <span class="n">IBMProvider</span>
+<span class="kn">from</span> <span class="nn">qiskit_ibm_runtime</span> <span class="kn">import</span> <span class="n">QiskitRuntimeService</span><span class="p">,</span> <span class="n">Sampler</span><span class="p">,</span> <span class="n">Options</span>
+
+<span class="c1"># Plotting tools</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;quantum-light&#39;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">provider</span> <span class="o">=</span> <span class="n">IBMProvider</span><span class="p">()</span>
+<span class="n">service</span> <span class="o">=</span> <span class="n">QiskitRuntimeService</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Lets grab a 27-qubit system (this will make diagrams a bit easier to follow)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">provider_backend</span> <span class="o">=</span> <span class="n">provider</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s1">&#39;ibm_canberra&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">backend</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s1">&#39;ibm_canberra&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="background">
+<h2>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h2>
+<p>To understand how a circuit is mapped to a quantum device works, we will consider a six-qubit BV circuit that requires <span class="math notranslate nohighlight">\(5\)</span>-partite connectivity; at least one qubit requires 2Q gates between 5 other qubits.  As we will see, this circuit will require several transformations to map onto an IBM Quantum system.  Understanding a subset of the full range of transformations that can be applied to a circuit via the Qiskit <code class="docutils literal notranslate"><span class="pre">transpile</span></code> function is the goal of this notebook.  These transformations are performed internally by the Qiskit Runtime, and knowing what is going on is important for achieving optimal results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bv_ones_circs</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a Bernstein-Vazarani (BV) circuit for an all-ones bit-string</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">        N (int): Number of qubits in circuit.  I.e. a bit-string of length N-1</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        QuantumCircuit: BV circuit</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">barrier</span><span class="p">()</span>
+    <span class="n">qc</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">qc</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">qc</span> <span class="o">=</span> <span class="n">bv_ones_circs</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="n">qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/75477e749de68797e9b028549c35497713d6352f6ad985dabce88b65ec02a87e.png" src="../../_images/75477e749de68797e9b028549c35497713d6352f6ad985dabce88b65ec02a87e.png" />
+</div>
+</div>
+<p>We have submitted this circuit to hardware many times already via the Runtime.  Let us try to do the same using <code class="docutils literal notranslate"><span class="pre">backend.run()</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bv_job</span> <span class="o">=</span> <span class="n">provider_backend</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mf">1e4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Attempting to retrieve the result leads to problems:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bv_job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">IBMJobFailureError</span><span class="g g-Whitespace">                        </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">48</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">bv_job</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+
+<span class="nn">File ~/mambaforge/envs/qiskit/lib/python3.11/site-packages/qiskit_ibm_provider/job/ibm_circuit_job.py:250,</span> in <span class="ni">IBMCircuitJob.result</span><span class="nt">(self, timeout, refresh)</span>
+<span class="g g-Whitespace">    </span><span class="mi">248</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_status</span> <span class="o">==</span> <span class="n">JobStatus</span><span class="o">.</span><span class="n">ERROR</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">249</span>         <span class="n">error_message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_message</span><span class="p">()</span>
+<span class="ne">--&gt; </span><span class="mi">250</span>         <span class="k">raise</span> <span class="n">IBMJobFailureError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Job failed: &quot;</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">error_message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">251</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_retrieve_result</span><span class="p">(</span><span class="n">refresh</span><span class="o">=</span><span class="n">refresh</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">252</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span>
+
+<span class="ne">IBMJobFailureError</span>: &#39;Job failed: Instruction h is not supported&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
+<span class="n">bv_job2</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mf">1e4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bv_job2</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SamplerResult(quasi_dists=[{0: 0.006118555163654723, 1: 0.009779522281544831, 2: 0.0010624785100383726, 3: 0.0010925395532566645, 4: 0.0018999659190570399, 5: 0.017270835701084133, 6: 0.0009822485027634379, 7: 0.006166641446972479, 8: -2.2374707962465154e-05, 9: 0.0007143159153160227, 10: 0.000493444727923226, 11: 0.0018085741104976734, 12: 0.00040964728733720244, 13: 0.012719285203670765, 14: 0.0010625368772757447, 15: 0.02418562878437437, 16: 0.0005348983894254184, 17: 0.001232213166762825, 18: 0.0006836687381836401, 19: 0.002302104324436434, 20: 0.00030501454245360606, 21: 0.0030315599055743105, 22: 0.0005585307332114078, 23: 0.014784521243453927, 24: 0.00032783069275547547, 25: 0.0022285668502876883, 26: 0.0013462917236834837, 27: 0.019293506312884207, 28: 0.0010771957204600041, 29: 0.03514246479802752, 30: 0.018173252061075718, 31: 0.81323453552052}], metadata=[{&#39;shots&#39;: 10000, &#39;readout_mitigation_overhead&#39;: 1.646756812340871, &#39;readout_mitigation_time&#39;: 0.07390344329178333}])
+</pre></div>
+</div>
+</div>
+</div>
+<p>So already we have encountered a difference between using the Runtime and <code class="docutils literal notranslate"><span class="pre">backend.run()</span></code>.  Here the job fails because we are told the <code class="docutils literal notranslate"><span class="pre">h</span></code> instruction, a Hadamard gate, is not supported.  But if it is “not supported”, why did it work via the Runtime?</p>
+<p>As we mentioned last time, <code class="docutils literal notranslate"><span class="pre">backend.run()</span></code> gives direct access to IBM Quantum systems.  Therefore, the end user needs to make sure that the circuits passed to the device satisfy the requirements of execution.  The Runtime is doing this work for you, and performs a set of processing steps on the circuits before and after execution; hardware details are abstracted away.  However, at present, understanding the transformations that are applied to circuits, as well as how some of the error mitigation techniques are performed, is still important to know in order to achieve optimal results.  Moreover, some times you need to manipulate circuits outside of Runtime, and then pass them in. We will see how to do this as well.</p>
+<p>In this notebook we will look at the transformations that are applied to circuits within the runtime using the Qiskit <code class="docutils literal notranslate"><span class="pre">transpile</span></code> function.  This is arguably the most important functionality in all of Qiskit.</p>
+</section>
+<section id="circuit-transpilation-basics">
+<h2>Circuit transpilation basics<a class="headerlink" href="#circuit-transpilation-basics" title="Permalink to this heading">#</a></h2>
+<p>To get started, lets try to call the <code class="docutils literal notranslate"><span class="pre">transpile</span></code> function, passing just our circuit of interest and the target backend:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trans_qc</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+<span class="n">trans_qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/97e92d2939b402d1710d266ee873ecbff4c95a4ec685daf1a6680092df1ef7f8.png" src="../../_images/97e92d2939b402d1710d266ee873ecbff4c95a4ec685daf1a6680092df1ef7f8.png" />
+</div>
+</div>
+<p>Things to note:</p>
+<ol class="arabic simple">
+<li><p>Obviously, the circuit now contains as many qubits as the target system.</p></li>
+<li><p>Our qubits have been mapped to physical qubits and have been rearranged at the beginning.</p></li>
+<li><p>Our <code class="docutils literal notranslate"><span class="pre">H</span></code> gates have been re-written as a collection of three 1Q gates.</p></li>
+<li><p>The number of CNOT gates has increased, in particular there are groups of three CNOT gates added to the circuit.</p></li>
+<li><p>The measurements are again rearranged from where one expects them to be based on the initial qubit ordering.</p></li>
+</ol>
+<p>One final thing to note is that what your circuit looks like above is likely different from the one shown here.  This is because some parts of the transpilation route are stochastic; they contain algorithms that rely on pseudorandom number generation.  To see this lets <code class="docutils literal notranslate"><span class="pre">transpile</span></code> the same circuit again (may have to do more than once since it is random):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trans_qc</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+<span class="n">trans_qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">fold</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/4fd3c377b8b5d9fa07e78b606148e2687d7312333bc83c16a2cf99095a8888e3.png" src="../../_images/4fd3c377b8b5d9fa07e78b606148e2687d7312333bc83c16a2cf99095a8888e3.png" />
+</div>
+</div>
+<p>Our goal in the rest of the notebook is to explain why and how all of these transformations are happening to the input circuits, and thus shedding insight into how the Runtime is processing circuits internally.</p>
+</section>
+<section id="compilation-pipeline">
+<h2>Compilation pipeline<a class="headerlink" href="#compilation-pipeline" title="Permalink to this heading">#</a></h2>
+<p>Compilation, in it simplest form, takes place in a series of steps.  The basic order of these steps in Qiskit is:</p>
+<ol class="arabic simple">
+<li><p>Decompose gates into 1Q and 2Q gates only / express circuit in terms of systems native gate set</p></li>
+<li><p>Select the initial virtual to physical qubit mapping</p></li>
+<li><p>Add SWAP gates to circuit to satisfy topology, and optimize layout</p></li>
+<li><p>Optimize 1Q and 2Q gates</p></li>
+<li><p>Optional, add timing information via “scheduling”</p></li>
+</ol>
+<section id="decomposition-into-2q-gates-and-basis-gates">
+<h3>1. Decomposition into &lt;= 2Q gates and basis gates<a class="headerlink" href="#decomposition-into-2q-gates-and-basis-gates" title="Permalink to this heading">#</a></h3>
+<p>Quantum computation greatly benefits from the fact that any computation can be written in terms of polynomial numbers of gates selected from a universal gate set that itself is comprised of a finite number of elements.  This “digitizes” the computation into successive steps.  Alternatives are a “pulse” based, continuous evolution, or ideally, going from initial to final state in a single step by forming the exact desired unitary.  This latter option is rarely, if ever, achievable due to physical constraints, amongst other complications.</p>
+<img alt="../../_images/propagate1.png" src="../../_images/propagate1.png" />
+<p>There are two limitations to the set of gates that a quantum computer may run.  First, IBM Quantum computers are restricted to gates that involve at most two-qubits.  Like trying to decide where to go to dinner amongst friends, the more people that are involved, the more difficult the process is.  The same is true for quantum gates; the more qubits, the harder it is to do a high-fidelity gate.  Therefore, although we can write a quantum circuit with abstract gates over any number of qubits, we must decompose these gates into 1Q and 2Q gates to impliment on hardware.  For example, consider the following circuit:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Build QFT circuit with expected result 1111101</span>
+<span class="n">nqubits</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="n">number</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">qft_qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">nqubits</span><span class="p">)</span>
+<span class="n">qft_qc</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">nqubits</span><span class="p">))</span>
+<span class="n">qft_qc</span><span class="o">.</span><span class="n">p</span><span class="p">(</span><span class="n">number</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">qft_qc</span><span class="o">.</span><span class="n">p</span><span class="p">(</span><span class="n">number</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">qft_qc</span><span class="o">.</span><span class="n">p</span><span class="p">(</span><span class="n">number</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">qft_qc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">QFT</span><span class="p">(</span><span class="n">nqubits</span><span class="p">,</span> <span class="n">do_swaps</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">)))</span>
+<span class="n">qft_qc</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+
+<span class="n">qft_qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">fold</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/61a91a6d49a90cb863dbf007ff0e86fe2c7410d9c6a1424e80d6b377f5b1720c.png" src="../../_images/61a91a6d49a90cb863dbf007ff0e86fe2c7410d9c6a1424e80d6b377f5b1720c.png" />
+</div>
+</div>
+<p>The IQFT gate is a gate over 7-qubits, and therefore needs to be decomposed.  This is the first step in the transpilation process, and one that can be seen using the <code class="docutils literal notranslate"><span class="pre">decompose</span></code> method of the <code class="docutils literal notranslate"><span class="pre">QuantumCircuit</span></code> class (That we have to do <code class="docutils literal notranslate"><span class="pre">reps=2</span></code> is due to the inverse QFT requiring one addtional layer of decomposition):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qft_qc</span><span class="o">.</span><span class="n">decompose</span><span class="p">(</span><span class="n">reps</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/676509d93dfe22cc467203dfa36bcb000ac3520f39009618a049e73275a73337.png" src="../../_images/676509d93dfe22cc467203dfa36bcb000ac3520f39009618a049e73275a73337.png" />
+</div>
+</div>
+<p>Although our circuit is now in terms of 1Q and 2Q gates only, every quantum system is limited in the gates that they can actually implement.  In Qiskit, universal gate sets are called <code class="docutils literal notranslate"><span class="pre">basis_gates</span></code>, and in general are over-complete sets. The <code class="docutils literal notranslate"><span class="pre">basis_gates</span></code> for IBM Quantum systems are found in the <code class="docutils literal notranslate"><span class="pre">backend.configuration()</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">backend</span><span class="o">.</span><span class="n">configuration</span><span class="p">()</span><span class="o">.</span><span class="n">basis_gates</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;cx&#39;, &#39;id&#39;, &#39;rz&#39;, &#39;sx&#39;, &#39;x&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>A few things to note:</p>
+<ol class="arabic simple">
+<li><p>For 1Q gates, IBM Quantum systems can only do <code class="docutils literal notranslate"><span class="pre">sx</span></code> (<span class="math notranslate nohighlight">\(\sqrt{x}\)</span>) and <code class="docutils literal notranslate"><span class="pre">x</span></code> gates, along with arbitrary z-axis rotations via <code class="docutils literal notranslate"><span class="pre">rz</span></code>.</p></li>
+<li><p>All z-rotations are “virtual” gates; there is no rotations of the qubits.  All z-rotations get mapped to phase-angles that get applied to all gates that come later.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">sx</span></code> and <code class="docutils literal notranslate"><span class="pre">x</span></code> gates take the same amount of time to impliment; they differ by the amplitude of the underlying pulse that causes the rotation.</p></li>
+<li><p>Currently, the only 2Q gate is the <code class="docutils literal notranslate"><span class="pre">cx</span></code> (CNOT) gate.  This will be relaxed in the future to expose native <code class="docutils literal notranslate"><span class="pre">cr</span></code> (cross-resonance) gates.</p></li>
+<li><p>On IBM Quantum systems, the identity gate <code class="docutils literal notranslate"><span class="pre">id</span></code> currently is represented as an idle time of the same width as an <code class="docutils literal notranslate"><span class="pre">sx</span></code> gate.</p></li>
+</ol>
+<p>In our BV circuit the <code class="docutils literal notranslate"><span class="pre">h</span></code> gate got converted into a single <code class="docutils literal notranslate"><span class="pre">sx</span></code> gate and two <code class="docutils literal notranslate"><span class="pre">rz</span></code> rotations:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc_1q</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">qc_1q</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">transpile</span><span class="p">(</span><span class="n">qc_1q</span><span class="p">,</span> <span class="n">basis_gates</span><span class="o">=</span><span class="n">backend</span><span class="o">.</span><span class="n">configuration</span><span class="p">()</span><span class="o">.</span><span class="n">basis_gates</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/0b490a86c4d609307bfb6a02651d6e78306f335abf81c995362ff2437235ce5c.png" src="../../_images/0b490a86c4d609307bfb6a02651d6e78306f335abf81c995362ff2437235ce5c.png" />
+</div>
+</div>
+<p>For a generic 1Q gate, the worst-case decomposition is comprised of two <code class="docutils literal notranslate"><span class="pre">sx</span></code> gates and three virtual <code class="docutils literal notranslate"><span class="pre">rz</span></code> rotations of various angles:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc_1q</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">qc_1q</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">transpile</span><span class="p">(</span><span class="n">qc_1q</span><span class="p">,</span> <span class="n">basis_gates</span><span class="o">=</span><span class="n">backend</span><span class="o">.</span><span class="n">configuration</span><span class="p">()</span><span class="o">.</span><span class="n">basis_gates</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/5b84162f1735850bdce74e4aa94019097fcd0755c4a83d918415200ad92dc36f.png" src="../../_images/5b84162f1735850bdce74e4aa94019097fcd0755c4a83d918415200ad92dc36f.png" />
+</div>
+</div>
+<p>When used in the transpiler, the <code class="docutils literal notranslate"><span class="pre">basis_gates</span></code> represent the final set of gates that the circuit is written in.  For example, our inverse QFT example above in terms of IBM Quantum basis gates can be found using:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transpile</span><span class="p">(</span><span class="n">qft_qc</span><span class="p">,</span> <span class="n">basis_gates</span><span class="o">=</span><span class="n">backend</span><span class="o">.</span><span class="n">configuration</span><span class="p">()</span><span class="o">.</span><span class="n">basis_gates</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/cf7bdc0885edd09c5e62f8ecb045e8dd40555c2bdfc592ee751fc15a16f966f1.png" src="../../_images/cf7bdc0885edd09c5e62f8ecb045e8dd40555c2bdfc592ee751fc15a16f966f1.png" />
+</div>
+</div>
+<p>If we pass a backend to <code class="docutils literal notranslate"><span class="pre">transpile</span></code> then the transpiler will automatically use the <code class="docutils literal notranslate"><span class="pre">basis_gates</span></code> of the device. However, we can overload that by passing <code class="docutils literal notranslate"><span class="pre">basis_gates</span></code> of our choice.</p>
+<p>Note that the basis gates should be at least universal set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trans_qc</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">basis_gates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;rx&#39;</span><span class="p">,</span> <span class="s1">&#39;ry&#39;</span><span class="p">,</span> <span class="s1">&#39;rz&#39;</span><span class="p">,</span> <span class="s1">&#39;ryy&#39;</span><span class="p">])</span>
+<span class="n">trans_qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">fold</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/9663a24995ce2c7d4844e5bf205e80fe23b661fa7313d7b8b872db1b6c3f2bbb.png" src="../../_images/9663a24995ce2c7d4844e5bf205e80fe23b661fa7313d7b8b872db1b6c3f2bbb.png" />
+</div>
+</div>
+<div class="alert alert-warning">
+   <div>
+       <big><b>Warning</b></big>
+   </div>
+   <br>
+    Sometimes additional basis gates are needed due to intermediate conversion steps within the transpiler.
+</div></section>
+<section id="initial-qubit-layout">
+<h3>2. Initial qubit layout<a class="headerlink" href="#initial-qubit-layout" title="Permalink to this heading">#</a></h3>
+<p>The qubits in a circuit are “virtual” qubits in that they exist in abstract only.  To perform the actual computation we must must map these virtual qubits onto the physical qubits of the target quantum system.  There is no unique way to do this, the mapping need only be bijective, and the choice of <code class="docutils literal notranslate"><span class="pre">initial_layout</span></code> can greatly affect the performance of the later routing (swap mapping) step, as well as overall fidelity if the selected qubits are overly error prone.</p>
+<img alt="../../_images/mapping1.png" src="../../_images/mapping1.png" />
+<p>Built-in to Qiskit <code class="docutils literal notranslate"><span class="pre">transpile()</span></code> there are several methods to do this:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TrivialLayout</span></code> (<code class="docutils literal notranslate"><span class="pre">&quot;trivial&quot;</span></code>)- Maps qubit 0 to physical qubit 0, 1-&gt;1, 2-&gt;2, etc.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DenseLayout</span></code> (<code class="docutils literal notranslate"><span class="pre">&quot;dense&quot;</span></code>) - Finds the subgraph with densest connectivity in the connectivity graph and select a permutation of that as the layout.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VF2Layout</span></code> - Searches for a perfect layout as a subgraph isomorphism problem and if a solution exists will pick the layout with the lowest error rate (as reported by the backend).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VF2PostLayout</span></code> - Selects a new layout after routing stage based on error rates on target to try and maximize fidelity based on calibration data.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SabreLayout</span></code> (<code class="docutils literal notranslate"><span class="pre">&quot;sabre&quot;</span></code>) - A heuristic method that use a routing method to find a layout with minimal swaps required.</p></li>
+<li><p>⚠ <code class="docutils literal notranslate"><span class="pre">NoiseAdaptiveLayout</span></code> (<code class="docutils literal notranslate"><span class="pre">&quot;noise_adaptive&quot;</span></code>) - Uses the calibration data to find the lowest noise qubits to run the circuit on.</p></li>
+</ul>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">layout_method</span></code> argument on <code class="docutils literal notranslate"><span class="pre">transpile()</span></code> to change the layout used. Using argument will disable <code class="docutils literal notranslate"><span class="pre">VF2Layout</span></code> and <code class="docutils literal notranslate"><span class="pre">VF2PostLayout</span></code>.</p>
+<p>After using <code class="docutils literal notranslate"><span class="pre">transpile</span></code>, we can view the layout information via the <code class="docutils literal notranslate"><span class="pre">layout</span></code> attribute of the circuit.  Additionally, we can see what impact the choice of initial layout has on the final output circuit by seeing how many 2Q gates there are in the final circuit.  For this device, the 2Q gate is a <code class="docutils literal notranslate"><span class="pre">cx</span></code> so we will count the number of CNOT gates:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temp_circuit</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">layout_method</span><span class="o">=</span><span class="s1">&#39;trivial&#39;</span><span class="p">)</span>
+<span class="n">temp_circuit</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">initial_layout</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layout({
+0: Qubit(QuantumRegister(6, &#39;q&#39;), 0),
+1: Qubit(QuantumRegister(6, &#39;q&#39;), 1),
+2: Qubit(QuantumRegister(6, &#39;q&#39;), 2),
+3: Qubit(QuantumRegister(6, &#39;q&#39;), 3),
+4: Qubit(QuantumRegister(6, &#39;q&#39;), 4),
+5: Qubit(QuantumRegister(6, &#39;q&#39;), 5),
+6: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 0),
+7: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 1),
+8: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 2),
+9: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 3),
+10: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 4),
+11: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 5),
+12: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 6),
+13: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 7),
+14: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 8),
+15: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 9),
+16: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 10),
+17: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 11),
+18: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 12),
+19: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 13),
+20: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 14),
+21: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 15),
+22: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 16),
+23: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 17),
+24: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 18),
+25: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 19),
+26: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 20)
+})
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temp_circuit</span><span class="o">.</span><span class="n">count_ops</span><span class="p">()[</span><span class="s1">&#39;cx&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>23
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temp_circuit</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">layout_method</span><span class="o">=</span><span class="s1">&#39;dense&#39;</span><span class="p">)</span>
+<span class="n">temp_circuit</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">initial_layout</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layout({
+20: Qubit(QuantumRegister(6, &#39;q&#39;), 0),
+19: Qubit(QuantumRegister(6, &#39;q&#39;), 1),
+16: Qubit(QuantumRegister(6, &#39;q&#39;), 2),
+13: Qubit(QuantumRegister(6, &#39;q&#39;), 3),
+14: Qubit(QuantumRegister(6, &#39;q&#39;), 4),
+11: Qubit(QuantumRegister(6, &#39;q&#39;), 5),
+0: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 0),
+1: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 1),
+2: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 2),
+3: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 3),
+4: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 4),
+5: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 5),
+6: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 6),
+7: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 7),
+8: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 8),
+9: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 9),
+10: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 10),
+12: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 11),
+15: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 12),
+17: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 13),
+18: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 14),
+21: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 15),
+22: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 16),
+23: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 17),
+24: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 18),
+25: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 19),
+26: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 20)
+})
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temp_circuit</span><span class="o">.</span><span class="n">count_ops</span><span class="p">()[</span><span class="s1">&#39;cx&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>14
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temp_circuit</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">layout_method</span><span class="o">=</span><span class="s1">&#39;sabre&#39;</span><span class="p">)</span>
+<span class="n">temp_circuit</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">initial_layout</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layout({
+13: Qubit(QuantumRegister(6, &#39;q&#39;), 0),
+15: Qubit(QuantumRegister(6, &#39;q&#39;), 1),
+7: Qubit(QuantumRegister(6, &#39;q&#39;), 2),
+4: Qubit(QuantumRegister(6, &#39;q&#39;), 3),
+10: Qubit(QuantumRegister(6, &#39;q&#39;), 4),
+12: Qubit(QuantumRegister(6, &#39;q&#39;), 5),
+0: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 0),
+1: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 1),
+2: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 2),
+3: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 3),
+5: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 4),
+6: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 5),
+8: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 6),
+9: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 7),
+11: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 8),
+14: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 9),
+16: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 10),
+17: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 11),
+18: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 12),
+19: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 13),
+20: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 14),
+21: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 15),
+22: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 16),
+23: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 17),
+24: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 18),
+25: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 19),
+26: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 20)
+})
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temp_circuit</span><span class="o">.</span><span class="n">count_ops</span><span class="p">()[</span><span class="s1">&#39;cx&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>11
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temp_circuit</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">layout_method</span><span class="o">=</span><span class="s1">&#39;noise_adaptive&#39;</span><span class="p">)</span>
+<span class="n">temp_circuit</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">initial_layout</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layout({
+25: Qubit(QuantumRegister(6, &#39;q&#39;), 0),
+22: Qubit(QuantumRegister(6, &#39;q&#39;), 1),
+19: Qubit(QuantumRegister(6, &#39;q&#39;), 2),
+20: Qubit(QuantumRegister(6, &#39;q&#39;), 3),
+14: Qubit(QuantumRegister(6, &#39;q&#39;), 4),
+26: Qubit(QuantumRegister(6, &#39;q&#39;), 5),
+0: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 0),
+1: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 1),
+2: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 2),
+3: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 3),
+4: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 4),
+5: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 5),
+6: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 6),
+7: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 7),
+8: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 8),
+9: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 9),
+10: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 10),
+11: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 11),
+12: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 12),
+13: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 13),
+15: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 14),
+16: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 15),
+17: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 16),
+18: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 17),
+21: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 18),
+23: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 19),
+24: Qubit(QuantumRegister(21, &#39;ancilla&#39;), 20)
+})
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temp_circuit</span><span class="o">.</span><span class="n">count_ops</span><span class="p">()[</span><span class="s1">&#39;cx&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>17
+</pre></div>
+</div>
+</div>
+</div>
+<p>Again, due to some stochastic components in the transpilation routine, plus the noise aware properties of some elements, the above layouts and CNOT numbers will likely vary.</p>
+<p>From this simple testing, we see that <code class="docutils literal notranslate"><span class="pre">sabre</span></code> performs quite well, resulting in less than half the number of <code class="docutils literal notranslate"><span class="pre">cx</span></code> gates that the <code class="docutils literal notranslate"><span class="pre">trivial</span></code> layout produces.  As a general rule, the <code class="docutils literal notranslate"><span class="pre">sabre</span></code> method is the best option unless one knows how to manually set the layout.</p>
+<section id="setting-initial-layout-manually">
+<h4>Setting <code class="docutils literal notranslate"><span class="pre">initial_layout</span></code> manually<a class="headerlink" href="#setting-initial-layout-manually" title="Permalink to this heading">#</a></h4>
+<p>Qiskit will automatically pick an <code class="docutils literal notranslate"><span class="pre">initial_layout</span></code> for you using the <code class="docutils literal notranslate"><span class="pre">layout_method</span></code> that is defined.  However it is possible to manually set the <code class="docutils literal notranslate"><span class="pre">initial_layout</span></code>.  Often times it is best to do so after looking at the calibration data to select the qubits with lowest 1Q errors, measurement errors, and associated 2Q gate errors. Moreoever, it is sometimes possible to manually map circuit to get the lowest possible number of two-qubit gates.</p>
+<p>The calibration data can easily be found on the IBM Quantum  website, e.g. <a class="reference external" href="https://quantum-computing.ibm.com/services?services=systems&amp;system=ibmq_mumbai">Mumbai calibration data</a>.  Alternatively, it can be found via Qiskit.</p>
+<p>The initial virtual -&gt; physical mapping can be manually set using the <code class="docutils literal notranslate"><span class="pre">initial_layout</span></code> argument in <code class="docutils literal notranslate"><span class="pre">transpile</span></code>.  This variable takes a list, amongst other options, where the 0th element tells the transpiler which physical qubit to map virtual qubit 0 to, etc.</p>
+<p>Because virtual qubit 5 needs large amounts of connectivity lets map it to physical qubit 12, and then select the other qubits so that they are nearest neighbor as possible.</p>
+<p>We are also going to use a very handy feature in the <code class="docutils literal notranslate"><span class="pre">draw()</span></code> method, namely passing <code class="docutils literal notranslate"><span class="pre">idle_wires=False</span></code> to remove all unused qubits</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trans_qc</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">initial_layout</span><span class="o">=</span><span class="p">[</span><span class="mi">18</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">])</span>
+<span class="n">trans_qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">idle_wires</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fold</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/186c829a57698b35aa16ac1dba0ee6c81123d73bfb8106d01db1a5162b318ab6.png" src="../../_images/186c829a57698b35aa16ac1dba0ee6c81123d73bfb8106d01db1a5162b318ab6.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trans_qc</span><span class="o">.</span><span class="n">count_ops</span><span class="p">()[</span><span class="s1">&#39;cx&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>17
+</pre></div>
+</div>
+</div>
+</div>
+<p>We are also free to pick disjoint sets of physical qubits.  This is usually not a good idea but none the less can be done.  Here is a particularly bad choice:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trans_qc</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">initial_layout</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">26</span><span class="p">])</span>
+<span class="n">trans_qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">idle_wires</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fold</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/d93ba63bddf3e3a4c04616793e0de68ded88e14e9a11db9a71ab5fbae81f5de5.png" src="../../_images/d93ba63bddf3e3a4c04616793e0de68ded88e14e9a11db9a71ab5fbae81f5de5.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trans_qc</span><span class="o">.</span><span class="n">count_ops</span><span class="p">()[</span><span class="s1">&#39;cx&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>68
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="qubit-routing">
+<h3>3. Qubit routing<a class="headerlink" href="#qubit-routing" title="Permalink to this heading">#</a></h3>
+<p>One of the most important tasks of circuit transpilation/compilation is in the inserting of <code class="docutils literal notranslate"><span class="pre">swap</span></code> gates so as to allow for the limited connectivity of many quantum processors. Two-qubit gates can only be done between pairs of qubits listed in the systems coupling map:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">backend</span><span class="o">.</span><span class="n">configuration</span><span class="p">()</span><span class="o">.</span><span class="n">coupling_map</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0, 1], [1, 0], [1, 2], [1, 4], [2, 1], [2, 3], [3, 2], [3, 5], [4, 1], [4, 7], [5, 3], [5, 8], [6, 7], [7, 4], [7, 6], [7, 10], [8, 5], [8, 9], [8, 11], [9, 8], [10, 7], [10, 12], [11, 8], [11, 14], [12, 10], [12, 13], [12, 15], [13, 12], [13, 14], [14, 11], [14, 13], [14, 16], [15, 12], [15, 18], [16, 14], [16, 19], [17, 18], [18, 15], [18, 17], [18, 21], [19, 16], [19, 20], [19, 22], [20, 19], [21, 18], [21, 23], [22, 19], [22, 25], [23, 21], [23, 24], [24, 23], [24, 25], [25, 22], [25, 24], [25, 26], [26, 25]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>This <code class="docutils literal notranslate"><span class="pre">coupling_map</span></code> forms what is called the entangling gate topology, or “topology” for short, of the system.  It can be viewed as a graph, with the qubits as the nodes, and edges indicating allowable 2Q gates.  This is what the IBM Quantum website is showing.  <code class="docutils literal notranslate"><span class="pre">swap</span></code> gates must be added to move the states of qubits around so that any 2Q gates are performed between one of the pairs in this topology.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">swap</span></code> gate is equal to 3 <code class="docutils literal notranslate"><span class="pre">cx</span></code> gates, and each <code class="docutils literal notranslate"><span class="pre">cx</span></code> is ~20x more noisy than 1Q gates; <code class="docutils literal notranslate"><span class="pre">swap</span></code> gates are expensive, should be minimized as best as possible.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">swap_qc</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">swap_qc</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">swap_qc</span><span class="o">.</span><span class="n">decompose</span><span class="p">()</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/95d8758f191dabeb37e0c72517e3716aa82ab2f6dec4691e28cfb771e86ec201.png" src="../../_images/95d8758f191dabeb37e0c72517e3716aa82ab2f6dec4691e28cfb771e86ec201.png" />
+</div>
+</div>
+<p>Finding the minimum number of <code class="docutils literal notranslate"><span class="pre">swap</span></code> gates needed for a general circuit and system topology is NP-Hard; It becomes combinatorics and scales exponentially.  In the case of our 6Q BV circuit, we know that swaps will need to be inserted because the number of required gates on the target qubit is larger than the connectivity present in the IBM Quantum heavy-hex lattice.</p>
+<p>The primary SWAP mappers in Qiskit use stochastic heuristics that yield a good, but perhaps not ideal, SWAP mapping.  As we will see, the quality of the mapping will vary, sometimes quite a bit, and knowing this is important for generating optimal circuits, and is something that the runtime does not handle for you.</p>
+<p>Included in Qiskit are several different passes to do this</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">basic</span></code> - Iterates over DAG when it encounters a finds shortest path between nodes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stochastic</span></code> - Randomized algorithm that tries random trials of swaps at each layer and selects the swap to insert based on a heuristic score [<strong>This is stochastic</strong>]</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sabre</span></code> - Algorithm that applies a heuristic score (basic algorithm is described in: https://arxiv.org/pdf/1809.02573.pdf but Qiskit’s implementation has built on top of this) [<strong>This is stochastic</strong>]</p></li>
+<li><p>⚠ <code class="docutils literal notranslate"><span class="pre">lookahead</span></code> - Uses a beam search over possible SWAP combinations (described in: https://medium.com/qiskit/improving-a-quantum-compiler-48410d7a7084)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">none</span></code> - Error if routing is required</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">routing_method</span></code> argument is used to select which method to use.  <strong>In practice, you should leave this option alone and let it use the default Sabre router</strong></p>
+<p>Lets transpile our circuit multiple times and look to see how many <code class="docutils literal notranslate"><span class="pre">swap</span></code> gates are added each time.  Additionally, we will look to see if our custom <code class="docutils literal notranslate"><span class="pre">initial_layout</span></code> works any better.  To make sure the <code class="docutils literal notranslate"><span class="pre">swap</span></code> gates are not converted to 3 <code class="docutils literal notranslate"><span class="pre">cx</span></code> gates each time, we will add <code class="docutils literal notranslate"><span class="pre">swap</span></code> to the basis gates (this will not run on hardware).</p>
+<p>First we start with the <code class="docutils literal notranslate"><span class="pre">basic</span></code> routing method, but using <code class="docutils literal notranslate"><span class="pre">sabre</span></code> layout (by default)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trans_qcs</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> 
+                      <span class="n">routing_method</span><span class="o">=</span><span class="s1">&#39;basic&#39;</span><span class="p">,</span>
+                      <span class="n">basis_gates</span><span class="o">=</span><span class="n">backend</span><span class="o">.</span><span class="n">configuration</span><span class="p">()</span><span class="o">.</span><span class="n">basis_gates</span><span class="o">+</span><span class="p">[</span><span class="s1">&#39;swap&#39;</span><span class="p">])</span>
+<span class="n">trans_qcs</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">idle_wires</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fold</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/d499db1cfc726771ccd1ff5a8bddab4c892799d55e1675557c6b5d7e3370e2b3.png" src="../../_images/d499db1cfc726771ccd1ff5a8bddab4c892799d55e1675557c6b5d7e3370e2b3.png" />
+</div>
+</div>
+<p>To show that the initial layout matters, lets use the trivial layout along with basic routing (never ever do this in practice):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trans_qcs</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span>
+                      <span class="n">layout_method</span><span class="o">=</span><span class="s1">&#39;trivial&#39;</span><span class="p">,</span>
+                      <span class="n">routing_method</span><span class="o">=</span><span class="s1">&#39;basic&#39;</span><span class="p">,</span>
+                      <span class="n">basis_gates</span><span class="o">=</span><span class="n">backend</span><span class="o">.</span><span class="n">configuration</span><span class="p">()</span><span class="o">.</span><span class="n">basis_gates</span><span class="o">+</span><span class="p">[</span><span class="s1">&#39;swap&#39;</span><span class="p">])</span>
+<span class="n">trans_qcs</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">idle_wires</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fold</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/ab23a340cdea9c9f74ed42ef8262f837d3234504139cedd7b652cca5d18753ba.png" src="../../_images/ab23a340cdea9c9f74ed42ef8262f837d3234504139cedd7b652cca5d18753ba.png" />
+</div>
+</div>
+<p>Now, to visually show that the routing varies stochastically, we will transpile the same circuit 100 times for the default <code class="docutils literal notranslate"><span class="pre">sabre</span></code> routing, the older <code class="docutils literal notranslate"><span class="pre">stochastic</span></code> mapper, and the <code class="docutils literal notranslate"><span class="pre">sabre</span></code> mapper, but with our custom layout:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trans_qcs</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">([</span><span class="n">qc</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span>
+                      <span class="n">basis_gates</span><span class="o">=</span><span class="n">backend</span><span class="o">.</span><span class="n">configuration</span><span class="p">()</span><span class="o">.</span><span class="n">basis_gates</span><span class="o">+</span><span class="p">[</span><span class="s1">&#39;swap&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trans_qcs2</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">([</span><span class="n">qc</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">basis_gates</span><span class="o">=</span><span class="n">backend</span><span class="o">.</span><span class="n">configuration</span><span class="p">()</span><span class="o">.</span><span class="n">basis_gates</span><span class="o">+</span><span class="p">[</span><span class="s1">&#39;swap&#39;</span><span class="p">],</span>
+                       <span class="n">routing_method</span><span class="o">=</span><span class="s1">&#39;stochastic&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trans_qcs_init</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">([</span><span class="n">qc</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">basis_gates</span><span class="o">=</span><span class="n">backend</span><span class="o">.</span><span class="n">configuration</span><span class="p">()</span><span class="o">.</span><span class="n">basis_gates</span><span class="o">+</span><span class="p">[</span><span class="s1">&#39;swap&#39;</span><span class="p">],</span>
+                           <span class="n">initial_layout</span><span class="o">=</span><span class="p">[</span><span class="mi">18</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">swap_count</span> <span class="o">=</span> <span class="p">[</span><span class="n">circ</span><span class="o">.</span><span class="n">count_ops</span><span class="p">()[</span><span class="s1">&#39;swap&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">circ</span> <span class="ow">in</span> <span class="n">trans_qcs</span><span class="p">]</span>
+<span class="n">swap_count2</span> <span class="o">=</span> <span class="p">[</span><span class="n">circ</span><span class="o">.</span><span class="n">count_ops</span><span class="p">()[</span><span class="s1">&#39;swap&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">circ</span> <span class="ow">in</span> <span class="n">trans_qcs2</span><span class="p">]</span>
+<span class="n">swap_count_init</span> <span class="o">=</span> <span class="p">[</span><span class="n">circ</span><span class="o">.</span><span class="n">count_ops</span><span class="p">()[</span><span class="s1">&#39;swap&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">circ</span> <span class="ow">in</span> <span class="n">trans_qcs_init</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">swap_count</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Default layout, sabre&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">swap_count_init</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Custom layout&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">swap_count2</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">36</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Default layout, stochastic&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Swaps added&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/d6627a88b45620421e2793f002f57ed61fba8389d1a4bb03f1bfe9cebd4d1730.png" src="../../_images/d6627a88b45620421e2793f002f57ed61fba8389d1a4bb03f1bfe9cebd4d1730.png" />
+</div>
+</div>
+<p>We see that there is a distribution in terms of the number of added <code class="docutils literal notranslate"><span class="pre">swap</span></code> gates, and the distribution depends on which routing method is used, and the choice of initial layout. Obviously we would prefer the circuit with the fewest swaps as it should yield the answer with the highest fidelity.</p>
+<p>What does this mean in practice?</p>
+<p>To get the optimal circuit, it is best to transpile multiple times, and select the circuit with the fewest number of 2Q gates, or alternatively by looking for the smallest output circuit depth.  For example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trans_qcs_init</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">([</span><span class="n">qc</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">depths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">circ</span><span class="o">.</span><span class="n">depth</span><span class="p">()</span> <span class="k">for</span> <span class="n">circ</span> <span class="ow">in</span> <span class="n">trans_qcs_init</span><span class="p">])</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">depths</span><span class="p">)</span>
+<span class="n">best_qc</span> <span class="o">=</span> <span class="n">trans_qcs_init</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+<span class="n">best_qc</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">fold</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">idle_wires</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/ffc8a9853e17e1084b9495ab562556da4e63dd438104e5caf3633e4b88ca8788.png" src="../../_images/ffc8a9853e17e1084b9495ab562556da4e63dd438104e5caf3633e4b88ca8788.png" />
+</div>
+</div>
+<p>For repeatability the best circuit can be saved  Or instead, one can transpile multiple times fixing the <code class="docutils literal notranslate"><span class="pre">seed_transpiler</span></code> option with a list of specified integers.  The integer seeds the random number generator used by the SWAP mapper, and allows you to reproduce the circuit again.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seeds</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+
+<span class="n">min_depth</span> <span class="o">=</span> <span class="mf">1e99</span>
+<span class="n">best_circ</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">best_seed</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">for</span> <span class="n">kk</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">trans_qc_seeded</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">seed_transpiler</span><span class="o">=</span><span class="n">seeds</span><span class="p">[</span><span class="n">kk</span><span class="p">])</span>
+    <span class="n">temp_depth</span> <span class="o">=</span> <span class="n">trans_qc_seeded</span><span class="o">.</span><span class="n">depth</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">temp_depth</span> <span class="o">&lt;</span> <span class="n">min_depth</span><span class="p">:</span>
+        <span class="n">min_depth</span> <span class="o">=</span> <span class="n">temp_depth</span>
+        <span class="n">best_seed</span> <span class="o">=</span> <span class="n">seeds</span><span class="p">[</span><span class="n">kk</span><span class="p">]</span>
+        <span class="n">best_circ</span> <span class="o">=</span> <span class="n">trans_qc_seeded</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_seed</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>16
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span> <span class="n">best_circ</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">fold</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">idle_wires</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/ffc8a9853e17e1084b9495ab562556da4e63dd438104e5caf3633e4b88ca8788.png" src="../../_images/ffc8a9853e17e1084b9495ab562556da4e63dd438104e5caf3633e4b88ca8788.png" />
+</div>
+</div>
+<p>Once the <code class="docutils literal notranslate"><span class="pre">best_seed</span></code> value is found we can then use that to deterministically regenerate the optimal circuit.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transpile</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">seed_transpiler</span><span class="o">=</span><span class="n">best_seed</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">fold</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">idle_wires</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/ffc8a9853e17e1084b9495ab562556da4e63dd438104e5caf3633e4b88ca8788.png" src="../../_images/ffc8a9853e17e1084b9495ab562556da4e63dd438104e5caf3633e4b88ca8788.png" />
+</div>
+</div>
+<section id="hands-on-example">
+<h4>Hands-on Example<a class="headerlink" href="#hands-on-example" title="Permalink to this heading">#</a></h4>
+<p>Consider the <a class="reference external" href="https://qiskit.org/documentation/stubs/qiskit.circuit.library.EfficientSU2.html#efficientsu2"><code class="docutils literal notranslate"><span class="pre">EfficientSU2</span></code></a> circuit from the Qiskit circuit library. that generates circuits used, for example, in quantum chemistry and optimization problems.   Here we will generate circuits with CNOT gates making a circular entangling topology (Note that I need to transpile the circuit to see the underlying gates):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transpile</span><span class="p">(</span><span class="n">EfficientSU2</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">entanglement</span><span class="o">=</span><span class="s1">&#39;circular&#39;</span><span class="p">),</span>
+          <span class="n">basis_gates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;rx&#39;</span><span class="p">,</span> <span class="s1">&#39;ry&#39;</span><span class="p">,</span> <span class="s1">&#39;rz&#39;</span><span class="p">,</span> <span class="s1">&#39;cx&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/4820fa2ddde9e5d901647e6ace1d9ee2cb537e13cf237614153c5a6207643771.png" src="../../_images/4820fa2ddde9e5d901647e6ace1d9ee2cb537e13cf237614153c5a6207643771.png" />
+</div>
+</div>
+<p>Lets try to compute the number of additional CNOT gates added to the circuit at the end of the default transpilation process as a function of the number of qubits <span class="math notranslate nohighlight">\(N\)</span> in the circuit when transpiled for a 27Q IBM Quantum system.  Lets consider <span class="math notranslate nohighlight">\(N \in [2,20]\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_points</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">qubit_range</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">21</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">num_qubits</span> <span class="ow">in</span> <span class="n">qubit_range</span><span class="p">:</span>
+    <span class="n">circ</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">(</span><span class="n">EfficientSU2</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">,</span> <span class="n">entanglement</span><span class="o">=</span><span class="s1">&#39;circular&#39;</span><span class="p">),</span>
+                     <span class="n">basis_gates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;rx&#39;</span><span class="p">,</span> <span class="s1">&#39;ry&#39;</span><span class="p">,</span> <span class="s1">&#39;rz&#39;</span><span class="p">,</span> <span class="s1">&#39;cx&#39;</span><span class="p">])</span>
+    <span class="n">orig_cx</span> <span class="o">=</span> <span class="n">circ</span><span class="o">.</span><span class="n">count_ops</span><span class="p">()[</span><span class="s1">&#39;cx&#39;</span><span class="p">]</span>
+    <span class="n">trans_circs</span> <span class="o">=</span> <span class="n">transpile</span><span class="p">([</span><span class="n">circ</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+    <span class="n">data_points</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">cc</span><span class="o">.</span><span class="n">count_ops</span><span class="p">()[</span><span class="s1">&#39;cx&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">orig_cx</span> <span class="k">for</span> <span class="n">cc</span> <span class="ow">in</span> <span class="n">trans_circs</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">num_qubits</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">qubit_range</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="n">num_qubits</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">data_points</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">21</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Number of qubits&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Number of added CNOT gates&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/68b2d0e16a85ff35ea121840b827f5f30215712c202b8cf5538680076a75f11b.png" src="../../_images/68b2d0e16a85ff35ea121840b827f5f30215712c202b8cf5538680076a75f11b.png" />
+</div>
+</div>
+<p>How does one interpret this result?</p>
+</section>
+<section id="re-mapping-to-low-noise-sub-graphs">
+<h4>Re-mapping to low-noise sub-graphs<a class="headerlink" href="#re-mapping-to-low-noise-sub-graphs" title="Permalink to this heading">#</a></h4>
+<p>Now that our circuit matches topology if so desired, we can execute our circuit on hardware as is.  However, there are additional transformations we might want to do.  One such possibility discussed here is the re-mapping of the circuit to sections of the target device with the lowest errors.</p>
+<p>On present day devices, the choice of qubits and gates has a large impact on the final fidelity of the output.  In many cases, this choice can mean the difference between an usable signal or noise.  For example, below highlights the variability in key performance metrics across several IBM Quantum systems [taken from <a class="reference external" href="http://dx.doi.org/10.1103/PRXQuantum.4.010327">PRX Quantum 4, 010327 (2023</a>)]:</p>
+<img alt="../../_images/variability1.png" src="../../_images/variability1.png" />
+<p>While the routing stage is designed to try to minimum the total number of swap gates needed to match the circuit to topology, it is insensitive to the noise characteristics of the qubits, gates, and measurements.  Therefore, we could have a good swap mapping, but over a set of low-performing qubits.  To get around this, after routing, Qiskit using a routine called “Mapomatic” (also known as <code class="docutils literal notranslate"><span class="pre">VF2FinalLayout</span></code> in Qiskit) to find isomorphic sub-graphs of the device to which the circuit is optimally placed.  Note that this will not be applied if explicitly setting <code class="docutils literal notranslate"><span class="pre">layout_method</span></code>.  An illustrative example of how this works is shown below:</p>
+<img alt="../../_images/mapo.png" src="../../_images/mapo.png" />
+<p>Additional information can be found in this paper: <a class="reference external" href="http://dx.doi.org/10.1103/PRXQuantum.4.010327">PRX Quantum 4, 010327 (2023</a>).</p>
+</section>
+</section>
+<section id="gate-optimization">
+<h3>4. Gate optimization<a class="headerlink" href="#gate-optimization" title="Permalink to this heading">#</a></h3>
+<p>The second additional optimization one can do is to optimize the 1Q and 2Q gates, re-ordering and collecting as necessary to reduce the overall number of operations.</p>
+<p>For example, a chain of 1Q gates, can easily be collected and reduced to a smaller number (based on what basis gates you are targeting):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc_1q</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">qc_1q</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">qc_1q</span><span class="o">.</span><span class="n">ry</span><span class="p">((</span><span class="n">i</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">qc_1q</span><span class="o">.</span><span class="n">rx</span><span class="p">((</span><span class="n">i</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">qc_1q</span><span class="o">.</span><span class="n">rz</span><span class="p">((</span><span class="n">i</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">qc_1q</span><span class="o">.</span><span class="n">y</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc_1q</span><span class="o">.</span><span class="n">z</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc_1q</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/75d18130e912f26e0ec7e50531a587679949748166dc9194622a56f351ed9c72.png" src="../../_images/75d18130e912f26e0ec7e50531a587679949748166dc9194622a56f351ed9c72.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transpile</span><span class="p">(</span><span class="n">qc_1q</span><span class="p">,</span> <span class="n">basis_gates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;rz&#39;</span><span class="p">,</span> <span class="s1">&#39;rx&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/36469d04948951263038efd82f8caa4b86ad261658654753d326d0f8420ac2c9.png" src="../../_images/36469d04948951263038efd82f8caa4b86ad261658654753d326d0f8420ac2c9.png" />
+</div>
+</div>
+<p>It is sometimes possible to use commutativity relations to reorder gates for simplification:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc_bell</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">qc_bell</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">qc_bell</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">qc_bell</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">qc_bell</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">qc_bell</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/21a5964393df61d7c463072cb1ff633879a6258e675af85f45e7155920f54bbd.png" src="../../_images/21a5964393df61d7c463072cb1ff633879a6258e675af85f45e7155920f54bbd.png" />
+</div>
+</div>
+<p>Note that I have to include <code class="docutils literal notranslate"><span class="pre">optimization_level=2</span></code> here to get it to work.  The details of the <code class="docutils literal notranslate"><span class="pre">optimization_level</span></code> options will be discussed shortly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transpile</span><span class="p">(</span><span class="n">qc_bell</span><span class="p">,</span> <span class="n">basis_gates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;cx&#39;</span><span class="p">],</span>
+          <span class="n">optimization_level</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/5853b9cc514d898fa46aae61ca2c09254cdd12b5d598c276d0f64fc17f8bf01b.png" src="../../_images/5853b9cc514d898fa46aae61ca2c09254cdd12b5d598c276d0f64fc17f8bf01b.png" />
+</div>
+</div>
+<p>An important optimization technique is KAK decomposition, where any collection of gates on two-qubits can be expressed using <strong>at most</strong> 3 CNOT gates (if using that basis gate), and a handful of 1Q gates.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qc_kak</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">qc_kak</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc_kak</span><span class="o">.</span><span class="n">cz</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">qc_kak</span><span class="o">.</span><span class="n">ry</span><span class="p">(</span><span class="mf">3.14159</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">qc_kak</span><span class="o">.</span><span class="n">cy</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">qc_kak</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc_kak</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">qc_kak</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">qc_kak</span><span class="o">.</span><span class="n">z</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">qc_kak</span><span class="o">.</span><span class="n">cy</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">qc_kak</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">qc_kak</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/c9456f05e2544eccb2da1834dfe1e3c67e895c0692c48fe34fdce7c8bc0c0cce.png" src="../../_images/c9456f05e2544eccb2da1834dfe1e3c67e895c0692c48fe34fdce7c8bc0c0cce.png" />
+</div>
+</div>
+<p>Again, I need to set the <code class="docutils literal notranslate"><span class="pre">optimization_level</span></code> here to enable this transformation</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transpile</span><span class="p">(</span><span class="n">qc_kak</span><span class="p">,</span> <span class="n">basis_gates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;rz&#39;</span><span class="p">,</span> <span class="s1">&#39;sx&#39;</span><span class="p">,</span> <span class="s1">&#39;cx&#39;</span><span class="p">],</span>
+          <span class="n">optimization_level</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/bc591ede580f7975fcccc0067b5e6c6f87fa2a49372d61cca0ba7295790ade2d.png" src="../../_images/bc591ede580f7975fcccc0067b5e6c6f87fa2a49372d61cca0ba7295790ade2d.png" />
+</div>
+</div>
+<p>This final circuit is obviously going to be much much more efficient to implement than the original!</p>
+</section>
+</section>
+<section id="transpiler-optimization-levels">
+<h2>Transpiler optimization levels<a class="headerlink" href="#transpiler-optimization-levels" title="Permalink to this heading">#</a></h2>
+<p>As we have seen there are a myriad of options available.  Not very many people (myself included) know what all the options are, nor how each one works.  Moreover, which combinations of all of these techniques gives best performance over large classes of circuits is a research-level question.  Therefore, unless one is interested in squeezing out all possible performance, and has lots of time for trial and error, it is best to use the built-in preset options that are controlled by the <code class="docutils literal notranslate"><span class="pre">optimization_level</span></code></p>
+<p>Much like standard compiler tool chains where one can specify the level of code optimization, e.g. <code class="docutils literal notranslate"><span class="pre">-O3</span></code>, it is possible to specify the level of quantum circuit optimization that <code class="docutils literal notranslate"><span class="pre">transpile</span></code> performs via the <code class="docutils literal notranslate"><span class="pre">optimization_level</span></code> keyword argument where the level is specified by an integer from 0 to 3.  The basic overview of each option is as follows:</p>
+<section id="optimization-level-0">
+<h3><code class="docutils literal notranslate"><span class="pre">optimization_level=0</span></code><a class="headerlink" href="#optimization-level-0" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Convert to target basis gate set.</p></li>
+<li><p>Choose a trivial layout that maps virtual qubit <span class="math notranslate nohighlight">\(i\)</span> to physical qubit <span class="math notranslate nohighlight">\(i\)</span>.</p></li>
+</ol>
+<div class="alert alert-warning">
+<font style="font-family:'Courier New'"> optimization_level=0</font> orders qubits sequentially from <font style="font-family:'Courier New'"> 0...N-1</font>.  On 27-qubit Falcon systems this ordering is usually very sub-optimal due to the column-based qubit ordering of those systems.
+</div><ol class="arabic simple" start="3">
+<li><p>SWAP map with the default Qiskit SWAP mapper.</p></li>
+<li><p>No 1Q or 2Q gate optimization.</p></li>
+</ol>
+</section>
+<section id="optimization-level-1">
+<h3><code class="docutils literal notranslate"><span class="pre">optimization_level=1</span></code><a class="headerlink" href="#optimization-level-1" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Convert to target basis gate set.</p></li>
+<li><p>Choose a dense (high-connectivity) layout.</p></li>
+<li><p>SWAP map using the Sabre routing method. Circuit remapping to low-noise subgraph.</p></li>
+<li><p>Basic 1Q and 2Q gate optimizations.</p></li>
+</ol>
+</section>
+<section id="optimization-level-2">
+<h3><code class="docutils literal notranslate"><span class="pre">optimization_level=2</span></code><a class="headerlink" href="#optimization-level-2" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Convert to target basis gate set.</p></li>
+<li><p>Choose a dense (high-connectivity) initial qubit layout.</p></li>
+<li><p>SWAP map using the Sabre routing method. Circuit remapping to low-noise subgraph.</p></li>
+<li><p>Medium 1Q and 2Q gate optimizations, e.g. commutative cancellation.</p></li>
+</ol>
+</section>
+<section id="optimization-level-3">
+<h3><code class="docutils literal notranslate"><span class="pre">optimization_level=3</span></code><a class="headerlink" href="#optimization-level-3" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Convert to target basis gate set.</p></li>
+<li><p>Select an <code class="docutils literal notranslate"><span class="pre">initial_layout</span></code> based on the Sabre algorithm.</p></li>
+<li><p>SWAP map using the Sabre routing method. Circuit remapping to low-noise subgraph.</p></li>
+<li><p>Full 1Q and 2Q gate optimizations, e.g. 2Q block collection and consolidation (KAK decomposition).</p></li>
+</ol>
+<p>By default, the Qiskit <code class="docutils literal notranslate"><span class="pre">transpile</span></code> function is set to <code class="docutils literal notranslate"><span class="pre">optimization_level=1</span></code>.  However, the best choice is usually <code class="docutils literal notranslate"><span class="pre">optimization_level=3</span></code>.  This is the default level in the Qiskit Runtime, but not in Qiskit itself!.  Therefore, outside of runtime it is <strong>best to always set</strong> <code class="docutils literal notranslate"><span class="pre">optimization_level=3</span></code>.</p>
+</section>
+</section>
+<section id="transpilation-options-in-the-qiskit-runtime">
+<h2>Transpilation options in the Qiskit Runtime<a class="headerlink" href="#transpilation-options-in-the-qiskit-runtime" title="Permalink to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">optimization_level</span></code> used by the runtime can be set by the user.  Recalling that the default is <code class="docutils literal notranslate"><span class="pre">optimization_level=3</span></code> for the Runtime, lets set the level to something else.  First, this can be done via the <code class="docutils literal notranslate"><span class="pre">Options</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">options</span> <span class="o">=</span> <span class="n">Options</span><span class="p">(</span><span class="n">optimization_level</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">(</span><span class="n">backend</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_job</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">qc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>or we can set it directly within the call to <code class="docutils literal notranslate"><span class="pre">run()</span></code> itself.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_job</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">qc</span><span class="p">,</span> <span class="n">optimization_level</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Additional transpilation options can be seen from the <code class="docutils literal notranslate"><span class="pre">Options</span></code> class:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Options</span><span class="p">()</span><span class="o">.</span><span class="n">transpilation</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TranspilationOptions(skip_transpilation=False, initial_layout=None, layout_method=None, routing_method=None, approximation_degree=None)
+</pre></div>
+</div>
+</div>
+</div>
+<section id="skipping-transpilation">
+<h3>Skipping transpilation<a class="headerlink" href="#skipping-transpilation" title="Permalink to this heading">#</a></h3>
+<p>It is also possible to completely skip the transpilation in the Runtime.  For example, we have seen that transpiling a circuit multiple times, and taking the best, can be valuable.  However, the runtime does not do this, and we would need to do this ourselves, and then send it to the runtime for further processing, e.g. error mitigation.  This can be done using the <code class="docutils literal notranslate"><span class="pre">skip_transpilation=True</span></code> option.</p>
+<p>For example, we have already found our “best” circuit and called it <code class="docutils literal notranslate"><span class="pre">best_circ</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_job</span> <span class="o">=</span> <span class="n">sampler</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">best_circ</span><span class="p">,</span> <span class="n">skip_transpilation</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>again, we can use the <code class="docutils literal notranslate"><span class="pre">Options</span></code> to get a similar effect:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Options</span><span class="p">(</span><span class="n">transpilation</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;skip_transpilation&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Options(optimization_level=None, resilience_level=None, max_execution_time=None, transpilation=TranspilationOptions(skip_transpilation=True, initial_layout=None, layout_method=None, routing_method=None, approximation_degree=None), resilience=ResilienceOptions(noise_amplifier=&#39;TwoQubitAmplifier&#39;, noise_factors=(1, 3, 5), extrapolator=&#39;LinearExtrapolator&#39;), execution=ExecutionOptions(shots=4000, init_qubits=True), environment=EnvironmentOptions(log_level=&#39;WARNING&#39;, callback=None, job_tags=[]), simulator=SimulatorOptions(noise_model=None, seed_simulator=None, coupling_map=None, basis_gates=None))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qiskit.tools.jupyter</span>
+<span class="o">%</span><span class="k">qiskit_version_table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><h3>Version Information</h3><table><tr><th>Qiskit Software</th><th>Version</th></tr><tr><td><code>qiskit-terra</code></td><td>0.24.1</td></tr><tr><td><code>qiskit-aer</code></td><td>0.12.0</td></tr><tr><td><code>qiskit-ibmq-provider</code></td><td>0.20.2</td></tr><tr><td><code>qiskit</code></td><td>0.43.0</td></tr><tr><td><code>qiskit-nature</code></td><td>0.6.2</td></tr><tr><th>System information</th></tr><tr><td>Python version</td><td>3.11.4</td></tr><tr><td>Python compiler</td><td>Clang 15.0.7 </td></tr><tr><td>Python build</td><td>main, Jun 10 2023 18:08:41</td></tr><tr><td>OS</td><td>Darwin</td></tr><tr><td>CPUs</td><td>8</td></tr><tr><td>Memory (Gb)</td><td>16.0</td></tr><tr><td colspan='2'>Mon Jul 17 12:15:36 2023 EDT</td></tr></table></div></div>
+</div>
+</section>
+</section>
+</section>
+
+<div class="section ablog__blog_comments">
+  
+  
+</div>
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#circuit-transpilation-basics">Circuit transpilation basics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compilation-pipeline">Compilation pipeline</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decomposition-into-2q-gates-and-basis-gates">1. Decomposition into &lt;= 2Q gates and basis gates</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initial-qubit-layout">2. Initial qubit layout</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-initial-layout-manually">Setting <code class="docutils literal notranslate"><span class="pre">initial_layout</span></code> manually</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qubit-routing">3. Qubit routing</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hands-on-example">Hands-on Example</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#re-mapping-to-low-noise-sub-graphs">Re-mapping to low-noise sub-graphs</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gate-optimization">4. Gate optimization</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transpiler-optimization-levels">Transpiler optimization levels</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-level-0"><code class="docutils literal notranslate"><span class="pre">optimization_level=0</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-level-1"><code class="docutils literal notranslate"><span class="pre">optimization_level=1</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-level-2"><code class="docutils literal notranslate"><span class="pre">optimization_level=2</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-level-3"><code class="docutils literal notranslate"><span class="pre">optimization_level=3</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transpilation-options-in-the-qiskit-runtime">Transpilation options in the Qiskit Runtime</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skipping-transpilation">Skipping transpilation</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div class="tocsection sourcelink">
+    <a href="../../_sources/events/msit-2023/Transpiling.ipynb.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+<footer class="bd-footer">
+<div>
+<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
+        Content on
+        <a property="dct:title" rel="cc:attributionURL" href="http://quantum-enablement.org">this website</a> 
+        by <span property="cc:attributionName">IBM</span> is licensed under 
+        <a href="http://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">
+                Attribution-NonCommercial 4.0 International<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1">
+                <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1">
+                <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1">
+        </a>
+</p> 
+</div>
+</footer>
+
+  </body>
+</html>

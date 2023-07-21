@@ -25,6 +25,7 @@ Utilizing Qiskit Runtime and IBM Quantum Hardware
 msit-2023/circuit-construction-simulation
 msit-2023/Runtime
 msit-2023/NearTermQC
+msit-2023/Transpiling
 ```
 
 ```{button-link} https://github.com/IBM-Quantum-Technical-Enablement/msit-2023/archive/refs/heads/main.zip
@@ -39,3 +40,4 @@ Download all workshop content
 | [Introduction to circuits and simulation](msit-2023/circuit-construction-simulation)  |
 | [Runtime](msit-2023/Runtime)  |
 | [Near-term quantum algorithms](msit-2023/NearTermQC)  |
+| [Circuit transpilation](msit-2023/Transpiling)  |
