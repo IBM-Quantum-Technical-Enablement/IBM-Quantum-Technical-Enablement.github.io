@@ -26,6 +26,9 @@ msit-2023/circuit-construction-simulation
 msit-2023/Runtime
 msit-2023/NearTermQC
 msit-2023/Transpiling
+msit-2023/Circuit-timing
+
+
 ```
 
 ```{button-link} https://github.com/IBM-Quantum-Technical-Enablement/msit-2023/archive/refs/heads/main.zip
@@ -41,3 +44,4 @@ Download all workshop content
 | [Runtime](msit-2023/Runtime)  |
 | [Near-term quantum algorithms](msit-2023/NearTermQC)  |
 | [Circuit transpilation](msit-2023/Transpiling)  |
+| [Circuit timing](msit-2023/Circuit-timing)  |
