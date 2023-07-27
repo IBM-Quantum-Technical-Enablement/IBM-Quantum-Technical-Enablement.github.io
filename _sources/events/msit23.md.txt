@@ -27,6 +27,10 @@ msit-2023/Runtime
 msit-2023/NearTermQC
 msit-2023/Transpiling
 msit-2023/Circuit-timing
+msit-2023/Dynamical-decoupling
+msit-2023/measurement-error-mitigation
+msit-2023/VQE_ex
+msit-2023/Noisy_Simulation
 
 
 ```
@@ -45,3 +49,7 @@ Download all workshop content
 | [Near-term quantum algorithms](msit-2023/NearTermQC)  |
 | [Circuit transpilation](msit-2023/Transpiling)  |
 | [Circuit timing](msit-2023/Circuit-timing)  |
+| [Dynamical decoupling](msit-2023/Dynamical-decoupling)  |
+| [Measurement error mitigation](msit-2023/measurement-error-mitigation)  |
+| [Variational eigensolver via Runtime](msit-2023/VQE_ex)  |
+| [Noise modelling](msit-2023/Noisy_Simulation)  |

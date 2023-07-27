@@ -1,0 +1,911 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Noisy Simulation &#8212; Enabing Technologies  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/thebelab-helper.js"></script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-16824831-8"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'UA-16824831-8');
+            </script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'events/msit-2023/Noisy_Simulation';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../../explore/atom.xml"
+  title="Quantum Explorations"
+/>
+
+
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the site..."
+         aria-label="Search the site..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/dark_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../how-to/howto.html">
+                        How to guides
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../explore.html">
+                        Explorations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../hardware/hardware.html">
+                        IBM Hardware
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../events.html">
+                        Events
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../members.html">
+                        Contributors
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the site..."
+         aria-label="Search the site..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../how-to/howto.html">
+                        How to guides
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../explore.html">
+                        Explorations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../hardware/hardware.html">
+                        IBM Hardware
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../events.html">
+                        Events
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../members.html">
+                        Contributors
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the site..."
+         aria-label="Search the site..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/IBM-Quantum-Technical-Enablement" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumbs">
+  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Noisy Simulation</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+<section class="tex2jax_ignore mathjax_ignore" id="noisy-simulation">
+<h1>Noisy Simulation<a class="headerlink" href="#noisy-simulation" title="Permalink to this heading">#</a></h1>
+<p><strong>Instructor</strong> : Hwajung Kang, Ph.D., Quantum Computational Scientist, IBM Quantum</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">qiskit.circuit</span> <span class="kn">import</span> <span class="n">ParameterVector</span>
+<span class="kn">from</span> <span class="nn">qiskit.visualization</span> <span class="kn">import</span> <span class="n">plot_distribution</span><span class="p">,</span> <span class="n">plot_error_map</span>
+
+<span class="kn">from</span> <span class="nn">qiskit_ibm_runtime</span> <span class="kn">import</span> <span class="n">QiskitRuntimeService</span><span class="p">,</span> <span class="n">Sampler</span><span class="p">,</span> <span class="n">Options</span>
+<span class="kn">from</span> <span class="nn">qiskit_aer.noise</span> <span class="kn">import</span> <span class="n">NoiseModel</span><span class="p">,</span> <span class="n">ReadoutError</span>
+                              
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="s1">&#39;1111&#39;</span>
+<span class="n">nq</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
+
+<span class="n">bv</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="n">nq</span><span class="p">,</span> <span class="n">nq</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">bv</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="n">nq</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">bv</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">nq</span><span class="p">))</span>
+<span class="n">bv</span><span class="o">.</span><span class="n">barrier</span><span class="p">()</span>
+<span class="n">bv</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)),</span> <span class="n">nq</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">bv</span><span class="o">.</span><span class="n">barrier</span><span class="p">()</span>
+<span class="n">bv</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">nq</span><span class="p">))</span>
+<span class="n">bv</span><span class="o">.</span><span class="n">barrier</span><span class="p">()</span>
+<span class="n">bv</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">nq</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">nq</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="n">bv</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/d745eb35019241920868492018a76a8b55d302289cfd52b5d9b8d96f69176afc.png" src="../../_images/d745eb35019241920868492018a76a8b55d302289cfd52b5d9b8d96f69176afc.png" />
+</div>
+</div>
+<div class="alert alert-success">
+    <h3>Hands-on exercise 1.</h3>
+    <p>
+    Execute the `bv` circuit on `ibm_qasm_simulator` using the sampler.</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## your code goes here.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="noisy-simulation-for-a-ibm-quantum-system">
+<h2>Noisy Simulation for a IBM Quantum system<a class="headerlink" href="#noisy-simulation-for-a-ibm-quantum-system" title="Permalink to this heading">#</a></h2>
+<section id="choose-a-quantum-system-and-build-a-noise-model-for-the-system">
+<h3>Choose a quantum system and build a noise model for the system<a class="headerlink" href="#choose-a-quantum-system-and-build-a-noise-model-for-the-system" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">backends_sel</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">backends</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">status</span><span class="p">()</span><span class="o">.</span><span class="n">operational</span><span class="o">==</span><span class="kc">True</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">x</span><span class="o">.</span><span class="n">configuration</span><span class="p">()</span><span class="o">.</span><span class="n">simulator</span>
+                        <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">configuration</span><span class="p">()</span><span class="o">.</span><span class="n">n_qubits</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">backends_sel</span><span class="p">))</span>
+<span class="n">backends_sel</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>19
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;IBMBackend(&#39;ibm_auckland&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_cairo&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_hanoi&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_kolkata&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_mumbai&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_algiers&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_lima&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_manila&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_lagos&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_cusco&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_quito&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_jakarta&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_brisbane&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_perth&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_nairobi&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_nazca&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_belem&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibmq_guadalupe&#39;)&gt;,
+ &lt;IBMBackend(&#39;ibm_sherbrooke&#39;)&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">backend</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">get_backend</span><span class="p">(</span><span class="s1">&#39;ibmq_mumbai&#39;</span><span class="p">)</span>
+<span class="n">noise</span> <span class="o">=</span> <span class="n">NoiseModel</span><span class="p">()</span><span class="o">.</span><span class="n">from_backend</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">noise</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NoiseModel:
+  Basis gates: [&#39;cx&#39;, &#39;delay&#39;, &#39;id&#39;, &#39;measure&#39;, &#39;reset&#39;, &#39;rz&#39;, &#39;sx&#39;, &#39;x&#39;]
+  Instructions with noise: [&#39;cx&#39;, &#39;reset&#39;, &#39;id&#39;, &#39;sx&#39;, &#39;x&#39;, &#39;measure&#39;]
+  Qubits with noise: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+  Specific qubit errors: [(&#39;id&#39;, (0,)), (&#39;id&#39;, (1,)), (&#39;id&#39;, (2,)), (&#39;id&#39;, (3,)), (&#39;id&#39;, (4,)), (&#39;id&#39;, (5,)), (&#39;id&#39;, (6,)), (&#39;id&#39;, (7,)), (&#39;id&#39;, (8,)), (&#39;id&#39;, (9,)), (&#39;id&#39;, (10,)), (&#39;id&#39;, (11,)), (&#39;id&#39;, (12,)), (&#39;id&#39;, (13,)), (&#39;id&#39;, (14,)), (&#39;id&#39;, (15,)), (&#39;id&#39;, (16,)), (&#39;id&#39;, (17,)), (&#39;id&#39;, (18,)), (&#39;id&#39;, (19,)), (&#39;id&#39;, (20,)), (&#39;id&#39;, (21,)), (&#39;id&#39;, (22,)), (&#39;id&#39;, (23,)), (&#39;id&#39;, (24,)), (&#39;id&#39;, (25,)), (&#39;id&#39;, (26,)), (&#39;sx&#39;, (0,)), (&#39;sx&#39;, (1,)), (&#39;sx&#39;, (2,)), (&#39;sx&#39;, (3,)), (&#39;sx&#39;, (4,)), (&#39;sx&#39;, (5,)), (&#39;sx&#39;, (6,)), (&#39;sx&#39;, (7,)), (&#39;sx&#39;, (8,)), (&#39;sx&#39;, (9,)), (&#39;sx&#39;, (10,)), (&#39;sx&#39;, (11,)), (&#39;sx&#39;, (12,)), (&#39;sx&#39;, (13,)), (&#39;sx&#39;, (14,)), (&#39;sx&#39;, (15,)), (&#39;sx&#39;, (16,)), (&#39;sx&#39;, (17,)), (&#39;sx&#39;, (18,)), (&#39;sx&#39;, (19,)), (&#39;sx&#39;, (20,)), (&#39;sx&#39;, (21,)), (&#39;sx&#39;, (22,)), (&#39;sx&#39;, (23,)), (&#39;sx&#39;, (24,)), (&#39;sx&#39;, (25,)), (&#39;sx&#39;, (26,)), (&#39;x&#39;, (0,)), (&#39;x&#39;, (1,)), (&#39;x&#39;, (2,)), (&#39;x&#39;, (3,)), (&#39;x&#39;, (4,)), (&#39;x&#39;, (5,)), (&#39;x&#39;, (6,)), (&#39;x&#39;, (7,)), (&#39;x&#39;, (8,)), (&#39;x&#39;, (9,)), (&#39;x&#39;, (10,)), (&#39;x&#39;, (11,)), (&#39;x&#39;, (12,)), (&#39;x&#39;, (13,)), (&#39;x&#39;, (14,)), (&#39;x&#39;, (15,)), (&#39;x&#39;, (16,)), (&#39;x&#39;, (17,)), (&#39;x&#39;, (18,)), (&#39;x&#39;, (19,)), (&#39;x&#39;, (20,)), (&#39;x&#39;, (21,)), (&#39;x&#39;, (22,)), (&#39;x&#39;, (23,)), (&#39;x&#39;, (24,)), (&#39;x&#39;, (25,)), (&#39;x&#39;, (26,)), (&#39;cx&#39;, (14, 11)), (&#39;cx&#39;, (11, 14)), (&#39;cx&#39;, (12, 13)), (&#39;cx&#39;, (13, 12)), (&#39;cx&#39;, (13, 14)), (&#39;cx&#39;, (14, 13)), (&#39;cx&#39;, (22, 19)), (&#39;cx&#39;, (19, 22)), (&#39;cx&#39;, (3, 5)), (&#39;cx&#39;, (5, 3)), (&#39;cx&#39;, (18, 21)), (&#39;cx&#39;, (21, 18)), (&#39;cx&#39;, (25, 22)), (&#39;cx&#39;, (22, 25)), (&#39;cx&#39;, (2, 1)), (&#39;cx&#39;, (1, 2)), (&#39;cx&#39;, (8, 11)), (&#39;cx&#39;, (11, 8)), (&#39;cx&#39;, (10, 12)), (&#39;cx&#39;, (12, 10)), (&#39;cx&#39;, (3, 2)), (&#39;cx&#39;, (2, 3)), (&#39;cx&#39;, (10, 7)), (&#39;cx&#39;, (7, 10)), (&#39;cx&#39;, (20, 19)), (&#39;cx&#39;, (19, 20)), (&#39;cx&#39;, (23, 21)), (&#39;cx&#39;, (21, 23)), (&#39;cx&#39;, (5, 8)), (&#39;cx&#39;, (8, 5)), (&#39;cx&#39;, (6, 7)), (&#39;cx&#39;, (7, 6)), (&#39;cx&#39;, (17, 18)), (&#39;cx&#39;, (18, 17)), (&#39;cx&#39;, (4, 7)), (&#39;cx&#39;, (7, 4)), (&#39;cx&#39;, (8, 9)), (&#39;cx&#39;, (9, 8)), (&#39;cx&#39;, (16, 19)), (&#39;cx&#39;, (19, 16)), (&#39;cx&#39;, (24, 23)), (&#39;cx&#39;, (23, 24)), (&#39;cx&#39;, (4, 1)), (&#39;cx&#39;, (1, 4)), (&#39;cx&#39;, (15, 18)), (&#39;cx&#39;, (18, 15)), (&#39;cx&#39;, (16, 14)), (&#39;cx&#39;, (14, 16)), (&#39;cx&#39;, (26, 25)), (&#39;cx&#39;, (25, 26)), (&#39;cx&#39;, (0, 1)), (&#39;cx&#39;, (1, 0)), (&#39;cx&#39;, (15, 12)), (&#39;cx&#39;, (12, 15)), (&#39;cx&#39;, (24, 25)), (&#39;cx&#39;, (25, 24)), (&#39;reset&#39;, (0,)), (&#39;reset&#39;, (1,)), (&#39;reset&#39;, (2,)), (&#39;reset&#39;, (3,)), (&#39;reset&#39;, (4,)), (&#39;reset&#39;, (5,)), (&#39;reset&#39;, (6,)), (&#39;reset&#39;, (7,)), (&#39;reset&#39;, (8,)), (&#39;reset&#39;, (9,)), (&#39;reset&#39;, (10,)), (&#39;reset&#39;, (11,)), (&#39;reset&#39;, (12,)), (&#39;reset&#39;, (13,)), (&#39;reset&#39;, (14,)), (&#39;reset&#39;, (15,)), (&#39;reset&#39;, (16,)), (&#39;reset&#39;, (17,)), (&#39;reset&#39;, (18,)), (&#39;reset&#39;, (19,)), (&#39;reset&#39;, (20,)), (&#39;reset&#39;, (21,)), (&#39;reset&#39;, (22,)), (&#39;reset&#39;, (23,)), (&#39;reset&#39;, (24,)), (&#39;reset&#39;, (25,)), (&#39;reset&#39;, (26,)), (&#39;measure&#39;, (0,)), (&#39;measure&#39;, (1,)), (&#39;measure&#39;, (2,)), (&#39;measure&#39;, (3,)), (&#39;measure&#39;, (4,)), (&#39;measure&#39;, (5,)), (&#39;measure&#39;, (6,)), (&#39;measure&#39;, (7,)), (&#39;measure&#39;, (8,)), (&#39;measure&#39;, (9,)), (&#39;measure&#39;, (10,)), (&#39;measure&#39;, (11,)), (&#39;measure&#39;, (12,)), (&#39;measure&#39;, (13,)), (&#39;measure&#39;, (14,)), (&#39;measure&#39;, (15,)), (&#39;measure&#39;, (16,)), (&#39;measure&#39;, (17,)), (&#39;measure&#39;, (18,)), (&#39;measure&#39;, (19,)), (&#39;measure&#39;, (20,)), (&#39;measure&#39;, (21,)), (&#39;measure&#39;, (22,)), (&#39;measure&#39;, (23,)), (&#39;measure&#39;, (24,)), (&#39;measure&#39;, (25,)), (&#39;measure&#39;, (26,))]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_error_map</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/1f3b39e95c0f22e11b8a0bdcaf8a2e6c16ebbda4a1bd7e7344d5e62622057ad7.png" src="../../_images/1f3b39e95c0f22e11b8a0bdcaf8a2e6c16ebbda4a1bd7e7344d5e62622057ad7.png" />
+</div>
+</div>
+</section>
+<section id="integrate-the-noise-model-into-the-selected-ibm-runtime-primitive-through-options">
+<h3>Integrate the noise model into the selected IBM runtime primitive through Options<a class="headerlink" href="#integrate-the-noise-model-into-the-selected-ibm-runtime-primitive-through-options" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coupling</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">configuration</span><span class="p">()</span><span class="o">.</span><span class="n">coupling_map</span>
+
+<span class="n">opts</span> <span class="o">=</span> <span class="n">Options</span><span class="p">()</span>
+<span class="n">opts</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">noise_model</span> <span class="o">=</span> <span class="n">noise</span>
+<span class="n">opts</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">coupling_map</span> <span class="o">=</span> <span class="n">coupling</span>
+
+<span class="n">samp_noise</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">(</span><span class="n">sim</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">opts</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="execute-a-circuit-using-the-prepared-runtime-primtive-with-noise-model">
+<h3>Execute a circuit using the prepared runtime primtive with noise model<a class="headerlink" href="#execute-a-circuit-using-the-prepared-runtime-primtive-with-noise-model" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># default setting</span>
+<span class="n">res_noise</span> <span class="o">=</span> <span class="n">samp_noise</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">bv</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res_noise</span><span class="p">)</span>
+
+<span class="n">plot_distribution</span><span class="p">(</span><span class="n">res_noise</span><span class="o">.</span><span class="n">quasi_dists</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">binary_probabilities</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SamplerResult(quasi_dists=[{0: 0.002819941431759108, 1: 0.004893396809542403, 2: 6.027145957610117e-05, 3: 0.005713085613806315, 4: 0.00016769410179990184, 5: -0.0003750114838358333, 6: 0.0001101370290060701, 7: 0.012094024132996135, 8: -0.00020775984069657788, 9: 0.006214747897109911, 10: -0.0006197609298515097, 11: 0.014685702205822838, 12: 0.00035583489580693993, 13: -0.0005513620262234406, 14: 0.004901717733358761, 15: 0.949737340970023}], metadata=[{&#39;shots&#39;: 4000, &#39;readout_mitigation_overhead&#39;: 1.7470162044886317, &#39;readout_mitigation_time&#39;: 0.0035431580035947263}])
+</pre></div>
+</div>
+<img alt="../../_images/90ef881b93f9044be8e3a89a62b0d2d37de905bddede8e06e1bdd58c86c0ba44.png" src="../../_images/90ef881b93f9044be8e3a89a62b0d2d37de905bddede8e06e1bdd58c86c0ba44.png" />
+</div>
+</div>
+<p>Compare the result with the <code class="docutils literal notranslate"><span class="pre">resilience_level</span> <span class="pre">=</span> <span class="pre">0</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># resilience level 0</span>
+<span class="n">opts_noMit</span> <span class="o">=</span> <span class="n">Options</span><span class="p">()</span>
+<span class="n">opts_noMit</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">noise_model</span> <span class="o">=</span> <span class="n">noise</span>
+<span class="n">opts_noMit</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">coupling_map</span> <span class="o">=</span> <span class="n">coupling</span>
+<span class="n">opts_noMit</span><span class="o">.</span><span class="n">resilience_level</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">samp_noise_noMit</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">(</span><span class="n">sim</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">opts_noMit</span><span class="p">)</span>
+<span class="n">res_noise_noMit</span> <span class="o">=</span> <span class="n">samp_noise_noMit</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">bv</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res_noise_noMit</span><span class="p">)</span>
+
+<span class="n">plot_distribution</span><span class="p">(</span><span class="n">res_noise_noMit</span><span class="o">.</span><span class="n">quasi_dists</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">binary_probabilities</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SamplerResult(quasi_dists=[{9: 0.00075, 4: 0.00025, 6: 0.0035, 11: 0.01375, 1: 0.00125, 14: 0.03025, 15: 0.91125, 0: 0.0005, 3: 0.003, 7: 0.0235, 13: 0.011, 12: 0.0005, 5: 0.0005}], metadata=[{&#39;shots&#39;: 4000}])
+</pre></div>
+</div>
+<img alt="../../_images/7ab8c47115c5a8818dee175d28e06075b8fa396217eb3aef817c9c1c8c9d65c5.png" src="../../_images/7ab8c47115c5a8818dee175d28e06075b8fa396217eb3aef817c9c1c8c9d65c5.png" />
+</div>
+</div>
+<div class="alert alert-success">
+    <h3>Hands-on exercise 2.</h3>
+    <p>
+    Estimate the energy for the given Hamiltonian, $H=Y$, ansatz, and two sets of parameter values using two Estimators, one with default setting (resilience_level=1) and the other for the resilience_level=0, when both excutes on the 'ibmq_qasm_simulator' with the noise model built from the backend 'ibm_algiers'.
+    </p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">angs</span> <span class="o">=</span> <span class="n">ParameterVector</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">ansatz</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ansatz</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ansatz</span><span class="o">.</span><span class="n">rz</span><span class="p">(</span><span class="n">angs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">ansatz</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">angs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">angs_vals</span> <span class="o">=</span> <span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## your code goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="custom-noisy-simulation">
+<h2>Custom Noisy Simulation<a class="headerlink" href="#custom-noisy-simulation" title="Permalink to this heading">#</a></h2>
+<section id="build-readout-noise-model-using-readouterror-class">
+<h3>Build Readout Noise model using <code class="docutils literal notranslate"><span class="pre">ReadoutError</span></code> class<a class="headerlink" href="#build-readout-noise-model-using-readouterror-class" title="Permalink to this heading">#</a></h3>
+<p>Check <a class="reference external" href="https://qiskit.org/ecosystem/aer/stubs/qiskit_aer.noise.ReadoutError.html?highlight=readout+error#qiskit_aer.noise.ReadoutError">ReadoutError</a></p>
+<ul>
+<li><p>Parameters
+: a list of assignment probability vectors <span class="math notranslate nohighlight">\(P(A|B)\)</span> where <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are noisy measurement outcomes and true measurement oucomes, respectively.<br />
+Explicitly, <span class="math notranslate nohighlight">\(P(A|B)= [P(A|k)]\)</span> where <span class="math notranslate nohighlight">\(k\in\{0, 1, 2, ..., 2^n - 1\}\)</span> for <span class="math notranslate nohighlight">\(n\)</span> number of qubits.</p>
+<p>E.g. for 1 qubit case, <span class="math notranslate nohighlight">\(P(A|B) = [P(A|0), P(A|1)] = [[P(0|0), P(1|0)], [P(0|1), P(1|1)]]\)</span>.</p>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p10</span><span class="p">,</span> <span class="n">p01</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span>
+<span class="n">ro</span> <span class="o">=</span> <span class="n">ReadoutError</span><span class="p">([[</span><span class="mi">1</span><span class="o">-</span><span class="n">p10</span><span class="p">,</span> <span class="n">p10</span><span class="p">],</span> <span class="p">[</span><span class="n">p01</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="n">p01</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ro</span><span class="p">)</span>
+
+<span class="n">ro_noise</span> <span class="o">=</span> <span class="n">NoiseModel</span><span class="p">()</span>
+
+<span class="n">ro_noise</span><span class="o">.</span><span class="n">add_all_qubit_readout_error</span><span class="p">(</span><span class="n">ro</span><span class="p">)</span>
+<span class="c1">## alternative</span>
+<span class="c1"># ro_noise.add_readout_error(ro, [0])</span>
+<span class="c1"># ro_noise.add_readout_error(ro, [1])</span>
+<span class="c1"># ro_noise.add_readout_error(ro, [2])</span>
+<span class="c1"># ro_noise.add_readout_error(ro, [3])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ReadoutError on 1 qubits. Assignment probabilities:
+ P(j|0) =  [0.9 0.1]
+ P(j|1) =  [0.2 0.8]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ro_noise</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NoiseModel:
+  Basis gates: [&#39;cx&#39;, &#39;id&#39;, &#39;rz&#39;, &#39;sx&#39;]
+  Instructions with noise: [&#39;measure&#39;]
+  All-qubits errors: [&#39;measure&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="incorporate-the-readout-noise-model-into-the-selected-ibm-runtime-primitive-through-options">
+<h3>Incorporate the readout noise model into the selected IBM runtime primitive through Options<a class="headerlink" href="#incorporate-the-readout-noise-model-into-the-selected-ibm-runtime-primitive-through-options" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">opt_ro</span> <span class="o">=</span> <span class="n">Options</span><span class="p">()</span>
+<span class="n">opt_ro</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">noise_model</span> <span class="o">=</span> <span class="n">ro_noise</span>
+
+<span class="n">samp_ro</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">(</span><span class="n">sim</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">opt_ro</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="execute-a-circuit-or-circuits-using-the-prepared-ibm-runtime-primitive">
+<h3>Execute a circuit or circuits using the prepared IBM runtime primitive<a class="headerlink" href="#execute-a-circuit-or-circuits-using-the-prepared-ibm-runtime-primitive" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_ro</span> <span class="o">=</span> <span class="n">samp_ro</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">bv</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res_ro</span><span class="p">)</span>
+
+<span class="n">plot_distribution</span><span class="p">(</span><span class="n">res_ro</span><span class="o">.</span><span class="n">quasi_dists</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">binary_probabilities</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SamplerResult(quasi_dists=[{0: -7.688145202610711e-05, 1: -0.0006835416570951855, 2: 0.0004607127252556061, 3: -0.003634243261029663, 4: -0.0003866310314785751, 5: -0.002459089998345474, 6: -0.005607737717205277, 7: -0.003465683217099625, 8: 0.0008927884923168776, 9: -0.009708202952772324, 10: -0.007148494077344195, 11: 0.00724722536734288, 12: -0.0029114120725251403, 13: -0.0005949675608451069, 14: 0.010448774908249029, 15: 1.0176273835046024}], metadata=[{&#39;shots&#39;: 4000, &#39;readout_mitigation_overhead&#39;: 38.76604093948819, &#39;readout_mitigation_time&#39;: 0.014638991000538226}])
+</pre></div>
+</div>
+<img alt="../../_images/5b6180fb2b0e98086c519575a4dc93bdcdb82e8a75a2165fe5a2eb0efb5ce8bb.png" src="../../_images/5b6180fb2b0e98086c519575a4dc93bdcdb82e8a75a2165fe5a2eb0efb5ce8bb.png" />
+</div>
+</div>
+<p>Compare the result with the <code class="docutils literal notranslate"><span class="pre">resilience_level</span> <span class="pre">=</span> <span class="pre">0</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">opt_ro_lev0</span> <span class="o">=</span> <span class="n">Options</span><span class="p">()</span>
+<span class="n">opt_ro_lev0</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">noise_model</span> <span class="o">=</span> <span class="n">my_noise</span>
+<span class="n">opt_ro_lev0</span><span class="o">.</span><span class="n">resilience_level</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">samp_ro_lev0</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">(</span><span class="n">sim</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">opt_ro_lev0</span><span class="p">)</span>
+
+<span class="n">res_ro_lev0</span> <span class="o">=</span> <span class="n">samp_ro_lev0</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">bv</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res_ro_lev0</span><span class="p">)</span>
+
+<span class="n">plot_distribution</span><span class="p">(</span><span class="n">res_ro_lev0</span><span class="o">.</span><span class="n">quasi_dists</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">binary_probabilities</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SamplerResult(quasi_dists=[{8: 0.00525, 1: 0.00525, 6: 0.02525, 4: 0.00525, 5: 0.02475, 12: 0.027, 2: 0.00625, 13: 0.111, 10: 0.01925, 15: 0.4185, 11: 0.1025, 14: 0.09275, 9: 0.026, 0: 0.00075, 3: 0.03025, 7: 0.1}], metadata=[{&#39;shots&#39;: 4000}])
+</pre></div>
+</div>
+<img alt="../../_images/8d43b9672da0a3d66f20ac04ed145fa9d448625177d1da8d6ca0d45be660fbaa.png" src="../../_images/8d43b9672da0a3d66f20ac04ed145fa9d448625177d1da8d6ca0d45be660fbaa.png" />
+</div>
+</div>
+<div class="alert alert-success">
+    <h3>Hands-on exercise 3.</h3>
+    <p>
+    Perform the noise simulation using two Samplers with resilience_level=0 (no error mitigation) and 1 (default, readout error mitigation) for the 5 qubit GHZ circuit in the cell below where the readout error for each qubit and coupling map are as follows.</p><br>
+      <p>
+         <li> Single qubit readout error for each qubit</li>   
+       $q0: P(0|0)=0.95, P(1|0)=0.05, P(0|1)=0.15, P(1|1)=0.85\\
+       q1: P(0|0)=0.98, P(1|0)=0.02, P(0|1)=0.1, P(1|1)=0.9\\
+       q2: P(0|0)=0.93, P(1|0)=0.07, P(0|1)=0.2, P(1|1)=0.8\\ 
+       q3: P(0|0)=0.96, P(1|0)=0.04, P(0|1)=0.08, P(1|1)=0.92\\    
+       q4: P(0|0)=0.9, P(1|0)=0.1, P(0|1)=0.25, P(1|1)=0.75\\
+       q5: P(0|0)=0.97, P(1|0)=0.03, P(0|1)=0.1, P(1|1)=0.9\\
+       q6: P(0|0)=0.89, P(1|0)=0.11, P(0|1)=0.25, P(1|1)=0.75$
+    </p>
+     <p>
+        <li> Coupling map </li>
+         $[[0, 1], [1, 0], [1, 2], [1, 3], [2, 1], [3, 1], [3, 5], [4, 5], [5, 3], [5, 4], [5, 6], [6, 5]]$ 
+     </p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ghz</span> <span class="o">=</span> <span class="n">QuantumCircuit</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">ghz</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ghz</span><span class="o">.</span><span class="n">cx</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">4</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">ghz</span><span class="o">.</span><span class="n">measure_all</span><span class="p">()</span>
+<span class="n">ghz</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s1">&#39;mpl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/82cce0540c9c05b1f2f74324a24eaa27af7482e4b4163c37e80b26d03c3cfbfb.png" src="../../_images/82cce0540c9c05b1f2f74324a24eaa27af7482e4b4163c37e80b26d03c3cfbfb.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## your code goes here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qiskit.tools.jupyter</span>
+<span class="o">%</span><span class="k">qiskit_version_table</span>
+<span class="o">%</span><span class="k">qiskit_copyright</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><h3>Version Information</h3><table><tr><th>Qiskit Software</th><th>Version</th></tr><tr><td><code>qiskit-terra</code></td><td>0.24.1</td></tr><tr><td><code>qiskit-aer</code></td><td>0.12.0</td></tr><tr><td><code>qiskit-ibmq-provider</code></td><td>0.20.2</td></tr><tr><td><code>qiskit</code></td><td>0.43.1</td></tr><tr><td><code>qiskit-nature</code></td><td>0.6.0</td></tr><tr><td><code>qiskit-machine-learning</code></td><td>0.6.1</td></tr><tr><th>System information</th></tr><tr><td>Python version</td><td>3.11.4</td></tr><tr><td>Python compiler</td><td>Clang 15.0.7 </td></tr><tr><td>Python build</td><td>main, Jun 10 2023 18:08:41</td></tr><tr><td>OS</td><td>Darwin</td></tr><tr><td>CPUs</td><td>10</td></tr><tr><td>Memory (Gb)</td><td>32.0</td></tr><tr><td colspan='2'>Tue Jul 25 19:42:25 2023 EDT</td></tr></table></div><div class="output text_html"><div style='width: 100%; background-color:#d5d9e0;padding-left: 10px; padding-bottom: 10px; padding-right: 10px; padding-top: 5px'><h3>This code is a part of Qiskit</h3><p>&copy; Copyright IBM 2017, 2023.</p><p>This code is licensed under the Apache License, Version 2.0. You may<br>obtain a copy of this license in the LICENSE.txt file in the root directory<br> of this source tree or at http://www.apache.org/licenses/LICENSE-2.0.<p>Any modifications or derivative works of this code must retain this<br>copyright notice, and modified files need to carry a notice indicating<br>that they have been altered from the originals.</p></div></div></div>
+</div>
+</section>
+</section>
+</section>
+
+<div class="section ablog__blog_comments">
+  
+  
+</div>
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#noisy-simulation-for-a-ibm-quantum-system">Noisy Simulation for a IBM Quantum system</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choose-a-quantum-system-and-build-a-noise-model-for-the-system">Choose a quantum system and build a noise model for the system</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integrate-the-noise-model-into-the-selected-ibm-runtime-primitive-through-options">Integrate the noise model into the selected IBM runtime primitive through Options</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#execute-a-circuit-using-the-prepared-runtime-primtive-with-noise-model">Execute a circuit using the prepared runtime primtive with noise model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#custom-noisy-simulation">Custom Noisy Simulation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#build-readout-noise-model-using-readouterror-class">Build Readout Noise model using <code class="docutils literal notranslate"><span class="pre">ReadoutError</span></code> class</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#incorporate-the-readout-noise-model-into-the-selected-ibm-runtime-primitive-through-options">Incorporate the readout noise model into the selected IBM runtime primitive through Options</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#execute-a-circuit-or-circuits-using-the-prepared-ibm-runtime-primitive">Execute a circuit or circuits using the prepared IBM runtime primitive</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div class="tocsection sourcelink">
+    <a href="../../_sources/events/msit-2023/Noisy_Simulation.ipynb.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+<footer class="bd-footer">
+<div>
+<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
+        Content on
+        <a property="dct:title" rel="cc:attributionURL" href="http://quantum-enablement.org">this website</a> 
+        by <span property="cc:attributionName">IBM</span> is licensed under 
+        <a href="http://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">
+                Attribution-NonCommercial 4.0 International<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1">
+                <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1">
+                <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1">
+        </a>
+</p> 
+</div>
+</footer>
+
+  </body>
+</html>
