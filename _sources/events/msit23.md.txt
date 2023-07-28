@@ -31,6 +31,8 @@ msit-2023/Dynamical-decoupling
 msit-2023/measurement-error-mitigation
 msit-2023/VQE_ex
 msit-2023/Noisy_Simulation
+msit-2023/QSVM_project
+msit-2023/chsh_challenge
 
 
 ```
@@ -53,3 +55,5 @@ Download all workshop content
 | [Measurement error mitigation](msit-2023/measurement-error-mitigation)  |
 | [Variational eigensolver via Runtime](msit-2023/VQE_ex)  |
 | [Noise modelling](msit-2023/Noisy_Simulation)  |
+| [QSVM Project](msit-2023/QSVM_project)  |
+| [CHSH Challenge](msit-2023/chsh_challenge)  |
