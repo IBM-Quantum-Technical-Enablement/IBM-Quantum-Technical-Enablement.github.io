@@ -1,19 +1,5 @@
-# Recent explorations
+# Summary
 
-See the [exploration archives](explore.md) for a more complete list.
+We are happy you found this site and enjoyed learning how to utilize quantum hardware to its fullest.  Unfortunately, we have had to stop generating and hosting enablement related materials here.
 
-```{postlist}
-:date: "%Y-%m-%d"
-:format: "{date} - {title}"
-:excerpts:
-```
-
-```{toctree}
-:maxdepth: 2
-:hidden:
-how-to/howto
-explore
-hardware/hardware
-events
-members
-```
+Official material can be found at [https://quantum-computing.ibm.com/](https://quantum-computing.ibm.com/). 
